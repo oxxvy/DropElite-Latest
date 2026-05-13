@@ -921,6 +921,508 @@ canvas.mini-chart { width: 100% !important; }
   .main { padding: 0; }
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOBILE FIXES v2 — addresses all 14 issues found in real-device testing
+   Applies only to screens ≤ 800px. Desktop stays unchanged.
+   Uses actual class names from this dashboard's HTML.
+═══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 800px) {
+
+  /* ── Prevent any horizontal page scroll on the page itself ── */
+  html, body { overflow-x: hidden !important; max-width: 100vw; }
+  .main { max-width: 100vw; overflow-x: hidden; }
+  .tab-panel { max-width: 100%; overflow-x: hidden; }
+  .page-wrapper { max-width: 100%; padding-left: 0; padding-right: 0; }
+
+  /* ═══════════════════════════════════════════════════════════
+     UNIVERSAL HERO — stack title + actions vertically on mobile
+     Applies to all tabs that use .hero-header / .hero
+  ═══════════════════════════════════════════════════════════ */
+  .hero-header,
+  .hero {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 14px !important;
+  }
+  .hero-header > .hero-left,
+  .hero-header > .hero-right,
+  .hero > .hero-left,
+  .hero > .hero-right,
+  .hero-inner > .hero-left,
+  .hero-inner > .hero-right {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Hero action button cluster (right side) → 2-column grid */
+  .hero-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+  .hero-actions > * {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 10px 8px !important;
+    font-size: 11px !important;
+    letter-spacing: 0.5px !important;
+    white-space: nowrap !important;
+    min-height: 42px !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     FIX 1: DAILY MISSIONS — all 4 stat cards fit on one row
+  ═══════════════════════════════════════════════════════════ */
+  .daily-missions-view .hero-stats {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 6px !important;
+    width: 100%;
+    margin-top: 16px !important;
+  }
+  .daily-missions-view .hero-stat {
+    padding: 8px 4px !important;
+    min-width: 0 !important;
+    text-align: center;
+  }
+  .daily-missions-view .hero-stat-val {
+    font-size: 15px !important;
+    line-height: 1.1 !important;
+  }
+  .daily-missions-view .hero-stat-val[style*="font-size:14px"] {
+    font-size: 13px !important;
+  }
+  .daily-missions-view .hero-stat-label {
+    font-size: 8px !important;
+    letter-spacing: 1px !important;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Hero countdown strip — wrap cleanly */
+  .daily-missions-view .countdown-strip {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    font-size: 11px !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     FIX 2: AIRDROP TRACKER — header buttons
+     (Handled by universal .hero-actions rule above)
+  ═══════════════════════════════════════════════════════════ */
+  .airdrop-tracker-view .hero-rank-area,
+  .airdrop-tracker-view .hero-rank-badge {
+    margin: 0 auto !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     FIX 3: AIRDROP DATABASE TABLE — horizontal scroll
+  ═══════════════════════════════════════════════════════════ */
+  .airdrop-tracker-view .data-table,
+  .airdrop-tracker-view .airdrop-table-wrap,
+  .airdrop-tracker-view [class*="table-container"],
+  .airdrop-tracker-view [class*="table-wrap"] {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+  .airdrop-tracker-view table {
+    min-width: 900px !important;
+    font-size: 11px !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     FIX 4: WALLETS — header buttons + hero
+     (Handled by universal .hero-actions rule above)
+  ═══════════════════════════════════════════════════════════ */
+
+  /* ═══════════════════════════════════════════════════════════
+     FIX 5: WALLET HEALTH cards (Alpha-Prime, NightOwl, etc.)
+     Was 4 columns desktop → must fit content in 2 columns mobile
+  ═══════════════════════════════════════════════════════════ */
+  .wallets-view .health-wallets-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+  .wallets-view .health-wallet-card {
+    padding: 12px 8px !important;
+    min-width: 0 !important;
+  }
+  .wallets-view .health-wallet-card * {
+    min-width: 0;
+  }
+  /* Wallet name + HEALTHY badge: stack on tight screens */
+  .wallets-view .health-wallet-card > div:first-child {
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+    font-size: 12px !important;
+  }
+  .wallets-view .health-wallet-card .status-badge,
+  .wallets-view .health-wallet-card [class*="badge"] {
+    font-size: 9px !important;
+    padding: 2px 6px !important;
+  }
+  /* Score ring: smaller */
+  .wallets-view .health-wallet-card .health-ring,
+  .wallets-view .health-wallet-card svg {
+    max-width: 70px !important;
+    max-height: 70px !important;
+    width: 70px !important;
+    height: 70px !important;
+  }
+  .wallets-view .health-wallet-card .health-num,
+  .wallets-view .health-wallet-card .health-value {
+    font-size: 18px !important;
+  }
+  /* Metric bars labels (Activity, Diversity, etc.) */
+  .wallets-view .health-bar-label,
+  .wallets-view .health-bar-pct {
+    font-size: 9px !important;
+  }
+  .wallets-view .health-bar-row {
+    gap: 6px !important;
+    margin-bottom: 4px !important;
+  }
+
+  /* Wallets heatmap (12-col desktop) → fit screen */
+  .wallets-view .heatmap {
+    grid-template-columns: repeat(12, 1fr) !important;
+    gap: 1px !important;
+    width: 100%;
+  }
+  .wallets-view .heatmap > * {
+    min-width: 0 !important;
+    aspect-ratio: 1 !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     FIX 6: WALLETS IDENTITY TABLE — horizontal scroll
+  ═══════════════════════════════════════════════════════════ */
+  .wallets-view table,
+  .wallets-view .wallet-table,
+  .wallets-view [class*="wallets-table"] {
+    min-width: 900px !important;
+    font-size: 11px !important;
+  }
+  .wallets-view [class*="table-wrap"],
+  .wallets-view [class*="table-container"],
+  .wallets-view .data-table {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+
+  /* Wallet filter pills */
+  .wallets-view .filter-tabs,
+  .wallets-view .filter-bar,
+  .wallets-view .wallet-filters {
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+  .wallets-view .filter-chip,
+  .wallets-view .filter-tab {
+    font-size: 11px !important;
+    padding: 5px 10px !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     FIX 7: FARMING ROUTES — hero header buttons
+     (Universal .hero-actions handles this)
+  ═══════════════════════════════════════════════════════════ */
+  .farming-routes-view .hero-header,
+  .farming-routes-view .hero {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     FIX 8: FARMING ROUTES — Quick Actions 2-column grid
+  ═══════════════════════════════════════════════════════════ */
+  .farming-routes-view .quick-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    padding: 16px !important;
+    align-items: stretch !important;
+  }
+  .farming-routes-view .quick-actions > * {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 10px 8px !important;
+    font-size: 11px !important;
+    min-height: 44px !important;
+  }
+  /* QA label "QUICK ACTIONS" — full width header */
+  .farming-routes-view .qa-label {
+    grid-column: 1 / -1 !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border) !important;
+    padding-right: 0 !important;
+    padding-bottom: 8px !important;
+    text-align: center;
+  }
+
+  /* Route step cards — readable on mobile */
+  .farming-routes-view .route-step-card {
+    padding: 14px !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     FIX 9: REWARDS TABLE — horizontal scroll, no truncation
+  ═══════════════════════════════════════════════════════════ */
+  .rewards-view table,
+  .rewards-view .rewards-table {
+    min-width: 900px !important;
+    font-size: 11px !important;
+  }
+  .rewards-view [class*="table-wrap"],
+  .rewards-view [class*="table-container"],
+  .rewards-view .data-table {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+  .rewards-view td, .rewards-view th {
+    white-space: nowrap !important;
+    padding: 10px 12px !important;
+  }
+  /* First column (project name) — allow normal width */
+  .rewards-view td:first-child,
+  .rewards-view th:first-child {
+    min-width: 140px;
+  }
+
+  /* Rewards filter pills (ALL/CLAIMED/PENDING/ELIGIBLE/EXPIRED) */
+  .rewards-view .filter-tabs,
+  .rewards-view .filter-bar {
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    padding: 8px !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     FIX 10: REWARDS QUICK ACTIONS — buttons + XP bar fit
+  ═══════════════════════════════════════════════════════════ */
+  .rewards-view .quick-actions-bar,
+  .rewards-view .quick-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    padding: 14px !important;
+  }
+  .rewards-view .quick-actions-bar > *,
+  .rewards-view .quick-actions > * {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 10px 6px !important;
+    font-size: 11px !important;
+    min-height: 44px !important;
+  }
+  /* Elite Rank · Level 14 strip — don't truncate the XP number */
+  .rewards-view .rank-bar,
+  .rewards-view .xp-bar,
+  .rewards-view [class*="rank-header"],
+  .rewards-view [class*="elite-rank"] {
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    padding: 12px !important;
+    font-size: 12px !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     FIX 11: INTEL HUB — Top Farming Opportunities header buttons
+  ═══════════════════════════════════════════════════════════ */
+  .intel-hub-view .section-header,
+  .intel-hub-view .panel-header,
+  .intel-hub-view .card-header,
+  .intel-hub-view [class*="-header"] {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    align-items: flex-start !important;
+  }
+  /* Headers with title left + action buttons right → buttons go full width below */
+  .intel-hub-view .section-header > *:last-child,
+  .intel-hub-view .panel-header > *:last-child {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .intel-hub-view .section-header button,
+  .intel-hub-view .panel-header button,
+  .intel-hub-view .section-header > a,
+  .intel-hub-view .panel-header > a {
+    font-size: 10px !important;
+    padding: 6px 10px !important;
+    white-space: nowrap;
+    flex: 1 1 auto;
+  }
+
+  /* "UPDATED 2 MIN AGO / SORT BY SCORE / + ADD TO TRACKER" row */
+  .intel-hub-view .opportunities-controls,
+  .intel-hub-view [class*="opp-controls"],
+  .intel-hub-view [class*="trend-controls"] {
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+  .intel-hub-view .opportunities-controls > *,
+  .intel-hub-view [class*="opp-controls"] > * {
+    flex: 1 1 auto !important;
+    font-size: 10px !important;
+    padding: 6px 8px !important;
+    text-align: center;
+    min-width: 0;
+    white-space: nowrap;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     FIX 12: INTEL HUB — Market Intelligence dashboard header
+     (Handled by FIX 11 rules above)
+  ═══════════════════════════════════════════════════════════ */
+
+  /* ═══════════════════════════════════════════════════════════
+     FIX 13: INTEL HUB HEATMAP — show full 7-day grid
+  ═══════════════════════════════════════════════════════════ */
+  .intel-hub-view .heatmap-grid {
+    grid-template-columns: repeat(7, 1fr) !important;
+    gap: 2px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .intel-hub-view .hm-cell {
+    min-width: 0 !important;
+    aspect-ratio: 1 !important;
+    border-radius: 1px !important;
+  }
+  /* Heatmap title / peak text shouldn't push grid off screen */
+  .intel-hub-view [class*="heatmap-title"],
+  .intel-hub-view [class*="heatmap-meta"] {
+    font-size: 11px !important;
+    flex-wrap: wrap !important;
+  }
+
+  /* Intel Hub stat widgets / chains */
+  .intel-hub-view .stats-grid,
+  .intel-hub-view [class*="intel-stats"] {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     FIX 14: REPORTS TABLE — horizontal scroll, no wrap
+  ═══════════════════════════════════════════════════════════ */
+  .reports-view table {
+    min-width: 900px !important;
+    font-size: 11px !important;
+  }
+  .reports-view [class*="table-wrap"],
+  .reports-view [class*="table-container"],
+  .reports-view .data-table {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+  .reports-view td, .reports-view th {
+    white-space: nowrap !important;
+    padding: 10px 12px !important;
+  }
+  /* Allow report title (first column) to be a reasonable width without wrapping */
+  .reports-view td:first-child {
+    min-width: 200px;
+    white-space: nowrap !important;
+  }
+
+  /* Reports filter tabs */
+  .reports-view .filter-tabs,
+  .reports-view .filter-bar {
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     UNIVERSAL: filter pills row (any tab) — horizontal scroll if many
+  ═══════════════════════════════════════════════════════════ */
+  .filter-tabs,
+  .filter-bar,
+  .filter-row,
+  .filter-chips {
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+    gap: 6px !important;
+  }
+  .filter-tabs::-webkit-scrollbar,
+  .filter-bar::-webkit-scrollbar,
+  .filter-row::-webkit-scrollbar { display: none; }
+  .filter-chip,
+  .filter-tab {
+    flex-shrink: 0 !important;
+    font-size: 11px !important;
+    padding: 5px 10px !important;
+    white-space: nowrap;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     UNIVERSAL: any wide button row should wrap
+  ═══════════════════════════════════════════════════════════ */
+  .alpha-actions,
+  .wallet-actions,
+  .expand-actions,
+  .action-btns,
+  .chart-controls {
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+
+  /* All tables that aren't explicitly wrapped */
+  .main table:not(.no-scroll) {
+    min-width: 0;
+  }
+  .main td, .main th {
+    padding: 10px 12px;
+  }
+
+  /* Modal sizing */
+  [class*="modal-content"], [class*="modal-inner"], [class*="dialog-content"] {
+    max-width: 94vw !important;
+    max-height: 92vh !important;
+    padding: 18px !important;
+  }
+}
+
+/* ═══ EXTRA SMALL: ≤ 380px (Nothing Phone portrait, smaller devices) ═══ */
+@media (max-width: 380px) {
+  /* Mission stats: still 4 cols (they're small enough now) but if needed: 2x2 */
+  .daily-missions-view .hero-stats {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 4px !important;
+  }
+  .daily-missions-view .hero-stat-val { font-size: 13px !important; }
+  .daily-missions-view .hero-stat-label { font-size: 7px !important; }
+
+  /* Wallet health: stack to single column on very narrow */
+  .wallets-view .health-wallets-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Hero actions, QA: single column */
+  .hero-actions,
+  .farming-routes-view .quick-actions,
+  .rewards-view .quick-actions-bar,
+  .rewards-view .quick-actions {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Topbar logo smaller */
+  .logo { font-size: 12px !important; letter-spacing: 1px !important; }
+  .logo-icon { width: 24px !important; height: 24px !important; }
+}
+
 /* ═══════════════════════════════════════════
    SCROLLBAR
 ═══════════════════════════════════════════ */
