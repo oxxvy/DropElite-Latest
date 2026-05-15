@@ -547,6 +547,10 @@ tbody tr:last-child td { border-bottom: none; }
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 10c2-4 6-6 8-6s6 2 8 6M5 10c1.5-2.5 3.5-4 5-4s3.5 1.5 5 4M8 10c.7-1 1.5-1.6 2-1.6s1.3.6 2 1.6"/><circle cx="10" cy="10" r="1.4" fill="currentColor"/></svg>
       Intel: Signals
     </a>
+    <a class="nav-item" data-section="alerts" onclick="switchSection('alerts', this)">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 2L2 17h16L10 2z"/><line x1="10" y1="8" x2="10" y2="12"/><circle cx="10" cy="14.5" r="0.9" fill="currentColor"/></svg>
+      Intel: Alerts
+    </a>
     <a class="nav-item" data-section="users" onclick="switchSection('users', this)">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10" cy="6" r="3"/><path d="M3 18c1-3 4-5 7-5s6 2 7 5"/></svg>
       Users
@@ -687,6 +691,31 @@ tbody tr:last-child td { border-bottom: none; }
         <div class="table-wrap">
           <table id="signalTable">
             <thead><tr><th>Published</th><th>Category</th><th>Title</th><th>URL</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="section-alerts">
+      <div class="page-head">
+        <div>
+          <div class="page-title">INTEL: ALERTS</div>
+          <div class="page-sub">Manage the "High Priority Alert Center" cards with live countdown timers</div>
+        </div>
+        <button class="btn btn-primary" onclick="openAlertModal()">+ New Alert</button>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">ALL ALERTS</div>
+          <div class="card-tools">
+            <span id="alertCount" style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text-dim);"></span>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="alertTable">
+            <thead><tr><th>Order</th><th>Name</th><th>Priority</th><th>Style</th><th>Deadline</th><th>Status</th><th>Actions</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -1239,6 +1268,67 @@ tbody tr:last-child td { border-bottom: none; }
   </div>
 </div>
 
+<!-- ═══════════════════════════════════════════
+     ALERT MODAL  (High Priority Alert Center)
+═══════════════════════════════════════════ -->
+<div class="modal-backdrop" id="alertModal">
+  <div class="modal" style="max-width:560px;">
+    <h3 id="alertModalTitle">NEW ALERT</h3>
+    <div class="form-row">
+      <label>Name *</label>
+      <input id="alertName" type="text" placeholder="e.g. zkSync SNAPSHOT IMMINENT">
+    </div>
+    <div class="form-row">
+      <label>Description</label>
+      <textarea id="alertDescription" rows="2" placeholder="e.g. Wallet eligibility window closing — act within 48h or lose qualification." style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:9px 11px;color:var(--text);font-family:inherit;font-size:13px;outline:none;resize:vertical;"></textarea>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="form-row">
+        <label>Priority *</label>
+        <select id="alertPriority">
+          <option value="CRITICAL">🚨 CRITICAL</option>
+          <option value="URGENT">⚠ URGENT</option>
+          <option value="HIGH" selected>HIGH</option>
+          <option value="MEDIUM">MEDIUM</option>
+          <option value="LOW">LOW</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Style</label>
+        <select id="alertStyle">
+          <option value="red">Red (default)</option>
+          <option value="gold">Gold</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label>Deadline (drives the live countdown)</label>
+      <input id="alertDeadline" type="datetime-local">
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="form-row">
+        <label>Display Order</label>
+        <input id="alertOrder" type="number" value="0" min="0">
+      </div>
+      <div class="form-row">
+        <label>Status</label>
+        <select id="alertActive">
+          <option value="true">Active (visible to users)</option>
+          <option value="false">Inactive (hidden)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn" onclick="closeAlertModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveAlert()">Save</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1317,6 +1407,7 @@ function switchSection(name, el) {
   if (name === 'routes') renderRoutes();
   if (name === 'opportunities') renderOpps();
   if (name === 'signals') renderSignals();
+  if (name === 'alerts') renderAlerts();
   if (name === 'users') renderUsers();
   if (name === 'payments') renderPayments();
   if (name === 'content') renderContent();
@@ -2011,6 +2102,141 @@ async function deleteSignal(id) {
   if (!result.ok) { toast('Delete failed: ' + (result.error || '')); return; }
   toast('Signal deleted');
   renderSignals();
+}
+
+/* ═══════════════════════════════════════════
+   INTEL HUB · ALERTS MANAGEMENT
+═══════════════════════════════════════════ */
+let alertsCache = [];
+let editingAlertId = null;
+
+const ALERT_PRIORITY_BADGE = {
+  CRITICAL: { cls: 'badge-active',   style: 'background:rgba(255,0,64,0.2);color:#ff5070;border-color:rgba(255,0,64,0.35);' },
+  URGENT:   { cls: 'badge-active',   style: 'background:rgba(255,100,0,0.18);color:#ff9a5a;border-color:rgba(255,100,0,0.3);' },
+  HIGH:     { cls: 'badge-active',   style: 'background:rgba(255,184,0,0.18);color:var(--gold);border-color:rgba(255,184,0,0.3);' },
+  MEDIUM:   { cls: 'badge-type',     style: '' },
+  LOW:      { cls: 'badge-inactive', style: '' }
+};
+
+async function renderAlerts() {
+  const tbody = document.querySelector('#alertTable tbody');
+  tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-dim);padding:24px;">Loading…</td></tr>';
+  alertsCache = await API.adminListAlerts();
+
+  const countEl = document.getElementById('alertCount');
+  if (countEl) {
+    const a = alertsCache.filter(x => x.active).length;
+    countEl.textContent = alertsCache.length + ' total · ' + a + ' active';
+  }
+
+  if (!alertsCache.length) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-dim);padding:30px;">No alerts yet. Click "+ New Alert" to publish a high-priority alert with a countdown.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = alertsCache.map(a => {
+    const deadline = a.deadline
+      ? new Date(a.deadline).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+      : '—';
+    const pri = ALERT_PRIORITY_BADGE[a.priority] || ALERT_PRIORITY_BADGE.HIGH;
+    return `
+      <tr>
+        <td><span style="font-family:'Share Tech Mono',monospace;color:var(--text-dim);">${a.display_order != null ? a.display_order : 0}</span></td>
+        <td>
+          <strong>${escapeHtml(a.name)}</strong>
+          ${a.description ? '<br><span style="font-size:11px;color:var(--text-dim);">' + escapeHtml((a.description || '').slice(0, 90)) + (a.description.length > 90 ? '…' : '') + '</span>' : ''}
+        </td>
+        <td><span class="badge ${pri.cls}" style="${pri.style}">${escapeHtml(a.priority || 'HIGH')}</span></td>
+        <td><span class="badge badge-type" style="${a.style === 'gold' ? 'background:rgba(255,184,0,0.18);color:var(--gold);border-color:rgba(255,184,0,0.3);' : 'background:rgba(255,0,64,0.15);color:#ff7a90;border-color:rgba(255,0,64,0.25);'}">${a.style === 'gold' ? 'Gold' : 'Red'}</span></td>
+        <td><span style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text-dim);">${escapeHtml(deadline)}</span></td>
+        <td><span class="badge badge-${a.active ? 'active' : 'inactive'}">${a.active ? 'Active' : 'Inactive'}</span></td>
+        <td>
+          <div class="row-actions">
+            <button class="icon-btn" onclick="editAlert(${a.id})" title="Edit">✎</button>
+            <button class="icon-btn" onclick="toggleAlertActive(${a.id})" title="${a.active ? 'Deactivate' : 'Activate'}">${a.active ? '◐' : '●'}</button>
+            <button class="icon-btn danger" onclick="deleteAlert(${a.id})" title="Delete">×</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function _alertLocalDatetime(iso) {
+  const d = iso ? new Date(iso) : new Date(Date.now() + 24 * 3600 * 1000); // default: 24h from now
+  const off = d.getTimezoneOffset();
+  const local = new Date(d.getTime() - off * 60000);
+  return local.toISOString().slice(0, 16);
+}
+
+function openAlertModal() {
+  editingAlertId = null;
+  document.getElementById('alertModalTitle').textContent = 'NEW ALERT';
+  document.getElementById('alertName').value = '';
+  document.getElementById('alertDescription').value = '';
+  document.getElementById('alertPriority').value = 'HIGH';
+  document.getElementById('alertStyle').value = 'red';
+  document.getElementById('alertDeadline').value = _alertLocalDatetime();
+  document.getElementById('alertOrder').value = alertsCache.length;
+  document.getElementById('alertActive').value = 'true';
+  document.getElementById('alertModal').classList.add('active');
+}
+
+function editAlert(id) {
+  const a = alertsCache.find(x => x.id === id);
+  if (!a) return;
+  editingAlertId = id;
+  document.getElementById('alertModalTitle').textContent = 'EDIT ALERT';
+  document.getElementById('alertName').value = a.name || '';
+  document.getElementById('alertDescription').value = a.description || '';
+  document.getElementById('alertPriority').value = a.priority || 'HIGH';
+  document.getElementById('alertStyle').value = a.style || 'red';
+  document.getElementById('alertDeadline').value = a.deadline ? _alertLocalDatetime(a.deadline) : '';
+  document.getElementById('alertOrder').value = a.display_order != null ? a.display_order : 0;
+  document.getElementById('alertActive').value = String(a.active !== false);
+  document.getElementById('alertModal').classList.add('active');
+}
+
+function closeAlertModal() {
+  document.getElementById('alertModal').classList.remove('active');
+}
+
+async function saveAlert() {
+  const deadlineLocal = document.getElementById('alertDeadline').value;
+  const data = {
+    id: editingAlertId,
+    name:          document.getElementById('alertName').value.trim(),
+    description:   document.getElementById('alertDescription').value.trim(),
+    priority:      document.getElementById('alertPriority').value,
+    style:         document.getElementById('alertStyle').value,
+    deadline:      deadlineLocal ? new Date(deadlineLocal).toISOString() : null,
+    display_order: document.getElementById('alertOrder').value,
+    active:        document.getElementById('alertActive').value === 'true'
+  };
+  if (!data.name) { toast('Name is required'); return; }
+
+  const result = await API.adminSaveAlert(data);
+  if (!result.ok) { toast('Save failed: ' + (result.error || '')); return; }
+  closeAlertModal();
+  toast(editingAlertId ? 'Alert updated' : 'Alert created');
+  renderAlerts();
+}
+
+async function toggleAlertActive(id) {
+  const a = alertsCache.find(x => x.id === id);
+  if (!a) return;
+  const result = await API.adminSaveAlert(Object.assign({}, a, { active: !a.active }));
+  if (!result.ok) { toast('Update failed: ' + (result.error || '')); return; }
+  toast(a.active ? 'Alert deactivated' : 'Alert activated');
+  renderAlerts();
+}
+
+async function deleteAlert(id) {
+  if (!confirm('Delete this alert? It will be removed from the Intel Hub. This cannot be undone.')) return;
+  const result = await API.adminDeleteAlert(id);
+  if (!result.ok) { toast('Delete failed: ' + (result.error || '')); return; }
+  toast('Alert deleted');
+  renderAlerts();
 }
 
 async function renderDashboard() {
