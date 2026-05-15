@@ -14,8 +14,8 @@
   // STEP 7b — PASTE YOUR SUPABASE KEYS HERE
   // Get these from Supabase → Settings → API
   // ═══════════════════════════════════════════════════════════════
-  const SUPABASE_URL = 'https://brfeekixpjbwqoooxcte.supabase.co';   // e.g. https://abcd1234.supabase.co
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJyZmVla2l4cGpid3Fvb294Y3RlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2OTIwNzUsImV4cCI6MjA5NDI2ODA3NX0.agL3ZVc4QvtPvI35kNDYdEhluBEn4lScRtNmsxgcajs'; // the long eyJhbGc... string
+  const SUPABASE_URL = '';   // e.g. https://abcd1234.supabase.co
+  const SUPABASE_ANON_KEY = ''; // the long eyJhbGc... string
   // ═══════════════════════════════════════════════════════════════
 
   // ─── Initialize Supabase client ───
