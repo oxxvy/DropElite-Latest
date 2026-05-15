@@ -22703,30 +22703,69 @@ const WATCHLIST_DATA = [
 //  RENDER FUNCTIONS
 // ═══════════════════════════════════════════════
 
-function intelRenderAlerts() {
+async function intelRenderAlerts() {
   const grid = document.getElementById('intelAlertGrid');
-  grid.innerHTML = ALERT_DATA.map(a => {
-    const isGold = a.type === 'gold';
+  if (!grid) return;
+
+  // Update the "9 ACTIVE" badge — find it within the section header
+  const activeBadgeEl = grid.closest('.alert-center')
+    ? grid.closest('.alert-center').querySelector('.badge.badge-red')
+    : null;
+
+  if (!window.API || !window.API.isLive()) {
+    grid.innerHTML = '<div style="grid-column:1/-1;padding:30px;text-align:center;color:var(--text-muted);font-size:12px;">Supabase not connected.</div>';
+    if (activeBadgeEl) activeBadgeEl.textContent = '0 ACTIVE';
+    return;
+  }
+
+  let alerts = [];
+  try {
+    alerts = await window.API.getAlerts();
+  } catch (e) {
+    console.error('getAlerts:', e);
+  }
+
+  // Hide expired alerts (deadline in the past) from the live feed
+  const now = Date.now();
+  alerts = alerts.filter(a => !a.deadline || new Date(a.deadline).getTime() > now);
+
+  if (activeBadgeEl) activeBadgeEl.textContent = alerts.length + ' ACTIVE';
+
+  if (!alerts.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;padding:30px;text-align:center;color:var(--text-muted);font-size:12px;">No high-priority alerts right now.</div>';
+    return;
+  }
+
+  grid.innerHTML = alerts.map(a => {
+    const isGold = a.style === 'gold';
+    const deadlineAttr = a.deadline
+      ? `data-deadline="${intelEscape(new Date(a.deadline).toISOString())}"`
+      : '';
+    const deadlineFallback = a.deadline ? '--:--:--' : 'NO DEADLINE';
+    const priorityClass = isGold ? 'badge-gold' : 'badge-red';
     return `
     <div class="alert-card ${isGold ? 'gold-alert' : ''}">
       <div class="alert-card-top">
         <div>
-          <div class="alert-card-name">${a.name}</div>
-          <div class="alert-card-desc">${a.desc}</div>
+          <div class="alert-card-name">${intelEscape(a.name)}</div>
+          <div class="alert-card-desc">${intelEscape(a.description || '')}</div>
         </div>
         <div style="flex-shrink:0;margin-left:12px">
-          <div class="countdown" data-timer="${a.timer}">--:--:--</div>
-          <div class="countdown-label">REMAINING</div>
+          <div class="countdown" ${deadlineAttr}>${deadlineFallback}</div>
+          <div class="countdown-label">${a.deadline ? 'REMAINING' : ''}</div>
         </div>
       </div>
       <div style="display:flex;gap:6px;margin-top:10px">
-        <span class="badge ${isGold ? 'badge-gold' : 'badge-red'}">${a.priority}</span>
+        <span class="badge ${priorityClass}">${intelEscape(a.priority || 'HIGH')}</span>
         <button class="btn btn-primary btn-xs" onclick="intelHandleAction('farm')">Farm Now</button>
         <button class="btn btn-ghost btn-xs" onclick="intelHandleAction('tracker')">Track</button>
       </div>
       <div class="alert-urgency"></div>
     </div>`;
   }).join('');
+
+  // Immediately render the countdown values (don't wait for the 1s tick)
+  intelUpdateCountdowns();
 }
 
 async function intelRenderAlphaGrid() {
@@ -23112,6 +23151,22 @@ Object.assign(window, {
 // ═══════════════════════════════════════════════
 
 function intelUpdateCountdowns() {
+  // 1. Real ISO deadlines (new — used by alerts from Supabase)
+  document.querySelectorAll('#tab-intel-hub .countdown[data-deadline]').forEach(el => {
+    const target = new Date(el.dataset.deadline).getTime();
+    if (isNaN(target)) { el.textContent = '—'; return; }
+    const secs = Math.floor((target - Date.now()) / 1000);
+    if (secs <= 0) { el.textContent = 'EXPIRED'; el.style.color = 'var(--text-dim)'; return; }
+    const d = Math.floor(secs/86400);
+    const h = Math.floor((secs%86400)/3600);
+    const m = Math.floor((secs%3600)/60);
+    const s = secs%60;
+    el.textContent = d > 0
+      ? `${d}d ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`
+      : `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  });
+
+  // 2. Legacy data-timer countdowns (countdown down from a fixed seconds count)
   document.querySelectorAll('#tab-intel-hub .countdown[data-timer]').forEach(el => {
     let secs = parseInt(el.dataset.timer,10);
     if (isNaN(secs) || secs <= 0) { el.textContent = 'EXPIRED'; return; }
@@ -23139,9 +23194,9 @@ const extraFeedItems = [
 
 let feedItemIndex = 0;
 function intelPushNewFeedItem() {
-  // Live mode: re-fetch latest signals from Supabase (lightweight).
-  // The fake push behavior (extraFeedItems) is no longer used.
+  // Live mode: re-fetch latest signals AND alerts from Supabase
   intelRenderFeed();
+  intelRenderAlerts();
 }
 
 // ═══════════════════════════════════════════════
