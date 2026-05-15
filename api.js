@@ -895,6 +895,59 @@
       return { ok: true };
     },
 
+    // ─── User-facing: list active alerts (newest deadlines first by display order) ───
+    async getAlerts() {
+      if (!_live()) return [];
+      const { data, error } = await supa
+        .from('intel_alerts')
+        .select('*')
+        .eq('active', true)
+        .order('display_order', { ascending: true });
+      if (error) { console.error('getAlerts:', error); return []; }
+      return data || [];
+    },
+
+    // ─── Admin: alerts ───
+    async adminListAlerts() {
+      if (!_live()) return [];
+      const { data, error } = await supa
+        .from('intel_alerts')
+        .select('*')
+        .order('display_order', { ascending: true });
+      if (error) { console.error('adminListAlerts:', error); return []; }
+      return data || [];
+    },
+
+    async adminSaveAlert(alert) {
+      if (!_live()) return { ok: false, error: 'Supabase not configured' };
+      const fields = {
+        name:          alert.name,
+        description:   alert.description || null,
+        priority:      alert.priority || 'HIGH',
+        style:         alert.style || 'red',
+        deadline:      alert.deadline || null,
+        active:        alert.active !== false,
+        display_order: alert.display_order == null ? 0 : parseInt(alert.display_order, 10)
+      };
+      if (alert.id) {
+        fields.updated_at = new Date().toISOString();
+        const { error } = await supa.from('intel_alerts').update(fields).eq('id', alert.id);
+        if (error) return { ok: false, error: error.message };
+        return { ok: true, id: alert.id };
+      } else {
+        const { data, error } = await supa.from('intel_alerts').insert(fields).select().single();
+        if (error) return { ok: false, error: error.message };
+        return { ok: true, id: data.id };
+      }
+    },
+
+    async adminDeleteAlert(id) {
+      if (!_live()) return { ok: false, error: 'Supabase not configured' };
+      const { error } = await supa.from('intel_alerts').delete().eq('id', id);
+      if (error) return { ok: false, error: error.message };
+      return { ok: true };
+    },
+
     // ───────────────────────────────────────────────────────────
     // EVERYTHING BELOW = STILL DEMO DATA (not wired to Supabase yet)
     // Converted tab-by-tab in future sessions.
