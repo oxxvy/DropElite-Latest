@@ -555,6 +555,14 @@ tbody tr:last-child td { border-bottom: none; }
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 16V9M8 16V4M13 16v-5M18 16V7"/></svg>
       Intel: Market
     </a>
+    <a class="nav-item" data-section="ecosystems" onclick="switchSection('ecosystems', this)">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10" cy="10" r="3"/><circle cx="10" cy="10" r="7.5"/><path d="M10 2.5v3M10 14.5v3M2.5 10h3M14.5 10h3"/></svg>
+      Intel: Ecosystems
+    </a>
+    <a class="nav-item" data-section="recs" onclick="switchSection('recs', this)">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 2.5a5 5 0 0 1 5 5c0 2-1.2 3-2 4-.5.6-.5 1.5-.5 2.5h-5c0-1 0-1.9-.5-2.5-.8-1-2-2-2-4a5 5 0 0 1 5-5z"/><path d="M8 17h4"/></svg>
+      Intel: Recs
+    </a>
     <a class="nav-item" data-section="users" onclick="switchSection('users', this)">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10" cy="6" r="3"/><path d="M3 18c1-3 4-5 7-5s6 2 7 5"/></svg>
       Users
@@ -815,6 +823,56 @@ tbody tr:last-child td { border-bottom: none; }
       <div style="display:flex;justify-content:flex-end;gap:10px;padding-bottom:30px;">
         <span id="mSavedNote" style="align-self:center;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text-dim);"></span>
         <button class="btn btn-primary" onclick="saveMarket()">Save Dashboard</button>
+      </div>
+    </section>
+
+    <section class="section" id="section-ecosystems">
+      <div class="page-head">
+        <div>
+          <div class="page-title">INTEL: ECOSYSTEMS</div>
+          <div class="page-sub">Manage the "Ecosystem Intelligence Matrix" cards on the Intel Hub</div>
+        </div>
+        <button class="btn btn-primary" onclick="openEcoModal()">+ New Ecosystem</button>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">ALL ECOSYSTEMS</div>
+          <div class="card-tools">
+            <span id="ecoCount" style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text-dim);"></span>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="ecoTable">
+            <thead><tr><th>Order</th><th>Name</th><th>Growth</th><th>Reward %</th><th>Competition</th><th>Activity</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="section-recs">
+      <div class="page-head">
+        <div>
+          <div class="page-title">INTEL: RECOMMENDATIONS</div>
+          <div class="page-sub">Manage the "Personalized Alpha Recommendations" cards on the Intel Hub</div>
+        </div>
+        <button class="btn btn-primary" onclick="openRecModal()">+ New Recommendation</button>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">ALL RECOMMENDATIONS</div>
+          <div class="card-tools">
+            <span id="recCount" style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text-dim);"></span>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="recTable">
+            <thead><tr><th>Order</th><th>Icon</th><th>Title</th><th>Tags</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
       </div>
     </section>
 
@@ -1425,6 +1483,134 @@ tbody tr:last-child td { border-bottom: none; }
   </div>
 </div>
 
+<!-- ═══════════════════════════════════════════
+     ECOSYSTEM MODAL  (Ecosystem Intelligence Matrix)
+═══════════════════════════════════════════ -->
+<div class="modal-backdrop" id="ecoModal">
+  <div class="modal" style="max-width:620px;max-height:90vh;overflow-y:auto;">
+    <h3 id="ecoModalTitle">NEW ECOSYSTEM</h3>
+
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:10px;">
+      <div class="form-row"><label>Name *</label><input id="ecoName" type="text" placeholder="e.g. Base"></div>
+      <div class="form-row"><label>Icon (emoji)</label><input id="ecoIcon" type="text" maxlength="4" placeholder="🔵"></div>
+    </div>
+    <div class="form-row"><label>Subtitle / Company</label><input id="ecoSubtitle" type="text" placeholder="e.g. Coinbase L2"></div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="form-row">
+        <label>Icon Background</label>
+        <select id="ecoIconBg">
+          <option value="rgba(0,82,255,0.12)">Blue</option>
+          <option value="rgba(0,212,255,0.12)">Cyan</option>
+          <option value="rgba(153,69,255,0.12)">Purple</option>
+          <option value="rgba(255,4,32,0.12)">Red</option>
+          <option value="rgba(0,255,136,0.12)">Green</option>
+          <option value="rgba(255,184,0,0.12)">Gold</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Accent Color (momentum bar)</label>
+        <select id="ecoAccent">
+          <option value="#0052FF">Blue</option>
+          <option value="#00D4FF">Cyan</option>
+          <option value="#9945FF">Purple</option>
+          <option value="#FF0420">Red</option>
+          <option value="#00FF88">Green</option>
+          <option value="#FFB800">Gold</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="form-row"><label>Growth (free text)</label><input id="ecoGrowth" type="text" placeholder="e.g. +84%"></div>
+      <div class="form-row"><label>Protocols (count)</label><input id="ecoProtocols" type="number" min="0" placeholder="127"></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="form-row"><label>Reward Probability % (0–100)</label><input id="ecoRewardProb" type="number" min="0" max="100" placeholder="82"></div>
+      <div class="form-row">
+        <label>Competition</label>
+        <select id="ecoCompetition">
+          <option value="LOW">LOW</option>
+          <option value="MED">MED</option>
+          <option value="HIGH">HIGH</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="form-row"><label>Activity Score (0–100)</label><input id="ecoActivity" type="number" min="0" max="100" placeholder="94"></div>
+      <div class="form-row"><label>Momentum (0–100)</label><input id="ecoMomentum" type="number" min="0" max="100" placeholder="88"></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="form-row"><label>Display Order</label><input id="ecoOrder" type="number" value="0" min="0"></div>
+      <div class="form-row">
+        <label>Status</label>
+        <select id="ecoActive">
+          <option value="true">Active (visible to users)</option>
+          <option value="false">Inactive (hidden)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn" onclick="closeEcoModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEco()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     RECOMMENDATION MODAL  (Alpha Recommendations)
+═══════════════════════════════════════════ -->
+<div class="modal-backdrop" id="recModal">
+  <div class="modal" style="max-width:560px;max-height:90vh;overflow-y:auto;">
+    <h3 id="recModalTitle">NEW RECOMMENDATION</h3>
+
+    <div style="display:grid;grid-template-columns:1fr 3fr;gap:10px;">
+      <div class="form-row"><label>Icon (emoji)</label><input id="recIcon" type="text" maxlength="4" placeholder="⛽"></div>
+      <div class="form-row"><label>Title *</label><input id="recTitle" type="text" placeholder="e.g. Best Under $50 Gas Today"></div>
+    </div>
+    <div class="form-row">
+      <label>Description</label>
+      <textarea id="recDescription" rows="3" placeholder="e.g. Base + Arbitrum routes optimized for <$8 gas per tx. Current window ideal." style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:9px 11px;color:var(--text);font-family:inherit;font-size:13px;outline:none;resize:vertical;"></textarea>
+    </div>
+
+    <div style="margin-top:6px;padding:10px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;">
+      <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:8px;">Tags (up to 3)</div>
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:8px;margin-bottom:8px;">
+        <input id="recTag1Text" type="text" placeholder="Text (e.g. LOW GAS)">
+        <select id="recTag1Color"><option value="">— color —</option><option value="badge-green">Green</option><option value="badge-gold">Gold</option><option value="badge-cyan">Cyan</option><option value="badge-red">Red</option><option value="badge-purple">Purple</option><option value="badge-dim">Dim</option></select>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:8px;margin-bottom:8px;">
+        <input id="recTag2Text" type="text" placeholder="Text (optional)">
+        <select id="recTag2Color"><option value="">— color —</option><option value="badge-green">Green</option><option value="badge-gold">Gold</option><option value="badge-cyan">Cyan</option><option value="badge-red">Red</option><option value="badge-purple">Purple</option><option value="badge-dim">Dim</option></select>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:8px;">
+        <input id="recTag3Text" type="text" placeholder="Text (optional)">
+        <select id="recTag3Color"><option value="">— color —</option><option value="badge-green">Green</option><option value="badge-gold">Gold</option><option value="badge-cyan">Cyan</option><option value="badge-red">Red</option><option value="badge-purple">Purple</option><option value="badge-dim">Dim</option></select>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+      <div class="form-row"><label>Display Order</label><input id="recOrder" type="number" value="0" min="0"></div>
+      <div class="form-row">
+        <label>Status</label>
+        <select id="recActive">
+          <option value="true">Active (visible to users)</option>
+          <option value="false">Inactive (hidden)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn" onclick="closeRecModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveRec()">Save</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1505,6 +1691,8 @@ function switchSection(name, el) {
   if (name === 'signals') renderSignals();
   if (name === 'alerts') renderAlerts();
   if (name === 'market') renderMarket();
+  if (name === 'ecosystems') renderEcosystems();
+  if (name === 'recs') renderRecs();
   if (name === 'users') renderUsers();
   if (name === 'payments') renderPayments();
   if (name === 'content') renderContent();
@@ -2502,6 +2690,269 @@ async function saveMarket() {
   toast('Market dashboard saved');
   const note = document.getElementById('mSavedNote');
   if (note) note.textContent = 'Last saved: ' + new Date().toLocaleString();
+}
+
+/* ═══════════════════════════════════════════
+   INTEL HUB · ECOSYSTEMS MANAGEMENT
+═══════════════════════════════════════════ */
+let ecosCache = [];
+let editingEcoId = null;
+
+async function renderEcosystems() {
+  const tbody = document.querySelector('#ecoTable tbody');
+  tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-dim);padding:24px;">Loading…</td></tr>';
+  ecosCache = await API.adminListEcosystems();
+
+  const countEl = document.getElementById('ecoCount');
+  if (countEl) {
+    const a = ecosCache.filter(e => e.active).length;
+    countEl.textContent = ecosCache.length + ' total · ' + a + ' active';
+  }
+
+  if (!ecosCache.length) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-dim);padding:30px;">No ecosystems yet. Click "+ New Ecosystem" to add your first one.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = ecosCache.map(e => {
+    const compColor = (e.competition === 'LOW') ? 'var(--green)' : (e.competition === 'HIGH') ? '#ff5070' : 'var(--gold)';
+    return `
+      <tr>
+        <td><span style="font-family:'Share Tech Mono',monospace;color:var(--text-dim);">${e.display_order != null ? e.display_order : 0}</span></td>
+        <td><strong>${e.icon ? escapeHtml(e.icon) + ' ' : ''}${escapeHtml(e.name)}</strong>${e.subtitle ? '<br><span style="font-size:11px;color:var(--text-dim);">' + escapeHtml(e.subtitle) + '</span>' : ''}</td>
+        <td><strong style="color:var(--green);">${e.growth ? escapeHtml(e.growth) : '—'}</strong></td>
+        <td><span style="font-family:'Share Tech Mono',monospace;color:var(--gold);">${e.reward_prob != null ? e.reward_prob + '%' : '—'}</span></td>
+        <td><span style="font-family:'Share Tech Mono',monospace;color:${compColor};">${escapeHtml(e.competition || '—')}</span></td>
+        <td><span style="font-family:'Share Tech Mono',monospace;color:var(--text-dim);">${e.activity != null ? e.activity + '/100' : '—'}</span></td>
+        <td><span class="badge badge-${e.active ? 'active' : 'inactive'}">${e.active ? 'Active' : 'Inactive'}</span></td>
+        <td>
+          <div class="row-actions">
+            <button class="icon-btn" onclick="editEco(${e.id})" title="Edit">✎</button>
+            <button class="icon-btn" onclick="toggleEcoActive(${e.id})" title="${e.active ? 'Deactivate' : 'Activate'}">${e.active ? '◐' : '●'}</button>
+            <button class="icon-btn danger" onclick="deleteEco(${e.id})" title="Delete">×</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function openEcoModal() {
+  editingEcoId = null;
+  document.getElementById('ecoModalTitle').textContent = 'NEW ECOSYSTEM';
+  document.getElementById('ecoName').value = '';
+  document.getElementById('ecoIcon').value = '';
+  document.getElementById('ecoSubtitle').value = '';
+  document.getElementById('ecoIconBg').value = 'rgba(0,82,255,0.12)';
+  document.getElementById('ecoAccent').value = '#0052FF';
+  document.getElementById('ecoGrowth').value = '';
+  document.getElementById('ecoProtocols').value = '';
+  document.getElementById('ecoRewardProb').value = '';
+  document.getElementById('ecoCompetition').value = 'LOW';
+  document.getElementById('ecoActivity').value = '';
+  document.getElementById('ecoMomentum').value = '';
+  document.getElementById('ecoOrder').value = ecosCache.length;
+  document.getElementById('ecoActive').value = 'true';
+  document.getElementById('ecoModal').classList.add('active');
+}
+
+function editEco(id) {
+  const e = ecosCache.find(x => x.id === id);
+  if (!e) return;
+  editingEcoId = id;
+  document.getElementById('ecoModalTitle').textContent = 'EDIT ECOSYSTEM';
+  document.getElementById('ecoName').value = e.name || '';
+  document.getElementById('ecoIcon').value = e.icon || '';
+  document.getElementById('ecoSubtitle').value = e.subtitle || '';
+  document.getElementById('ecoIconBg').value = e.icon_bg || 'rgba(0,82,255,0.12)';
+  document.getElementById('ecoAccent').value = e.accent_color || '#0052FF';
+  document.getElementById('ecoGrowth').value = e.growth || '';
+  document.getElementById('ecoProtocols').value = e.protocols != null ? e.protocols : '';
+  document.getElementById('ecoRewardProb').value = e.reward_prob != null ? e.reward_prob : '';
+  document.getElementById('ecoCompetition').value = e.competition || 'LOW';
+  document.getElementById('ecoActivity').value = e.activity != null ? e.activity : '';
+  document.getElementById('ecoMomentum').value = e.momentum != null ? e.momentum : '';
+  document.getElementById('ecoOrder').value = e.display_order != null ? e.display_order : 0;
+  document.getElementById('ecoActive').value = String(e.active !== false);
+  document.getElementById('ecoModal').classList.add('active');
+}
+
+function closeEcoModal() {
+  document.getElementById('ecoModal').classList.remove('active');
+}
+
+async function saveEco() {
+  const data = {
+    id: editingEcoId,
+    name:          document.getElementById('ecoName').value.trim(),
+    icon:          document.getElementById('ecoIcon').value.trim(),
+    subtitle:      document.getElementById('ecoSubtitle').value.trim(),
+    icon_bg:       document.getElementById('ecoIconBg').value,
+    accent_color:  document.getElementById('ecoAccent').value,
+    growth:        document.getElementById('ecoGrowth').value.trim(),
+    protocols:     document.getElementById('ecoProtocols').value,
+    reward_prob:   document.getElementById('ecoRewardProb').value,
+    competition:   document.getElementById('ecoCompetition').value,
+    activity:      document.getElementById('ecoActivity').value,
+    momentum:      document.getElementById('ecoMomentum').value,
+    display_order: document.getElementById('ecoOrder').value,
+    active:        document.getElementById('ecoActive').value === 'true'
+  };
+  if (!data.name) { toast('Name is required'); return; }
+
+  const result = await API.adminSaveEcosystem(data);
+  if (!result.ok) { toast('Save failed: ' + (result.error || '')); return; }
+  closeEcoModal();
+  toast(editingEcoId ? 'Ecosystem updated' : 'Ecosystem created');
+  renderEcosystems();
+}
+
+async function toggleEcoActive(id) {
+  const e = ecosCache.find(x => x.id === id);
+  if (!e) return;
+  const result = await API.adminSaveEcosystem(Object.assign({}, e, { active: !e.active }));
+  if (!result.ok) { toast('Update failed: ' + (result.error || '')); return; }
+  toast(e.active ? 'Ecosystem deactivated' : 'Ecosystem activated');
+  renderEcosystems();
+}
+
+async function deleteEco(id) {
+  if (!confirm('Delete this ecosystem? Users will no longer see it. This cannot be undone.')) return;
+  const result = await API.adminDeleteEcosystem(id);
+  if (!result.ok) { toast('Delete failed: ' + (result.error || '')); return; }
+  toast('Ecosystem deleted');
+  renderEcosystems();
+}
+
+/* ═══════════════════════════════════════════
+   INTEL HUB · RECOMMENDATIONS MANAGEMENT
+═══════════════════════════════════════════ */
+let recsCache = [];
+let editingRecId = null;
+
+async function renderRecs() {
+  const tbody = document.querySelector('#recTable tbody');
+  tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:24px;">Loading…</td></tr>';
+  recsCache = await API.adminListRecommendations();
+
+  const countEl = document.getElementById('recCount');
+  if (countEl) {
+    const a = recsCache.filter(r => r.active).length;
+    countEl.textContent = recsCache.length + ' total · ' + a + ' active';
+  }
+
+  if (!recsCache.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:30px;">No recommendations yet. Click "+ New Recommendation" to add your first one.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = recsCache.map(r => {
+    const tags = Array.isArray(r.tags) ? r.tags.filter(t => t && t.t)
+      .map(t => '<span class="badge badge-type" style="margin-right:3px;">' + escapeHtml(t.t) + '</span>').join('') : '';
+    return `
+      <tr>
+        <td><span style="font-family:'Share Tech Mono',monospace;color:var(--text-dim);">${r.display_order != null ? r.display_order : 0}</span></td>
+        <td style="font-size:18px;">${r.icon ? escapeHtml(r.icon) : '—'}</td>
+        <td>
+          <strong>${escapeHtml(r.title)}</strong>
+          ${r.description ? '<br><span style="font-size:11px;color:var(--text-dim);">' + escapeHtml((r.description || '').slice(0, 80)) + (r.description.length > 80 ? '…' : '') + '</span>' : ''}
+        </td>
+        <td>${tags || '<span style="color:var(--text-muted);">—</span>'}</td>
+        <td><span class="badge badge-${r.active ? 'active' : 'inactive'}">${r.active ? 'Active' : 'Inactive'}</span></td>
+        <td>
+          <div class="row-actions">
+            <button class="icon-btn" onclick="editRec(${r.id})" title="Edit">✎</button>
+            <button class="icon-btn" onclick="toggleRecActive(${r.id})" title="${r.active ? 'Deactivate' : 'Activate'}">${r.active ? '◐' : '●'}</button>
+            <button class="icon-btn danger" onclick="deleteRec(${r.id})" title="Delete">×</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function _recCollectTags() {
+  const out = [];
+  for (let i = 1; i <= 3; i++) {
+    const t = document.getElementById('recTag' + i + 'Text').value.trim();
+    const c = document.getElementById('recTag' + i + 'Color').value;
+    if (t) out.push({ t: t, c: c || 'badge-cyan' });
+  }
+  return out;
+}
+
+function openRecModal() {
+  editingRecId = null;
+  document.getElementById('recModalTitle').textContent = 'NEW RECOMMENDATION';
+  document.getElementById('recIcon').value = '';
+  document.getElementById('recTitle').value = '';
+  document.getElementById('recDescription').value = '';
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById('recTag' + i + 'Text').value = '';
+    document.getElementById('recTag' + i + 'Color').value = '';
+  }
+  document.getElementById('recOrder').value = recsCache.length;
+  document.getElementById('recActive').value = 'true';
+  document.getElementById('recModal').classList.add('active');
+}
+
+function editRec(id) {
+  const r = recsCache.find(x => x.id === id);
+  if (!r) return;
+  editingRecId = id;
+  document.getElementById('recModalTitle').textContent = 'EDIT RECOMMENDATION';
+  document.getElementById('recIcon').value = r.icon || '';
+  document.getElementById('recTitle').value = r.title || '';
+  document.getElementById('recDescription').value = r.description || '';
+  const tags = Array.isArray(r.tags) ? r.tags : [];
+  for (let i = 0; i < 3; i++) {
+    const slot = tags[i] || {};
+    document.getElementById('recTag' + (i+1) + 'Text').value = slot.t || '';
+    document.getElementById('recTag' + (i+1) + 'Color').value = slot.c || '';
+  }
+  document.getElementById('recOrder').value = r.display_order != null ? r.display_order : 0;
+  document.getElementById('recActive').value = String(r.active !== false);
+  document.getElementById('recModal').classList.add('active');
+}
+
+function closeRecModal() {
+  document.getElementById('recModal').classList.remove('active');
+}
+
+async function saveRec() {
+  const data = {
+    id: editingRecId,
+    icon:          document.getElementById('recIcon').value.trim(),
+    title:         document.getElementById('recTitle').value.trim(),
+    description:   document.getElementById('recDescription').value.trim(),
+    tags:          _recCollectTags(),
+    display_order: document.getElementById('recOrder').value,
+    active:        document.getElementById('recActive').value === 'true'
+  };
+  if (!data.title) { toast('Title is required'); return; }
+
+  const result = await API.adminSaveRecommendation(data);
+  if (!result.ok) { toast('Save failed: ' + (result.error || '')); return; }
+  closeRecModal();
+  toast(editingRecId ? 'Recommendation updated' : 'Recommendation created');
+  renderRecs();
+}
+
+async function toggleRecActive(id) {
+  const r = recsCache.find(x => x.id === id);
+  if (!r) return;
+  const result = await API.adminSaveRecommendation(Object.assign({}, r, { active: !r.active }));
+  if (!result.ok) { toast('Update failed: ' + (result.error || '')); return; }
+  toast(r.active ? 'Recommendation deactivated' : 'Recommendation activated');
+  renderRecs();
+}
+
+async function deleteRec(id) {
+  if (!confirm('Delete this recommendation? Users will no longer see it. This cannot be undone.')) return;
+  const result = await API.adminDeleteRecommendation(id);
+  if (!result.ok) { toast('Delete failed: ' + (result.error || '')); return; }
+  toast('Recommendation deleted');
+  renderRecs();
 }
 
 async function renderDashboard() {
