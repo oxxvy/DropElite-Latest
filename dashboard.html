@@ -17522,7 +17522,7 @@ canvas.mini-chart { width: 100% !important; }
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px">
             <div>
               <div class="section-label"><span class="dot-pulse dot-purple"></span> ECOSYSTEM RESEARCH</div>
-              <div class="section-title">Ecosystem Intelligence Matrix <span style="display:inline-block;background:rgba(255,184,0,0.12);color:var(--gold,#FFB800);border:1px solid rgba(255,184,0,0.25);padding:2px 7px;border-radius:4px;font-size:9px;font-family:var(--mono);margin-left:8px;vertical-align:middle;letter-spacing:0.5px;">DEMO · PHASE 3+</span></div>
+              <div class="section-title">Ecosystem Intelligence Matrix</div>
             </div>
             <button class="btn btn-ghost btn-sm">View Full Research →</button>
           </div>
@@ -17538,12 +17538,11 @@ canvas.mini-chart { width: 100% !important; }
               <div class="ai-title">
                 <div>
                   <div class="section-label"><span style="color:var(--purple)">◈</span> AI INTELLIGENCE ENGINE</div>
-                  <div class="section-title" style="margin-bottom:0">Personalized Alpha Recommendations <span style="display:inline-block;background:rgba(255,184,0,0.12);color:var(--gold,#FFB800);border:1px solid rgba(255,184,0,0.25);padding:2px 7px;border-radius:4px;font-size:9px;font-family:var(--mono);margin-left:8px;vertical-align:middle;letter-spacing:0.5px;">DEMO · PHASE 3+</span></div>
+                  <div class="section-title" style="margin-bottom:0">Personalized Alpha Recommendations</div>
                 </div>
               </div>
               <div style="display:flex;gap:10px;align-items:center">
                 <div class="ai-badge-indicator">● AI ACTIVE</div>
-                <button class="btn btn-ghost btn-sm">Refresh Intel</button>
               </div>
             </div>
             <div class="ai-rec-grid" id="intelAiRecGrid"></div>
@@ -22955,68 +22954,115 @@ async function intelRenderFeed() {
   }).join('');
 }
 
-function intelRenderEcosystems() {
+async function intelRenderEcosystems() {
   const grid = document.getElementById('intelEcoGrid');
-  grid.innerHTML = ECO_DATA.map(e => {
-    const probColor = e.prob >= 75 ? 'var(--green)' : e.prob >= 55 ? 'var(--gold)' : 'var(--text-secondary)';
-    const compColor = e.comp === 'LOW' ? 'var(--green)' : e.comp === 'MED' ? 'var(--gold)' : 'var(--red)';
-    const momW = e.momentum;
+  if (!grid) return;
+
+  if (!window.API || !window.API.isLive()) {
+    grid.innerHTML = '<div style="grid-column:1/-1;padding:30px;text-align:center;color:var(--text-muted);font-size:12px;">Supabase not connected.</div>';
+    return;
+  }
+
+  let ecos = [];
+  try {
+    ecos = await window.API.getEcosystems();
+  } catch (e) {
+    console.error('getEcosystems:', e);
+  }
+
+  if (!ecos.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;padding:40px 30px;text-align:center;color:var(--text-muted);font-size:13px;">No ecosystems published yet. The DropElite team curates these.</div>';
+    return;
+  }
+
+  grid.innerHTML = ecos.map(e => {
+    const prob = e.reward_prob != null ? Number(e.reward_prob) : null;
+    const probColor = prob == null ? 'var(--text-secondary)' : (prob >= 75 ? 'var(--green)' : prob >= 55 ? 'var(--gold)' : 'var(--text-secondary)');
+    const comp = (e.competition || '').toUpperCase();
+    const compColor = comp === 'LOW' ? 'var(--green)' : (comp === 'MED' || comp === 'MEDIUM') ? 'var(--gold)' : comp === 'HIGH' ? 'var(--red)' : 'var(--text-secondary)';
+    const activity = e.activity != null ? Number(e.activity) : 0;
+    const momentum = e.momentum != null ? Number(e.momentum) : 0;
+    const color = e.accent_color || '#00D4FF';
+    const iconBg = e.icon_bg || 'rgba(0,212,255,0.12)';
     return `
-    <div class="eco-card eco-card-${e.key}" onclick="intelHandleAction('ecosystem')">
+    <div class="eco-card" onclick="intelHandleAction('ecosystem')">
       <div class="eco-top">
-        <div class="eco-icon" style="background:${e.iconBg};font-size:20px">${e.icon}</div>
+        <div class="eco-icon" style="background:${iconBg};font-size:20px">${intelEscape(e.icon || '')}</div>
         <div>
-          <div class="eco-name">${e.name}</div>
-          <div class="eco-sub">${e.sub}</div>
+          <div class="eco-name">${intelEscape(e.name)}</div>
+          <div class="eco-sub">${intelEscape(e.subtitle || '')}</div>
         </div>
       </div>
       <div class="eco-stats">
         <div class="eco-stat-item">
           <div class="eco-stat-label">Growth</div>
-          <div class="eco-stat-val" style="color:var(--green);text-shadow:0 0 12px rgba(0,255,136,0.3)">${e.growth}</div>
+          <div class="eco-stat-val" style="color:var(--green);text-shadow:0 0 12px rgba(0,255,136,0.3)">${intelEscape(e.growth || '—')}</div>
         </div>
         <div class="eco-stat-item">
           <div class="eco-stat-label">Protocols</div>
-          <div class="eco-stat-val" style="color:var(--cyan)">${e.protocols}</div>
+          <div class="eco-stat-val" style="color:var(--cyan)">${e.protocols != null ? e.protocols : '—'}</div>
         </div>
         <div class="eco-stat-item">
           <div class="eco-stat-label">Reward Prob.</div>
-          <div class="eco-stat-val" style="color:${probColor}">${e.prob}%</div>
+          <div class="eco-stat-val" style="color:${probColor}">${prob != null ? prob + '%' : '—'}</div>
         </div>
         <div class="eco-stat-item">
           <div class="eco-stat-label">Competition</div>
-          <div class="eco-stat-val" style="font-size:13px;color:${compColor}">${e.comp}</div>
+          <div class="eco-stat-val" style="font-size:13px;color:${compColor}">${intelEscape(e.competition || '—')}</div>
         </div>
       </div>
       <div style="margin-bottom:8px">
         <div style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:8px;color:var(--text-muted);margin-bottom:4px;letter-spacing:0.1em;text-transform:uppercase">
-          <span>Activity</span><span>${e.activity}/100</span>
+          <span>Activity</span><span>${activity}/100</span>
         </div>
         <div class="progress-bar">
-          <div class="progress-fill progress-cyan" style="width:${e.activity}%"></div>
+          <div class="progress-fill progress-cyan" style="width:${activity}%"></div>
         </div>
       </div>
       <div class="eco-momentum">
         <div class="eco-momentum-label">Momentum</div>
         <div class="eco-momentum-bar">
-          <div class="eco-momentum-fill" style="width:${momW}%;background:linear-gradient(90deg,${e.color}99,${e.color});box-shadow:0 0 6px ${e.color}66"></div>
+          <div class="eco-momentum-fill" style="width:${momentum}%;background:linear-gradient(90deg,${color}99,${color});box-shadow:0 0 6px ${color}66"></div>
         </div>
-        <span style="font-family:var(--font-mono);font-size:9px;color:${e.color}">${momW}</span>
+        <span style="font-family:var(--font-mono);font-size:9px;color:${color}">${momentum}</span>
       </div>
     </div>`;
   }).join('');
 }
 
-function intelRenderAIRecs() {
+async function intelRenderAIRecs() {
   const grid = document.getElementById('intelAiRecGrid');
-  grid.innerHTML = AI_REC_DATA.map(r => {
-    const tags = r.tags.map(t => `<span class="badge ${t.c}">${t.t}</span>`).join('');
+  if (!grid) return;
+
+  if (!window.API || !window.API.isLive()) {
+    grid.innerHTML = '<div style="grid-column:1/-1;padding:30px;text-align:center;color:var(--text-muted);font-size:12px;">Supabase not connected.</div>';
+    return;
+  }
+
+  let recs = [];
+  try {
+    recs = await window.API.getRecommendations();
+  } catch (e) {
+    console.error('getRecommendations:', e);
+  }
+
+  if (!recs.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;padding:40px 30px;text-align:center;color:var(--text-muted);font-size:13px;">No recommendations published yet. The DropElite team curates these daily.</div>';
+    return;
+  }
+
+  grid.innerHTML = recs.map(r => {
+    const tags = Array.isArray(r.tags) ? r.tags
+      .filter(t => t && t.t)
+      .slice(0, 3)
+      .map(t => `<span class="badge ${intelEscape(t.c || 'badge-cyan')}">${intelEscape(t.t)}</span>`)
+      .join('') : '';
     return `
     <div class="ai-rec-card">
-      <div class="ai-rec-icon">${r.icon}</div>
+      <div class="ai-rec-icon">${intelEscape(r.icon || '💡')}</div>
       <div class="ai-rec-content">
-        <div class="ai-rec-title">${r.title}</div>
-        <div class="ai-rec-desc">${r.desc}</div>
+        <div class="ai-rec-title">${intelEscape(r.title)}</div>
+        <div class="ai-rec-desc">${intelEscape(r.description || '')}</div>
         <div class="ai-rec-tags">${tags}</div>
       </div>
     </div>`;
