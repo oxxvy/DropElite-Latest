@@ -17453,7 +17453,7 @@ canvas.mini-chart { width: 100% !important; }
             <div class="analytics-header">
               <div>
                 <div class="section-label"><span class="dot-pulse dot-cyan"></span> ANALYTICS PREVIEW</div>
-                <div class="section-title">Market Intelligence Dashboard <span style="display:inline-block;background:rgba(255,184,0,0.12);color:var(--gold,#FFB800);border:1px solid rgba(255,184,0,0.25);padding:2px 7px;border-radius:4px;font-size:9px;font-family:var(--mono);margin-left:8px;vertical-align:middle;letter-spacing:0.5px;">DEMO · PHASE 3+</span></div>
+                <div class="section-title">Market Intelligence Dashboard</div>
               </div>
               <button class="btn btn-ghost btn-sm">Full Analytics →</button>
             </div>
@@ -23054,11 +23054,67 @@ function intelRenderWatchlist() {
 //  CHARTS
 // ═══════════════════════════════════════════════
 
+// Holds the fetched market record so all 5 widgets share one fetch
+let intelMarketData = null;
+
+async function intelLoadMarket() {
+  if (!window.API || !window.API.isLive()) return;
+  try {
+    intelMarketData = await window.API.getMarketIntel();
+  } catch (e) {
+    console.error('intelLoadMarket:', e);
+  }
+  // Re-render all 5 widgets with real data
+  intelRenderChainActivityChart();
+  intelRenderOppScoreChart();
+  intelRenderFundingSparkline();
+  intelRenderHeatmap();
+  intelRenderFlowBars();
+  intelApplyMarketHeadlines();
+}
+
+// Update the 4 headline stat values + sub-text from the market record
+function intelApplyMarketHeadlines() {
+  const m = intelMarketData;
+  if (!m) return;
+  const setTxt = (sel, val) => {
+    const el = document.querySelector(sel);
+    if (el && val != null && val !== '') el.textContent = val;
+  };
+  // The Market Intelligence Dashboard cards, in order
+  const cards = document.querySelectorAll('#tab-intel-hub .analytics-grid .analytics-card');
+  // card 0 = Chain Activity, 1 = Funding, 2 = Heatmap, 3 = Flow, 4 = Scores
+  if (cards[0]) {
+    const v = cards[0].querySelector('.ac-value'); if (v && m.chain_activity_value) v.textContent = m.chain_activity_value;
+    const s = cards[0].querySelector('.ac-sub');   if (s && m.chain_activity_sub)   s.textContent = m.chain_activity_sub;
+  }
+  if (cards[1]) {
+    const v = cards[1].querySelector('.ac-value'); if (v && m.funding_value) v.textContent = m.funding_value;
+    const s = cards[1].querySelector('.ac-sub');   if (s && m.funding_sub)   s.textContent = m.funding_sub;
+  }
+  if (cards[2]) {
+    const v = cards[2].querySelector('.ac-value');
+    if (v && (m.heatmap_peak || m.heatmap_low)) {
+      v.textContent = 'Peak: ' + (m.heatmap_peak || '—') + ' · Low: ' + (m.heatmap_low || '—');
+    }
+  }
+  if (cards[3]) {
+    const v = cards[3].querySelector('.ac-value'); if (v && m.flow_value) v.textContent = m.flow_value;
+    const s = cards[3].querySelector('.ac-sub');   if (s && m.flow_sub)   s.textContent = m.flow_sub;
+  }
+  if (cards[4]) {
+    const v = cards[4].querySelector('.ac-value'); if (v && m.score_value) v.textContent = m.score_value;
+    const s = cards[4].querySelector('.ac-sub');   if (s && m.score_sub)   s.textContent = m.score_sub;
+  }
+}
+
 function intelRenderChainActivityChart() {
   const el = document.getElementById('intelChainActivityChart');
   if (!el) return;
-  const vals = [32,45,38,52,48,67,61,74,68,82,79,94];
-  const max = Math.max(...vals);
+  let vals = (intelMarketData && Array.isArray(intelMarketData.chain_activity_bars) && intelMarketData.chain_activity_bars.length)
+    ? intelMarketData.chain_activity_bars
+    : [32,45,38,52,48,67,61,74,68,82,79,94];
+  const max = Math.max(...vals, 1);
   el.innerHTML = vals.map(v => {
     const h = Math.max(4, Math.round((v/max)*34));
     return `<div class="mini-bar gold-bar" style="height:${h}px"></div>`;
@@ -23068,8 +23124,10 @@ function intelRenderChainActivityChart() {
 function intelRenderOppScoreChart() {
   const el = document.getElementById('intelOppScoreChart');
   if (!el) return;
-  const vals = [72,68,78,82,75,88,85,92,89,94,91,94];
-  const max = Math.max(...vals);
+  let vals = (intelMarketData && Array.isArray(intelMarketData.score_bars) && intelMarketData.score_bars.length)
+    ? intelMarketData.score_bars
+    : [72,68,78,82,75,88,85,92,89,94,91,94];
+  const max = Math.max(...vals, 1);
   el.innerHTML = vals.map((v,i) => {
     const h = Math.max(4, Math.round((v/max)*34));
     return `<div class="mini-bar ${i>=10?'gold-bar':'cyan-bar'}" style="height:${h}px;opacity:${0.4+(i/vals.length*0.6)}"></div>`;
@@ -23082,12 +23140,15 @@ function intelRenderFundingSparkline() {
   canvas.width = canvas.offsetWidth || 200;
   canvas.height = 36;
   const ctx = canvas.getContext('2d');
-  const data = [1.2,1.4,1.1,1.8,1.6,2.1,1.9,2.4,2.2,2.5,2.7,2.8];
+  let data = (intelMarketData && Array.isArray(intelMarketData.funding_spark) && intelMarketData.funding_spark.length > 1)
+    ? intelMarketData.funding_spark
+    : [1.2,1.4,1.1,1.8,1.6,2.1,1.9,2.4,2.2,2.5,2.7,2.8];
   const w = canvas.width, h = canvas.height;
   const max = Math.max(...data), min = Math.min(...data);
+  const range = (max - min) || 1;
   const pts = data.map((v,i) => ({
     x: (i/(data.length-1))*w,
-    y: h - ((v-min)/(max-min))*(h-6) - 3
+    y: h - ((v-min)/range)*(h-6) - 3
   }));
   const grd = ctx.createLinearGradient(0,0,0,h);
   grd.addColorStop(0,'rgba(0,212,255,0.3)');
@@ -23105,40 +23166,67 @@ function intelRenderFundingSparkline() {
 function intelRenderHeatmap() {
   const grid = document.getElementById('intelHeatmapGrid');
   if (!grid) return;
-  const days = 7, hours = 24;
-  let html = '';
-  for (let d = 0; d < days; d++) {
-    for (let h2 = 0; h2 < hours; h2++) {
-      const intensity = Math.random();
-      const alpha = 0.05 + intensity * 0.9;
-      const r = Math.floor(intensity * 255);
-      const g = Math.floor(intensity * 184);
-      html += `<div class="hm-cell" style="background:rgba(${r},${g},0,${alpha.toFixed(2)});width:100%;height:14px" title="Day ${d+1}, Hour ${h2}:00"></div>`;
+
+  // Real data: 7 days x 4 blocks of 'low'|'med'|'high'
+  const hm = (intelMarketData && Array.isArray(intelMarketData.heatmap) && intelMarketData.heatmap.length === 7)
+    ? intelMarketData.heatmap
+    : null;
+
+  const levelStyle = lvl => {
+    if (lvl === 'high') return 'rgba(255,184,0,0.85)';
+    if (lvl === 'med')  return 'rgba(255,184,0,0.4)';
+    return 'rgba(255,255,255,0.06)';
+  };
+
+  if (hm) {
+    // 7 rows x 4 blocks
+    const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    const blockNames = ['Night','Morning','Afternoon','Evening'];
+    grid.style.gridTemplateColumns = 'repeat(4, 1fr)';
+    let html = '';
+    for (let d = 0; d < 7; d++) {
+      for (let b = 0; b < 4; b++) {
+        const lvl = (hm[d] && hm[d][b]) || 'low';
+        html += `<div class="hm-cell" style="background:${levelStyle(lvl)};width:100%;height:16px;border-radius:3px" title="${dayNames[d]} ${blockNames[b]}: ${lvl}"></div>`;
+      }
     }
+    grid.innerHTML = html;
+  } else {
+    // Fallback (no data saved yet) — neutral empty grid
+    grid.style.gridTemplateColumns = 'repeat(4, 1fr)';
+    let html = '';
+    for (let i = 0; i < 28; i++) {
+      html += `<div class="hm-cell" style="background:rgba(255,255,255,0.06);width:100%;height:16px;border-radius:3px"></div>`;
+    }
+    grid.innerHTML = html;
   }
-  grid.style.gridTemplateColumns = `repeat(${hours}, 1fr)`;
-  grid.innerHTML = html;
 }
 
 function intelRenderFlowBars() {
   const el = document.getElementById('intelFlowBars');
   if (!el) return;
-  const flows = [
-    { label:'Base',       val:'$287M', pct:87, color:'var(--cyan)' },
-    { label:'Monad',      val:'$195M', pct:72, color:'var(--purple)' },
-    { label:'Arbitrum',   val:'$142M', pct:58, color:'rgba(40,160,240,1)' },
-    { label:'zkSync',     val:'$98M',  pct:44, color:'var(--gold)' },
-    { label:'Solana',     val:'$78M',  pct:35, color:'#9945FF' },
-    { label:'Other',      val:'$47M',  pct:22, color:'var(--text-muted)' },
-  ];
-  el.innerHTML = flows.map(f => `
+  let flows = (intelMarketData && Array.isArray(intelMarketData.flow_rows) && intelMarketData.flow_rows.length)
+    ? intelMarketData.flow_rows
+    : [
+        { label:'Base',     val:'$287M', pct:87, color:'var(--cyan)' },
+        { label:'Monad',    val:'$195M', pct:72, color:'var(--purple)' },
+        { label:'Arbitrum', val:'$142M', pct:58, color:'rgba(40,160,240,1)' },
+        { label:'zkSync',   val:'$98M',  pct:44, color:'var(--gold)' },
+        { label:'Solana',   val:'$78M',  pct:35, color:'#9945FF' },
+        { label:'Other',    val:'$47M',  pct:22, color:'var(--text-muted)' },
+      ];
+  el.innerHTML = flows.map(f => {
+    const color = f.color || 'var(--cyan)';
+    const pct = Math.max(0, Math.min(100, Number(f.pct) || 0));
+    return `
     <div class="flow-row">
-      <div class="flow-label">${f.label}</div>
+      <div class="flow-label">${intelEscape(f.label)}</div>
       <div class="flow-bar-wrap">
-        <div class="flow-bar-fill" style="width:${f.pct}%;background:${f.color};box-shadow:0 0 6px ${f.color}66"></div>
+        <div class="flow-bar-fill" style="width:${pct}%;background:${color};box-shadow:0 0 6px ${color}66"></div>
       </div>
-      <div class="flow-val">${f.val}</div>
-    </div>`).join('');
+      <div class="flow-val">${intelEscape(f.val || '')}</div>
+    </div>`;
+  }).join('');
 }
 
 Object.assign(window, {
@@ -23339,6 +23427,9 @@ document.addEventListener('DOMContentLoaded', () => {
     intelRenderHeatmap();
     intelRenderFlowBars();
   }, 100);
+
+  // Fetch real Market Intelligence data, then re-render the 5 widgets with it
+  setTimeout(intelLoadMarket, 600);
 
   // Counter animations
   const ecoEl = document.getElementById('intelStatEco');
