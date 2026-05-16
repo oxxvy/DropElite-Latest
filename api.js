@@ -14,8 +14,8 @@
   // STEP 7b — PASTE YOUR SUPABASE KEYS HERE
   // Get these from Supabase → Settings → API
   // ═══════════════════════════════════════════════════════════════
-  const SUPABASE_URL = 'https://brfeekixpjbwqoooxcte.supabase.co';   // e.g. https://abcd1234.supabase.co
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJyZmVla2l4cGpid3Fvb294Y3RlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2OTIwNzUsImV4cCI6MjA5NDI2ODA3NX0.agL3ZVc4QvtPvI35kNDYdEhluBEn4lScRtNmsxgcajs'; // the long eyJhbGc... string
+  const SUPABASE_URL = '';   // e.g. https://abcd1234.supabase.co
+  const SUPABASE_ANON_KEY = ''; // the long eyJhbGc... string
   // ═══════════════════════════════════════════════════════════════
 
   // ─── Initialize Supabase client ───
@@ -992,6 +992,128 @@
         .from('intel_market')
         .update(fields)
         .eq('id', 1);
+      if (error) return { ok: false, error: error.message };
+      return { ok: true };
+    },
+
+    // ─── Ecosystem Intelligence Matrix ───
+    async getEcosystems() {
+      if (!_live()) return [];
+      const { data, error } = await supa
+        .from('intel_ecosystems')
+        .select('*')
+        .eq('active', true)
+        .order('display_order', { ascending: true });
+      if (error) { console.error('getEcosystems:', error); return []; }
+      return data || [];
+    },
+
+    async adminListEcosystems() {
+      if (!_live()) return [];
+      const { data, error } = await supa
+        .from('intel_ecosystems')
+        .select('*')
+        .order('display_order', { ascending: true });
+      if (error) { console.error('adminListEcosystems:', error); return []; }
+      return data || [];
+    },
+
+    async adminSaveEcosystem(eco) {
+      if (!_live()) return { ok: false, error: 'Supabase not configured' };
+      const fields = {
+        name:          eco.name,
+        subtitle:      eco.subtitle || null,
+        icon:          eco.icon || null,
+        icon_bg:       eco.icon_bg || null,
+        accent_color:  eco.accent_color || null,
+        growth:        eco.growth || null,
+        protocols:     (eco.protocols === '' || eco.protocols == null) ? null : parseInt(eco.protocols, 10),
+        reward_prob:   (eco.reward_prob === '' || eco.reward_prob == null) ? null : parseInt(eco.reward_prob, 10),
+        competition:   eco.competition || null,
+        activity:      (eco.activity === '' || eco.activity == null) ? null : parseInt(eco.activity, 10),
+        momentum:      (eco.momentum === '' || eco.momentum == null) ? null : parseInt(eco.momentum, 10),
+        active:        eco.active !== false,
+        display_order: eco.display_order == null ? 0 : parseInt(eco.display_order, 10)
+      };
+      if (eco.id) {
+        fields.updated_at = new Date().toISOString();
+        const { error } = await supa.from('intel_ecosystems').update(fields).eq('id', eco.id);
+        if (error) return { ok: false, error: error.message };
+        return { ok: true, id: eco.id };
+      } else {
+        const { data, error } = await supa.from('intel_ecosystems').insert(fields).select().single();
+        if (error) return { ok: false, error: error.message };
+        return { ok: true, id: data.id };
+      }
+    },
+
+    async adminDeleteEcosystem(id) {
+      if (!_live()) return { ok: false, error: 'Supabase not configured' };
+      const { error } = await supa.from('intel_ecosystems').delete().eq('id', id);
+      if (error) return { ok: false, error: error.message };
+      return { ok: true };
+    },
+
+    // ─── Alpha Recommendations ───
+    async getRecommendations() {
+      if (!_live()) return [];
+      const { data, error } = await supa
+        .from('intel_recommendations')
+        .select('*')
+        .eq('active', true)
+        .order('display_order', { ascending: true });
+      if (error) { console.error('getRecommendations:', error); return []; }
+      return data || [];
+    },
+
+    async adminListRecommendations() {
+      if (!_live()) return [];
+      const { data, error } = await supa
+        .from('intel_recommendations')
+        .select('*')
+        .order('display_order', { ascending: true });
+      if (error) { console.error('adminListRecommendations:', error); return []; }
+      return data || [];
+    },
+
+    async adminSaveRecommendation(rec) {
+      if (!_live()) return { ok: false, error: 'Supabase not configured' };
+
+      let tags = [];
+      if (Array.isArray(rec.tags)) {
+        tags = rec.tags
+          .map(t => {
+            if (typeof t === 'string') return { t: t, c: 'badge-cyan' };
+            if (t && t.t) return { t: String(t.t), c: String(t.c || 'badge-cyan') };
+            return null;
+          })
+          .filter(Boolean)
+          .slice(0, 3);
+      }
+
+      const fields = {
+        title:         rec.title,
+        description:   rec.description || null,
+        icon:          rec.icon || null,
+        tags:          tags,
+        active:        rec.active !== false,
+        display_order: rec.display_order == null ? 0 : parseInt(rec.display_order, 10)
+      };
+      if (rec.id) {
+        fields.updated_at = new Date().toISOString();
+        const { error } = await supa.from('intel_recommendations').update(fields).eq('id', rec.id);
+        if (error) return { ok: false, error: error.message };
+        return { ok: true, id: rec.id };
+      } else {
+        const { data, error } = await supa.from('intel_recommendations').insert(fields).select().single();
+        if (error) return { ok: false, error: error.message };
+        return { ok: true, id: data.id };
+      }
+    },
+
+    async adminDeleteRecommendation(id) {
+      if (!_live()) return { ok: false, error: 'Supabase not configured' };
+      const { error } = await supa.from('intel_recommendations').delete().eq('id', id);
       if (error) return { ok: false, error: error.message };
       return { ok: true };
     },
