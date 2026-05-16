@@ -948,6 +948,54 @@
       return { ok: true };
     },
 
+    // ─── Market Intelligence Dashboard (single-row settings) ───
+
+    // User + admin both read the same single record
+    async getMarketIntel() {
+      if (!_live()) return null;
+      const { data, error } = await supa
+        .from('intel_market')
+        .select('*')
+        .eq('id', 1)
+        .single();
+      if (error) { console.error('getMarketIntel:', error); return null; }
+      return data;
+    },
+
+    // Admin: update the single market record (id is always 1)
+    async adminSaveMarketIntel(m) {
+      if (!_live()) return { ok: false, error: 'Supabase not configured' };
+
+      const asArray = v => Array.isArray(v) ? v : [];
+
+      const fields = {
+        chain_activity_value: m.chain_activity_value || '+0%',
+        chain_activity_sub:   m.chain_activity_sub || null,
+        chain_activity_bars:  asArray(m.chain_activity_bars),
+        funding_value:        m.funding_value || '$0',
+        funding_sub:          m.funding_sub || null,
+        funding_spark:        asArray(m.funding_spark),
+        heatmap:              asArray(m.heatmap),
+        heatmap_peak:         m.heatmap_peak || null,
+        heatmap_low:          m.heatmap_low || null,
+        flow_value:           m.flow_value || '$0',
+        flow_sub:             m.flow_sub || null,
+        flow_rows:            asArray(m.flow_rows),
+        score_value:          m.score_value || '0',
+        score_sub:            m.score_sub || null,
+        score_bars:           asArray(m.score_bars),
+        score_rows:           asArray(m.score_rows),
+        updated_at:           new Date().toISOString()
+      };
+
+      const { error } = await supa
+        .from('intel_market')
+        .update(fields)
+        .eq('id', 1);
+      if (error) return { ok: false, error: error.message };
+      return { ok: true };
+    },
+
     // ───────────────────────────────────────────────────────────
     // EVERYTHING BELOW = STILL DEMO DATA (not wired to Supabase yet)
     // Converted tab-by-tab in future sessions.
