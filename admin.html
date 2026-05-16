@@ -551,6 +551,10 @@ tbody tr:last-child td { border-bottom: none; }
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 2L2 17h16L10 2z"/><line x1="10" y1="8" x2="10" y2="12"/><circle cx="10" cy="14.5" r="0.9" fill="currentColor"/></svg>
       Intel: Alerts
     </a>
+    <a class="nav-item" data-section="market" onclick="switchSection('market', this)">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 16V9M8 16V4M13 16v-5M18 16V7"/></svg>
+      Intel: Market
+    </a>
     <a class="nav-item" data-section="users" onclick="switchSection('users', this)">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10" cy="6" r="3"/><path d="M3 18c1-3 4-5 7-5s6 2 7 5"/></svg>
       Users
@@ -719,6 +723,98 @@ tbody tr:last-child td { border-bottom: none; }
             <tbody></tbody>
           </table>
         </div>
+      </div>
+    </section>
+
+    <section class="section" id="section-market">
+      <div class="page-head">
+        <div>
+          <div class="page-title">INTEL: MARKET DASHBOARD</div>
+          <div class="page-sub">Update the Market Intelligence Dashboard numbers shown on the Intel Hub</div>
+        </div>
+        <button class="btn btn-primary" onclick="saveMarket()">Save Dashboard</button>
+      </div>
+
+      <div style="background:rgba(255,184,0,0.06);border:1px solid rgba(255,184,0,0.18);border-radius:8px;padding:12px 14px;margin-bottom:18px;font-size:12px;color:var(--text-dim);line-height:1.55;">
+        💡 These are <strong style="color:var(--gold);">manually published research figures</strong>, not live API data. Update them periodically (e.g. weekly) based on your market research. Live blockchain-fed data is a future phase.
+      </div>
+
+      <!-- CHAIN ACTIVITY -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-head"><div class="card-title">CHAIN ACTIVITY (7D)</div></div>
+        <div style="padding:16px;">
+          <div style="display:grid;grid-template-columns:1fr 2fr;gap:12px;">
+            <div class="form-row"><label>Headline Value</label><input id="mChainValue" type="text" placeholder="+38.4%"></div>
+            <div class="form-row"><label>Sub-text</label><input id="mChainSub" type="text" placeholder="Cross-chain momentum surge"></div>
+          </div>
+          <div class="form-row">
+            <label>Mini Bar Chart — 12 numbers, comma-separated (low→high trend)</label>
+            <input id="mChainBars" type="text" placeholder="32,45,38,52,48,67,61,74,68,82,79,94">
+          </div>
+        </div>
+      </div>
+
+      <!-- PROTOCOL FUNDING -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-head"><div class="card-title">PROTOCOL FUNDING (30D)</div></div>
+        <div style="padding:16px;">
+          <div style="display:grid;grid-template-columns:1fr 2fr;gap:12px;">
+            <div class="form-row"><label>Headline Value</label><input id="mFundingValue" type="text" placeholder="$2.8B"></div>
+            <div class="form-row"><label>Sub-text</label><input id="mFundingSub" type="text" placeholder="42 rounds tracked"></div>
+          </div>
+          <div class="form-row">
+            <label>Sparkline — 12 numbers, comma-separated</label>
+            <input id="mFundingSpark" type="text" placeholder="1.2,1.4,1.1,1.8,1.6,2.1,1.9,2.4,2.2,2.5,2.7,2.8">
+          </div>
+        </div>
+      </div>
+
+      <!-- HEATMAP -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-head"><div class="card-title">FARMING ACTIVITY HEATMAP</div></div>
+        <div style="padding:16px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+            <div class="form-row"><label>Peak Window</label><input id="mHeatPeak" type="text" placeholder="Tue 14:00 UTC"></div>
+            <div class="form-row"><label>Low Window</label><input id="mHeatLow" type="text" placeholder="Sun 06:00 UTC"></div>
+          </div>
+          <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1.5px;color:var(--text-dim);margin-bottom:8px;">ACTIVITY GRID — set each block's intensity</div>
+          <div id="mHeatmapGrid" style="display:flex;flex-direction:column;gap:6px;"></div>
+        </div>
+      </div>
+
+      <!-- SMART MONEY FLOW -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-head"><div class="card-title">SMART MONEY FLOW</div></div>
+        <div style="padding:16px;">
+          <div style="display:grid;grid-template-columns:1fr 2fr;gap:12px;">
+            <div class="form-row"><label>Headline Value</label><input id="mFlowValue" type="text" placeholder="$847M"></div>
+            <div class="form-row"><label>Sub-text</label><input id="mFlowSub" type="text" placeholder="24h net inflow"></div>
+          </div>
+          <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1.5px;color:var(--text-dim);margin:6px 0 8px;">6 FLOW ROWS — chain name, $ value, bar % (0–100), color</div>
+          <div id="mFlowRows" style="display:flex;flex-direction:column;gap:8px;"></div>
+        </div>
+      </div>
+
+      <!-- OPPORTUNITY SCORES -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-head"><div class="card-title">TOP OPPORTUNITY SCORES</div></div>
+        <div style="padding:16px;">
+          <div style="display:grid;grid-template-columns:1fr 2fr;gap:12px;">
+            <div class="form-row"><label>Headline Value</label><input id="mScoreValue" type="text" placeholder="94.2"></div>
+            <div class="form-row"><label>Sub-text</label><input id="mScoreSub" type="text" placeholder="Your intel score"></div>
+          </div>
+          <div class="form-row">
+            <label>Mini Bar Chart — 12 numbers, comma-separated</label>
+            <input id="mScoreBars" type="text" placeholder="72,68,78,82,75,88,85,92,89,94,91,94">
+          </div>
+          <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1.5px;color:var(--text-dim);margin:6px 0 8px;">6 SCORE ROWS — ecosystem name + score (shown as a list)</div>
+          <div id="mScoreRows" style="display:flex;flex-direction:column;gap:8px;"></div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px;padding-bottom:30px;">
+        <span id="mSavedNote" style="align-self:center;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text-dim);"></span>
+        <button class="btn btn-primary" onclick="saveMarket()">Save Dashboard</button>
       </div>
     </section>
 
@@ -1408,6 +1504,7 @@ function switchSection(name, el) {
   if (name === 'opportunities') renderOpps();
   if (name === 'signals') renderSignals();
   if (name === 'alerts') renderAlerts();
+  if (name === 'market') renderMarket();
   if (name === 'users') renderUsers();
   if (name === 'payments') renderPayments();
   if (name === 'content') renderContent();
@@ -2237,6 +2334,174 @@ async function deleteAlert(id) {
   if (!result.ok) { toast('Delete failed: ' + (result.error || '')); return; }
   toast('Alert deleted');
   renderAlerts();
+}
+
+/* ═══════════════════════════════════════════
+   INTEL HUB · MARKET DASHBOARD (single record)
+═══════════════════════════════════════════ */
+const HEAT_DAYS   = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const HEAT_BLOCKS = ['Night','Morning','Afternoon','Evening'];
+const HEAT_LEVELS = ['low','med','high'];
+let marketHeatmap = [];   // 7 x 4 of 'low'|'med'|'high'
+
+function _heatColor(level) {
+  if (level === 'high') return 'background:rgba(255,184,0,0.85);color:#000;';
+  if (level === 'med')  return 'background:rgba(255,184,0,0.4);color:#000;';
+  return 'background:rgba(255,255,255,0.06);color:var(--text-dim);';
+}
+
+function renderHeatmapEditor() {
+  const wrap = document.getElementById('mHeatmapGrid');
+  if (!wrap) return;
+  wrap.innerHTML = HEAT_DAYS.map((day, d) => {
+    const blocks = HEAT_BLOCKS.map((blk, b) => {
+      const level = (marketHeatmap[d] && marketHeatmap[d][b]) || 'low';
+      return `<button type="button" onclick="cycleHeat(${d},${b})" style="flex:1;padding:8px 4px;border:1px solid rgba(255,255,255,0.1);border-radius:5px;cursor:pointer;font-size:10px;font-family:'Share Tech Mono',monospace;${_heatColor(level)}">${blk}<br><strong>${level.toUpperCase()}</strong></button>`;
+    }).join('');
+    return `
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:38px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text-dim);">${day}</div>
+        <div style="flex:1;display:flex;gap:5px;">${blocks}</div>
+      </div>`;
+  }).join('');
+}
+
+function cycleHeat(d, b) {
+  if (!marketHeatmap[d]) marketHeatmap[d] = ['low','low','low','low'];
+  const cur = marketHeatmap[d][b] || 'low';
+  const next = HEAT_LEVELS[(HEAT_LEVELS.indexOf(cur) + 1) % 3];
+  marketHeatmap[d][b] = next;
+  renderHeatmapEditor();
+}
+
+function renderFlowRowsEditor(rows) {
+  const wrap = document.getElementById('mFlowRows');
+  if (!wrap) return;
+  const colors = [
+    { v: 'var(--cyan)',           n: 'Cyan' },
+    { v: 'var(--purple)',         n: 'Purple' },
+    { v: 'rgba(40,160,240,1)',    n: 'Blue' },
+    { v: 'var(--gold)',           n: 'Gold' },
+    { v: '#9945FF',               n: 'Violet' },
+    { v: 'var(--text-muted)',     n: 'Grey' }
+  ];
+  wrap.innerHTML = Array.from({ length: 6 }, (_, i) => {
+    const r = rows[i] || {};
+    const opts = colors.map(c => `<option value="${c.v}" ${r.color === c.v ? 'selected' : ''}>${c.n}</option>`).join('');
+    return `
+      <div style="display:grid;grid-template-columns:1.4fr 1fr 0.8fr 1fr;gap:6px;">
+        <input id="mFlow${i}Label" type="text" placeholder="Chain ${i+1}" value="${escapeAttr(r.label || '')}">
+        <input id="mFlow${i}Val"   type="text" placeholder="$0M"        value="${escapeAttr(r.val || '')}">
+        <input id="mFlow${i}Pct"   type="number" min="0" max="100" placeholder="%" value="${r.pct != null ? r.pct : ''}">
+        <select id="mFlow${i}Color">${opts}</select>
+      </div>`;
+  }).join('');
+}
+
+function renderScoreRowsEditor(rows) {
+  const wrap = document.getElementById('mScoreRows');
+  if (!wrap) return;
+  wrap.innerHTML = Array.from({ length: 6 }, (_, i) => {
+    const r = rows[i] || {};
+    return `
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:6px;">
+        <input id="mScore${i}Label" type="text" placeholder="Ecosystem ${i+1}" value="${escapeAttr(r.label || '')}">
+        <input id="mScore${i}Score" type="text" placeholder="Score (e.g. 91)" value="${escapeAttr(r.score != null ? r.score : '')}">
+      </div>`;
+  }).join('');
+}
+
+function escapeAttr(s) {
+  return String(s == null ? '' : s).replace(/"/g, '&quot;');
+}
+
+async function renderMarket() {
+  const m = await API.getMarketIntel();
+  const data = m || {};
+
+  document.getElementById('mChainValue').value   = data.chain_activity_value || '';
+  document.getElementById('mChainSub').value     = data.chain_activity_sub || '';
+  document.getElementById('mChainBars').value    = (data.chain_activity_bars || []).join(',');
+  document.getElementById('mFundingValue').value = data.funding_value || '';
+  document.getElementById('mFundingSub').value   = data.funding_sub || '';
+  document.getElementById('mFundingSpark').value = (data.funding_spark || []).join(',');
+  document.getElementById('mHeatPeak').value     = data.heatmap_peak || '';
+  document.getElementById('mHeatLow').value      = data.heatmap_low || '';
+  document.getElementById('mFlowValue').value    = data.flow_value || '';
+  document.getElementById('mFlowSub').value      = data.flow_sub || '';
+  document.getElementById('mScoreValue').value   = data.score_value || '';
+  document.getElementById('mScoreSub').value     = data.score_sub || '';
+  document.getElementById('mScoreBars').value    = (data.score_bars || []).join(',');
+
+  // Heatmap — ensure 7x4 grid exists
+  marketHeatmap = Array.isArray(data.heatmap) && data.heatmap.length === 7
+    ? data.heatmap.map(day => Array.isArray(day) && day.length === 4 ? day.slice() : ['low','low','low','low'])
+    : Array.from({ length: 7 }, () => ['low','low','low','low']);
+  renderHeatmapEditor();
+
+  renderFlowRowsEditor(Array.isArray(data.flow_rows) ? data.flow_rows : []);
+  renderScoreRowsEditor(Array.isArray(data.score_rows) ? data.score_rows : []);
+
+  const note = document.getElementById('mSavedNote');
+  if (note) note.textContent = data.updated_at ? 'Last saved: ' + new Date(data.updated_at).toLocaleString() : '';
+}
+
+function _parseNums(str) {
+  return String(str || '')
+    .split(',')
+    .map(s => s.trim())
+    .filter(s => s !== '')
+    .map(Number)
+    .filter(n => !isNaN(n));
+}
+
+async function saveMarket() {
+  const flowRows = [];
+  for (let i = 0; i < 6; i++) {
+    const label = document.getElementById('mFlow' + i + 'Label').value.trim();
+    if (!label) continue;
+    flowRows.push({
+      label: label,
+      val:   document.getElementById('mFlow' + i + 'Val').value.trim(),
+      pct:   Math.max(0, Math.min(100, parseInt(document.getElementById('mFlow' + i + 'Pct').value, 10) || 0)),
+      color: document.getElementById('mFlow' + i + 'Color').value
+    });
+  }
+
+  const scoreRows = [];
+  for (let i = 0; i < 6; i++) {
+    const label = document.getElementById('mScore' + i + 'Label').value.trim();
+    if (!label) continue;
+    scoreRows.push({
+      label: label,
+      score: document.getElementById('mScore' + i + 'Score').value.trim()
+    });
+  }
+
+  const payload = {
+    chain_activity_value: document.getElementById('mChainValue').value.trim(),
+    chain_activity_sub:   document.getElementById('mChainSub').value.trim(),
+    chain_activity_bars:  _parseNums(document.getElementById('mChainBars').value),
+    funding_value:        document.getElementById('mFundingValue').value.trim(),
+    funding_sub:          document.getElementById('mFundingSub').value.trim(),
+    funding_spark:        _parseNums(document.getElementById('mFundingSpark').value),
+    heatmap:              marketHeatmap,
+    heatmap_peak:         document.getElementById('mHeatPeak').value.trim(),
+    heatmap_low:          document.getElementById('mHeatLow').value.trim(),
+    flow_value:           document.getElementById('mFlowValue').value.trim(),
+    flow_sub:             document.getElementById('mFlowSub').value.trim(),
+    flow_rows:            flowRows,
+    score_value:          document.getElementById('mScoreValue').value.trim(),
+    score_sub:            document.getElementById('mScoreSub').value.trim(),
+    score_bars:           _parseNums(document.getElementById('mScoreBars').value),
+    score_rows:           scoreRows
+  };
+
+  const result = await API.adminSaveMarketIntel(payload);
+  if (!result.ok) { toast('Save failed: ' + (result.error || '')); return; }
+  toast('Market dashboard saved');
+  const note = document.getElementById('mSavedNote');
+  if (note) note.textContent = 'Last saved: ' + new Date().toLocaleString();
 }
 
 async function renderDashboard() {
