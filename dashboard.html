@@ -17437,7 +17437,6 @@ canvas.mini-chart { width: 100% !important; }
             <div style="display:flex;gap:10px;align-items:center">
               <span class="badge badge-dim">Updated 2 min ago</span>
               <button class="btn btn-ghost btn-sm">Sort by Score ↓</button>
-              <button class="btn btn-cyan btn-sm">+ Add to Tracker</button>
             </div>
           </div>
           <div class="alpha-grid" id="intelAlphaGrid"></div>
@@ -17455,7 +17454,7 @@ canvas.mini-chart { width: 100% !important; }
                 <div class="section-label"><span class="dot-pulse dot-cyan"></span> ANALYTICS PREVIEW</div>
                 <div class="section-title">Market Intelligence Dashboard</div>
               </div>
-              <button class="btn btn-ghost btn-sm">Full Analytics →</button>
+              <button class="btn btn-ghost btn-sm" onclick="intelHandleAction('analytics')">Full Analytics →</button>
             </div>
 
             <div class="analytics-grid">
@@ -23337,7 +23336,7 @@ function intelHandleAction(type) {
     missions: 'Opening Mission Control…',
     farming:  'Loading Farming Dashboard…',
     route:    'Generating Optimal Route…',
-    analytics:'Opening Full Analytics…',
+    analytics:'Full Analytics page is coming in a future update.',
     farm:     'Starting Farming Protocol…',
     tracker:  'Adding to Portfolio Tracker…',
     follow:   'Following Ecosystem…',
