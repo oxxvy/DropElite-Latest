@@ -90,6 +90,16 @@
         options: { data: { name: name || email.split('@')[0] } }
       });
       if (error) return { ok: false, error: error.message };
+      // Mirror email into profiles so admins can see all signups
+      if (data.user) {
+        await supa.from('profiles').upsert({
+          id:     data.user.id,
+          email:  email,
+          name:   name || email.split('@')[0],
+          plan:   'Free',
+          status: 'active'
+        }, { onConflict: 'id' });
+      }
       return { ok: true, user: data.user };
     },
 
@@ -1456,11 +1466,20 @@
     },
     async getReports() { await _delay(120); return _readStore('reports', []); },
 
+    // ── Subscription: read plan from profiles ──
     async getSubscription() {
-      return _readStore('subscription', {
-        plan: 'Pro', status: 'active', amount: 999, currency: 'INR',
-        nextBilling: '2026-06-01', provider: 'Razorpay'
-      });
+      if (!_live()) return { plan: 'Free', status: 'active', amount: 0, currency: 'INR', provider: 'Razorpay' };
+      const profile = await this.getProfile();
+      if (!profile) return { plan: 'Free', status: 'active', amount: 0, currency: 'INR', provider: 'Razorpay' };
+      const plan = profile.plan || 'Free';
+      return {
+        plan:     plan,
+        status:   profile.status || 'active',
+        amount:   plan === 'Pro Annual' ? 1999 : plan === 'Pro' ? 999 : 0,
+        currency: 'INR',
+        nextBilling: null,
+        provider: 'Razorpay'
+      };
     },
     async createCheckoutSession(plan, provider) {
       await _delay(400);
@@ -1471,62 +1490,197 @@
       };
     },
 
+    // ── Admin: Users — reads from profiles table ──
     async adminListUsers() {
-      return _readStore('admin_users', [
-        { id: 1, name: 'Rejaul K',     email: 'rejaul@dropelite.com', plan: 'Pro',  status: 'active',   joined: '2025-01-15' },
-        { id: 2, name: 'Asrina K',     email: 'asrina@example.com',   plan: 'Free', status: 'active',   joined: '2025-04-22' },
-        { id: 3, name: 'Test User',    email: 'test@example.com',     plan: 'Pro',  status: 'inactive', joined: '2025-03-10' },
-        { id: 4, name: 'Demo Account', email: 'demo@dropelite.com',   plan: 'Free', status: 'active',   joined: '2025-02-01' }
-      ]);
+      if (!_live()) return [];
+      const { data, error } = await supa
+        .from('profiles')
+        .select('id, name, email, role, plan, status, created_at')
+        .order('created_at', { ascending: false });
+      if (error) { console.error('adminListUsers:', error); return []; }
+      return (data || []).map(u => ({
+        id:     u.id,
+        name:   u.name   || '—',
+        email:  u.email  || '—',
+        plan:   u.plan   || 'Free',
+        status: u.status || 'active',
+        role:   u.role   || 'user',
+        joined: u.created_at ? u.created_at.slice(0, 10) : '—'
+      }));
     },
-    async adminListPayments() {
-      return _readStore('admin_payments', [
-        { id: 'pay_001', user: 'rejaul@dropelite.com', amount: 1999, currency: 'INR', plan: 'Pro Annual',  provider: 'Razorpay', status: 'success', date: '2025-04-15' },
-        { id: 'pay_002', user: 'asrina@example.com',   amount: 999,  currency: 'INR', plan: 'Pro Monthly', provider: 'Razorpay', status: 'success', date: '2025-04-20' },
-        { id: 'pay_003', user: 'test@example.com',     amount: 1999, currency: 'INR', plan: 'Pro Annual',  provider: 'Stripe',   status: 'failed',  date: '2025-04-22' },
-        { id: 'pay_004', user: 'demo@dropelite.com',   amount: 999,  currency: 'INR', plan: 'Pro Monthly', provider: 'Razorpay', status: 'success', date: '2025-05-01' }
-      ]);
-    },
-    async adminListContent() {
-      return _readStore('admin_content', [
-        { id: 1, type: 'announcement', title: 'New airdrop tracker live!', published: true,  date: '2025-05-10' },
-        { id: 2, type: 'guide',        title: 'LayerZero farming guide',   published: true,  date: '2025-04-28' },
-        { id: 3, type: 'announcement', title: 'Pro plan price update',     published: false, date: '2025-05-12' }
-      ]);
-    },
+
     async adminSaveUser(user) {
-      const users = await this.adminListUsers();
-      const idx = users.findIndex(u => u.id === user.id);
-      if (idx >= 0) users[idx] = user; else { user.id = Date.now(); users.push(user); }
-      _writeStore('admin_users', users);
-      return user;
+      if (!_live()) return { ok: false, error: 'Supabase not configured' };
+      if (!user.id) return { ok: false, error: 'User ID required' };
+      const { error } = await supa.from('profiles').update({
+        name:       user.name,
+        plan:       user.plan,
+        status:     user.status,
+        updated_at: new Date().toISOString()
+      }).eq('id', user.id);
+      if (error) return { ok: false, error: error.message };
+      return { ok: true };
     },
+
     async adminDeleteUser(id) {
-      _writeStore('admin_users', (await this.adminListUsers()).filter(u => u.id !== id));
+      if (!_live()) return { ok: true };
+      // Soft-delete: mark status 'deleted' (anon key cannot remove auth.users)
+      const { error } = await supa.from('profiles').update({
+        status:     'deleted',
+        updated_at: new Date().toISOString()
+      }).eq('id', id);
+      if (error) return { ok: false, error: error.message };
       return { ok: true };
     },
+
+    // ── Admin: Payments — reads from payments table ──
+    async adminListPayments() {
+      if (!_live()) return [];
+      const { data, error } = await supa
+        .from('payments')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (error) { console.error('adminListPayments:', error); return []; }
+      return (data || []).map(p => ({
+        id:       p.id,
+        user:     p.user_email || '—',
+        plan:     p.plan       || '—',
+        amount:   p.amount     || 0,
+        currency: p.currency   || 'INR',
+        provider: p.provider   || '—',
+        status:   p.status     || 'success',
+        date:     p.created_at ? p.created_at.slice(0, 10) : '—'
+      }));
+    },
+
+    // ── Admin: Content — reads from content table ──
+    async adminListContent() {
+      if (!_live()) return [];
+      const { data, error } = await supa
+        .from('content')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (error) { console.error('adminListContent:', error); return []; }
+      return (data || []).map(c => ({
+        id:        c.id,
+        title:     c.title,
+        type:      c.type,
+        published: c.published,
+        date:      c.created_at ? c.created_at.slice(0, 10) : '—'
+      }));
+    },
+
     async adminSaveContent(content) {
-      const list = await this.adminListContent();
-      const idx = list.findIndex(c => c.id === content.id);
-      if (idx >= 0) list[idx] = content; else { content.id = Date.now(); list.push(content); }
-      _writeStore('admin_content', list);
-      return content;
-    },
-    async adminDeleteContent(id) {
-      _writeStore('admin_content', (await this.adminListContent()).filter(c => c.id !== id));
+      if (!_live()) return { ok: false, error: 'Supabase not configured' };
+      if (content.id) {
+        const { error } = await supa.from('content').update({
+          title:      content.title,
+          type:       content.type,
+          published:  content.published,
+          updated_at: new Date().toISOString()
+        }).eq('id', content.id);
+        if (error) return { ok: false, error: error.message };
+      } else {
+        const { error } = await supa.from('content').insert({
+          title:     content.title,
+          type:      content.type,
+          published: content.published || false
+        });
+        if (error) return { ok: false, error: error.message };
+      }
       return { ok: true };
     },
+
+    async adminDeleteContent(id) {
+      if (!_live()) return { ok: true };
+      const { error } = await supa.from('content').delete().eq('id', id);
+      if (error) return { ok: false, error: error.message };
+      return { ok: true };
+    },
+
+    // ── Admin: Stats — derived from real profiles + payments ──
     async adminGetStats() {
-      const users    = await this.adminListUsers();
-      const payments = await this.adminListPayments();
-      return {
-        totalUsers:     users.length,
-        activeUsers:    users.filter(u => u.status === 'active').length,
-        paidUsers:      users.filter(u => u.plan !== 'Free').length,
-        totalRevenue:   payments.filter(p => p.status === 'success').reduce((s, p) => s + p.amount, 0),
-        failedPayments: payments.filter(p => p.status === 'failed').length,
-        currency: 'INR'
-      };
+      if (!_live()) return { totalUsers: 0, activeUsers: 0, paidUsers: 0, totalRevenue: 0, failedPayments: 0, currency: 'INR' };
+      try {
+        const [ud, pd] = await Promise.all([
+          supa.from('profiles').select('plan, status'),
+          supa.from('payments').select('amount, status')
+        ]);
+        const users    = ud.data || [];
+        const payments = pd.data || [];
+        return {
+          totalUsers:     users.length,
+          activeUsers:    users.filter(u => u.status === 'active').length,
+          paidUsers:      users.filter(u => u.plan && u.plan !== 'Free').length,
+          totalRevenue:   payments.filter(p => p.status === 'success').reduce((s, p) => s + (p.amount || 0), 0),
+          failedPayments: payments.filter(p => p.status === 'failed').length,
+          currency: 'INR'
+        };
+      } catch (e) {
+        console.error('adminGetStats:', e);
+        return { totalUsers: 0, activeUsers: 0, paidUsers: 0, totalRevenue: 0, failedPayments: 0, currency: 'INR' };
+      }
+    },
+
+    // ── Admin: Settings — reads/writes settings table (id=1) ──
+    async adminGetSettings() {
+      if (!_live()) return { price_monthly: 999, price_annual: 1999, razorpay_key: '', stripe_key: '' };
+      const { data, error } = await supa.from('settings').select('*').eq('id', 1).single();
+      if (error) { console.error('adminGetSettings:', error); return { price_monthly: 999, price_annual: 1999 }; }
+      return data || {};
+    },
+
+    async adminSaveSettings(patch) {
+      if (!_live()) return { ok: false, error: 'Supabase not configured' };
+      const { error } = await supa.from('settings').update(
+        Object.assign({}, patch, { updated_at: new Date().toISOString() })
+      ).eq('id', 1);
+      if (error) return { ok: false, error: error.message };
+      return { ok: true };
+    },
+
+    // ── Analytics: aggregate real user data for the Analytics tab KPIs ──
+    async getAnalyticsStats() {
+      if (!_live()) return { totalRewardsUsd: 0, roiPct: 0, efficiencyScore: 0, totalInteractions: 0, ecosystemsCount: 0, successRate: 0 };
+      try {
+        const [rewards, airdrops, missions, wallets] = await Promise.all([
+          this.getRewards(),
+          this.getAirdrops(),
+          this.getMissions(),
+          this.getWallets()
+        ]);
+
+        const totalRewardsUsd = rewards.reduce((s, r) => {
+          const v = Number(r.usd_value != null ? r.usd_value : (r.reward_usd || 0));
+          return s + (isNaN(v) ? 0 : v);
+        }, 0);
+
+        const chains = new Set(airdrops.map(a => a.chain).filter(Boolean));
+        const ecosystemsCount = Math.max(chains.size, wallets.length);
+
+        const totalMissions = missions.length;
+        const doneMissions  = missions.filter(m => m.done).length;
+        const successRate   = totalMissions > 0 ? Math.round((doneMissions / totalMissions) * 100) : 0;
+
+        const avgElig = airdrops.length > 0
+          ? airdrops.reduce((s, a) => s + (a.eligibility || a.progress || 0), 0) / airdrops.length
+          : 0;
+        const efficiencyScore = Math.min(99, Math.round((successRate * 0.5) + (avgElig * 0.5)));
+
+        const totalInteractions = rewards.length + airdrops.length + wallets.length + doneMissions;
+
+        return {
+          totalRewardsUsd:   Math.round(totalRewardsUsd),
+          roiPct:            successRate,
+          efficiencyScore:   efficiencyScore,
+          totalInteractions: totalInteractions,
+          ecosystemsCount:   ecosystemsCount,
+          successRate:       successRate
+        };
+      } catch (e) {
+        console.error('getAnalyticsStats:', e);
+        return { totalRewardsUsd: 0, roiPct: 0, efficiencyScore: 0, totalInteractions: 0, ecosystemsCount: 0, successRate: 0 };
+      }
     }
   };
 
