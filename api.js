@@ -154,6 +154,11 @@
         description: m.description,
         xp: m.xp,
         project: m.project,
+        difficulty:    m.difficulty   || 'easy',
+        verified:      m.verified !== false,
+        time_minutes:  m.time_minutes != null ? m.time_minutes : 5,
+        est_value_usd: m.est_value_usd != null ? Number(m.est_value_usd) : 0,
+        display_order: m.display_order != null ? m.display_order : 0,
         done: doneIds.has(m.id)
       }));
     },
@@ -251,6 +256,155 @@
     },
 
     // ───────────────────────────────────────────────────────────
+    // OVERVIEW HERO STATS  ·  LIVE (Supabase)
+    // Gathers every number the Overview "ELITE FARMING COMMAND"
+    // section needs, in ONE call. All real data — no fake values.
+    // ───────────────────────────────────────────────────────────
+    async getOverviewStats() {
+      // Empty/safe shape so the UI never crashes if something fails
+      const empty = {
+        name: 'Farmer',
+        missionsDone: 0, missionsTotal: 0,
+        xpToday: 0, totalXp: 0,
+        currentStreak: 0, longestStreak: 0,
+        activeAirdrops: 0, highPriorityAirdrops: 0,
+        walletsActive: 0,
+        estRewardsUsd: 0, claimingSoon: 0,
+        activeDrops: 0
+      };
+      if (!_live()) return empty;
+
+      const user = await this.getCurrentUser();
+      if (!user) return empty;
+
+      try {
+        // Run all reads in parallel — faster on mobile
+        const [missions, progress, airdrops, wallets, rewards, profile] =
+          await Promise.all([
+            this.getMissions(),
+            this.getProgress(),
+            this.getAirdrops(),
+            this.getWallets(),
+            this.getRewards(),
+            this.getProfile()
+          ]);
+
+        // ── Missions: today's progress ──
+        const missionsTotal = missions.length;
+        const doneList      = missions.filter(m => m.done);
+        const missionsDone  = doneList.length;
+        const xpToday       = doneList.reduce((s, m) => s + (m.xp || 0), 0);
+
+        // ── Airdrops: active opportunities ──
+        // "active" = anything not finished/dead. High priority via category/status text.
+        const activeAirdrops = airdrops.filter(a => {
+          const st = String(a.status || '').toLowerCase();
+          return st !== 'completed' && st !== 'ended' && st !== 'inactive';
+        });
+        const highPriorityAirdrops = activeAirdrops.filter(a => {
+          const tag = (String(a.category || '') + ' ' + String(a.status || '')).toLowerCase();
+          return tag.indexOf('high') !== -1 || tag.indexOf('priority') !== -1 || tag.indexOf('urgent') !== -1;
+        }).length;
+
+        // ── Wallets: count (real). "inactive" detection needs Phase 4 APIs. ──
+        const walletsActive = wallets.length;
+
+        // ── Rewards: estimated future value + claiming soon ──
+        // Sum usd_value of rewards still in play (not expired, not claimed).
+        const liveRewards = rewards.filter(r => {
+          const st = String(r.status || '').toLowerCase();
+          return st !== 'claimed' && st !== 'expired';
+        });
+        const estRewardsUsd = liveRewards.reduce((s, r) => {
+          const v = Number(r.usd_value);
+          return s + (isNaN(v) ? 0 : v);
+        }, 0);
+        // "claiming soon" = pending/eligible with a deadline inside 72h
+        const now = Date.now();
+        const claimingSoon = rewards.filter(r => {
+          const st = String(r.status || '').toLowerCase();
+          if (st !== 'pending' && st !== 'eligible') return false;
+          if (!r.deadline) return false;
+          const dl = new Date(r.deadline).getTime();
+          return !isNaN(dl) && dl > now && (dl - now) <= 72 * 3600 * 1000;
+        }).length;
+
+        return {
+          name: (profile && profile.name) ? profile.name
+               : (user.email ? user.email.split('@')[0] : 'Farmer'),
+          missionsDone:         missionsDone,
+          missionsTotal:        missionsTotal,
+          xpToday:              xpToday,
+          totalXp:              progress.total_xp || 0,
+          currentStreak:        progress.current_streak || 0,
+          longestStreak:        progress.longest_streak || 0,
+          activeAirdrops:       activeAirdrops.length,
+          highPriorityAirdrops: highPriorityAirdrops,
+          walletsActive:        walletsActive,
+          estRewardsUsd:        Math.round(estRewardsUsd),
+          claimingSoon:         claimingSoon,
+          activeDrops:          activeAirdrops.length
+        };
+      } catch (e) {
+        console.error('getOverviewStats:', e);
+        return empty;
+      }
+    },
+
+    // Real claim-deadline alerts for the Overview "Alerts" panel.
+    // Pulls rewards that are pending/eligible with a deadline still ahead.
+    // (Gas / wallet-inactive / snapshot alerts need Phase 4 blockchain APIs.)
+    async getClaimAlerts() {
+      if (!_live()) return [];
+      try {
+        const rewards = await this.getRewards();
+        const now = Date.now();
+        return rewards
+          .filter(r => {
+            const st = String(r.status || '').toLowerCase();
+            if (st !== 'pending' && st !== 'eligible') return false;
+            if (!r.deadline) return false;
+            const dl = new Date(r.deadline).getTime();
+            return !isNaN(dl) && dl > now;
+          })
+          .map(r => ({
+            project:  r.project || 'Reward',
+            usdValue: Number(r.usd_value) || 0,
+            deadline: r.deadline,
+            msLeft:   new Date(r.deadline).getTime() - now
+          }))
+          .sort((a, b) => a.msLeft - b.msLeft)
+          .slice(0, 5);
+      } catch (e) {
+        console.error('getClaimAlerts:', e);
+        return [];
+      }
+    },
+
+    // Count of missions this user completed in the last 7 days.
+    // Powers the Overview "Weekly Completion" stat card.
+    async getWeeklyCompletions() {
+      if (!_live()) return 0;
+      try {
+        const user = await this.getCurrentUser();
+        if (!user) return 0;
+        // 7 days ago, as YYYY-MM-DD
+        const since = new Date(Date.now() - 7 * 86400000)
+          .toISOString().slice(0, 10);
+        const { count, error } = await supa
+          .from('mission_completions')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', user.id)
+          .gte('completed_on', since);
+        if (error) { console.error('getWeeklyCompletions:', error); return 0; }
+        return count || 0;
+      } catch (e) {
+        console.error('getWeeklyCompletions:', e);
+        return 0;
+      }
+    },
+
+    // ───────────────────────────────────────────────────────────
     // ADMIN — MISSIONS MANAGEMENT  ·  LIVE (Supabase)
     // ───────────────────────────────────────────────────────────
     async adminListMissions() {
@@ -273,7 +427,11 @@
             xp: mission.xp,
             project: mission.project,
             active: mission.active,
-            display_order: mission.display_order
+            display_order: mission.display_order,
+            difficulty:    mission.difficulty || 'easy',
+            verified:      mission.verified !== false,
+            time_minutes:  mission.time_minutes != null ? mission.time_minutes : 5,
+            est_value_usd: mission.est_value_usd != null ? mission.est_value_usd : 0
           })
           .eq('id', mission.id);
         if (error) return { ok: false, error: error.message };
@@ -286,7 +444,11 @@
             xp: mission.xp,
             project: mission.project,
             active: mission.active !== false,
-            display_order: mission.display_order || 0
+            display_order: mission.display_order || 0,
+            difficulty:    mission.difficulty || 'easy',
+            verified:      mission.verified !== false,
+            time_minutes:  mission.time_minutes != null ? mission.time_minutes : 5,
+            est_value_usd: mission.est_value_usd != null ? mission.est_value_usd : 0
           });
         if (error) return { ok: false, error: error.message };
       }
