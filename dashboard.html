@@ -138,6 +138,65 @@ body {
 .topbar-right {
   display: flex; align-items: center; gap: 12px;
 }
+.topbar-status {
+  display: flex; align-items: center; gap: 6px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px; color: var(--text-dim);
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+/* ── Live crypto price ticker ── */
+.crypto-ticker {
+  background: rgba(0,0,0,0.4);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  position: relative;
+}
+.crypto-ticker::before,
+.crypto-ticker::after {
+  content: '';
+  position: absolute; top: 0; bottom: 0;
+  width: 48px; z-index: 2; pointer-events: none;
+}
+.crypto-ticker::before {
+  left: 0;
+  background: linear-gradient(90deg, rgba(8,13,26,0.95), transparent);
+}
+.crypto-ticker::after {
+  right: 0;
+  background: linear-gradient(270deg, rgba(8,13,26,0.95), transparent);
+}
+.ticker-track {
+  display: flex;
+  gap: 36px;
+  padding: 9px 0;
+  width: max-content;
+  animation: ticker-scroll 60s linear infinite;
+}
+.crypto-ticker:hover .ticker-track { animation-play-state: paused; }
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.ticker-item {
+  display: flex; align-items: center; gap: 8px;
+  white-space: nowrap;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+}
+.ticker-sym { color: var(--text); font-weight: 700; letter-spacing: 0.5px; }
+.ticker-price { color: var(--text-dim); }
+.ticker-chg { font-size: 11px; font-weight: 700; }
+.ticker-chg.up   { color: var(--green); }
+.ticker-chg.down { color: var(--red); }
+.ticker-loading {
+  padding: 2px 24px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px; color: var(--text-dim);
+}
 .tb-btn {
   background: var(--surface);
   border: 1px solid var(--border2);
@@ -413,6 +472,57 @@ body {
 
 /* Hero Right — Mission Progress */
 .hero-right { display: flex; flex-direction: column; gap: 14px; min-width: 200px; }
+
+/* ── Hero middle column: live Ethereum gas widget ── */
+.hero-mid { display: flex; min-width: 200px; }
+.gwei-widget {
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(74,240,255,0.22);
+  border-radius: 12px;
+  padding: 14px 16px;
+  width: 100%;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.gwei-head {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px; letter-spacing: 1px;
+  color: var(--text-muted);
+  display: flex; align-items: center; gap: 6px;
+}
+.gwei-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--blue); box-shadow: 0 0 8px var(--blue);
+  animation: pulse 2s infinite;
+}
+.gwei-main { display: flex; align-items: baseline; gap: 6px; }
+.gwei-big {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 34px; font-weight: 700;
+  color: var(--blue); line-height: 1;
+}
+.gwei-unit {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px; color: var(--text-muted);
+}
+.gwei-sub {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px; color: var(--text-dim);
+}
+.gwei-row { display: flex; gap: 6px; margin-top: 2px; }
+.gwei-cell {
+  flex: 1; text-align: center;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border2);
+  border-radius: 8px; padding: 6px 4px;
+}
+.gwei-cell-val {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px; font-weight: 700; color: var(--text);
+}
+.gwei-cell-lbl {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px; color: var(--text-muted); margin-top: 2px;
+}
 
 .mission-timer {
   background: rgba(0,0,0,0.35);
@@ -843,7 +953,8 @@ canvas.mini-chart { width: 100% !important; }
 
   /* Topbar adjustments */
   .topbar { padding: 0 14px; gap: 10px; }
-  .topbar-center { display: none; } /* hide system status on mobile */
+  .topbar-center { display: none; }
+  .topbar-status { display: none; } /* hide system status on mobile */
   .topbar-right { gap: 8px; }
   .tb-btn { padding: 5px 10px; font-size: 12px; }
   .tb-btn svg { width: 12px; height: 12px; }
@@ -869,9 +980,6 @@ canvas.mini-chart { width: 100% !important; }
     box-shadow: 4px 0 24px rgba(0,0,0,0.5);
   }
   .sidebar.open { transform: translateX(0); }
-
-  /* Hide topbar Overview button to save space */
-  .tb-btn[data-tab-target="overview"] { display: none; }
 
   /* Grids collapse */
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -14148,18 +14256,15 @@ canvas.mini-chart { width: 100% !important; }
         DROPELITE
       </a>
     </div>
-    <div class="topbar-center">
-      <div class="status-dot"></div>
-      SYSTEM ONLINE &nbsp;·&nbsp; <span id="live-time">--:--:--</span>
-    </div>
+    <div class="topbar-center"></div>
     <div class="topbar-right">
-      <button class="tb-btn" data-tab-target="overview">
-        <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2a6 6 0 016 6c0 4-6 11-6 11S4 12 4 8a6 6 0 016-6z"/><circle cx="10" cy="8" r="2"/></svg>
-        <span class="btn-label">Overview</span>
-      </button>
-      <button class="tb-btn" style="border-color:rgba(245,200,66,0.3);color:var(--gold)">
+      <div class="topbar-status">
+        <div class="status-dot"></div>
+        SYSTEM ONLINE &nbsp;·&nbsp; <span id="live-time">--:--:--</span>
+      </div>
+      <button class="tb-btn" id="ov-alert-pill" data-tab-target="overview" style="border-color:rgba(245,200,66,0.3);color:var(--gold)">
         <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2v4M10 14v4M2 10h4M14 10h4"/><circle cx="10" cy="10" r="3"/></svg>
-        <span class="btn-label">7 Alerts</span>
+        <span class="btn-label">0 Alerts</span>
       </button>
       <button class="tb-btn" onclick="if(window.Auth)Auth.logout()" title="Logout" aria-label="Logout">
         <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 4H4v12h4M13 7l3 3-3 3M16 10H8"/></svg>
@@ -14239,6 +14344,13 @@ canvas.mini-chart { width: 100% !important; }
   <!-- ─── MAIN CONTENT ─── -->
   <main class="main">
 
+    <!-- ══ LIVE CRYPTO PRICE TICKER ══ -->
+    <div class="crypto-ticker" id="crypto-ticker">
+      <div class="ticker-track" id="ticker-track">
+        <div class="ticker-loading">Loading live crypto prices…</div>
+      </div>
+    </div>
+
     <section class="tab-panel active" id="tab-overview" data-tab-panel="overview">
 
 
@@ -14274,6 +14386,33 @@ canvas.mini-chart { width: 100% !important; }
               <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="8"/><path d="M10 6v4"/><circle cx="10" cy="14" r="0.5" fill="currentColor"/></svg>
               Open Intel
             </button>
+          </div>
+        </div>
+        <div class="hero-mid">
+          <div class="gwei-widget">
+            <div class="gwei-head">
+              <span class="gwei-dot"></span>
+              ⛽ ETHEREUM GAS · LIVE
+            </div>
+            <div class="gwei-main">
+              <div class="gwei-big" id="gwei-propose">--</div>
+              <div class="gwei-unit">GWEI</div>
+            </div>
+            <div class="gwei-sub" id="gwei-status">Connecting to Etherscan…</div>
+            <div class="gwei-row">
+              <div class="gwei-cell">
+                <div class="gwei-cell-val" id="gwei-safe">--</div>
+                <div class="gwei-cell-lbl">SAFE</div>
+              </div>
+              <div class="gwei-cell">
+                <div class="gwei-cell-val" id="gwei-fast">--</div>
+                <div class="gwei-cell-lbl">FAST</div>
+              </div>
+              <div class="gwei-cell">
+                <div class="gwei-cell-val" id="gwei-base">--</div>
+                <div class="gwei-cell-lbl">BASE FEE</div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="hero-right">
@@ -20181,6 +20320,13 @@ updateClock();
 
     try {
       var alerts = await window.API.getClaimAlerts();
+
+      // Update the topbar "X Alerts" pill with the real count
+      var pill = document.querySelector('#ov-alert-pill .btn-label');
+      if (pill) {
+        pill.textContent = alerts.length + (alerts.length === 1 ? ' Alert' : ' Alerts');
+      }
+
       if (!alerts.length) {
         box.innerHTML = '<div style="padding:22px;text-align:center;color:var(--text-dim);' +
           'font-family:\'Share Tech Mono\',monospace;font-size:11px;">' +
@@ -20257,6 +20403,179 @@ updateClock();
   document.addEventListener('DOMContentLoaded', function() {
     // small delay so the Supabase client + auth are ready (same as Daily Missions)
     setTimeout(ovLoadAll, 650);
+  });
+
+})();
+
+/* ═══════════════════════════════════════════
+   LIVE ETHEREUM GAS WIDGET — Etherscan V2 API
+   ───────────────────────────────────────────
+   ⚠️ PASTE YOUR ETHERSCAN API KEY BELOW (free tier).
+   Get one free at: https://etherscan.io/myapikey
+═══════════════════════════════════════════ */
+(function() {
+
+  var ETHERSCAN_API_KEY = 'TI6HDBV645C2XAKH36I21K9VFGU5459YI3';
+
+  var REFRESH_MS = 30000;   // refresh every 30 seconds (well under free-tier limits)
+
+  function gwEl(id) { return document.getElementById(id); }
+
+  // round to a sensible number of decimals (gas can be < 1 gwei now)
+  function gwFmt(v) {
+    var n = Number(v);
+    if (isNaN(n)) return '--';
+    return n >= 10 ? Math.round(n) : n.toFixed(1);
+  }
+
+  async function gwFetchGas() {
+    var statusEl = gwEl('gwei-status');
+
+    if (!ETHERSCAN_API_KEY || ETHERSCAN_API_KEY.indexOf('PASTE_') === 0) {
+      if (statusEl) statusEl.textContent = '⚠ Add Etherscan API key in dashboard.html';
+      return;
+    }
+
+    var url = 'https://api.etherscan.io/v2/api?chainid=1&module=gastracker' +
+              '&action=gasoracle&apikey=' + ETHERSCAN_API_KEY;
+
+    try {
+      var res = await fetch(url);
+      var data = await res.json();
+
+      if (!data || data.status !== '1' || !data.result) {
+        if (statusEl) statusEl.textContent = '⚠ Gas data unavailable, retrying…';
+        return;
+      }
+
+      var r = data.result;
+      if (gwEl('gwei-propose')) gwEl('gwei-propose').textContent = gwFmt(r.ProposeGasPrice);
+      if (gwEl('gwei-safe'))    gwEl('gwei-safe').textContent    = gwFmt(r.SafeGasPrice);
+      if (gwEl('gwei-fast'))    gwEl('gwei-fast').textContent    = gwFmt(r.FastGasPrice);
+      if (gwEl('gwei-base'))    gwEl('gwei-base').textContent    = gwFmt(r.suggestBaseFee);
+
+      // friendly status line — is gas cheap right now?
+      var p = Number(r.ProposeGasPrice);
+      var note;
+      if (isNaN(p))      note = 'Live';
+      else if (p < 5)    note = 'Very low — great time to farm';
+      else if (p < 15)   note = 'Low — good farming window';
+      else if (p < 40)   note = 'Moderate gas';
+      else               note = 'High gas — consider waiting';
+
+      var t = new Date();
+      var pad = function(n) { return String(n).padStart(2, '0'); };
+      if (statusEl) {
+        statusEl.textContent = note + ' · updated ' +
+          pad(t.getHours()) + ':' + pad(t.getMinutes()) + ':' + pad(t.getSeconds());
+      }
+    } catch (e) {
+      console.error('gwFetchGas:', e);
+      if (statusEl) statusEl.textContent = '⚠ Could not reach Etherscan';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    gwFetchGas();
+    setInterval(gwFetchGas, REFRESH_MS);
+  });
+
+})();
+
+/* ═══════════════════════════════════════════
+   LIVE CRYPTO PRICE TICKER — CoinGecko API
+   ───────────────────────────────────────────
+   Works WITHOUT a key (free public endpoint).
+   For a more reliable feed, paste a free CoinGecko
+   Demo API key below — get one at:
+   https://www.coingecko.com/en/developers/dashboard
+═══════════════════════════════════════════ */
+(function() {
+
+  // Optional — leave the placeholder to use the keyless public endpoint.
+  var COINGECKO_API_KEY = 'PASTE_YOUR_COINGECKO_DEMO_KEY_HERE';
+
+  var TICKER_REFRESH_MS = 60000;   // refresh every 60 seconds
+
+  // Top 10 coins — CoinGecko id : display symbol
+  var TICKER_COINS = [
+    { id: 'bitcoin',      sym: 'BTC'  },
+    { id: 'ethereum',     sym: 'ETH'  },
+    { id: 'binancecoin',  sym: 'BNB'  },
+    { id: 'solana',       sym: 'SOL'  },
+    { id: 'ripple',       sym: 'XRP'  },
+    { id: 'cardano',      sym: 'ADA'  },
+    { id: 'dogecoin',     sym: 'DOGE' },
+    { id: 'avalanche-2',  sym: 'AVAX' },
+    { id: 'chainlink',    sym: 'LINK' },
+    { id: 'tron',         sym: 'TRX'  }
+  ];
+
+  // Format a USD price sensibly (big coins → 0 dp, small coins → more dp)
+  function tkPrice(v) {
+    var n = Number(v);
+    if (isNaN(n)) return '--';
+    if (n >= 1000) return '$' + n.toLocaleString(undefined, { maximumFractionDigits: 0 });
+    if (n >= 1)    return '$' + n.toLocaleString(undefined, { maximumFractionDigits: 2 });
+    return '$' + n.toLocaleString(undefined, { maximumFractionDigits: 4 });
+  }
+
+  function tkRenderItem(coin, price, chg) {
+    var c = Number(chg);
+    var cls = c >= 0 ? 'up' : 'down';
+    var arrow = c >= 0 ? '▲' : '▼';
+    var chgTxt = isNaN(c) ? '' :
+      '<span class="ticker-chg ' + cls + '">' + arrow + ' ' + Math.abs(c).toFixed(2) + '%</span>';
+    return '' +
+      '<div class="ticker-item">' +
+        '<span class="ticker-sym">' + coin.sym + '</span>' +
+        '<span class="ticker-price">' + tkPrice(price) + '</span>' +
+        chgTxt +
+      '</div>';
+  }
+
+  async function tkFetchPrices() {
+    var track = document.getElementById('ticker-track');
+    if (!track) return;
+
+    var ids = TICKER_COINS.map(function(c) { return c.id; }).join(',');
+    var url = 'https://api.coingecko.com/api/v3/simple/price' +
+              '?ids=' + ids + '&vs_currencies=usd&include_24hr_change=true';
+
+    var opts = {};
+    if (COINGECKO_API_KEY && COINGECKO_API_KEY.indexOf('PASTE_') !== 0) {
+      // Demo keys are passed via this header
+      opts.headers = { 'x-cg-demo-api-key': COINGECKO_API_KEY };
+    }
+
+    try {
+      var res = await fetch(url, opts);
+      var data = await res.json();
+      if (!data || typeof data !== 'object') {
+        track.innerHTML = '<div class="ticker-loading">Price feed unavailable, retrying…</div>';
+        return;
+      }
+
+      // Build the row of items once...
+      var itemsHtml = TICKER_COINS.map(function(coin) {
+        var d = data[coin.id];
+        if (!d) return tkRenderItem(coin, NaN, NaN);
+        return tkRenderItem(coin, d.usd, d.usd_24h_change);
+      }).join('');
+
+      // ...then render it TWICE for a seamless infinite scroll loop.
+      track.innerHTML = itemsHtml + itemsHtml;
+    } catch (e) {
+      console.error('tkFetchPrices:', e);
+      if (track.querySelector('.ticker-item') === null) {
+        track.innerHTML = '<div class="ticker-loading">Could not reach price feed</div>';
+      }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    tkFetchPrices();
+    setInterval(tkFetchPrices, TICKER_REFRESH_MS);
   });
 
 })();
