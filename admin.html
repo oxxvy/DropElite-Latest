@@ -627,7 +627,7 @@ tbody tr:last-child td { border-bottom: none; }
         </div>
         <div class="table-wrap">
           <table id="missionsTable">
-            <thead><tr><th>Order</th><th>Title</th><th>Project</th><th>XP</th><th>Status</th><th>Actions</th></tr></thead>
+            <thead><tr><th>Order</th><th>Title</th><th>Project</th><th>XP</th><th>Details</th><th>Status</th><th>Actions</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -1064,6 +1064,29 @@ tbody tr:last-child td { border-bottom: none; }
     <div class="form-row">
       <label>XP Reward</label>
       <input id="missionXp" type="number" value="50" min="0">
+    </div>
+    <div class="form-row">
+      <label>Difficulty</label>
+      <select id="missionDifficulty">
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>Verified Route (anti-phishing trust badge)</label>
+      <select id="missionVerified">
+        <option value="true">Verified — safe route ✓</option>
+        <option value="false">Not verified</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>Time Estimate (minutes)</label>
+      <input id="missionTime" type="number" value="5" min="1">
+    </div>
+    <div class="form-row">
+      <label>Est. Value (USD) — your estimate, not guaranteed</label>
+      <input id="missionValue" type="number" value="0" min="0">
     </div>
     <div class="form-row">
       <label>Display Order (lower = shown first)</label>
@@ -1727,7 +1750,7 @@ async function renderMissions() {
   }
 
   if (!missionsCache.length) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:30px;">No missions yet. Click "+ New Mission" to add one.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-dim);padding:30px;">No missions yet. Click "+ New Mission" to add one.</td></tr>';
     return;
   }
 
@@ -1737,6 +1760,7 @@ async function renderMissions() {
       <td><strong>${escapeHtml(m.title)}</strong>${m.description ? '<br><span style="font-size:11px;color:var(--text-dim);">' + escapeHtml(m.description) + '</span>' : ''}</td>
       <td>${m.project ? '<span class="badge badge-type">' + escapeHtml(m.project) + '</span>' : '<span style="color:var(--text-muted);">—</span>'}</td>
       <td><strong style="color:var(--gold);">+${m.xp}</strong></td>
+      <td><span style="font-size:11px;color:var(--text-dim);font-family:'Share Tech Mono',monospace;">${escapeHtml((m.difficulty || 'easy').toUpperCase())} · ${(m.time_minutes != null ? m.time_minutes : 5)}m · $${(m.est_value_usd != null ? m.est_value_usd : 0)}${(m.verified !== false) ? ' · ✓VERIFIED' : ''}</span></td>
       <td><span class="badge badge-${m.active ? 'active' : 'inactive'}">${m.active ? 'Active' : 'Inactive'}</span></td>
       <td>
         <div class="row-actions">
@@ -1764,6 +1788,10 @@ function openMissionModal() {
   document.getElementById('missionDescription').value = '';
   document.getElementById('missionProject').value = '';
   document.getElementById('missionXp').value = 50;
+  document.getElementById('missionDifficulty').value = 'easy';
+  document.getElementById('missionVerified').value = 'true';
+  document.getElementById('missionTime').value = 5;
+  document.getElementById('missionValue').value = 0;
   document.getElementById('missionOrder').value = missionsCache.length;
   document.getElementById('missionActive').value = 'true';
   document.getElementById('missionModal').classList.add('active');
@@ -1778,6 +1806,10 @@ function editMission(id) {
   document.getElementById('missionDescription').value = m.description || '';
   document.getElementById('missionProject').value = m.project || '';
   document.getElementById('missionXp').value = m.xp != null ? m.xp : 50;
+  document.getElementById('missionDifficulty').value = m.difficulty || 'easy';
+  document.getElementById('missionVerified').value = String(m.verified !== false);
+  document.getElementById('missionTime').value = m.time_minutes != null ? m.time_minutes : 5;
+  document.getElementById('missionValue').value = m.est_value_usd != null ? m.est_value_usd : 0;
   document.getElementById('missionOrder').value = m.display_order != null ? m.display_order : 0;
   document.getElementById('missionActive').value = String(m.active !== false);
   document.getElementById('missionModal').classList.add('active');
@@ -1795,7 +1827,11 @@ async function saveMission() {
     project: document.getElementById('missionProject').value.trim(),
     xp: parseInt(document.getElementById('missionXp').value, 10) || 0,
     display_order: parseInt(document.getElementById('missionOrder').value, 10) || 0,
-    active: document.getElementById('missionActive').value === 'true'
+    active: document.getElementById('missionActive').value === 'true',
+    difficulty: document.getElementById('missionDifficulty').value,
+    verified: document.getElementById('missionVerified').value === 'true',
+    time_minutes: parseInt(document.getElementById('missionTime').value, 10) || 5,
+    est_value_usd: parseFloat(document.getElementById('missionValue').value) || 0
   };
   if (!data.title) { toast('Title is required'); return; }
 
@@ -1819,7 +1855,11 @@ async function toggleMissionActive(id) {
     project: m.project,
     xp: m.xp,
     display_order: m.display_order,
-    active: !m.active
+    active: !m.active,
+    difficulty: m.difficulty,
+    verified: m.verified,
+    time_minutes: m.time_minutes,
+    est_value_usd: m.est_value_usd
   });
   if (!result.ok) { toast('Update failed: ' + (result.error || '')); return; }
   toast(m.active ? 'Mission deactivated' : 'Mission activated');
