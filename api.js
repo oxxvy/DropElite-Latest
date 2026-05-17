@@ -1097,7 +1097,9 @@
         featured:         !!opp.featured,
         rank_label:       opp.rank_label || null,
         active:           opp.active !== false,
-        display_order:    opp.display_order == null ? 0 : parseInt(opp.display_order, 10)
+        display_order:    opp.display_order == null ? 0 : parseInt(opp.display_order, 10),
+        deadline:         opp.deadline || null,
+        completion_pct:   (opp.completion_pct === '' || opp.completion_pct == null) ? 0 : parseInt(opp.completion_pct, 10)
       };
 
       if (opp.id) {
@@ -1115,6 +1117,59 @@
     async adminDeleteOpportunity(id) {
       if (!_live()) return { ok: false, error: 'Supabase not configured' };
       const { error } = await supa.from('intel_opportunities').delete().eq('id', id);
+      if (error) return { ok: false, error: error.message };
+      return { ok: true };
+    },
+
+    // ───────────────────────────────────────────────────────────
+    // INTEL — FUNDING ROUNDS  ·  LIVE (Supabase)
+    //   intel_funding — admin-published "Recent Funding Rounds"
+    // ───────────────────────────────────────────────────────────
+    async getFundingRounds() {
+      if (!_live()) return [];
+      const { data, error } = await supa
+        .from('intel_funding')
+        .select('*')
+        .eq('active', true)
+        .order('display_order', { ascending: true });
+      if (error) { console.error('getFundingRounds:', error); return []; }
+      return data || [];
+    },
+
+    async adminListFunding() {
+      if (!_live()) return [];
+      const { data, error } = await supa
+        .from('intel_funding')
+        .select('*')
+        .order('display_order', { ascending: true });
+      if (error) { console.error('adminListFunding:', error); return []; }
+      return data || [];
+    },
+
+    async adminSaveFunding(f) {
+      if (!_live()) return { ok: false, error: 'Supabase not configured' };
+      const fields = {
+        name:          f.name,
+        subtitle:      f.subtitle || null,
+        amount:        f.amount || null,
+        accent_color:  f.accent_color || '#a78bfa',
+        active:        f.active !== false,
+        display_order: f.display_order == null ? 0 : parseInt(f.display_order, 10)
+      };
+      if (f.id) {
+        const { error } = await supa.from('intel_funding').update(fields).eq('id', f.id);
+        if (error) return { ok: false, error: error.message };
+        return { ok: true, id: f.id };
+      } else {
+        const { data, error } = await supa.from('intel_funding').insert(fields).select().single();
+        if (error) return { ok: false, error: error.message };
+        return { ok: true, id: data.id };
+      }
+    },
+
+    async adminDeleteFunding(id) {
+      if (!_live()) return { ok: false, error: 'Supabase not configured' };
+      const { error } = await supa.from('intel_funding').delete().eq('id', id);
       if (error) return { ok: false, error: error.message };
       return { ok: true };
     },
