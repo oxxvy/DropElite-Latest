@@ -14247,35 +14247,30 @@ canvas.mini-chart { width: 100% !important; }
       <div class="hero-inner">
         <div class="hero-left">
           <div class="hero-label">✦ ELITE FARMING COMMAND</div>
-          <h1 class="hero-title">Welcome back, <span>Commander RK</span></h1>
-          <p class="hero-sub">Your farming intelligence is ready. <strong>5 priority missions</strong> await execution today.</p>
+          <h1 class="hero-title">Welcome back, <span id="ov-username">Operator</span></h1>
+          <p class="hero-sub">Your farming intelligence is ready. <strong id="ov-priority-count">0 priority missions</strong> await execution today.</p>
           <div class="hero-meta">
             <div class="hero-stat">
-              <div class="hero-stat-val">🔥 14</div>
+              <div class="hero-stat-val" id="ov-streak">🔥 0</div>
               <div class="hero-stat-label">Day Streak</div>
             </div>
             <div class="hero-stat-sep"></div>
             <div class="hero-stat">
-              <div class="hero-stat-val">+820</div>
+              <div class="hero-stat-val" id="ov-xp-today">+0</div>
               <div class="hero-stat-label">XP Today</div>
             </div>
             <div class="hero-stat-sep"></div>
             <div class="hero-stat">
-              <div class="hero-stat-val" style="color:var(--green)">3/5</div>
+              <div class="hero-stat-val" id="ov-missions-done" style="color:var(--green)">0/0</div>
               <div class="hero-stat-label">Missions Done</div>
-            </div>
-            <div class="hero-stat-sep"></div>
-            <div class="hero-stat">
-              <div class="hero-stat-val" style="color:var(--blue)">Rank #12</div>
-              <div class="hero-stat-label">Global Board</div>
             </div>
           </div>
           <div class="hero-cta">
-            <button class="btn btn-gold" data-tab-target="daily-missions">
+            <button class="btn btn-gold" id="ov-start-missions">
               <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 10 5 17 5 3"/></svg>
               Start Missions
             </button>
-            <button class="btn btn-outline">
+            <button class="btn btn-outline" data-tab-target="intel-hub">
               <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="8"/><path d="M10 6v4"/><circle cx="10" cy="14" r="0.5" fill="currentColor"/></svg>
               Open Intel
             </button>
@@ -14284,24 +14279,24 @@ canvas.mini-chart { width: 100% !important; }
         <div class="hero-right">
           <div class="mission-timer">
             <div class="timer-label">⏱ MISSION RESET IN</div>
-            <div class="timer-value" id="reset-timer">08:32:17</div>
+            <div class="timer-value" id="reset-timer">00:00:00</div>
           </div>
           <div class="mission-progress">
             <div class="mp-label">
               DAILY PROGRESS
-              <span id="prog-pct">60%</span>
+              <span id="prog-pct">0%</span>
             </div>
             <div class="mp-bar-bg">
-              <div class="mp-bar" id="prog-bar" style="width:60%"></div>
+              <div class="mp-bar" id="prog-bar" style="width:0%"></div>
             </div>
           </div>
           <div style="display:flex;gap:6px;">
             <div style="flex:1;background:rgba(0,232,122,0.08);border:1px solid rgba(0,232,122,0.2);border-radius:9px;padding:10px 12px;text-align:center;">
-              <div style="font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;color:var(--green);">$4,280</div>
+              <div id="ov-hero-rewards" style="font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;color:var(--green);">$0</div>
               <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-muted);margin-top:2px;">EST. REWARDS</div>
             </div>
             <div style="flex:1;background:rgba(74,240,255,0.07);border:1px solid rgba(74,240,255,0.18);border-radius:9px;padding:10px 12px;text-align:center;">
-              <div style="font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;color:var(--blue);">12</div>
+              <div id="ov-hero-drops" style="font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;color:var(--blue);">0</div>
               <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-muted);margin-top:2px;">ACTIVE DROPS</div>
             </div>
           </div>
@@ -14314,56 +14309,42 @@ canvas.mini-chart { width: 100% !important; }
       <div class="card stat-card fade-in">
         <div class="stat-top">
           <div class="stat-icon icon-gold">🎯</div>
-          <div class="stat-trend trend-up">+3</div>
         </div>
-        <div class="stat-val">12</div>
+        <div class="stat-val" id="ov-stat-airdrops">0</div>
         <div class="stat-lbl">Active Airdrops</div>
-        <div class="stat-sub">4 high-priority</div>
+        <div class="stat-sub" id="ov-stat-airdrops-sub">0 high-priority</div>
       </div>
       <div class="card stat-card fade-in">
         <div class="stat-top">
           <div class="stat-icon icon-green">💰</div>
-          <div class="stat-trend trend-up">+12%</div>
         </div>
-        <div class="stat-val">$4,280</div>
+        <div class="stat-val" id="ov-stat-rewards">$0</div>
         <div class="stat-lbl">Est. Rewards</div>
-        <div class="stat-sub">~3 claiming soon</div>
+        <div class="stat-sub" id="ov-stat-rewards-sub">0 claiming soon</div>
       </div>
       <div class="card stat-card fade-in">
         <div class="stat-top">
           <div class="stat-icon icon-blue">🔗</div>
-          <div class="stat-trend trend-flat">—</div>
         </div>
-        <div class="stat-val">7</div>
+        <div class="stat-val" id="ov-stat-wallets">0</div>
         <div class="stat-lbl">Wallets Active</div>
-        <div class="stat-sub">2 inactive today</div>
+        <div class="stat-sub" id="ov-stat-wallets-sub">across all chains</div>
       </div>
       <div class="card stat-card fade-in">
         <div class="stat-top">
           <div class="stat-icon icon-orange">⚡</div>
-          <div class="stat-trend trend-up">+820</div>
         </div>
-        <div class="stat-val">8,420</div>
+        <div class="stat-val" id="ov-stat-xp">0</div>
         <div class="stat-lbl">Current XP</div>
-        <div class="stat-sub">1,580 to next level</div>
-      </div>
-      <div class="card stat-card fade-in">
-        <div class="stat-top">
-          <div class="stat-icon icon-purple">🏆</div>
-          <div class="stat-trend trend-up">▲ 3</div>
-        </div>
-        <div class="stat-val">#12</div>
-        <div class="stat-lbl">Farming Rank</div>
-        <div class="stat-sub">Global leaderboard</div>
+        <div class="stat-sub" id="ov-stat-xp-sub">to next level</div>
       </div>
       <div class="card stat-card fade-in">
         <div class="stat-top">
           <div class="stat-icon icon-green">📊</div>
-          <div class="stat-trend trend-up">+8%</div>
         </div>
-        <div class="stat-val">87%</div>
+        <div class="stat-val" id="ov-stat-weekly">0%</div>
         <div class="stat-lbl">Weekly Completion</div>
-        <div class="stat-sub">Above average ✓</div>
+        <div class="stat-sub" id="ov-stat-weekly-sub">missions this week</div>
       </div>
     </div>
 
@@ -14373,113 +14354,8 @@ canvas.mini-chart { width: 100% !important; }
       <!-- Priority Missions -->
       <div class="card priority-panel fade-in">
         <div class="section-title">Today's Priority Missions</div>
-        <div class="mission-list">
-
-          <div class="mission-row" id="m1">
-            <div class="mission-num">01</div>
-            <div class="mission-chain-icon">🔵</div>
-            <div class="mission-info">
-              <div class="mission-title">LayerZero Daily Bridge</div>
-              <div class="mission-meta">
-                <span class="badge-pill badge-easy">✓ EASY</span>
-                <span class="badge-pill badge-verify">🛡 VERIFIED</span>
-                <span class="mission-time">⏱ ~8 min</span>
-              </div>
-            </div>
-            <div class="mission-reward">
-              <div class="reward-val">~$340</div>
-              <div class="reward-label">EST. VALUE</div>
-            </div>
-            <div class="mission-actions">
-              <button class="btn btn-ghost" onclick="startMission(this,'m1')">START</button>
-              <button class="check-btn" onclick="completeMission(this,'m1')">✓</button>
-            </div>
-          </div>
-
-          <div class="mission-row" id="m2">
-            <div class="mission-num">02</div>
-            <div class="mission-chain-icon">🟣</div>
-            <div class="mission-info">
-              <div class="mission-title">ZKSync Lite Swap Route</div>
-              <div class="mission-meta">
-                <span class="badge-pill badge-medium">◆ MEDIUM</span>
-                <span class="badge-pill badge-verify">🛡 VERIFIED</span>
-                <span class="mission-time">⏱ ~15 min</span>
-              </div>
-            </div>
-            <div class="mission-reward">
-              <div class="reward-val">~$520</div>
-              <div class="reward-label">EST. VALUE</div>
-            </div>
-            <div class="mission-actions">
-              <button class="btn btn-ghost" onclick="startMission(this,'m2')">START</button>
-              <button class="check-btn" onclick="completeMission(this,'m2')">✓</button>
-            </div>
-          </div>
-
-          <div class="mission-row completed" id="m3">
-            <div class="mission-num">03</div>
-            <div class="mission-chain-icon">🟢</div>
-            <div class="mission-info">
-              <div class="mission-title">Arbitrum Liquidity Deposit</div>
-              <div class="mission-meta">
-                <span class="badge-pill badge-easy">✓ EASY</span>
-                <span class="badge-pill badge-verify">🛡 VERIFIED</span>
-                <span class="mission-time">⏱ ~5 min</span>
-              </div>
-            </div>
-            <div class="mission-reward">
-              <div class="reward-val">~$180</div>
-              <div class="reward-label">EST. VALUE</div>
-            </div>
-            <div class="mission-actions">
-              <button class="btn btn-ghost" style="opacity:0.4" disabled>DONE</button>
-              <button class="check-btn done">✓</button>
-            </div>
-          </div>
-
-          <div class="mission-row" id="m4">
-            <div class="mission-num">04</div>
-            <div class="mission-chain-icon">🟡</div>
-            <div class="mission-info">
-              <div class="mission-title">Starknet NFT Mint</div>
-              <div class="mission-meta">
-                <span class="badge-pill badge-hard">⚠ HARD</span>
-                <span class="badge-pill badge-verify">🛡 VERIFIED</span>
-                <span class="mission-time">⏱ ~25 min</span>
-              </div>
-            </div>
-            <div class="mission-reward">
-              <div class="reward-val">~$1,200</div>
-              <div class="reward-label">EST. VALUE</div>
-            </div>
-            <div class="mission-actions">
-              <button class="btn btn-ghost" onclick="startMission(this,'m4')">START</button>
-              <button class="check-btn" onclick="completeMission(this,'m4')">✓</button>
-            </div>
-          </div>
-
-          <div class="mission-row completed" id="m5">
-            <div class="mission-num">05</div>
-            <div class="mission-chain-icon">🔴</div>
-            <div class="mission-info">
-              <div class="mission-title">Optimism Daily Activity</div>
-              <div class="mission-meta">
-                <span class="badge-pill badge-easy">✓ EASY</span>
-                <span class="badge-pill badge-verify">🛡 VERIFIED</span>
-                <span class="mission-time">⏱ ~6 min</span>
-              </div>
-            </div>
-            <div class="mission-reward">
-              <div class="reward-val">~$95</div>
-              <div class="reward-label">EST. VALUE</div>
-            </div>
-            <div class="mission-actions">
-              <button class="btn btn-ghost" style="opacity:0.4" disabled>DONE</button>
-              <button class="check-btn done">✓</button>
-            </div>
-          </div>
-
+        <div class="mission-list" id="ov-mission-list">
+          <div style="padding:28px;text-align:center;color:var(--text-dim);font-family:'Share Tech Mono',monospace;font-size:12px;">Loading missions…</div>
         </div>
       </div>
 
@@ -14490,69 +14366,38 @@ canvas.mini-chart { width: 100% !important; }
         <div class="card quick-actions fade-in">
           <div class="section-title">Quick Actions</div>
           <div class="qa-grid">
-            <div class="qa-btn">
+            <div class="qa-btn" data-tab-target="wallets">
               <div class="qa-icon">🔗</div>
               <div class="qa-label">Add Wallet</div>
             </div>
-            <div class="qa-btn">
+            <div class="qa-btn" data-tab-target="airdrop-tracker">
               <div class="qa-icon">📡</div>
               <div class="qa-label">Track Airdrop</div>
             </div>
-            <div class="qa-btn">
+            <div class="qa-btn" data-tab-target="farming-routes">
               <div class="qa-icon">▶</div>
               <div class="qa-label">Daily Route</div>
             </div>
-            <div class="qa-btn">
+            <div class="qa-btn" data-tab-target="rewards">
               <div class="qa-icon">🏅</div>
               <div class="qa-label">Rewards</div>
             </div>
-            <div class="qa-btn">
+            <div class="qa-btn" data-tab-target="wallets">
               <div class="qa-icon">🔄</div>
-              <div class="qa-label">Sync Wallets</div>
+              <div class="qa-label">My Wallets</div>
             </div>
-            <div class="qa-btn">
+            <div class="qa-btn" data-tab-target="intel-hub">
               <div class="qa-icon">📊</div>
               <div class="qa-label">Analytics</div>
             </div>
           </div>
         </div>
 
-        <!-- Alerts -->
+        <!-- Alerts — real claim deadlines from your Rewards tracker -->
         <div class="card alerts-panel fade-in">
-          <div class="section-title">Alerts & Warnings</div>
-          <div class="alert-list">
-            <div class="alert-item alert-critical">
-              <div class="alert-icon">🚨</div>
-              <div class="alert-body">
-                <div class="alert-title">Claim Deadline: LayerZero</div>
-                <div class="alert-desc">Claim window closes in 4 hours. Take action now.</div>
-              </div>
-              <div class="alert-time">4h left</div>
-            </div>
-            <div class="alert-item alert-warning">
-              <div class="alert-icon">⚠️</div>
-              <div class="alert-body">
-                <div class="alert-title">Wallet Inactive: 0x3f...a21</div>
-                <div class="alert-desc">No activity in 9 days. Sybil risk increasing.</div>
-              </div>
-              <div class="alert-time">9d ago</div>
-            </div>
-            <div class="alert-item alert-info">
-              <div class="alert-icon">⛽</div>
-              <div class="alert-body">
-                <div class="alert-title">Gas Alert: ETH Mainnet</div>
-                <div class="alert-desc">Gas dropped to 8 gwei — optimal farming window.</div>
-              </div>
-              <div class="alert-time">Now</div>
-            </div>
-            <div class="alert-item alert-success">
-              <div class="alert-icon">📸</div>
-              <div class="alert-body">
-                <div class="alert-title">Snapshot Tomorrow: zkSync</div>
-                <div class="alert-desc">Ensure wallets are active before snapshot at 00:00 UTC.</div>
-              </div>
-              <div class="alert-time">18h</div>
-            </div>
+          <div class="section-title">Claim Deadline Alerts</div>
+          <div class="alert-list" id="ov-alert-list">
+            <div style="padding:22px;text-align:center;color:var(--text-dim);font-family:'Share Tech Mono',monospace;font-size:11px;">Loading alerts…</div>
           </div>
         </div>
       </div>
@@ -20129,34 +19974,292 @@ updateClock();
 })();
 
 /* ═══════════════════════════════════════════
-   MISSION INTERACTIONS
+   OVERVIEW TAB — LIVE (Supabase)
+   ELITE FARMING COMMAND  +  TODAY'S PRIORITY MISSIONS
+   All data is real. Reuses the same API methods as the
+   Daily Missions tab — no parallel logic.
 ═══════════════════════════════════════════ */
-function startMission(btn, id) {
-  btn.textContent = 'RUNNING';
-  btn.style.borderColor = 'var(--gold)';
-  btn.style.color = 'var(--gold)';
-}
+(function() {
 
-function completeMission(btn, id) {
-  const row = document.getElementById(id);
-  row.classList.add('completed');
-  btn.classList.add('done');
-  const startBtn = row.querySelector('.btn-ghost');
-  if (startBtn && !startBtn.disabled) {
-    startBtn.textContent = 'DONE';
-    startBtn.disabled = true;
-    startBtn.style.opacity = '0.4';
+  // Cosmetic-only: pick an icon by mission position.
+  // (Mission icon is not a database field — purely visual.)
+  var OV_ICONS = ['🔵','🟣','🟢','🟡','🔴','⚡','🌉','🔄','🖼️','📡','📊','🧪','🌊','🎯','💎','🚀'];
+
+  var ovMissions = [];   // today's missions (live, each has .done)
+  var ovBusyId   = null; // mission currently being completed (guards double-tap)
+
+  function ovEl(id) { return document.getElementById(id); }
+
+  function ovEscape(s) {
+    if (s == null) return '';
+    return String(s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
-  updateProgress();
-}
 
-function updateProgress() {
-  const total = document.querySelectorAll('.mission-row').length;
-  const done  = document.querySelectorAll('.mission-row.completed').length;
-  const pct   = Math.round((done / total) * 100);
-  document.getElementById('prog-bar').style.width = pct + '%';
-  document.getElementById('prog-pct').textContent  = pct + '%';
-}
+  // ── Difficulty → badge class + label ──
+  function ovDiffBadge(diff) {
+    var d = String(diff || 'easy').toLowerCase();
+    if (d === 'hard')   return '<span class="badge-pill badge-hard">⚠ HARD</span>';
+    if (d === 'medium') return '<span class="badge-pill badge-medium">◆ MEDIUM</span>';
+    return '<span class="badge-pill badge-easy">✓ EASY</span>';
+  }
+
+  // ── Render the "Today's Priority Missions" list ──
+  function ovRenderMissions() {
+    var list = ovEl('ov-mission-list');
+    if (!list) return;
+
+    if (!ovMissions.length) {
+      list.innerHTML = '<div style="padding:28px;text-align:center;color:var(--text-dim);' +
+        'font-family:\'Share Tech Mono\',monospace;font-size:12px;">' +
+        'No missions today. Check back after the daily reset.</div>';
+      return;
+    }
+
+    list.innerHTML = ovMissions.map(function(m, i) {
+      var num = String(i + 1).padStart(2, '0');
+      var icon = OV_ICONS[i % OV_ICONS.length];
+      var done = !!m.done;
+
+      // value line: only show "~$X" if admin set a value above 0
+      var valHtml = (m.est_value_usd && m.est_value_usd > 0)
+        ? '~$' + Number(m.est_value_usd).toLocaleString()
+        : '+' + (m.xp || 0) + ' XP';
+      var valLbl = (m.est_value_usd && m.est_value_usd > 0) ? 'EST. VALUE' : 'XP REWARD';
+
+      var verifyBadge = (m.verified !== false)
+        ? '<span class="badge-pill badge-verify">🛡 VERIFIED</span>' : '';
+
+      var actions = done
+        ? '<button class="btn btn-ghost" style="opacity:0.4" disabled>DONE</button>' +
+          '<button class="check-btn done">✓</button>'
+        : '<button class="btn btn-ghost" data-ov-start="' + m.id + '">START</button>' +
+          '<button class="check-btn" data-ov-done="' + m.id + '">✓</button>';
+
+      return '' +
+        '<div class="mission-row' + (done ? ' completed' : '') + '" data-ov-row="' + m.id + '">' +
+          '<div class="mission-num">' + num + '</div>' +
+          '<div class="mission-chain-icon">' + icon + '</div>' +
+          '<div class="mission-info">' +
+            '<div class="mission-title">' + ovEscape(m.title) + '</div>' +
+            '<div class="mission-meta">' +
+              ovDiffBadge(m.difficulty) +
+              verifyBadge +
+              '<span class="mission-time">⏱ ~' + (m.time_minutes || 5) + ' min</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="mission-reward">' +
+            '<div class="reward-val">' + valHtml + '</div>' +
+            '<div class="reward-label">' + valLbl + '</div>' +
+          '</div>' +
+          '<div class="mission-actions">' + actions + '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  // ── START button: marks the START as engaged, opens project link if any ──
+  function ovStartMission(id) {
+    var btn = document.querySelector('[data-ov-start="' + id + '"]');
+    if (btn) {
+      btn.textContent = 'RUNNING';
+      btn.style.borderColor = 'var(--gold)';
+      btn.style.color = 'var(--gold)';
+    }
+  }
+
+  // ── ✓ button: complete the mission for real (saves XP + streak) ──
+  async function ovCompleteMission(id) {
+    if (ovBusyId !== null) return;          // one at a time
+    var m = ovMissions.find(function(x) { return x.id === id; });
+    if (!m || m.done) return;
+
+    ovBusyId = id;
+    var checkBtn = document.querySelector('[data-ov-done="' + id + '"]');
+    if (checkBtn) { checkBtn.textContent = '…'; checkBtn.style.opacity = '0.5'; }
+
+    try {
+      var result = await window.API.completeMission(id);
+      if (!result || !result.ok) {
+        if (checkBtn) { checkBtn.textContent = '✓'; checkBtn.style.opacity = '1'; }
+        alert('Could not save: ' + ((result && result.error) || 'unknown error'));
+        ovBusyId = null;
+        return;
+      }
+      // Mark done locally, then re-render + refresh all the hero numbers
+      m.done = true;
+      ovRenderMissions();
+      await ovLoadStats();
+    } catch (e) {
+      console.error('ovCompleteMission:', e);
+      if (checkBtn) { checkBtn.textContent = '✓'; checkBtn.style.opacity = '1'; }
+    }
+    ovBusyId = null;
+  }
+
+  // ── Load the hero / stat-card numbers (ELITE FARMING COMMAND) ──
+  async function ovLoadStats() {
+    if (!window.API || !window.API.isLive || !window.API.isLive()) return;
+
+    var s = await window.API.getOverviewStats();
+
+    // Hero — welcome line
+    if (ovEl('ov-username'))  ovEl('ov-username').textContent = s.name || 'Operator';
+    var remaining = Math.max(0, (s.missionsTotal || 0) - (s.missionsDone || 0));
+    if (ovEl('ov-priority-count')) {
+      ovEl('ov-priority-count').textContent =
+        remaining + (remaining === 1 ? ' priority mission' : ' priority missions');
+    }
+
+    // Hero — meta stats
+    if (ovEl('ov-streak'))        ovEl('ov-streak').textContent = '🔥 ' + (s.currentStreak || 0);
+    if (ovEl('ov-xp-today'))      ovEl('ov-xp-today').textContent = '+' + (s.xpToday || 0);
+    if (ovEl('ov-missions-done')) ovEl('ov-missions-done').textContent =
+        (s.missionsDone || 0) + '/' + (s.missionsTotal || 0);
+
+    // Hero — right side: daily progress bar
+    var pct = (s.missionsTotal > 0)
+      ? Math.round((s.missionsDone / s.missionsTotal) * 100) : 0;
+    if (ovEl('prog-pct')) ovEl('prog-pct').textContent = pct + '%';
+    if (ovEl('prog-bar')) ovEl('prog-bar').style.width = pct + '%';
+
+    // Hero — reward + drops boxes
+    if (ovEl('ov-hero-rewards')) ovEl('ov-hero-rewards').textContent =
+        '$' + (s.estRewardsUsd || 0).toLocaleString();
+    if (ovEl('ov-hero-drops'))   ovEl('ov-hero-drops').textContent = s.activeDrops || 0;
+
+    // Stat grid card 1 — Active Airdrops
+    if (ovEl('ov-stat-airdrops')) ovEl('ov-stat-airdrops').textContent = s.activeAirdrops || 0;
+    if (ovEl('ov-stat-airdrops-sub')) ovEl('ov-stat-airdrops-sub').textContent =
+        (s.highPriorityAirdrops || 0) + ' high-priority';
+
+    // Stat grid card 2 — Est. Rewards
+    if (ovEl('ov-stat-rewards')) ovEl('ov-stat-rewards').textContent =
+        '$' + (s.estRewardsUsd || 0).toLocaleString();
+    if (ovEl('ov-stat-rewards-sub')) ovEl('ov-stat-rewards-sub').textContent =
+        (s.claimingSoon || 0) + ' claiming soon';
+
+    // Stat grid card 3 — Wallets
+    if (ovEl('ov-stat-wallets')) ovEl('ov-stat-wallets').textContent = s.walletsActive || 0;
+
+    // Stat grid card 4 — Current XP (+ XP needed for next 1,000-XP level)
+    if (ovEl('ov-stat-xp')) ovEl('ov-stat-xp').textContent = (s.totalXp || 0).toLocaleString();
+    var toNext = 1000 - ((s.totalXp || 0) % 1000);
+    if (ovEl('ov-stat-xp-sub')) ovEl('ov-stat-xp-sub').textContent =
+        toNext.toLocaleString() + ' XP to next level';
+
+    // Stat grid card 5 — Weekly Completion (missions done in last 7 days)
+    ovLoadWeekly();
+  }
+
+  // ── Weekly Completion: count this user's completions in the last 7 days ──
+  async function ovLoadWeekly() {
+    try {
+      var done7 = 0;
+      if (window.API && window.API.getWeeklyCompletions) {
+        done7 = await window.API.getWeeklyCompletions();
+      }
+      if (ovEl('ov-stat-weekly')) ovEl('ov-stat-weekly').textContent = done7;
+      if (ovEl('ov-stat-weekly-sub')) ovEl('ov-stat-weekly-sub').textContent =
+          'missions done · last 7 days';
+    } catch (e) { console.error('ovLoadWeekly:', e); }
+  }
+
+  // ── Claim Deadline Alerts (real — from the Rewards table) ──
+  function ovFormatLeft(ms) {
+    if (ms <= 0) return 'expired';
+    var h = Math.floor(ms / 3600000);
+    if (h < 1)  return Math.max(1, Math.floor(ms / 60000)) + 'm left';
+    if (h < 48) return h + 'h left';
+    return Math.floor(h / 24) + 'd left';
+  }
+
+  async function ovLoadAlerts() {
+    var box = ovEl('ov-alert-list');
+    if (!box) return;
+    if (!window.API || !window.API.getClaimAlerts) return;
+
+    try {
+      var alerts = await window.API.getClaimAlerts();
+      if (!alerts.length) {
+        box.innerHTML = '<div style="padding:22px;text-align:center;color:var(--text-dim);' +
+          'font-family:\'Share Tech Mono\',monospace;font-size:11px;">' +
+          'No claim deadlines coming up. You\'re all clear. ✓</div>';
+        return;
+      }
+      box.innerHTML = alerts.map(function(a) {
+        // <12h = critical, <48h = warning, else info
+        var cls = a.msLeft < 12 * 3600000 ? 'alert-critical'
+                : (a.msLeft < 48 * 3600000 ? 'alert-warning' : 'alert-info');
+        var icon = cls === 'alert-critical' ? '🚨' : (cls === 'alert-warning' ? '⚠️' : '🏅');
+        var val  = a.usdValue > 0 ? ' · ~$' + Number(a.usdValue).toLocaleString() : '';
+        return '' +
+          '<div class="alert-item ' + cls + '">' +
+            '<div class="alert-icon">' + icon + '</div>' +
+            '<div class="alert-body">' +
+              '<div class="alert-title">Claim Deadline: ' + ovEscape(a.project) + '</div>' +
+              '<div class="alert-desc">Claim window closing soon' + val + '. Open the Rewards tab to claim.</div>' +
+            '</div>' +
+            '<div class="alert-time">' + ovFormatLeft(a.msLeft) + '</div>' +
+          '</div>';
+      }).join('');
+    } catch (e) {
+      console.error('ovLoadAlerts:', e);
+    }
+  }
+
+  // ── Load the priority mission list ──
+  async function ovLoadMissions() {
+    var list = ovEl('ov-mission-list');
+    if (!window.API || !window.API.isLive || !window.API.isLive()) {
+      if (list) list.innerHTML = '<div style="padding:28px;text-align:center;color:var(--text-dim);' +
+        'font-family:\'Share Tech Mono\',monospace;font-size:12px;">' +
+        'Supabase not connected. Check api.js keys.</div>';
+      return;
+    }
+    try {
+      ovMissions = await window.API.getMissions();
+      ovRenderMissions();
+    } catch (e) {
+      console.error('ovLoadMissions:', e);
+    }
+  }
+
+  // ── Master loader: refresh the whole Overview tab ──
+  async function ovLoadAll() {
+    await ovLoadMissions();
+    await ovLoadStats();
+    await ovLoadAlerts();
+  }
+
+  // ── Event delegation for the mission START / ✓ buttons ──
+  document.addEventListener('click', function(e) {
+    var startBtn = e.target.closest('[data-ov-start]');
+    if (startBtn) { ovStartMission(parseInt(startBtn.dataset.ovStart, 10)); return; }
+
+    var doneBtn = e.target.closest('[data-ov-done]');
+    if (doneBtn) { ovCompleteMission(parseInt(doneBtn.dataset.ovDone, 10)); return; }
+
+    // "Start Missions" hero button → scroll to the priority mission list
+    var heroStart = e.target.closest('#ov-start-missions');
+    if (heroStart) {
+      var panel = ovEl('ov-mission-list');
+      if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  });
+
+  // ── Refresh when the user switches back to the Overview tab ──
+  document.addEventListener('dropelite:tabchange', function(e) {
+    if (e.detail && e.detail.tabName === 'overview') ovLoadAll();
+  });
+
+  // ── First load on page open ──
+  document.addEventListener('DOMContentLoaded', function() {
+    // small delay so the Supabase client + auth are ready (same as Daily Missions)
+    setTimeout(ovLoadAll, 650);
+  });
+
+})();
 
 /* ═══════════════════════════════════════════
    MINI CHART (Canvas)
