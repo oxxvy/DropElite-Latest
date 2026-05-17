@@ -24031,21 +24031,15 @@ function analyticsAnimateCounter(el, target, prefix='', suffix='', duration=1800
   }, step);
 }
 
-let _analyticsLoaded = false;
-async function analyticsInit() {
-  if (_analyticsLoaded) return;
-  _analyticsLoaded = true;
-  if (!window.API) return;
-  const s = await API.getAnalyticsStats();
-  analyticsAnimateCounter(document.getElementById('analyticsHeroRewards'),     s.totalRewardsUsd,   '$', '');
-  analyticsAnimateCounter(document.getElementById('analyticsHeroROI'),         s.roiPct,            '', '%');
-  analyticsAnimateCounter(document.getElementById('analyticsHeroEfficiency'),  s.efficiencyScore,   '', '');
-  analyticsAnimateCounter(document.getElementById('analyticsHeroInteractions'),s.totalInteractions, '', '');
-  analyticsAnimateCounter(document.getElementById('analyticsHeroEcosystems'),  s.ecosystemsCount,   '', '');
-  analyticsAnimateCounter(document.getElementById('analyticsHeroSuccess'),     s.successRate,       '', '%');
-}
-document.addEventListener('dropelite:tabchange', e => {
-  if (e.detail.tabName === 'analytics') analyticsInit();
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    analyticsAnimateCounter(document.getElementById('analyticsHeroRewards'), 48720, '$', '');
+    analyticsAnimateCounter(document.getElementById('analyticsHeroROI'), 1612, '', '%');
+    analyticsAnimateCounter(document.getElementById('analyticsHeroEfficiency'), 94, '', '');
+    analyticsAnimateCounter(document.getElementById('analyticsHeroInteractions'), 14892, '', '');
+    analyticsAnimateCounter(document.getElementById('analyticsHeroEcosystems'), 9, '', '');
+    analyticsAnimateCounter(document.getElementById('analyticsHeroSuccess'), 87, '', '%');
+  }, 300);
 });
 
 /* ═══════════════════════════════════════════════
