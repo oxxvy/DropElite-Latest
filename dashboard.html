@@ -14551,58 +14551,27 @@ canvas.mini-chart { width: 100% !important; }
 
         <div class="xp-bar-wrap">
           <div class="xp-bar-top">
-            <div class="xp-level">LEVEL 8 — ELITE</div>
-            <div class="xp-numbers"><span>8,420</span> / 10,000 XP</div>
+            <div class="xp-level" id="xp-level">LEVEL 1</div>
+            <div class="xp-numbers"><span id="xp-current">0</span> / <span id="xp-target">1,000</span> XP</div>
           </div>
-          <div class="xp-bg"><div class="xp-fill" style="width:84.2%"></div></div>
-          <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text-muted);margin-top:5px;">
-            1,580 XP to LEVEL 9 — MASTER
+          <div class="xp-bg"><div class="xp-fill" id="xp-fill" style="width:0%"></div></div>
+          <div id="xp-next" style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text-muted);margin-top:5px;">
+            1,000 XP to LEVEL 2
           </div>
         </div>
 
-        <div class="streak-row">
-          <div class="streak-day done"><span class="streak-checkmark">✓</span>MON</div>
-          <div class="streak-day done"><span class="streak-checkmark">✓</span>TUE</div>
-          <div class="streak-day done"><span class="streak-checkmark">✓</span>WED</div>
-          <div class="streak-day done"><span class="streak-checkmark">✓</span>THU</div>
-          <div class="streak-day today"><span class="streak-checkmark">★</span>FRI</div>
+        <div class="streak-row" id="streak-row">
+          <div class="streak-day"><span class="streak-checkmark">·</span>MON</div>
+          <div class="streak-day"><span class="streak-checkmark">·</span>TUE</div>
+          <div class="streak-day"><span class="streak-checkmark">·</span>WED</div>
+          <div class="streak-day"><span class="streak-checkmark">·</span>THU</div>
+          <div class="streak-day"><span class="streak-checkmark">·</span>FRI</div>
           <div class="streak-day"><span class="streak-checkmark">·</span>SAT</div>
           <div class="streak-day"><span class="streak-checkmark">·</span>SUN</div>
         </div>
 
-        <div style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--gold);margin-bottom:12px;text-align:center;">
-          🔥 14-DAY FARMING STREAK — KEEP IT ALIVE!
-        </div>
-
-        <div class="achievements">
-          <div class="achievement">
-            <div class="ach-icon">🥇</div>
-            <div class="ach-info">
-              <div class="ach-name">First Drop</div>
-              <div class="ach-desc">UNLOCKED</div>
-            </div>
-          </div>
-          <div class="achievement">
-            <div class="ach-icon">🔥</div>
-            <div class="ach-info">
-              <div class="ach-name">10-Day Streak</div>
-              <div class="ach-desc">UNLOCKED</div>
-            </div>
-          </div>
-          <div class="achievement" style="opacity:0.4">
-            <div class="ach-icon">💎</div>
-            <div class="ach-info">
-              <div class="ach-name">Diamond Farmer</div>
-              <div class="ach-desc">LOCKED</div>
-            </div>
-          </div>
-          <div class="achievement" style="opacity:0.4">
-            <div class="ach-icon">👑</div>
-            <div class="ach-info">
-              <div class="ach-name">Top 10 Rank</div>
-              <div class="ach-desc">IN PROGRESS</div>
-            </div>
-          </div>
+        <div id="streak-text" style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--gold);text-align:center;">
+          Start your farming streak today!
         </div>
       </div>
 
@@ -14619,41 +14588,7 @@ canvas.mini-chart { width: 100% !important; }
           </span>
         </div>
         <div class="feed-list" id="feed-list">
-          <div class="feed-item">
-            <div class="feed-dot fd-green"></div>
-            <div class="feed-text"><strong>Mission Complete</strong> — Arbitrum Liquidity Deposit finished. +150 XP</div>
-            <div class="feed-time">2m ago</div>
-          </div>
-          <div class="feed-item">
-            <div class="feed-dot fd-gold"></div>
-            <div class="feed-text"><strong>Reward Detected</strong> — LayerZero snapshot eligible wallet 0x7f...3a</div>
-            <div class="feed-time">14m ago</div>
-          </div>
-          <div class="feed-item">
-            <div class="feed-dot fd-blue"></div>
-            <div class="feed-text"><strong>New Opportunity</strong> — Scroll Alpha testnet airdrop listed. Priority: HIGH</div>
-            <div class="feed-time">31m ago</div>
-          </div>
-          <div class="feed-item">
-            <div class="feed-dot fd-orange"></div>
-            <div class="feed-text"><strong>Wallet Sync</strong> — 7 wallets synced successfully across 3 chains</div>
-            <div class="feed-time">1h ago</div>
-          </div>
-          <div class="feed-item">
-            <div class="feed-dot fd-green"></div>
-            <div class="feed-text"><strong>XP Gained</strong> — Daily login bonus +50 XP awarded</div>
-            <div class="feed-time">2h ago</div>
-          </div>
-          <div class="feed-item">
-            <div class="feed-dot fd-red"></div>
-            <div class="feed-text"><strong>Farming Alert</strong> — zkSync wallet 0x3f...a21 shows no recent activity</div>
-            <div class="feed-time">9h ago</div>
-          </div>
-          <div class="feed-item">
-            <div class="feed-dot fd-gold"></div>
-            <div class="feed-text"><strong>Streak Milestone</strong> — 14-day farming streak achieved! +500 bonus XP</div>
-            <div class="feed-time">Yesterday</div>
-          </div>
+          <div style="padding:24px;text-align:center;color:var(--text-dim);font-family:'Share Tech Mono',monospace;font-size:11px;">Loading activity…</div>
         </div>
       </div>
 
@@ -14668,44 +14603,18 @@ canvas.mini-chart { width: 100% !important; }
         <div class="chart-label-row">
           <span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
         </div>
-
-        <div style="margin-top:16px;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;margin-bottom:8px;">CHAIN ACTIVITY</div>
-        <div class="chain-activity">
-          <div class="chain-row">
-            <div class="chain-name">Arbitrum</div>
-            <div class="chain-bar-bg"><div class="chain-bar" style="width:82%;background:linear-gradient(90deg,#4af0ff,#0ea5e9)"></div></div>
-            <div class="chain-pct">82%</div>
-          </div>
-          <div class="chain-row">
-            <div class="chain-name">zkSync</div>
-            <div class="chain-bar-bg"><div class="chain-bar" style="width:67%;background:linear-gradient(90deg,#a855f7,#7c3aed)"></div></div>
-            <div class="chain-pct">67%</div>
-          </div>
-          <div class="chain-row">
-            <div class="chain-name">Optimism</div>
-            <div class="chain-bar-bg"><div class="chain-bar" style="width:54%;background:linear-gradient(90deg,#ef4444,#dc2626)"></div></div>
-            <div class="chain-pct">54%</div>
-          </div>
-          <div class="chain-row">
-            <div class="chain-name">Starknet</div>
-            <div class="chain-bar-bg"><div class="chain-bar" style="width:39%;background:linear-gradient(90deg,var(--gold),var(--gold-dim))"></div></div>
-            <div class="chain-pct">39%</div>
-          </div>
-          <div class="chain-row">
-            <div class="chain-name">Base</div>
-            <div class="chain-bar-bg"><div class="chain-bar" style="width:28%;background:linear-gradient(90deg,#22c55e,#16a34a)"></div></div>
-            <div class="chain-pct">28%</div>
-          </div>
+        <div id="mini-chart-note" style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text-muted);margin-top:8px;text-align:center;">
+          Missions completed each day
         </div>
 
-        <div style="margin-top:14px;display:flex;gap:8px;">
+        <div style="margin-top:16px;display:flex;gap:8px;">
           <div style="flex:1;background:rgba(0,232,122,0.07);border:1px solid rgba(0,232,122,0.2);border-radius:9px;padding:10px;text-align:center;">
-            <div style="font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--green)">+$1,840</div>
-            <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-muted);margin-top:2px">THIS WEEK</div>
+            <div id="mini-week-missions" style="font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--green)">0</div>
+            <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-muted);margin-top:2px">MISSIONS THIS WEEK</div>
           </div>
           <div style="flex:1;background:rgba(245,200,66,0.07);border:1px solid rgba(245,200,66,0.18);border-radius:9px;padding:10px;text-align:center;">
-            <div style="font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--gold)">+23%</div>
-            <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-muted);margin-top:2px">VS LAST WK</div>
+            <div id="mini-week-xp" style="font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--gold)">+0</div>
+            <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-muted);margin-top:2px">XP THIS WEEK</div>
           </div>
         </div>
       </div>
@@ -20585,40 +20494,101 @@ updateClock();
 })();
 
 /* ═══════════════════════════════════════════
-   MINI CHART (Canvas)
+   OVERVIEW — XP & STREAK · ACTIVITY FEED · MINI ANALYTICS
+   All LIVE from Supabase.
 ═══════════════════════════════════════════ */
 (function() {
-  const canvas = document.getElementById('mini-chart');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
 
-  const data = [42, 68, 55, 80, 90, 38, 20]; // daily activity %
-  const labels = ['M','T','W','T','F','S','S'];
+  function xpEl(id) { return document.getElementById(id); }
 
-  function draw() {
-    const W = canvas.offsetWidth || 200;
-    const H = 80;
-    canvas.width = W * window.devicePixelRatio;
-    canvas.height = H * window.devicePixelRatio;
-    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  function xpEscape(s) {
+    if (s == null) return '';
+    return String(s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
 
-    const pad = { t: 8, b: 4, l: 4, r: 4 };
-    const w = W - pad.l - pad.r;
-    const h = H - pad.t - pad.b;
-    const step = w / (data.length - 1);
+  // ── XP & STREAK panel ──
+  // Level model: every 1,000 XP = one level. Simple, honest, matches
+  // the "X XP to next level" wording elsewhere on the Overview.
+  function xpRenderProgress(totalXp, currentStreak) {
+    totalXp = totalXp || 0;
+    var level    = Math.floor(totalXp / 1000) + 1;
+    var intoLevel = totalXp % 1000;
+    var toNext   = 1000 - intoLevel;
+    var pct      = Math.round((intoLevel / 1000) * 100);
 
-    // gradient fill
-    const grad = ctx.createLinearGradient(0, pad.t, 0, pad.t + h);
+    if (xpEl('xp-level'))   xpEl('xp-level').textContent = 'LEVEL ' + level;
+    if (xpEl('xp-current')) xpEl('xp-current').textContent = totalXp.toLocaleString();
+    if (xpEl('xp-target'))  xpEl('xp-target').textContent = (level * 1000).toLocaleString();
+    if (xpEl('xp-fill'))    xpEl('xp-fill').style.width = pct + '%';
+    if (xpEl('xp-next'))    xpEl('xp-next').textContent =
+      toNext.toLocaleString() + ' XP to LEVEL ' + (level + 1);
+
+    // streak text
+    var txt = xpEl('streak-text');
+    if (txt) {
+      if (currentStreak > 0) {
+        txt.textContent = '🔥 ' + currentStreak + '-DAY FARMING STREAK — KEEP IT ALIVE!';
+      } else {
+        txt.textContent = 'Start your farming streak today!';
+      }
+    }
+  }
+
+  // ── Weekly streak dots (Mon..Sun) — green = active day, ★ = today ──
+  function xpRenderStreakDots(weekDays) {
+    var row = xpEl('streak-row');
+    if (!row) return;
+    var labels = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+    var todayIdx = (new Date().getUTCDay() + 6) % 7;   // 0 = Monday
+
+    row.innerHTML = labels.map(function(lbl, i) {
+      var active = weekDays && weekDays[i] > 0;
+      var isToday = i === todayIdx;
+      var cls = 'streak-day' + (active ? ' done' : '') + (isToday ? ' today' : '');
+      var mark = active ? '✓' : (isToday ? '★' : '·');
+      return '<div class="' + cls + '"><span class="streak-checkmark">' +
+             mark + '</span>' + lbl + '</div>';
+    }).join('');
+  }
+
+  // ── MINI ANALYTICS: weekly activity chart (real mission counts) ──
+  function xpDrawChart(days) {
+    var canvas = xpEl('mini-chart');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var data = days && days.length === 7 ? days : [0,0,0,0,0,0,0];
+
+    // scale: tallest bar = max value (min 1 so a flat week still renders)
+    var maxV = Math.max.apply(null, data.concat([1]));
+
+    var dpr = window.devicePixelRatio || 1;
+    var W = canvas.offsetWidth || 240;
+    var H = 80;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.scale(dpr, dpr);
+    ctx.clearRect(0, 0, W, H);
+
+    var pad = { t: 8, b: 4, l: 4, r: 4 };
+    var w = W - pad.l - pad.r;
+    var h = H - pad.t - pad.b;
+    var step = w / 6;   // 7 points → 6 gaps
+
+    function pointY(v) { return pad.t + h - (v / maxV) * h; }
+
+    // area fill
+    var grad = ctx.createLinearGradient(0, pad.t, 0, pad.t + h);
     grad.addColorStop(0, 'rgba(245,200,66,0.35)');
     grad.addColorStop(1, 'rgba(245,200,66,0.00)');
-
     ctx.beginPath();
-    data.forEach((v, i) => {
-      const x = pad.l + i * step;
-      const y = pad.t + h - (v / 100) * h;
+    data.forEach(function(v, i) {
+      var x = pad.l + i * step, y = pointY(v);
       i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
     });
-    ctx.lineTo(pad.l + (data.length - 1) * step, pad.t + h);
+    ctx.lineTo(pad.l + 6 * step, pad.t + h);
     ctx.lineTo(pad.l, pad.t + h);
     ctx.closePath();
     ctx.fillStyle = grad;
@@ -20626,9 +20596,8 @@ updateClock();
 
     // line
     ctx.beginPath();
-    data.forEach((v, i) => {
-      const x = pad.l + i * step;
-      const y = pad.t + h - (v / 100) * h;
+    data.forEach(function(v, i) {
+      var x = pad.l + i * step, y = pointY(v);
       i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
     });
     ctx.strokeStyle = 'rgba(245,200,66,0.9)';
@@ -20637,44 +20606,109 @@ updateClock();
     ctx.stroke();
 
     // dots
-    data.forEach((v, i) => {
-      const x = pad.l + i * step;
-      const y = pad.t + h - (v / 100) * h;
+    var todayIdx = (new Date().getUTCDay() + 6) % 7;
+    data.forEach(function(v, i) {
+      var x = pad.l + i * step, y = pointY(v);
       ctx.beginPath();
-      ctx.arc(x, y, 2.5, 0, Math.PI * 2);
-      ctx.fillStyle = i === 4 ? 'var(--gold-bright)' : 'rgba(245,200,66,0.7)';
+      ctx.arc(x, y, 2.6, 0, Math.PI * 2);
+      ctx.fillStyle = i === todayIdx ? '#FFD86B' : 'rgba(245,200,66,0.7)';
       ctx.fill();
     });
   }
 
-  draw();
-  window.addEventListener('resize', draw);
+  var xpLastDays = [0,0,0,0,0,0,0];   // remembered for resize redraws
+
+  // ── ACTIVITY FEED ──
+  function xpTimeAgo(iso) {
+    var then = new Date(iso).getTime();
+    if (isNaN(then)) return '';
+    var s = Math.floor((Date.now() - then) / 1000);
+    if (s < 60)    return 'Just now';
+    if (s < 3600)  return Math.floor(s / 60) + 'm ago';
+    if (s < 86400) return Math.floor(s / 3600) + 'h ago';
+    if (s < 172800) return 'Yesterday';
+    return Math.floor(s / 86400) + 'd ago';
+  }
+
+  function xpFeedDot(kind) {
+    if (kind === 'mission') return 'fd-green';
+    if (kind === 'reward')  return 'fd-gold';
+    if (kind === 'airdrop') return 'fd-blue';
+    if (kind === 'wallet')  return 'fd-orange';
+    return 'fd-gold';
+  }
+
+  function xpRenderFeed(events) {
+    var feed = xpEl('feed-list');
+    if (!feed) return;
+
+    if (!events.length) {
+      feed.innerHTML = '<div style="padding:24px;text-align:center;color:var(--text-dim);' +
+        'font-family:\'Share Tech Mono\',monospace;font-size:11px;line-height:1.6;">' +
+        'No activity yet.<br>Complete a mission or add a wallet — ' +
+        'your events will appear here.</div>';
+      return;
+    }
+
+    feed.innerHTML = events.map(function(ev) {
+      var detail = ev.detail ? ' — ' + xpEscape(ev.detail) : '';
+      return '' +
+        '<div class="feed-item">' +
+          '<div class="feed-dot ' + xpFeedDot(ev.kind) + '"></div>' +
+          '<div class="feed-text"><strong>' + xpEscape(ev.title) + '</strong>' + detail + '</div>' +
+          '<div class="feed-time">' + xpTimeAgo(ev.created_at) + '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  // ── Master loader for all three panels ──
+  async function xpLoadAll() {
+    if (!window.API || !window.API.isLive || !window.API.isLive()) return;
+
+    try {
+      // Run the three reads in parallel
+      var results = await Promise.all([
+        window.API.getProgress(),
+        window.API.getWeeklyActivity(),
+        window.API.getActivityFeed(20)
+      ]);
+      var progress = results[0] || {};
+      var weekly   = results[1] || { days: [0,0,0,0,0,0,0], totalMissions: 0, totalXp: 0 };
+      var feed     = results[2] || [];
+
+      // XP & Streak panel
+      xpRenderProgress(progress.total_xp, progress.current_streak);
+      xpRenderStreakDots(weekly.days);
+
+      // Mini Analytics
+      xpLastDays = weekly.days;
+      xpDrawChart(weekly.days);
+      if (xpEl('mini-week-missions'))
+        xpEl('mini-week-missions').textContent = weekly.totalMissions;
+      if (xpEl('mini-week-xp'))
+        xpEl('mini-week-xp').textContent = '+' + (weekly.totalXp || 0).toLocaleString();
+
+      // Activity Feed
+      xpRenderFeed(feed);
+    } catch (e) {
+      console.error('xpLoadAll:', e);
+    }
+  }
+
+  // redraw chart on window resize (canvas needs re-scaling)
+  window.addEventListener('resize', function() { xpDrawChart(xpLastDays); });
+
+  // refresh when returning to the Overview tab
+  document.addEventListener('dropelite:tabchange', function(e) {
+    if (e.detail && e.detail.tabName === 'overview') xpLoadAll();
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(xpLoadAll, 700);
+  });
+
 })();
 
-/* ═══════════════════════════════════════════
-   LIVE FEED SIMULATION
-═══════════════════════════════════════════ */
-const newEvents = [
-  { color: 'fd-green', text: '<strong>Mission Complete</strong> — LayerZero bridge executed +180 XP', time: 'Just now' },
-  { color: 'fd-gold',  text: '<strong>New Airdrop Listed</strong> — Linea mainnet farm opportunity detected', time: 'Just now' },
-  { color: 'fd-blue',  text: '<strong>Wallet Synced</strong> — 0x9a...44f synced on Arbitrum One', time: 'Just now' },
-];
-let evIdx = 0;
-setInterval(function() {
-  const ev = newEvents[evIdx % newEvents.length];
-  evIdx++;
-  const feed = document.getElementById('feed-list');
-  const item = document.createElement('div');
-  item.className = 'feed-item';
-  item.style.animation = 'feedIn 0.4s ease both';
-  item.innerHTML = `
-    <div class="feed-dot ${ev.color}"></div>
-    <div class="feed-text">${ev.text}</div>
-    <div class="feed-time">${ev.time}</div>
-  `;
-  feed.insertBefore(item, feed.firstChild);
-  if (feed.children.length > 9) feed.removeChild(feed.lastChild);
-}, 8000);
 /* START DASHBOARD TAB SWITCHING */
 (function() {
   function setActiveTab(tabName) {
