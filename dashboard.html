@@ -20421,11 +20421,15 @@ updateClock();
 
   function gwEl(id) { return document.getElementById(id); }
 
-  // round to a sensible number of decimals (gas can be < 1 gwei now)
+  // Format gwei with enough precision. Gas is often < 1 gwei today,
+  // so we scale decimal places to the size of the number.
   function gwFmt(v) {
     var n = Number(v);
     if (isNaN(n)) return '--';
-    return n >= 10 ? Math.round(n) : n.toFixed(1);
+    if (n >= 100) return String(Math.round(n));        // 120
+    if (n >= 10)  return n.toFixed(1);                  // 24.5
+    if (n >= 1)   return n.toFixed(2);                  // 4.82
+    return n.toFixed(3);                                // 0.174
   }
 
   async function gwFetchGas() {
