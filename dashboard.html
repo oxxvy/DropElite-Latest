@@ -15059,70 +15059,14 @@ canvas.mini-chart { width: 100% !important; }
             <div class="section-title">
               <span class="title-icon">⚡</span>
               HIGH PRIORITY TARGETS
-              <span class="title-count">3 URGENT</span>
+              <span class="title-count" id="hpt-count">0 URGENT</span>
             </div>
             <div class="section-actions">
-              <button class="btn btn-ghost" style="font-size:11px;padding:6px 14px;">View All Intel</button>
+              <button class="btn btn-ghost" style="font-size:11px;padding:6px 14px;" data-tab-target="intel-hub">View All Intel</button>
             </div>
           </div>
-          <div class="priority-grid">
-            <div class="priority-card" onclick="airdropShowToast('🎯', 'LayerZero', 'Opening full farming route...')">
-              <div class="priority-badge badge-hot">🔥 HOTTEST PLAY</div>
-              <div class="priority-name">LAYERZERO</div>
-              <div class="priority-chain">ETH · OMNICHAIN · DEFI</div>
-              <div class="priority-meta">
-                <div>
-                  <div class="priority-reward-label">EST. REWARD</div>
-                  <div class="priority-reward">$3,200</div>
-                </div>
-                <div class="countdown-block">
-                  <div class="countdown-value" id="cd1">14d 06h</div>
-                  <div class="countdown-label">SNAPSHOT</div>
-                </div>
-              </div>
-              <div class="priority-progress">
-                <div class="progress-pct"><span>Completion</span><span>82%</span></div>
-                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:82%"></div></div>
-              </div>
-            </div>
-            <div class="priority-card" onclick="airdropShowToast('🐋', 'ZkSync', 'Whale opportunity detected...')">
-              <div class="priority-badge badge-whale">🐋 WHALE TIER</div>
-              <div class="priority-name">ZKSYNC ERA</div>
-              <div class="priority-chain">ETH L2 · ZK-ROLLUP · INFRA</div>
-              <div class="priority-meta">
-                <div>
-                  <div class="priority-reward-label">EST. REWARD</div>
-                  <div class="priority-reward">$8,500</div>
-                </div>
-                <div class="countdown-block">
-                  <div class="countdown-value" style="color:var(--orange)">21d 14h</div>
-                  <div class="countdown-label">DEADLINE</div>
-                </div>
-              </div>
-              <div class="priority-progress">
-                <div class="progress-pct"><span>Completion</span><span>61%</span></div>
-                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:61%;background:linear-gradient(90deg,#7c3aed,#a78bfa)"></div></div>
-              </div>
-            </div>
-            <div class="priority-card" onclick="airdropShowToast('⚠️', 'Scroll', 'URGENT: Snapshot in 3 days!')">
-              <div class="priority-badge badge-urgent">⚡ URGENT WINDOW</div>
-              <div class="priority-name">SCROLL</div>
-              <div class="priority-chain">ETH L2 · ZK · ECOSYSTEM</div>
-              <div class="priority-meta">
-                <div>
-                  <div class="priority-reward-label">EST. REWARD</div>
-                  <div class="priority-reward">$1,800</div>
-                </div>
-                <div class="countdown-block">
-                  <div class="countdown-value">3d 02h</div>
-                  <div class="countdown-label">SNAPSHOT</div>
-                </div>
-              </div>
-              <div class="priority-progress">
-                <div class="progress-pct"><span>Completion</span><span>45%</span></div>
-                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:45%;background:linear-gradient(90deg,var(--red-alert),var(--orange))"></div></div>
-              </div>
-            </div>
+          <div class="priority-grid" id="hpt-grid">
+            <div style="grid-column:1/-1;padding:28px;text-align:center;color:var(--text-muted);font-size:12px;font-family:'Share Tech Mono',monospace;">Loading priority targets…</div>
           </div>
         </div>
 
@@ -15233,73 +15177,8 @@ canvas.mini-chart { width: 100% !important; }
                 DEADLINE & SNAPSHOT CENTER
               </div>
             </div>
-            <div class="deadline-list">
-              <div class="deadline-item urgent">
-                <div class="deadline-color dc-red"></div>
-                <div class="deadline-info">
-                  <div class="deadline-name">Scroll Network</div>
-                  <div class="deadline-type">MAINNET SNAPSHOT • HIGH PRIORITY</div>
-                </div>
-                <div>
-                  <div class="deadline-time red" id="deadline1">3d 02h 14m</div>
-                  <div class="deadline-time-label">REMAINING</div>
-                </div>
-              </div>
-              <div class="deadline-item urgent">
-                <div class="deadline-color dc-red"></div>
-                <div class="deadline-info">
-                  <div class="deadline-name">Hyperliquid — Claim Window</div>
-                  <div class="deadline-type">CLAIM DEADLINE • ACT NOW</div>
-                </div>
-                <div>
-                  <div class="deadline-time red">5d 18h 30m</div>
-                  <div class="deadline-time-label">EXPIRES</div>
-                </div>
-              </div>
-              <div class="deadline-item">
-                <div class="deadline-color dc-gold"></div>
-                <div class="deadline-info">
-                  <div class="deadline-name">LayerZero — Final Interactions</div>
-                  <div class="deadline-type">SNAPSHOT PREPARATION</div>
-                </div>
-                <div>
-                  <div class="deadline-time gold">14d 06h 52m</div>
-                  <div class="deadline-time-label">TO SNAPSHOT</div>
-                </div>
-              </div>
-              <div class="deadline-item">
-                <div class="deadline-color dc-gold"></div>
-                <div class="deadline-info">
-                  <div class="deadline-name">Celestia Staking Rewards</div>
-                  <div class="deadline-type">STAKING DEADLINE • EPOCH END</div>
-                </div>
-                <div>
-                  <div class="deadline-time gold">18d 00h 15m</div>
-                  <div class="deadline-time-label">REMAINING</div>
-                </div>
-              </div>
-              <div class="deadline-item">
-                <div class="deadline-color dc-cyan"></div>
-                <div class="deadline-info">
-                  <div class="deadline-name">ZkSync Era — Volume Milestone</div>
-                  <div class="deadline-type">VOLUME THRESHOLD</div>
-                </div>
-                <div>
-                  <div class="deadline-time" style="color:var(--cyan)">21d 14h 08m</div>
-                  <div class="deadline-time-label">TO DEADLINE</div>
-                </div>
-              </div>
-              <div class="deadline-item">
-                <div class="deadline-color dc-green"></div>
-                <div class="deadline-info">
-                  <div class="deadline-name">Arbitrum Nova — Governance Vote</div>
-                  <div class="deadline-type">DAO PARTICIPATION</div>
-                </div>
-                <div>
-                  <div class="deadline-time green">34d 10h 20m</div>
-                  <div class="deadline-time-label">TO VOTE</div>
-                </div>
-              </div>
+            <div class="deadline-list" id="deadline-list">
+              <div style="padding:24px;text-align:center;color:var(--text-muted);font-size:12px;font-family:'Share Tech Mono',monospace;">Loading deadlines…</div>
             </div>
           </div>
 
@@ -15312,73 +15191,13 @@ canvas.mini-chart { width: 100% !important; }
             </div>
             <div class="intel-body">
               <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px;">TRENDING ECOSYSTEMS</div>
-              <div class="intel-item">
-                <div class="intel-dot" style="background:#00d4ff;box-shadow:0 0 8px #00d4ff"></div>
-                <div>
-                  <div class="intel-item-name">zkSync Ecosystem</div>
-                  <div class="intel-item-meta">LAYER 2 • 14 active protocols</div>
-                </div>
-                <div class="intel-item-value">↑ HOT</div>
-              </div>
-              <div class="intel-item">
-                <div class="intel-dot" style="background:#f0b429;box-shadow:0 0 8px #f0b429"></div>
-                <div>
-                  <div class="intel-item-name">Cosmos IBC</div>
-                  <div class="intel-item-meta">INTERCHAIN • 8 protocols</div>
-                </div>
-                <div class="intel-item-value">↑ $240M</div>
-              </div>
-              <div class="intel-item">
-                <div class="intel-dot" style="background:#00e676;box-shadow:0 0 8px #00e676"></div>
-                <div>
-                  <div class="intel-item-name">Starknet DeFi</div>
-                  <div class="intel-item-meta">ZK-STARK • 6 protocols</div>
-                </div>
-                <div class="intel-item-value">NEW</div>
+              <div id="intel-ecosystems">
+                <div style="padding:14px;text-align:center;color:var(--text-muted);font-size:11px;font-family:'Share Tech Mono',monospace;">Loading…</div>
               </div>
 
               <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--text-muted);text-transform:uppercase;margin:14px 0 10px;">RECENT FUNDING ROUNDS</div>
-              <div class="intel-item">
-                <div class="intel-dot" style="background:#a78bfa;box-shadow:0 0 8px #a78bfa"></div>
-                <div>
-                  <div class="intel-item-name">EigenLayer</div>
-                  <div class="intel-item-meta">RESTAKING • Series B</div>
-                </div>
-                <div class="intel-item-value">$100M</div>
-              </div>
-              <div class="intel-item">
-                <div class="intel-dot" style="background:#ff8c00;box-shadow:0 0 8px #ff8c00"></div>
-                <div>
-                  <div class="intel-item-name">Monad Labs</div>
-                  <div class="intel-item-meta">EVM L1 • Series A</div>
-                </div>
-                <div class="intel-item-value">$19M</div>
-              </div>
-              <div class="intel-item">
-                <div class="intel-dot" style="background:#f0b429;box-shadow:0 0 8px #f0b429"></div>
-                <div>
-                  <div class="intel-item-name">Berachain</div>
-                  <div class="intel-item-meta">POL CONSENSUS • Seed</div>
-                </div>
-                <div class="intel-item-value">$42M</div>
-              </div>
-
-              <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--text-muted);text-transform:uppercase;margin:14px 0 10px;">RUMORED SNAPSHOTS</div>
-              <div class="intel-item">
-                <div class="intel-dot" style="background:#ff3b6b;box-shadow:0 0 8px #ff3b6b;animation: airdrop-pulse 1.5s infinite"></div>
-                <div>
-                  <div class="intel-item-name">Fuel Network</div>
-                  <div class="intel-item-meta">MODULAR L1 • UNCONFIRMED</div>
-                </div>
-                <div class="intel-item-value" style="color:var(--red-alert)">⚠ SOON</div>
-              </div>
-              <div class="intel-item">
-                <div class="intel-dot" style="background:#ff3b6b;box-shadow:0 0 8px #ff3b6b;animation: airdrop-pulse 2s infinite"></div>
-                <div>
-                  <div class="intel-item-name">Taiko Protocol</div>
-                  <div class="intel-item-meta">ETH L2 • Q2 RUMORED</div>
-                </div>
-                <div class="intel-item-value" style="color:var(--red-alert)">⚠ Q2</div>
+              <div id="intel-funding">
+                <div style="padding:14px;text-align:center;color:var(--text-muted);font-size:11px;font-family:'Share Tech Mono',monospace;">Loading…</div>
               </div>
             </div>
           </div>
@@ -15390,103 +15209,12 @@ canvas.mini-chart { width: 100% !important; }
             <div class="section-title">
               <span class="title-icon">◎</span>
               WALLET PARTICIPATION SYSTEM
-              <span class="title-count">4 WALLETS</span>
+              <span class="title-count" id="atw-count">0 WALLETS</span>
             </div>
-            <button class="btn btn-ghost" style="font-size:11px;padding:6px 14px;" onclick="airdropShowToast('➕', 'Add Wallet', 'Connect a new wallet to the system')">＋ Add Wallet</button>
+            <button class="btn btn-ghost" style="font-size:11px;padding:6px 14px;" data-tab-target="wallets">＋ Add Wallet</button>
           </div>
-          <div class="wallet-grid">
-            <div class="wallet-card" style="--accent:#00d4ff">
-              <div class="wallet-addr">0x4f3a...b892</div>
-              <div class="wallet-name">Farming Wallet Alpha</div>
-              <div class="wallet-stats">
-                <div class="wallet-stat-row">
-                  <span class="wallet-stat-label">AIRDROPS</span>
-                  <span class="wallet-stat-val text-gold">14</span>
-                </div>
-                <div class="wallet-stat-row">
-                  <span class="wallet-stat-label">SCORE</span>
-                  <span class="wallet-stat-val" style="color:var(--green-safe)">94/100</span>
-                </div>
-                <div class="wallet-stat-row">
-                  <span class="wallet-stat-label">SYBIL RISK</span>
-                  <span class="wallet-stat-val" style="color:var(--green-safe)">LOW</span>
-                </div>
-                <div class="wallet-stat-row">
-                  <span class="wallet-stat-label">TX COUNT</span>
-                  <span class="wallet-stat-val">847</span>
-                </div>
-              </div>
-              <div class="health-bar"><div class="health-fill" style="width:94%;background:var(--green-safe)"></div></div>
-            </div>
-            <div class="wallet-card" style="--accent:#f0b429">
-              <div class="wallet-addr">0x7c21...e441</div>
-              <div class="wallet-name">Whale Wallet Beta</div>
-              <div class="wallet-stats">
-                <div class="wallet-stat-row">
-                  <span class="wallet-stat-label">AIRDROPS</span>
-                  <span class="wallet-stat-val text-gold">9</span>
-                </div>
-                <div class="wallet-stat-row">
-                  <span class="wallet-stat-label">SCORE</span>
-                  <span class="wallet-stat-val" style="color:var(--gold)">82/100</span>
-                </div>
-                <div class="wallet-stat-row">
-                  <span class="wallet-stat-label">SYBIL RISK</span>
-                  <span class="wallet-stat-val" style="color:var(--gold)">MED</span>
-                </div>
-                <div class="wallet-stat-row">
-                  <span class="wallet-stat-label">TX COUNT</span>
-                  <span class="wallet-stat-val">392</span>
-                </div>
-              </div>
-              <div class="health-bar"><div class="health-fill" style="width:82%;background:var(--gold)"></div></div>
-            </div>
-            <div class="wallet-card" style="--accent:#00e676">
-              <div class="wallet-addr">0xa9f5...d31c</div>
-              <div class="wallet-name">Clean Wallet Gamma</div>
-              <div class="wallet-stats">
-                <div class="wallet-stat-row">
-                  <span class="wallet-stat-label">AIRDROPS</span>
-                  <span class="wallet-stat-val text-gold">7</span>
-                </div>
-                <div class="wallet-stat-row">
-                  <span class="wallet-stat-label">SCORE</span>
-                  <span class="wallet-stat-val" style="color:var(--green-safe)">98/100</span>
-                </div>
-                <div class="wallet-stat-row">
-                  <span class="wallet-stat-label">SYBIL RISK</span>
-                  <span class="wallet-stat-val" style="color:var(--green-safe)">NONE</span>
-                </div>
-                <div class="wallet-stat-row">
-                  <span class="wallet-stat-label">TX COUNT</span>
-                  <span class="wallet-stat-val">214</span>
-                </div>
-              </div>
-              <div class="health-bar"><div class="health-fill" style="width:98%;background:var(--green-safe)"></div></div>
-            </div>
-            <div class="wallet-card" style="--accent:#a78bfa">
-              <div class="wallet-addr">0xd820...7f6a</div>
-              <div class="wallet-name">Reserve Wallet Delta</div>
-              <div class="wallet-stats">
-                <div class="wallet-stat-row">
-                  <span class="wallet-stat-label">AIRDROPS</span>
-                  <span class="wallet-stat-val text-gold">4</span>
-                </div>
-                <div class="wallet-stat-row">
-                  <span class="wallet-stat-label">SCORE</span>
-                  <span class="wallet-stat-val" style="color:#a78bfa">71/100</span>
-                </div>
-                <div class="wallet-stat-row">
-                  <span class="wallet-stat-label">SYBIL RISK</span>
-                  <span class="wallet-stat-val" style="color:var(--orange)">MED+</span>
-                </div>
-                <div class="wallet-stat-row">
-                  <span class="wallet-stat-label">TX COUNT</span>
-                  <span class="wallet-stat-val">128</span>
-                </div>
-              </div>
-              <div class="health-bar"><div class="health-fill" style="width:71%;background:#a78bfa"></div></div>
-            </div>
+          <div class="wallet-grid" id="atw-grid">
+            <div style="grid-column:1/-1;padding:28px;text-align:center;color:var(--text-muted);font-size:12px;font-family:'Share Tech Mono',monospace;">Loading wallets…</div>
           </div>
         </div>
 
@@ -15498,42 +15226,14 @@ canvas.mini-chart { width: 100% !important; }
               FARMING ANALYTICS
             </div>
           </div>
-          <div class="analytics-grid">
-            <div class="analytics-card">
-              <div class="analytics-label">FARMING SUCCESS RATE</div>
-              <div class="analytics-value gold">78.4%</div>
-              <div style="font-size:11px;color:var(--text-muted)">47 of 60 completed</div>
-              <div class="mini-chart" id="chart1"></div>
-            </div>
-            <div class="analytics-card">
-              <div class="analytics-label">AVG REWARD / AIRDROP</div>
-              <div class="analytics-value green">$1,240</div>
-              <div style="font-size:11px;color:var(--text-muted)">vs $340 platform avg</div>
-              <div class="mini-chart" id="chart2"></div>
-            </div>
-            <div class="analytics-card">
-              <div class="analytics-label">TOP ECOSYSTEM EXPOSURE</div>
-              <div class="analytics-value cyan">zkSync</div>
-              <div style="font-size:11px;color:var(--text-muted)">6 active protocols</div>
-              <div class="mini-chart" id="chart3"></div>
-            </div>
-            <div class="analytics-card">
-              <div class="analytics-label">TOTAL INTERACTIONS</div>
-              <div class="analytics-value gold">1,581</div>
-              <div style="font-size:11px;color:var(--text-muted)">Across 4 wallets</div>
-              <div class="mini-chart" id="chart4"></div>
-            </div>
-            <div class="analytics-card">
-              <div class="analytics-label">FARMING CONSISTENCY</div>
-              <div class="analytics-value green">92%</div>
-              <div style="font-size:11px;color:var(--text-muted)">97-day active streak</div>
-              <div class="mini-chart" id="chart5"></div>
-            </div>
-            <div class="analytics-card">
-              <div class="analytics-label">WALLET EFFICIENCY</div>
-              <div class="analytics-value gold">3.4x</div>
-              <div style="font-size:11px;color:var(--text-muted)">Vs cost ratio</div>
-              <div class="mini-chart" id="chart6"></div>
+          <div style="background:var(--bg-card,rgba(14,17,30,0.6));border:1px solid var(--border,rgba(255,255,255,0.08));border-radius:12px;padding:28px 24px;text-align:center;">
+            <div style="font-size:30px;margin-bottom:10px;">📊</div>
+            <div style="font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--text-primary,#fff);letter-spacing:1px;margin-bottom:8px;">FARMING ANALYTICS — COMING IN PHASE 4</div>
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.6;max-width:560px;margin:0 auto;">
+              Success rate, average reward, wallet efficiency and consistency need
+              on-chain transaction history to be calculated accurately. These metrics
+              unlock once blockchain data integration (Phase 4) is live — so the
+              numbers shown will be real, not estimated.
             </div>
           </div>
         </div>
@@ -21241,7 +20941,7 @@ async function airdropLoadFromSupabase() {
 }
 
 // ─── REAL STATS (computed from the user's airdrop data) ───
-function airdropUpdateStats() {
+async function airdropUpdateStats() {
   const data = airdropTrackerData;
 
   // Active Opportunities = airdrops not yet finished (not claimed/completed/missed)
@@ -21265,8 +20965,33 @@ function airdropUpdateStats() {
   setText('adStatPending', pendingCount);
   setText('adStatPendingSub', pendingCount === 1 ? 'being farmed' : 'being farmed');
 
-  // The other 3 (Success Rate, Wallets Active, Snapshot Alerts) stay "—"
-  // until their data systems exist (Wallets tab, deadline field, etc.)
+  // Wallets Active — real count from the wallets table
+  try {
+    if (window.API && window.API.isLive && window.API.isLive()) {
+      const wallets = await window.API.getWallets();
+      setText('adStatWallets', wallets.length);
+      const sub = document.querySelector('#adStatWallets + .stat-delta');
+      if (sub) sub.textContent = wallets.length === 1 ? 'wallet tracked' : 'wallets tracked';
+    }
+  } catch (e) { console.error('airdrop stats — wallets:', e); }
+
+  // Snapshot Alerts — count of upcoming admin-published deadline alerts
+  try {
+    if (window.API && window.API.getAlerts) {
+      const alerts = await window.API.getAlerts();
+      const now = Date.now();
+      const upcoming = alerts.filter(a => {
+        if (!a.deadline) return false;
+        const dl = new Date(a.deadline).getTime();
+        return !isNaN(dl) && dl > now;
+      }).length;
+      setText('adStatSnapshot', upcoming);
+      const sub = document.querySelector('#adStatSnapshot + .stat-delta');
+      if (sub) sub.textContent = 'upcoming deadlines';
+    }
+  } catch (e) { console.error('airdrop stats — snapshot:', e); }
+
+  // Success Rate stays "—" until claimed-vs-missed history exists.
 }
 
 // ─── HELPERS ───
@@ -21595,6 +21320,320 @@ async function walletLoadFromSupabase() {
     console.error('walletLoadFromSupabase:', e);
   }
 }
+
+/* ════════════════════════════════
+   AIRDROP TRACKER — Section 5
+   Wallet Participation cards · LIVE (Supabase)
+   Real: name, address, chains, status, label.
+   Score / Sybil Risk / TX Count need blockchain
+   data → shown as "Phase 4", never faked.
+   ════════════════════════════════ */
+function atwEscape(s) {
+  if (s == null) return '';
+  return String(s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function atwShortAddr(addr) {
+  if (!addr) return 'No address';
+  var a = String(addr).trim();
+  if (a.length <= 14) return a;
+  return a.slice(0, 6) + '…' + a.slice(-4);
+}
+
+// a small palette so cards aren't all the same accent colour
+var ATW_ACCENTS = ['#00d4ff', '#f0b429', '#00e676', '#a78bfa', '#ff6b9d', '#4af0ff'];
+
+function atwRenderWallets(wallets) {
+  var grid  = document.getElementById('atw-grid');
+  var count = document.getElementById('atw-count');
+  if (!grid) return;
+
+  if (count) {
+    count.textContent = wallets.length +
+      (wallets.length === 1 ? ' WALLET' : ' WALLETS');
+  }
+
+  if (!wallets.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;padding:28px;text-align:center;' +
+      'color:var(--text-muted);font-size:12px;font-family:\'Share Tech Mono\',monospace;' +
+      'line-height:1.6;">No wallets yet.<br>Add wallets from the Wallets tab — ' +
+      'they\'ll appear here.</div>';
+    return;
+  }
+
+  grid.innerHTML = wallets.map(function(w, i) {
+    var accent = ATW_ACCENTS[i % ATW_ACCENTS.length];
+    var chains = w.chains ? atwEscape(w.chains) : '—';
+    var status = w.status ? atwEscape(w.status) : 'active';
+    return '' +
+      '<div class="wallet-card" style="--accent:' + accent + '">' +
+        '<div class="wallet-addr">' + atwShortAddr(w.address) + '</div>' +
+        '<div class="wallet-name">' + atwEscape(w.name || 'Unnamed Wallet') + '</div>' +
+        '<div class="wallet-stats">' +
+          '<div class="wallet-stat-row">' +
+            '<span class="wallet-stat-label">CHAINS</span>' +
+            '<span class="wallet-stat-val text-gold">' + chains + '</span>' +
+          '</div>' +
+          '<div class="wallet-stat-row">' +
+            '<span class="wallet-stat-label">STATUS</span>' +
+            '<span class="wallet-stat-val">' + status + '</span>' +
+          '</div>' +
+          '<div class="wallet-stat-row">' +
+            '<span class="wallet-stat-label">SCORE</span>' +
+            '<span class="wallet-stat-val" style="color:var(--text-muted);font-size:10px;">PHASE 4</span>' +
+          '</div>' +
+          '<div class="wallet-stat-row">' +
+            '<span class="wallet-stat-label">SYBIL RISK</span>' +
+            '<span class="wallet-stat-val" style="color:var(--text-muted);font-size:10px;">PHASE 4</span>' +
+          '</div>' +
+        '</div>' +
+        (w.label
+          ? '<div style="font-size:10px;color:var(--text-muted);font-family:\'Share Tech Mono\',monospace;margin-top:8px;">🏷 ' + atwEscape(w.label) + '</div>'
+          : '') +
+      '</div>';
+  }).join('');
+}
+
+async function atwLoadWallets() {
+  var grid = document.getElementById('atw-grid');
+  if (!window.API || !window.API.isLive || !window.API.isLive()) {
+    if (grid) grid.innerHTML = '<div style="grid-column:1/-1;padding:28px;text-align:center;' +
+      'color:var(--text-muted);font-size:12px;font-family:\'Share Tech Mono\',monospace;">' +
+      'Supabase not connected. Check api.js keys.</div>';
+    return;
+  }
+  try {
+    var wallets = await window.API.getWallets();
+    atwRenderWallets(wallets);
+  } catch (e) {
+    console.error('atwLoadWallets:', e);
+  }
+}
+
+// Load on first open + whenever the user returns to the Airdrop Tracker tab
+document.addEventListener('dropelite:tabchange', function(e) {
+  if (e.detail && e.detail.tabName === 'airdrop-tracker') {
+    atwLoadWallets();
+    atIntelLoadAll();
+  }
+});
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    atwLoadWallets();
+    atIntelLoadAll();
+  }, 750);
+});
+
+/* ════════════════════════════════
+   AIRDROP TRACKER — Sections 2, 3, 4
+   High Priority Targets · Deadline Center · Alpha Intelligence
+   All LIVE from the admin-published intel_* tables.
+   ════════════════════════════════ */
+function atIntelEscape(s) {
+  if (s == null) return '';
+  return String(s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+// countdown: ms → "3d 02h 14m" (or "2h 30m" when under a day)
+function atIntelCountdown(ms) {
+  if (ms <= 0) return 'Expired';
+  var d = Math.floor(ms / 86400000);
+  var h = Math.floor((ms % 86400000) / 3600000);
+  var m = Math.floor((ms % 3600000) / 60000);
+  var pad = function(n) { return String(n).padStart(2, '0'); };
+  if (d > 0) return d + 'd ' + pad(h) + 'h ' + pad(m) + 'm';
+  return pad(h) + 'h ' + pad(m) + 'm';
+}
+
+// ── SECTION 2: High Priority Targets (intel_opportunities) ──
+async function atIntelLoadOpportunities() {
+  var grid  = document.getElementById('hpt-grid');
+  var count = document.getElementById('hpt-count');
+  if (!grid) return;
+
+  try {
+    var opps = await window.API.getOpportunities();
+
+    // "urgent" count = opportunities flagged urgent
+    var urgent = opps.filter(function(o) { return o.urgency; }).length;
+    if (count) count.textContent = urgent + (urgent === 1 ? ' URGENT' : ' URGENT');
+
+    if (!opps.length) {
+      grid.innerHTML = '<div style="grid-column:1/-1;padding:28px;text-align:center;' +
+        'color:var(--text-muted);font-size:12px;font-family:\'Share Tech Mono\',monospace;">' +
+        'No priority targets published yet.</div>';
+      return;
+    }
+
+    // show the top 3 (featured first, then by display_order)
+    var top = opps.slice().sort(function(a, b) {
+      if (!!b.featured !== !!a.featured) return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
+      return (a.display_order || 0) - (b.display_order || 0);
+    }).slice(0, 3);
+
+    var now = Date.now();
+    grid.innerHTML = top.map(function(o) {
+      // badge — use the first admin badge, or a default
+      var badge = (Array.isArray(o.badges) && o.badges[0] && o.badges[0].t)
+        ? '<div class="priority-badge badge-hot">' + atIntelEscape(o.badges[0].t) + '</div>'
+        : (o.featured ? '<div class="priority-badge badge-hot">🔥 FEATURED</div>' : '');
+
+      // countdown from the real deadline
+      var cdHtml = '';
+      if (o.deadline) {
+        var ms = new Date(o.deadline).getTime() - now;
+        var col = ms < 3 * 86400000 ? 'var(--red-alert)'
+                : (ms < 14 * 86400000 ? 'var(--orange)' : 'var(--gold)');
+        cdHtml = '<div class="countdown-block">' +
+          '<div class="countdown-value" style="color:' + col + '">' + atIntelCountdown(ms) + '</div>' +
+          '<div class="countdown-label">DEADLINE</div></div>';
+      }
+
+      // completion bar (real admin value)
+      var pct = Math.max(0, Math.min(100, o.completion_pct || 0));
+      var progHtml = '<div class="priority-progress">' +
+        '<div class="progress-pct"><span>Completion</span><span>' + pct + '%</span></div>' +
+        '<div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + pct + '%"></div></div>' +
+        '</div>';
+
+      return '<div class="priority-card">' +
+        badge +
+        '<div class="priority-name">' + atIntelEscape(o.name || '') + '</div>' +
+        '<div class="priority-chain">' + atIntelEscape(o.chain || '—') + '</div>' +
+        '<div class="priority-meta">' +
+          '<div><div class="priority-reward-label">EST. REWARD</div>' +
+          '<div class="priority-reward">' + atIntelEscape(o.reward || '—') + '</div></div>' +
+          cdHtml +
+        '</div>' +
+        progHtml +
+      '</div>';
+    }).join('');
+  } catch (e) {
+    console.error('atIntelLoadOpportunities:', e);
+  }
+}
+
+// ── SECTION 3: Deadline & Snapshot Center (intel_alerts) ──
+async function atIntelLoadDeadlines() {
+  var list = document.getElementById('deadline-list');
+  if (!list) return;
+
+  try {
+    var alerts = await window.API.getAlerts();
+    var now = Date.now();
+
+    // keep only alerts with a future deadline, soonest first
+    var rows = alerts
+      .filter(function(a) {
+        if (!a.deadline) return false;
+        return new Date(a.deadline).getTime() > now;
+      })
+      .sort(function(a, b) {
+        return new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
+      });
+
+    if (!rows.length) {
+      list.innerHTML = '<div style="padding:24px;text-align:center;color:var(--text-muted);' +
+        'font-size:12px;font-family:\'Share Tech Mono\',monospace;line-height:1.6;">' +
+        'No upcoming deadlines published.<br>You\'re all clear. ✓</div>';
+      return;
+    }
+
+    list.innerHTML = rows.map(function(a) {
+      var ms = new Date(a.deadline).getTime() - now;
+      // colour by urgency
+      var dc, timeCol, urgentCls;
+      if (ms < 3 * 86400000)      { dc = 'dc-red';  timeCol = 'red';   urgentCls = ' urgent'; }
+      else if (ms < 14 * 86400000){ dc = 'dc-gold'; timeCol = 'gold';  urgentCls = ''; }
+      else if (ms < 25 * 86400000){ dc = 'dc-cyan'; timeCol = '';      urgentCls = ''; }
+      else                        { dc = 'dc-green';timeCol = 'green'; urgentCls = ''; }
+
+      var timeStyle = timeCol === '' ? ' style="color:var(--cyan)"' : '';
+      var timeClass = timeCol === '' ? 'deadline-time' : 'deadline-time ' + timeCol;
+      var typeText = (a.priority ? a.priority + ' PRIORITY' : 'DEADLINE') +
+                     (a.description ? ' • ' + a.description : '');
+
+      return '<div class="deadline-item' + urgentCls + '">' +
+        '<div class="deadline-color ' + dc + '"></div>' +
+        '<div class="deadline-info">' +
+          '<div class="deadline-name">' + atIntelEscape(a.name || 'Event') + '</div>' +
+          '<div class="deadline-type">' + atIntelEscape(typeText) + '</div>' +
+        '</div>' +
+        '<div>' +
+          '<div class="' + timeClass + '"' + timeStyle + '>' + atIntelCountdown(ms) + '</div>' +
+          '<div class="deadline-time-label">REMAINING</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  } catch (e) {
+    console.error('atIntelLoadDeadlines:', e);
+  }
+}
+
+// ── SECTION 4: Alpha Intelligence (intel_ecosystems + intel_funding) ──
+async function atIntelLoadAlpha() {
+  var ecoBox  = document.getElementById('intel-ecosystems');
+  var fundBox = document.getElementById('intel-funding');
+
+  // Trending ecosystems
+  if (ecoBox) {
+    try {
+      var ecos = await window.API.getEcosystems();
+      if (!ecos.length) {
+        ecoBox.innerHTML = '<div style="padding:14px;text-align:center;color:var(--text-muted);' +
+          'font-size:11px;font-family:\'Share Tech Mono\',monospace;">None published yet.</div>';
+      } else {
+        ecoBox.innerHTML = ecos.slice(0, 6).map(function(e) {
+          var color = e.accent_color || '#00d4ff';
+          var meta = (e.subtitle || '') +
+            (e.protocols ? ' • ' + e.protocols + ' protocols' : '');
+          var val = e.momentum || e.growth || 'TRENDING';
+          return '<div class="intel-item">' +
+            '<div class="intel-dot" style="background:' + color + ';box-shadow:0 0 8px ' + color + '"></div>' +
+            '<div><div class="intel-item-name">' + atIntelEscape(e.name || '') + '</div>' +
+            '<div class="intel-item-meta">' + atIntelEscape(meta || '—') + '</div></div>' +
+            '<div class="intel-item-value">' + atIntelEscape(val) + '</div>' +
+          '</div>';
+        }).join('');
+      }
+    } catch (e) { console.error('atIntelLoadAlpha — ecosystems:', e); }
+  }
+
+  // Recent funding rounds
+  if (fundBox) {
+    try {
+      var funds = (window.API.getFundingRounds)
+        ? await window.API.getFundingRounds() : [];
+      if (!funds.length) {
+        fundBox.innerHTML = '<div style="padding:14px;text-align:center;color:var(--text-muted);' +
+          'font-size:11px;font-family:\'Share Tech Mono\',monospace;">None published yet.</div>';
+      } else {
+        fundBox.innerHTML = funds.slice(0, 8).map(function(f) {
+          var color = f.accent_color || '#a78bfa';
+          return '<div class="intel-item">' +
+            '<div class="intel-dot" style="background:' + color + ';box-shadow:0 0 8px ' + color + '"></div>' +
+            '<div><div class="intel-item-name">' + atIntelEscape(f.name || '') + '</div>' +
+            '<div class="intel-item-meta">' + atIntelEscape(f.subtitle || '—') + '</div></div>' +
+            '<div class="intel-item-value">' + atIntelEscape(f.amount || '') + '</div>' +
+          '</div>';
+        }).join('');
+      }
+    } catch (e) { console.error('atIntelLoadAlpha — funding:', e); }
+  }
+}
+
+// master loader for Sections 2, 3, 4
+async function atIntelLoadAll() {
+  if (!window.API || !window.API.isLive || !window.API.isLive()) return;
+  atIntelLoadOpportunities();
+  atIntelLoadDeadlines();
+  atIntelLoadAlpha();
+}
+
 
 // DEMO — these stay as demo data for now (need blockchain APIs / Phase 3 backend)
 const walletHealthData = [
