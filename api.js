@@ -176,7 +176,7 @@
       if (!user) return { ok: false, error: 'Not signed in' };
 
       const { data: mission, error: mErr } = await supa
-        .from('missions').select('xp').eq('id', missionId).single();
+        .from('missions').select('xp, title').eq('id', missionId).single();
       if (mErr) return { ok: false, error: mErr.message };
 
       const { error: cErr } = await supa
@@ -194,6 +194,12 @@
       }
 
       await this._updateProgress(user.id, mission.xp);
+
+      // Log it for the activity feed (only on a genuinely new completion)
+      if (!cErr) {
+        this.logActivity('mission', 'Mission Complete',
+          (mission.title || 'Mission') + ' · +' + (mission.xp || 0) + ' XP');
+      }
       return { ok: true, xpEarned: mission.xp };
     },
 
@@ -405,6 +411,95 @@
     },
 
     // ───────────────────────────────────────────────────────────
+    // ACTIVITY LOG  ·  LIVE (Supabase)
+    // Records real user actions for the Overview "Live Activity Feed".
+    // ───────────────────────────────────────────────────────────
+
+    // Write one activity event. Fire-and-forget — never blocks or
+    // breaks the action it is logging (a failed log is not fatal).
+    async logActivity(kind, title, detail) {
+      if (!_live()) return;
+      try {
+        const user = await this.getCurrentUser();
+        if (!user) return;
+        await supa.from('activity_log').insert({
+          user_id: user.id,
+          kind:    kind,
+          title:   title,
+          detail:  detail || null
+        });
+      } catch (e) {
+        console.error('logActivity:', e);   // logged, but never thrown
+      }
+    },
+
+    // Read this user's recent activity, newest first.
+    async getActivityFeed(limit) {
+      if (!_live()) return [];
+      try {
+        const user = await this.getCurrentUser();
+        if (!user) return [];
+        const { data, error } = await supa
+          .from('activity_log')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false })
+          .limit(limit || 20);
+        if (error) { console.error('getActivityFeed:', error); return []; }
+        return data || [];
+      } catch (e) {
+        console.error('getActivityFeed:', e);
+        return [];
+      }
+    },
+
+    // Per-day mission completions + XP for the last 7 days (Mon→Sun of
+    // the current week). Powers the Overview "Weekly Farming Activity"
+    // chart and the "this week" stat boxes.
+    async getWeeklyActivity() {
+      // 7 day-slots, Monday first
+      const empty = {
+        days: [0, 0, 0, 0, 0, 0, 0],   // mission count per day Mon..Sun
+        totalMissions: 0,
+        totalXp: 0
+      };
+      if (!_live()) return empty;
+      try {
+        const user = await this.getCurrentUser();
+        if (!user) return empty;
+
+        // Find Monday of the current week (UTC)
+        const now = new Date();
+        const dow = (now.getUTCDay() + 6) % 7;   // 0 = Monday
+        const monday = new Date(Date.UTC(
+          now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - dow));
+        const mondayStr = monday.toISOString().slice(0, 10);
+
+        const { data, error } = await supa
+          .from('mission_completions')
+          .select('completed_on, xp_earned')
+          .eq('user_id', user.id)
+          .gte('completed_on', mondayStr);
+        if (error) { console.error('getWeeklyActivity:', error); return empty; }
+
+        const result = { days: [0, 0, 0, 0, 0, 0, 0], totalMissions: 0, totalXp: 0 };
+        (data || []).forEach(row => {
+          const d = new Date(row.completed_on + 'T00:00:00Z');
+          const idx = (d.getUTCDay() + 6) % 7;   // 0 = Monday
+          if (idx >= 0 && idx < 7) {
+            result.days[idx] += 1;
+            result.totalMissions += 1;
+            result.totalXp += (row.xp_earned || 0);
+          }
+        });
+        return result;
+      } catch (e) {
+        console.error('getWeeklyActivity:', e);
+        return empty;
+      }
+    },
+
+    // ───────────────────────────────────────────────────────────
     // ADMIN — MISSIONS MANAGEMENT  ·  LIVE (Supabase)
     // ───────────────────────────────────────────────────────────
     async adminListMissions() {
@@ -513,6 +608,8 @@
         .select()
         .single();
       if (error) return { ok: false, error: error.message };
+      this.logActivity('airdrop', 'Airdrop Tracked',
+        (data.name || 'New airdrop') + (data.chain ? ' · ' + data.chain : ''));
       return { ok: true, airdrop: data };
     },
 
@@ -610,6 +707,8 @@
         .select()
         .single();
       if (error) return { ok: false, error: error.message };
+      this.logActivity('wallet', 'Wallet Added',
+        (data.name || 'New wallet') + (data.chains ? ' · ' + data.chains : ''));
       return { ok: true, wallet: data };
     },
 
@@ -711,6 +810,9 @@
         .select()
         .single();
       if (error) return { ok: false, error: error.message };
+      this.logActivity('reward', 'Reward Tracked',
+        (data.project || 'New reward') +
+        (data.usd_value ? ' · ~$' + Number(data.usd_value).toLocaleString() : ''));
       return { ok: true, reward: data };
     },
 
