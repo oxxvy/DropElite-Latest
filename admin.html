@@ -563,6 +563,10 @@ tbody tr:last-child td { border-bottom: none; }
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 2.5a5 5 0 0 1 5 5c0 2-1.2 3-2 4-.5.6-.5 1.5-.5 2.5h-5c0-1 0-1.9-.5-2.5-.8-1-2-2-2-4a5 5 0 0 1 5-5z"/><path d="M8 17h4"/></svg>
       Intel: Recs
     </a>
+    <a class="nav-item" data-section="funding" onclick="switchSection('funding', this)">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10" cy="10" r="7.5"/><path d="M10 6v8M7.5 8.5h3.5a1.8 1.8 0 0 1 0 3.5H8.5"/></svg>
+      Intel: Funding
+    </a>
     <a class="nav-item" data-section="users" onclick="switchSection('users', this)">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10" cy="6" r="3"/><path d="M3 18c1-3 4-5 7-5s6 2 7 5"/></svg>
       Users
@@ -627,7 +631,7 @@ tbody tr:last-child td { border-bottom: none; }
         </div>
         <div class="table-wrap">
           <table id="missionsTable">
-            <thead><tr><th>Order</th><th>Title</th><th>Project</th><th>XP</th><th>Details</th><th>Status</th><th>Actions</th></tr></thead>
+            <thead><tr><th>Order</th><th>Title</th><th>Project</th><th>XP</th><th>Status</th><th>Actions</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -876,6 +880,31 @@ tbody tr:last-child td { border-bottom: none; }
       </div>
     </section>
 
+    <section class="section" id="section-funding">
+      <div class="page-head">
+        <div>
+          <div class="page-title">INTEL: FUNDING</div>
+          <div class="page-sub">Manage the "Recent Funding Rounds" list on the Airdrop Tracker</div>
+        </div>
+        <button class="btn btn-primary" onclick="openFundModal()">+ New Funding Round</button>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">ALL FUNDING ROUNDS</div>
+          <div class="card-tools">
+            <span id="fundCount" style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text-dim);"></span>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="fundTable">
+            <thead><tr><th>Order</th><th>Name</th><th>Subtitle</th><th>Amount</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="section-users">
       <div class="page-head">
         <div>
@@ -1064,29 +1093,6 @@ tbody tr:last-child td { border-bottom: none; }
     <div class="form-row">
       <label>XP Reward</label>
       <input id="missionXp" type="number" value="50" min="0">
-    </div>
-    <div class="form-row">
-      <label>Difficulty</label>
-      <select id="missionDifficulty">
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
-      </select>
-    </div>
-    <div class="form-row">
-      <label>Verified Route (anti-phishing trust badge)</label>
-      <select id="missionVerified">
-        <option value="true">Verified — safe route ✓</option>
-        <option value="false">Not verified</option>
-      </select>
-    </div>
-    <div class="form-row">
-      <label>Time Estimate (minutes)</label>
-      <input id="missionTime" type="number" value="5" min="1">
-    </div>
-    <div class="form-row">
-      <label>Est. Value (USD) — your estimate, not guaranteed</label>
-      <input id="missionValue" type="number" value="0" min="0">
     </div>
     <div class="form-row">
       <label>Display Order (lower = shown first)</label>
@@ -1287,6 +1293,17 @@ tbody tr:last-child td { border-bottom: none; }
       <div class="form-row">
         <label>Reward Range</label>
         <input id="oppReward" type="text" placeholder="e.g. $2,400–$8,000">
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="form-row">
+        <label>Snapshot / Deadline (for the countdown timer)</label>
+        <input id="oppDeadline" type="datetime-local">
+      </div>
+      <div class="form-row">
+        <label>Completion % (farming progress, 0–100)</label>
+        <input id="oppCompletion" type="number" min="0" max="100" placeholder="0">
       </div>
     </div>
 
@@ -1585,6 +1602,59 @@ tbody tr:last-child td { border-bottom: none; }
 </div>
 
 <!-- ═══════════════════════════════════════════
+     FUNDING MODAL  (Recent Funding Rounds)
+═══════════════════════════════════════════ -->
+<div class="modal-backdrop" id="fundModal">
+  <div class="modal" style="max-width:560px;">
+    <h3 id="fundModalTitle">NEW FUNDING ROUND</h3>
+
+    <div class="form-row">
+      <label>Project Name *</label>
+      <input id="fundName" type="text" placeholder="e.g. EigenLayer">
+    </div>
+    <div class="form-row">
+      <label>Subtitle</label>
+      <input id="fundSubtitle" type="text" placeholder="e.g. RESTAKING · Series B">
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="form-row">
+        <label>Amount</label>
+        <input id="fundAmount" type="text" placeholder="e.g. $100M">
+      </div>
+      <div class="form-row">
+        <label>Dot Color</label>
+        <select id="fundColor">
+          <option value="#a78bfa">Purple</option>
+          <option value="#f0b429">Gold</option>
+          <option value="#00d4ff">Cyan</option>
+          <option value="#00e676">Green</option>
+          <option value="#ff8c00">Orange</option>
+          <option value="#ff3b6b">Red</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="form-row">
+        <label>Display Order</label>
+        <input id="fundOrder" type="number" min="0" value="0">
+      </div>
+      <div class="form-row">
+        <label>Status</label>
+        <select id="fundActive">
+          <option value="true">Active (visible)</option>
+          <option value="false">Inactive (hidden)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn" onclick="closeFundModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveFund()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
      RECOMMENDATION MODAL  (Alpha Recommendations)
 ═══════════════════════════════════════════ -->
 <div class="modal-backdrop" id="recModal">
@@ -1716,6 +1786,7 @@ function switchSection(name, el) {
   if (name === 'market') renderMarket();
   if (name === 'ecosystems') renderEcosystems();
   if (name === 'recs') renderRecs();
+  if (name === 'funding') renderFunding();
   if (name === 'users') renderUsers();
   if (name === 'payments') renderPayments();
   if (name === 'content') renderContent();
@@ -1750,7 +1821,7 @@ async function renderMissions() {
   }
 
   if (!missionsCache.length) {
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-dim);padding:30px;">No missions yet. Click "+ New Mission" to add one.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:30px;">No missions yet. Click "+ New Mission" to add one.</td></tr>';
     return;
   }
 
@@ -1760,7 +1831,6 @@ async function renderMissions() {
       <td><strong>${escapeHtml(m.title)}</strong>${m.description ? '<br><span style="font-size:11px;color:var(--text-dim);">' + escapeHtml(m.description) + '</span>' : ''}</td>
       <td>${m.project ? '<span class="badge badge-type">' + escapeHtml(m.project) + '</span>' : '<span style="color:var(--text-muted);">—</span>'}</td>
       <td><strong style="color:var(--gold);">+${m.xp}</strong></td>
-      <td><span style="font-size:11px;color:var(--text-dim);font-family:'Share Tech Mono',monospace;">${escapeHtml((m.difficulty || 'easy').toUpperCase())} · ${(m.time_minutes != null ? m.time_minutes : 5)}m · $${(m.est_value_usd != null ? m.est_value_usd : 0)}${(m.verified !== false) ? ' · ✓VERIFIED' : ''}</span></td>
       <td><span class="badge badge-${m.active ? 'active' : 'inactive'}">${m.active ? 'Active' : 'Inactive'}</span></td>
       <td>
         <div class="row-actions">
@@ -1788,10 +1858,6 @@ function openMissionModal() {
   document.getElementById('missionDescription').value = '';
   document.getElementById('missionProject').value = '';
   document.getElementById('missionXp').value = 50;
-  document.getElementById('missionDifficulty').value = 'easy';
-  document.getElementById('missionVerified').value = 'true';
-  document.getElementById('missionTime').value = 5;
-  document.getElementById('missionValue').value = 0;
   document.getElementById('missionOrder').value = missionsCache.length;
   document.getElementById('missionActive').value = 'true';
   document.getElementById('missionModal').classList.add('active');
@@ -1806,10 +1872,6 @@ function editMission(id) {
   document.getElementById('missionDescription').value = m.description || '';
   document.getElementById('missionProject').value = m.project || '';
   document.getElementById('missionXp').value = m.xp != null ? m.xp : 50;
-  document.getElementById('missionDifficulty').value = m.difficulty || 'easy';
-  document.getElementById('missionVerified').value = String(m.verified !== false);
-  document.getElementById('missionTime').value = m.time_minutes != null ? m.time_minutes : 5;
-  document.getElementById('missionValue').value = m.est_value_usd != null ? m.est_value_usd : 0;
   document.getElementById('missionOrder').value = m.display_order != null ? m.display_order : 0;
   document.getElementById('missionActive').value = String(m.active !== false);
   document.getElementById('missionModal').classList.add('active');
@@ -1827,11 +1889,7 @@ async function saveMission() {
     project: document.getElementById('missionProject').value.trim(),
     xp: parseInt(document.getElementById('missionXp').value, 10) || 0,
     display_order: parseInt(document.getElementById('missionOrder').value, 10) || 0,
-    active: document.getElementById('missionActive').value === 'true',
-    difficulty: document.getElementById('missionDifficulty').value,
-    verified: document.getElementById('missionVerified').value === 'true',
-    time_minutes: parseInt(document.getElementById('missionTime').value, 10) || 5,
-    est_value_usd: parseFloat(document.getElementById('missionValue').value) || 0
+    active: document.getElementById('missionActive').value === 'true'
   };
   if (!data.title) { toast('Title is required'); return; }
 
@@ -1855,11 +1913,7 @@ async function toggleMissionActive(id) {
     project: m.project,
     xp: m.xp,
     display_order: m.display_order,
-    active: !m.active,
-    difficulty: m.difficulty,
-    verified: m.verified,
-    time_minutes: m.time_minutes,
-    est_value_usd: m.est_value_usd
+    active: !m.active
   });
   if (!result.ok) { toast('Update failed: ' + (result.error || '')); return; }
   toast(m.active ? 'Mission deactivated' : 'Mission activated');
@@ -2188,6 +2242,8 @@ function openOppModal() {
   document.getElementById('oppChain').value = '';
   document.getElementById('oppFunding').value = '';
   document.getElementById('oppReward').value = '';
+  document.getElementById('oppDeadline').value = '';
+  document.getElementById('oppCompletion').value = '';
   document.getElementById('oppBadge1Text').value = '';
   document.getElementById('oppBadge1Color').value = '';
   document.getElementById('oppBadge2Text').value = '';
@@ -2220,6 +2276,10 @@ function editOpp(id) {
   document.getElementById('oppChain').value = o.chain || '';
   document.getElementById('oppFunding').value = o.funding || '';
   document.getElementById('oppReward').value = o.reward || '';
+  // deadline: DB stores full ISO timestamp; datetime-local needs YYYY-MM-DDTHH:MM
+  document.getElementById('oppDeadline').value = o.deadline
+    ? new Date(o.deadline).toISOString().slice(0, 16) : '';
+  document.getElementById('oppCompletion').value = o.completion_pct != null ? o.completion_pct : '';
   // Badges (up to 3)
   const badges = Array.isArray(o.badges) ? o.badges : [];
   for (let i = 0; i < 3; i++) {
@@ -2266,6 +2326,10 @@ async function saveOpp() {
     badges:           _collectBadges(),
     funding:          document.getElementById('oppFunding').value.trim(),
     reward:           document.getElementById('oppReward').value.trim(),
+    deadline:         document.getElementById('oppDeadline').value
+                        ? new Date(document.getElementById('oppDeadline').value).toISOString()
+                        : null,
+    completion_pct:   document.getElementById('oppCompletion').value,
     difficulty_pct:   document.getElementById('oppDiffPct').value,
     difficulty_label: document.getElementById('oppDiffLabel').value,
     snapshot_prob:    document.getElementById('oppSnapshot').value,
@@ -2993,6 +3057,112 @@ async function deleteRec(id) {
   if (!result.ok) { toast('Delete failed: ' + (result.error || '')); return; }
   toast('Recommendation deleted');
   renderRecs();
+}
+
+/* ═══════════════════════════════════════════
+   INTEL: FUNDING  (Recent Funding Rounds)
+═══════════════════════════════════════════ */
+let fundsCache = [];
+let editingFundId = null;
+
+async function renderFunding() {
+  const tbody = document.querySelector('#fundTable tbody');
+  tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:24px;">Loading…</td></tr>';
+  fundsCache = await API.adminListFunding();
+
+  const countEl = document.getElementById('fundCount');
+  if (countEl) {
+    const a = fundsCache.filter(f => f.active).length;
+    countEl.textContent = fundsCache.length + ' total · ' + a + ' active';
+  }
+
+  if (!fundsCache.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:30px;">No funding rounds yet. Click "+ New Funding Round" to add your first one.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = fundsCache.map(f => `
+    <tr>
+      <td><span style="font-family:'Share Tech Mono',monospace;color:var(--text-dim);">${f.display_order != null ? f.display_order : 0}</span></td>
+      <td><strong>${escapeHtml(f.name)}</strong></td>
+      <td><span style="font-size:11px;color:var(--text-dim);">${f.subtitle ? escapeHtml(f.subtitle) : '—'}</span></td>
+      <td><strong style="color:var(--gold);">${f.amount ? escapeHtml(f.amount) : '—'}</strong></td>
+      <td><span class="badge badge-${f.active ? 'active' : 'inactive'}">${f.active ? 'Active' : 'Inactive'}</span></td>
+      <td>
+        <div class="row-actions">
+          <button class="icon-btn" onclick="editFund(${f.id})" title="Edit">✎</button>
+          <button class="icon-btn" onclick="toggleFundActive(${f.id})" title="${f.active ? 'Deactivate' : 'Activate'}">${f.active ? '◐' : '●'}</button>
+          <button class="icon-btn danger" onclick="deleteFund(${f.id})" title="Delete">×</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function openFundModal() {
+  editingFundId = null;
+  document.getElementById('fundModalTitle').textContent = 'NEW FUNDING ROUND';
+  document.getElementById('fundName').value = '';
+  document.getElementById('fundSubtitle').value = '';
+  document.getElementById('fundAmount').value = '';
+  document.getElementById('fundColor').value = '#a78bfa';
+  document.getElementById('fundOrder').value = fundsCache.length;
+  document.getElementById('fundActive').value = 'true';
+  document.getElementById('fundModal').classList.add('active');
+}
+
+function editFund(id) {
+  const f = fundsCache.find(x => x.id === id);
+  if (!f) return;
+  editingFundId = id;
+  document.getElementById('fundModalTitle').textContent = 'EDIT FUNDING ROUND';
+  document.getElementById('fundName').value = f.name || '';
+  document.getElementById('fundSubtitle').value = f.subtitle || '';
+  document.getElementById('fundAmount').value = f.amount || '';
+  document.getElementById('fundColor').value = f.accent_color || '#a78bfa';
+  document.getElementById('fundOrder').value = f.display_order != null ? f.display_order : 0;
+  document.getElementById('fundActive').value = String(f.active !== false);
+  document.getElementById('fundModal').classList.add('active');
+}
+
+function closeFundModal() {
+  document.getElementById('fundModal').classList.remove('active');
+}
+
+async function saveFund() {
+  const data = {
+    id: editingFundId,
+    name:          document.getElementById('fundName').value.trim(),
+    subtitle:      document.getElementById('fundSubtitle').value.trim(),
+    amount:        document.getElementById('fundAmount').value.trim(),
+    accent_color:  document.getElementById('fundColor').value,
+    display_order: document.getElementById('fundOrder').value,
+    active:        document.getElementById('fundActive').value === 'true'
+  };
+  if (!data.name) { toast('Name is required'); return; }
+
+  const result = await API.adminSaveFunding(data);
+  if (!result.ok) { toast('Save failed: ' + (result.error || '')); return; }
+  closeFundModal();
+  toast(editingFundId ? 'Funding round updated' : 'Funding round created');
+  renderFunding();
+}
+
+async function toggleFundActive(id) {
+  const f = fundsCache.find(x => x.id === id);
+  if (!f) return;
+  const result = await API.adminSaveFunding(Object.assign({}, f, { active: !f.active }));
+  if (!result.ok) { toast('Update failed: ' + (result.error || '')); return; }
+  toast(f.active ? 'Funding round deactivated' : 'Funding round activated');
+  renderFunding();
+}
+
+async function deleteFund(id) {
+  if (!confirm('Delete this funding round? Users will no longer see it. This cannot be undone.')) return;
+  const result = await API.adminDeleteFunding(id);
+  if (!result.ok) { toast('Delete failed: ' + (result.error || '')); return; }
+  toast('Funding round deleted');
+  renderFunding();
 }
 
 async function renderDashboard() {
