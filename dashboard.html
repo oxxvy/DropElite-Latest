@@ -21367,6 +21367,7 @@ function atwRenderWallets(wallets) {
     var accent = ATW_ACCENTS[i % ATW_ACCENTS.length];
     var chains = w.chains ? atwEscape(w.chains) : '—';
     var status = w.status ? atwEscape(w.status) : 'active';
+    var addr = w.address ? atwEscape(String(w.address).trim()) : '';
     return '' +
       '<div class="wallet-card" style="--accent:' + accent + '">' +
         '<div class="wallet-addr">' + atwShortAddr(w.address) + '</div>' +
@@ -21392,9 +21393,110 @@ function atwRenderWallets(wallets) {
         (w.label
           ? '<div style="font-size:10px;color:var(--text-muted);font-family:\'Share Tech Mono\',monospace;margin-top:8px;">🏷 ' + atwEscape(w.label) + '</div>'
           : '') +
+        // ── Stage 1: live Etherscan on-chain check ──
+        (addr
+          ? '<button class="btn btn-ghost" style="width:100%;margin-top:10px;font-size:11px;padding:7px;" ' +
+            'data-onchain-addr="' + addr + '">⛓ Check On-Chain (ETH)</button>' +
+            '<div class="onchain-result" data-onchain-for="' + addr + '" ' +
+            'style="margin-top:8px;font-family:\'Share Tech Mono\',monospace;font-size:10px;color:var(--text-muted);"></div>'
+          : '') +
       '</div>';
   }).join('');
 }
+
+/* ════════════════════════════════
+   SYBIL SYSTEM — STAGE 1
+   Live on-chain check via Etherscan (Ethereum mainnet).
+   Real data: wallet age · tx count · gas spent (recent).
+   No score yet — that's Stage 2.
+   ════════════════════════════════ */
+async function ocCheckWallet(addr, btn, resultEl) {
+  if (!addr) return;
+
+  // reuse the Etherscan key from the gas widget
+  var key = (typeof ETHERSCAN_API_KEY !== 'undefined') ? ETHERSCAN_API_KEY : '';
+  if (!key || key.indexOf('PASTE_') === 0) {
+    resultEl.innerHTML = '<span style="color:var(--orange)">⚠ Add Etherscan API key in dashboard.html</span>';
+    return;
+  }
+
+  btn.disabled = true;
+  var oldLabel = btn.textContent;
+  btn.textContent = 'Checking…';
+  resultEl.innerHTML = 'Reading the blockchain…';
+
+  var base = 'https://api.etherscan.io/v2/api?chainid=1&apikey=' + key;
+
+  try {
+    // Pull the wallet's transaction list (most recent 1,000, newest first).
+    // From it we get: tx count, first-tx date (age), and gas spent.
+    var url = base + '&module=account&action=txlist&address=' + addr +
+              '&startblock=0&endblock=99999999&page=1&offset=1000&sort=desc';
+    var res = await fetch(url);
+    var data = await res.json();
+
+    // Etherscan: status "1" = ok with rows; "0" + "No transactions found" = empty wallet
+    if (!data || (data.status !== '1' && data.message !== 'No transactions found')) {
+      resultEl.innerHTML = '<span style="color:var(--orange)">⚠ ' +
+        ((data && data.message) ? data.message : 'Could not read wallet') + '</span>';
+      btn.disabled = false; btn.textContent = oldLabel;
+      return;
+    }
+
+    var txs = Array.isArray(data.result) ? data.result : [];
+
+    if (!txs.length) {
+      resultEl.innerHTML = 'No Ethereum transactions found for this wallet.';
+      btn.disabled = false; btn.textContent = 'Re-check On-Chain (ETH)';
+      return;
+    }
+
+    // ── Wallet age: oldest tx in the list ──
+    // (list is newest-first, so the last item is the oldest of the recent 1,000)
+    var oldest = txs[txs.length - 1];
+    var firstTs = parseInt(oldest.timeStamp, 10) * 1000;
+    var ageDays = Math.floor((Date.now() - firstTs) / 86400000);
+
+    // ── Gas spent across the fetched transactions (in ETH) ──
+    var gasWei = txs.reduce(function(sum, t) {
+      var used  = parseFloat(t.gasUsed)  || 0;
+      var price = parseFloat(t.gasPrice) || 0;
+      return sum + used * price;
+    }, 0);
+    var gasEth = gasWei / 1e18;
+
+    // ── TX count: if exactly 1,000 came back, there are likely more ──
+    var txCountText = txs.length >= 1000 ? '1,000+' : String(txs.length);
+
+    resultEl.innerHTML =
+      '<div style="display:flex;justify-content:space-between;margin-bottom:3px;">' +
+        '<span>WALLET AGE</span><span style="color:var(--text-primary,#fff)">' +
+        ageDays.toLocaleString() + ' days</span></div>' +
+      '<div style="display:flex;justify-content:space-between;margin-bottom:3px;">' +
+        '<span>TX COUNT</span><span style="color:var(--text-primary,#fff)">' +
+        txCountText + '</span></div>' +
+      '<div style="display:flex;justify-content:space-between;">' +
+        '<span>GAS SPENT (recent)</span><span style="color:var(--text-primary,#fff)">' +
+        gasEth.toFixed(4) + ' ETH</span></div>';
+
+    btn.disabled = false;
+    btn.textContent = 'Re-check On-Chain (ETH)';
+  } catch (e) {
+    console.error('ocCheckWallet:', e);
+    resultEl.innerHTML = '<span style="color:var(--orange)">⚠ Could not reach Etherscan</span>';
+    btn.disabled = false;
+    btn.textContent = oldLabel;
+  }
+}
+
+// Click delegation for the "Check On-Chain" buttons
+document.addEventListener('click', function(e) {
+  var btn = e.target.closest('[data-onchain-addr]');
+  if (!btn) return;
+  var addr = btn.getAttribute('data-onchain-addr');
+  var resultEl = document.querySelector('[data-onchain-for="' + addr + '"]');
+  if (resultEl) ocCheckWallet(addr, btn, resultEl);
+});
 
 async function atwLoadWallets() {
   var grid = document.getElementById('atw-grid');
