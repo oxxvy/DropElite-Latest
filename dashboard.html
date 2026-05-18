@@ -21363,12 +21363,17 @@ function atwRenderWallets(wallets) {
    Live on-chain check via Etherscan (Ethereum mainnet).
    Real data: wallet age · tx count · gas spent (recent).
    No score yet — that's Stage 2.
+
+   ⚠️ PASTE YOUR ETHERSCAN API KEY ON THE NEXT LINE.
+   (Use the SAME key as the gas widget above. It must
+    be here too — this code block can't see that one.)
    ════════════════════════════════ */
+var OC_ETHERSCAN_KEY = 'TI6HDBV645C2XAKH36I21K9VFGU5459YI3';
+
 async function ocCheckWallet(addr, btn, resultEl) {
   if (!addr) return;
 
-  // reuse the Etherscan key from the gas widget
-  var key = (typeof ETHERSCAN_API_KEY !== 'undefined') ? ETHERSCAN_API_KEY : '';
+  var key = OC_ETHERSCAN_KEY;
   if (!key || key.indexOf('PASTE_') === 0) {
     resultEl.innerHTML = '<span style="color:var(--orange)">⚠ Add Etherscan API key in dashboard.html</span>';
     return;
