@@ -21299,6 +21299,25 @@ function atwShortAddr(addr) {
 // a small palette so cards aren't all the same accent colour
 var ATW_ACCENTS = ['#00d4ff', '#f0b429', '#00e676', '#a78bfa', '#ff6b9d', '#4af0ff'];
 
+// Holds the on-chain cache map { wallet_id: row } for the current render
+var atwChainCache = {};
+
+// risk → colour
+function atwRiskColor(risk) {
+  var r = String(risk || '').toLowerCase();
+  if (r === 'low')    return 'var(--green, #00e676)';
+  if (r === 'medium') return 'var(--gold, #f0b429)';
+  if (r === 'high')   return 'var(--red-alert, #ff3b6b)';
+  return 'var(--text-muted)';
+}
+function atwRiskLabel(risk) {
+  var r = String(risk || '').toLowerCase();
+  if (r === 'low')    return 'LOW';
+  if (r === 'medium') return 'MEDIUM';
+  if (r === 'high')   return 'HIGH';
+  return '—';
+}
+
 function atwRenderWallets(wallets) {
   var grid  = document.getElementById('atw-grid');
   var count = document.getElementById('atw-count');
@@ -21322,6 +21341,31 @@ function atwRenderWallets(wallets) {
     var chains = w.chains ? atwEscape(w.chains) : '—';
     var status = w.status ? atwEscape(w.status) : 'active';
     var addr = w.address ? atwEscape(String(w.address).trim()) : '';
+
+    // Cached on-chain data for this wallet (if any)
+    var cd = atwChainCache[w.id];
+    var scoreCell, riskCell;
+    if (cd && cd.last_checked) {
+      scoreCell = '<span class="wallet-stat-val" style="color:var(--text-primary,#fff)">' +
+                  (cd.health_score || 0) + '/100</span>';
+      riskCell  = '<span class="wallet-stat-val" style="color:' + atwRiskColor(cd.activity_risk) +
+                  ';font-weight:700;">' + atwRiskLabel(cd.activity_risk) + '</span>';
+    } else {
+      scoreCell = '<span class="wallet-stat-val" style="color:var(--text-muted);font-size:10px;">tap check ↓</span>';
+      riskCell  = '<span class="wallet-stat-val" style="color:var(--text-muted);font-size:10px;">tap check ↓</span>';
+    }
+
+    // Button label depends on whether cached data exists + how old it is
+    var btnLabel = '⛓ Check On-Chain (ETH)';
+    var cacheNote = '';
+    if (cd && cd.last_checked) {
+      var ageMs = Date.now() - new Date(cd.last_checked).getTime();
+      var hrs = Math.floor(ageMs / 3600000);
+      btnLabel = '⟳ Re-check On-Chain (ETH)';
+      cacheNote = '<div style="font-size:9px;color:var(--text-muted);font-family:\'Share Tech Mono\',monospace;margin-top:5px;">' +
+        'Last checked ' + (hrs < 1 ? 'under 1h' : hrs + 'h') + ' ago · auto-refreshes after 24h</div>';
+    }
+
     return '' +
       '<div class="wallet-card" style="--accent:' + accent + '">' +
         '<div class="wallet-addr">' + atwShortAddr(w.address) + '</div>' +
@@ -21336,21 +21380,20 @@ function atwRenderWallets(wallets) {
             '<span class="wallet-stat-val">' + status + '</span>' +
           '</div>' +
           '<div class="wallet-stat-row">' +
-            '<span class="wallet-stat-label">SCORE</span>' +
-            '<span class="wallet-stat-val" style="color:var(--text-muted);font-size:10px;">PHASE 4</span>' +
+            '<span class="wallet-stat-label">HEALTH SCORE</span>' + scoreCell +
           '</div>' +
           '<div class="wallet-stat-row">' +
-            '<span class="wallet-stat-label">SYBIL RISK</span>' +
-            '<span class="wallet-stat-val" style="color:var(--text-muted);font-size:10px;">PHASE 4</span>' +
+            '<span class="wallet-stat-label">ACTIVITY RISK</span>' + riskCell +
           '</div>' +
         '</div>' +
         (w.label
           ? '<div style="font-size:10px;color:var(--text-muted);font-family:\'Share Tech Mono\',monospace;margin-top:8px;">🏷 ' + atwEscape(w.label) + '</div>'
           : '') +
-        // ── Stage 1: live Etherscan on-chain check ──
+        // ── Stage 2: on-chain check (Etherscan, 24h-cached) ──
         (addr
           ? '<button class="btn btn-ghost" style="width:100%;margin-top:10px;font-size:11px;padding:7px;" ' +
-            'data-onchain-addr="' + addr + '">⛓ Check On-Chain (ETH)</button>' +
+            'data-onchain-addr="' + addr + '" data-wallet-id="' + w.id + '">' + btnLabel + '</button>' +
+            cacheNote +
             '<div class="onchain-result" data-onchain-for="' + addr + '" ' +
             'style="margin-top:8px;font-family:\'Share Tech Mono\',monospace;font-size:10px;color:var(--text-muted);"></div>'
           : '') +
@@ -21359,18 +21402,43 @@ function atwRenderWallets(wallets) {
 }
 
 /* ════════════════════════════════
-   SYBIL SYSTEM — STAGE 1
-   Live on-chain check via Etherscan (Ethereum mainnet).
-   Real data: wallet age · tx count · gas spent (recent).
-   No score yet — that's Stage 2.
+   SYBIL SYSTEM — STAGE 2
+   On-chain check via Etherscan (Ethereum mainnet), 24h-cached.
+   Computes a Health Score (0-100) + Activity Risk from real data.
+
+   Scoring (your chosen formula):
+     wallet age  → 40%   (365+ days = full)
+     tx count    → 35%   (100+ txs  = full)
+     gas spent   → 25%   (0.05+ ETH = full)
+   Activity Risk:  70+ = LOW · 40-69 = MEDIUM · under 40 = HIGH
+
+   NOTE: this is a wallet HEALTH score from on-chain activity —
+   not full sybil-cluster detection (that needs Phase 4+).
 
    ⚠️ PASTE YOUR ETHERSCAN API KEY ON THE NEXT LINE.
-   (Use the SAME key as the gas widget above. It must
-    be here too — this code block can't see that one.)
+   (Same key as the gas widget — must be here too.)
    ════════════════════════════════ */
 var OC_ETHERSCAN_KEY = 'TI6HDBV645C2XAKH36I21K9VFGU5459YI3';
 
-async function ocCheckWallet(addr, btn, resultEl) {
+var OC_CACHE_HOURS = 24;   // re-check a wallet at most once per 24h
+
+// ── Scoring formula ──
+function ocComputeScore(ageDays, txCount, gasEth) {
+  // each sub-score is 0..1, capped at the "full marks" threshold
+  var ageScore = Math.min(ageDays / 365, 1);
+  var txScore  = Math.min(txCount / 100, 1);
+  var gasScore = Math.min(gasEth  / 0.05, 1);
+
+  var score = Math.round((ageScore * 40) + (txScore * 35) + (gasScore * 25));
+  if (score > 100) score = 100;
+  if (score < 0)   score = 0;
+
+  var risk = score >= 70 ? 'low' : (score >= 40 ? 'medium' : 'high');
+  return { score: score, risk: risk };
+}
+
+// ── Fetch + score one wallet (called by the on-chain button) ──
+async function ocCheckWallet(addr, walletId, btn, resultEl) {
   if (!addr) return;
 
   var key = OC_ETHERSCAN_KEY;
@@ -21387,14 +21455,11 @@ async function ocCheckWallet(addr, btn, resultEl) {
   var base = 'https://api.etherscan.io/v2/api?chainid=1&apikey=' + key;
 
   try {
-    // Pull the wallet's transaction list (most recent 1,000, newest first).
-    // From it we get: tx count, first-tx date (age), and gas spent.
     var url = base + '&module=account&action=txlist&address=' + addr +
               '&startblock=0&endblock=99999999&page=1&offset=1000&sort=desc';
     var res = await fetch(url);
     var data = await res.json();
 
-    // Etherscan: status "1" = ok with rows; "0" + "No transactions found" = empty wallet
     if (!data || (data.status !== '1' && data.message !== 'No transactions found')) {
       resultEl.innerHTML = '<span style="color:var(--orange)">⚠ ' +
         ((data && data.message) ? data.message : 'Could not read wallet') + '</span>';
@@ -21404,42 +21469,60 @@ async function ocCheckWallet(addr, btn, resultEl) {
 
     var txs = Array.isArray(data.result) ? data.result : [];
 
-    if (!txs.length) {
-      resultEl.innerHTML = 'No Ethereum transactions found for this wallet.';
-      btn.disabled = false; btn.textContent = 'Re-check On-Chain (ETH)';
-      return;
+    // Compute the three real signals
+    var ageDays = 0, gasEth = 0, txCount = txs.length;
+    if (txs.length) {
+      var oldest = txs[txs.length - 1];
+      var firstTs = parseInt(oldest.timeStamp, 10) * 1000;
+      ageDays = Math.floor((Date.now() - firstTs) / 86400000);
+      var gasWei = txs.reduce(function(sum, t) {
+        return sum + (parseFloat(t.gasUsed) || 0) * (parseFloat(t.gasPrice) || 0);
+      }, 0);
+      gasEth = gasWei / 1e18;
     }
 
-    // ── Wallet age: oldest tx in the list ──
-    // (list is newest-first, so the last item is the oldest of the recent 1,000)
-    var oldest = txs[txs.length - 1];
-    var firstTs = parseInt(oldest.timeStamp, 10) * 1000;
-    var ageDays = Math.floor((Date.now() - firstTs) / 86400000);
+    // Score it
+    var result = ocComputeScore(ageDays, txCount, gasEth);
 
-    // ── Gas spent across the fetched transactions (in ETH) ──
-    var gasWei = txs.reduce(function(sum, t) {
-      var used  = parseFloat(t.gasUsed)  || 0;
-      var price = parseFloat(t.gasPrice) || 0;
-      return sum + used * price;
-    }, 0);
-    var gasEth = gasWei / 1e18;
+    // Save to the 24h cache in Supabase
+    if (window.API && window.API.saveWalletChainData) {
+      await window.API.saveWalletChainData({
+        wallet_id:     walletId,
+        address:       addr,
+        age_days:      ageDays,
+        tx_count:      txCount,
+        gas_eth:       gasEth,
+        health_score:  result.score,
+        activity_risk: result.risk
+      });
+      // update the in-memory cache so the card refreshes without a full reload
+      atwChainCache[walletId] = {
+        wallet_id: walletId, age_days: ageDays, tx_count: txCount,
+        gas_eth: gasEth, health_score: result.score,
+        activity_risk: result.risk, last_checked: new Date().toISOString()
+      };
+    }
 
-    // ── TX count: if exactly 1,000 came back, there are likely more ──
-    var txCountText = txs.length >= 1000 ? '1,000+' : String(txs.length);
-
+    // Show the breakdown
+    var txText = txCount >= 1000 ? '1,000+' : String(txCount);
+    var riskColor = atwRiskColor(result.risk);
     resultEl.innerHTML =
       '<div style="display:flex;justify-content:space-between;margin-bottom:3px;">' +
         '<span>WALLET AGE</span><span style="color:var(--text-primary,#fff)">' +
         ageDays.toLocaleString() + ' days</span></div>' +
       '<div style="display:flex;justify-content:space-between;margin-bottom:3px;">' +
-        '<span>TX COUNT</span><span style="color:var(--text-primary,#fff)">' +
-        txCountText + '</span></div>' +
-      '<div style="display:flex;justify-content:space-between;">' +
+        '<span>TX COUNT</span><span style="color:var(--text-primary,#fff)">' + txText + '</span></div>' +
+      '<div style="display:flex;justify-content:space-between;margin-bottom:5px;">' +
         '<span>GAS SPENT (recent)</span><span style="color:var(--text-primary,#fff)">' +
-        gasEth.toFixed(4) + ' ETH</span></div>';
+        gasEth.toFixed(4) + ' ETH</span></div>' +
+      '<div style="display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.08);padding-top:5px;">' +
+        '<span>HEALTH SCORE</span><span style="color:' + riskColor + ';font-weight:700;">' +
+        result.score + '/100 · ' + atwRiskLabel(result.risk) + '</span></div>';
 
-    btn.disabled = false;
-    btn.textContent = 'Re-check On-Chain (ETH)';
+    // re-render all cards so the HEALTH SCORE / ACTIVITY RISK rows update
+    if (typeof atwCurrentWallets !== 'undefined' && atwCurrentWallets) {
+      atwRenderWallets(atwCurrentWallets);
+    }
   } catch (e) {
     console.error('ocCheckWallet:', e);
     resultEl.innerHTML = '<span style="color:var(--orange)">⚠ Could not reach Etherscan</span>';
@@ -21448,14 +21531,18 @@ async function ocCheckWallet(addr, btn, resultEl) {
   }
 }
 
-// Click delegation for the "Check On-Chain" buttons
+// Click delegation for the on-chain buttons
 document.addEventListener('click', function(e) {
   var btn = e.target.closest('[data-onchain-addr]');
   if (!btn) return;
   var addr = btn.getAttribute('data-onchain-addr');
+  var walletId = parseInt(btn.getAttribute('data-wallet-id'), 10);
   var resultEl = document.querySelector('[data-onchain-for="' + addr + '"]');
-  if (resultEl) ocCheckWallet(addr, btn, resultEl);
+  if (resultEl) ocCheckWallet(addr, walletId, btn, resultEl);
 });
+
+// remembers the last wallet list, so a single re-check can re-render all cards
+var atwCurrentWallets = null;
 
 async function atwLoadWallets() {
   var grid = document.getElementById('atw-grid');
@@ -21467,9 +21554,46 @@ async function atwLoadWallets() {
   }
   try {
     var wallets = await window.API.getWallets();
+    atwCurrentWallets = wallets;
+
+    // Load the 24h on-chain cache
+    if (window.API.getWalletChainData) {
+      atwChainCache = await window.API.getWalletChainData();
+    }
     atwRenderWallets(wallets);
+
+    // Auto-refresh any wallet whose cache is missing or older than 24h.
+    // Cached wallets cost ZERO API calls — this is the cost-saver.
+    ocAutoRefreshStale(wallets);
   } catch (e) {
     console.error('atwLoadWallets:', e);
+  }
+}
+
+// For each wallet: if no cache row, or it's older than OC_CACHE_HOURS,
+// fetch fresh data once. Wallets checked within 24h are skipped (0 calls).
+async function ocAutoRefreshStale(wallets) {
+  var key = OC_ETHERSCAN_KEY;
+  if (!key || key.indexOf('PASTE_') === 0) return;   // no key → skip silently
+
+  var now = Date.now();
+  for (var i = 0; i < wallets.length; i++) {
+    var w = wallets[i];
+    if (!w.address) continue;
+    var cd = atwChainCache[w.id];
+    var stale = !cd || !cd.last_checked ||
+      (now - new Date(cd.last_checked).getTime()) > OC_CACHE_HOURS * 3600000;
+    if (!stale) continue;   // fresh enough — skip, no API call
+
+    // find this card's button + result area and run a check
+    var btn = document.querySelector('[data-wallet-id="' + w.id + '"]');
+    var resultEl = document.querySelector('[data-onchain-for="' +
+      atwEscape(String(w.address).trim()) + '"]');
+    if (btn && resultEl) {
+      await ocCheckWallet(String(w.address).trim(), w.id, btn, resultEl);
+      // small gap so we never hit Etherscan's rate limit
+      await new Promise(function(r) { setTimeout(r, 400); });
+    }
   }
 }
 
