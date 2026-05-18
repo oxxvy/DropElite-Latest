@@ -453,6 +453,66 @@
       }
     },
 
+    // ───────────────────────────────────────────────────────────
+    // WALLET CHAIN DATA  ·  LIVE (Supabase)
+    // 24-hour cache of on-chain wallet data (Sybil system Stage 2).
+    // Read the cache; only call Etherscan when a row is stale/missing.
+    // ───────────────────────────────────────────────────────────
+
+    // Read all cached on-chain rows for the current user.
+    // Returns a map: { wallet_id: rowData }
+    async getWalletChainData() {
+      if (!_live()) return {};
+      try {
+        const user = await this.getCurrentUser();
+        if (!user) return {};
+        const { data, error } = await supa
+          .from('wallet_chain_data')
+          .select('*')
+          .eq('user_id', user.id);
+        if (error) { console.error('getWalletChainData:', error); return {}; }
+        const map = {};
+        (data || []).forEach(function(row) { map[row.wallet_id] = row; });
+        return map;
+      } catch (e) {
+        console.error('getWalletChainData:', e);
+        return {};
+      }
+    },
+
+    // Insert or update one wallet's cached on-chain data.
+    // `d` = { wallet_id, address, age_days, tx_count, gas_eth,
+    //         health_score, activity_risk }
+    async saveWalletChainData(d) {
+      if (!_live()) return { ok: false, error: 'Supabase not configured' };
+      try {
+        const user = await this.getCurrentUser();
+        if (!user) return { ok: false, error: 'Not signed in' };
+
+        const row = {
+          user_id:       user.id,
+          wallet_id:     d.wallet_id,
+          address:       d.address,
+          age_days:      d.age_days   || 0,
+          tx_count:      d.tx_count   || 0,
+          gas_eth:       d.gas_eth    || 0,
+          health_score:  d.health_score || 0,
+          activity_risk: d.activity_risk || 'unknown',
+          last_checked:  new Date().toISOString()
+        };
+
+        // upsert keyed on wallet_id (unique constraint)
+        const { error } = await supa
+          .from('wallet_chain_data')
+          .upsert(row, { onConflict: 'wallet_id' });
+        if (error) return { ok: false, error: error.message };
+        return { ok: true };
+      } catch (e) {
+        console.error('saveWalletChainData:', e);
+        return { ok: false, error: String(e) };
+      }
+    },
+
     // Per-day mission completions + XP for the last 7 days (Mon→Sun of
     // the current week). Powers the Overview "Weekly Farming Activity"
     // chart and the "this week" stat boxes.
