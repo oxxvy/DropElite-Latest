@@ -15729,52 +15729,6 @@ canvas.mini-chart { width: 100% !important; }
         </div>
 
         <!-- ADD / EDIT WALLET MODAL -->
-        <div class="modal-overlay" id="walletModal" style="position:fixed;inset:0;background:rgba(0,0,0,0.78);backdrop-filter:blur(8px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;">
-          <div style="background:linear-gradient(135deg,#0a0f1e,#0d1428);border:1px solid rgba(255,200,50,0.25);border-radius:14px;width:100%;max-width:460px;max-height:90vh;overflow-y:auto;box-shadow:0 30px 60px rgba(0,0,0,0.6);">
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 22px;border-bottom:1px solid rgba(255,255,255,0.07);">
-              <div style="font-family:var(--font-display);font-size:15px;font-weight:700;letter-spacing:1px;color:var(--gold);" id="walletModalTitle">// ADD NEW WALLET</div>
-              <button onclick="walletCloseModal()" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:6px;width:30px;height:30px;color:var(--text-muted);cursor:pointer;font-size:14px;">✕</button>
-            </div>
-            <div style="padding:22px;display:flex;flex-direction:column;gap:14px;">
-              <div>
-                <label style="display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px;">Wallet Name *</label>
-                <input id="wName" type="text" placeholder="e.g. Main Wallet" style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 13px;color:var(--text);font-family:var(--font-ui);font-size:14px;outline:none;">
-              </div>
-              <div>
-                <label style="display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px;">Public Address</label>
-                <input id="wAddress" type="text" placeholder="0x... (public address only — never private keys)" style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 13px;color:var(--text);font-family:var(--font-mono);font-size:12px;outline:none;">
-              </div>
-              <div>
-                <label style="display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px;">Chains (comma-separated)</label>
-                <input id="wChains" type="text" placeholder="e.g. ETH, ARB, Base, zkSync" style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 13px;color:var(--text);font-family:var(--font-ui);font-size:14px;outline:none;">
-              </div>
-              <div style="display:flex;gap:12px;">
-                <div style="flex:1;">
-                  <label style="display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px;">Status</label>
-                  <select id="wStatus" style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 13px;color:var(--text);font-family:var(--font-ui);font-size:14px;outline:none;">
-                    <option value="active">Active</option>
-                    <option value="farming">Farming</option>
-                    <option value="resting">Resting</option>
-                    <option value="burner">Burner</option>
-                    <option value="high-risk">High Risk</option>
-                  </select>
-                </div>
-                <div style="flex:1;">
-                  <label style="display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px;">Label</label>
-                  <input id="wLabel" type="text" placeholder="e.g. Main, Whale" style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 13px;color:var(--text);font-family:var(--font-ui);font-size:14px;outline:none;">
-                </div>
-              </div>
-              <div>
-                <label style="display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px;">Notes</label>
-                <textarea id="wNotes" placeholder="Funding source, strategy, sybil considerations..." style="width:100%;min-height:70px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 13px;color:var(--text);font-family:var(--font-ui);font-size:14px;outline:none;resize:vertical;"></textarea>
-              </div>
-            </div>
-            <div style="display:flex;gap:10px;justify-content:flex-end;padding:18px 22px;border-top:1px solid rgba(255,255,255,0.07);">
-              <button onclick="walletCloseModal()" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:10px 18px;color:var(--text);font-family:var(--font-ui);font-size:13px;font-weight:600;cursor:pointer;">Cancel</button>
-              <button id="walletSaveBtn" onclick="walletSaveFromModal()" style="background:linear-gradient(135deg,#ffc832,#a8862a);border:none;border-radius:8px;padding:10px 18px;color:#050810;font-family:var(--font-ui);font-size:13px;font-weight:700;cursor:pointer;">Add Wallet →</button>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
     <!-- END WALLETS TAB CONTENT -->
@@ -24950,5 +24904,52 @@ function profileSetIntensity(level) {
 })();
 </script>
 
+  <!-- Wallet modal — moved here so position:fixed escapes the wallets-view stacking context -->
+        <div class="modal-overlay" id="walletModal" style="position:fixed;inset:0;background:rgba(0,0,0,0.78);backdrop-filter:blur(8px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;">
+          <div style="background:linear-gradient(135deg,#0a0f1e,#0d1428);border:1px solid rgba(255,200,50,0.25);border-radius:14px;width:100%;max-width:460px;max-height:90vh;overflow-y:auto;box-shadow:0 30px 60px rgba(0,0,0,0.6);">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 22px;border-bottom:1px solid rgba(255,255,255,0.07);">
+              <div style="font-family:var(--font-display);font-size:15px;font-weight:700;letter-spacing:1px;color:var(--gold);" id="walletModalTitle">// ADD NEW WALLET</div>
+              <button onclick="walletCloseModal()" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:6px;width:30px;height:30px;color:var(--text-muted);cursor:pointer;font-size:14px;">✕</button>
+            </div>
+            <div style="padding:22px;display:flex;flex-direction:column;gap:14px;">
+              <div>
+                <label style="display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px;">Wallet Name *</label>
+                <input id="wName" type="text" placeholder="e.g. Main Wallet" style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 13px;color:var(--text);font-family:var(--font-ui);font-size:14px;outline:none;">
+              </div>
+              <div>
+                <label style="display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px;">Public Address</label>
+                <input id="wAddress" type="text" placeholder="0x... (public address only — never private keys)" style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 13px;color:var(--text);font-family:var(--font-mono);font-size:12px;outline:none;">
+              </div>
+              <div>
+                <label style="display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px;">Chains (comma-separated)</label>
+                <input id="wChains" type="text" placeholder="e.g. ETH, ARB, Base, zkSync" style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 13px;color:var(--text);font-family:var(--font-ui);font-size:14px;outline:none;">
+              </div>
+              <div style="display:flex;gap:12px;">
+                <div style="flex:1;">
+                  <label style="display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px;">Status</label>
+                  <select id="wStatus" style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 13px;color:var(--text);font-family:var(--font-ui);font-size:14px;outline:none;">
+                    <option value="active">Active</option>
+                    <option value="farming">Farming</option>
+                    <option value="resting">Resting</option>
+                    <option value="burner">Burner</option>
+                    <option value="high-risk">High Risk</option>
+                  </select>
+                </div>
+                <div style="flex:1;">
+                  <label style="display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px;">Label</label>
+                  <input id="wLabel" type="text" placeholder="e.g. Main, Whale" style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 13px;color:var(--text);font-family:var(--font-ui);font-size:14px;outline:none;">
+                </div>
+              </div>
+              <div>
+                <label style="display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px;">Notes</label>
+                <textarea id="wNotes" placeholder="Funding source, strategy, sybil considerations..." style="width:100%;min-height:70px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 13px;color:var(--text);font-family:var(--font-ui);font-size:14px;outline:none;resize:vertical;"></textarea>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;justify-content:flex-end;padding:18px 22px;border-top:1px solid rgba(255,255,255,0.07);">
+              <button onclick="walletCloseModal()" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:10px 18px;color:var(--text);font-family:var(--font-ui);font-size:13px;font-weight:600;cursor:pointer;">Cancel</button>
+              <button id="walletSaveBtn" onclick="walletSaveFromModal()" style="background:linear-gradient(135deg,#ffc832,#a8862a);border:none;border-radius:8px;padding:10px 18px;color:#050810;font-family:var(--font-ui);font-size:13px;font-weight:700;cursor:pointer;">Add Wallet →</button>
+            </div>
+          </div>
+        </div>
 </body>
 </html>
