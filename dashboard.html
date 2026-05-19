@@ -15374,33 +15374,33 @@ canvas.mini-chart { width: 100% !important; }
           <div class="hero-stats">
             <div class="stat-widget gold">
               <div class="stat-label">Total Wallets</div>
-              <div class="stat-value" id="stat-total">24</div>
-              <div class="stat-change up">↑ 3 this week</div>
+              <div class="stat-value" id="stat-total">0</div>
+              <div class="stat-change">tracked</div>
             </div>
             <div class="stat-widget cyan">
               <div class="stat-label">Active Today</div>
-              <div class="stat-value" id="stat-active">11</div>
-              <div class="stat-change up">↑ 2 from yesterday</div>
+              <div class="stat-value" style="color:var(--text-muted);font-size:18px;">Phase 4</div>
+              <div class="stat-change">needs on-chain feed</div>
             </div>
             <div class="stat-widget green">
               <div class="stat-label">Total Interactions</div>
-              <div class="stat-value">4,892</div>
-              <div class="stat-change up">↑ 143 today</div>
+              <div class="stat-value" style="color:var(--text-muted);font-size:18px;">Phase 4</div>
+              <div class="stat-change">needs on-chain feed</div>
             </div>
             <div class="stat-widget gold">
               <div class="stat-label">Avg Health Score</div>
-              <div class="stat-value">78<span style="font-size:14px;color:var(--text-muted)">/100</span></div>
-              <div class="stat-change up">↑ 4 pts</div>
+              <div class="stat-value" id="stat-avg-health">—</div>
+              <div class="stat-change">across checked wallets</div>
             </div>
             <div class="stat-widget green">
               <div class="stat-label">Sybil Safety</div>
-              <div class="stat-value">SAFE</div>
-              <div class="stat-change up">Low Risk · A-</div>
+              <div class="stat-value" id="stat-sybil-safety">—</div>
+              <div class="stat-change">from avg health</div>
             </div>
             <div class="stat-widget orange">
               <div class="stat-label">Est. Exposure</div>
-              <div class="stat-value">$84K</div>
-              <div class="stat-change up">↑ $4.2K today</div>
+              <div class="stat-value" style="color:var(--text-muted);font-size:18px;">Phase 4</div>
+              <div class="stat-change">needs portfolio data</div>
             </div>
           </div>
         </div>
@@ -15429,25 +15429,16 @@ canvas.mini-chart { width: 100% !important; }
             <!-- Grouping -->
             <div class="group-tabs" id="group-tabs">
               <div class="group-tag active" onclick="walletFilterGroup(this,'all')">
-                <span class="group-tag-dot" style="background:var(--gold)"></span> All Wallets <span style="font-family:var(--font-mono);font-size:9px;opacity:.6">24</span>
+                <span class="group-tag-dot" style="background:var(--gold)"></span> All Wallets
               </div>
               <div class="group-tag" onclick="walletFilterGroup(this,'farming')">
-                <span class="group-tag-dot" style="background:var(--gold)"></span> Active Farming <span style="font-family:var(--font-mono);font-size:9px;opacity:.6">8</span>
+                <span class="group-tag-dot" style="background:var(--gold)"></span> Farming
               </div>
-              <div class="group-tag" onclick="walletFilterGroup(this,'elite')">
-                <span class="group-tag-dot" style="background:var(--purple)"></span> Elite Tier <span style="font-family:var(--font-mono);font-size:9px;opacity:.6">4</span>
-              </div>
-              <div class="group-tag" onclick="walletFilterGroup(this,'testnet')">
-                <span class="group-tag-dot" style="background:var(--cyan)"></span> Testnet <span style="font-family:var(--font-mono);font-size:9px;opacity:.6">5</span>
-              </div>
-              <div class="group-tag" onclick="walletFilterGroup(this,'burner')">
-                <span class="group-tag-dot" style="background:var(--orange)"></span> Burner <span style="font-family:var(--font-mono);font-size:9px;opacity:.6">3</span>
-              </div>
-              <div class="group-tag" onclick="walletFilterGroup(this,'whale')">
-                <span class="group-tag-dot" style="background:var(--green)"></span> Whale <span style="font-family:var(--font-mono);font-size:9px;opacity:.6">2</span>
+              <div class="group-tag" onclick="walletFilterGroup(this,'active')">
+                <span class="group-tag-dot" style="background:var(--cyan)"></span> Active
               </div>
               <div class="group-tag" onclick="walletFilterGroup(this,'resting')">
-                <span class="group-tag-dot" style="background:var(--text-muted)"></span> Resting <span style="font-family:var(--font-mono);font-size:9px;opacity:.6">4</span>
+                <span class="group-tag-dot" style="background:var(--text-muted)"></span> Resting
               </div>
             </div>
 
@@ -15467,13 +15458,10 @@ canvas.mini-chart { width: 100% !important; }
 
             <!-- Filter tabs -->
             <div class="wallet-filters">
-              <div class="filter-tab active" onclick="walletFilterStatus(this,'all')">All <span class="count">24</span></div>
-              <div class="filter-tab" onclick="walletFilterStatus(this,'farming')">Farming <span class="count">8</span></div>
-              <div class="filter-tab" onclick="walletFilterStatus(this,'active')">Active <span class="count">11</span></div>
-              <div class="filter-tab" onclick="walletFilterStatus(this,'resting')">Resting <span class="count">4</span></div>
-              <div class="filter-tab" onclick="walletFilterStatus(this,'highrisk')">High Risk <span class="count">2</span></div>
-              <div class="filter-tab" onclick="walletFilterStatus(this,'elite')">Elite <span class="count">4</span></div>
-              <div class="filter-tab" onclick="walletFilterStatus(this,'archived')">Archived <span class="count">3</span></div>
+              <div class="filter-tab active" onclick="walletFilterStatus(this,'all')">All</div>
+              <div class="filter-tab" onclick="walletFilterStatus(this,'farming')">Farming</div>
+              <div class="filter-tab" onclick="walletFilterStatus(this,'active')">Active</div>
+              <div class="filter-tab" onclick="walletFilterStatus(this,'resting')">Resting</div>
             </div>
 
             <!-- Table -->
@@ -15508,48 +15496,20 @@ canvas.mini-chart { width: 100% !important; }
             <div class="panel red-top">
               <div class="section-header">
                 <div class="section-title" style="color:var(--red)">Sybil Protection</div>
-                <span class="live-pulse" style="color:var(--green)">SCANNING</span>
               </div>
 
-              <div class="sybil-risk-indicator">
-                <div class="sybil-score-ring">
-                  <svg width="70" height="70" viewBox="0 0 70 70">
-                    <circle cx="35" cy="35" r="28" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/>
-                    <circle cx="35" cy="35" r="28" fill="none" stroke="var(--green)" stroke-width="6"
-                      stroke-dasharray="175.9" stroke-dashoffset="35.2" stroke-linecap="round"
-                      style="filter:drop-shadow(0 0 6px var(--green))"/>
-                  </svg>
-                  <div class="sybil-score-val">
-                    <div class="sybil-num">82</div>
-                    <div class="sybil-label-sm">SAFE</div>
-                  </div>
+              <div style="padding:20px 12px;text-align:center;">
+                <div style="font-size:26px;margin-bottom:8px;">🛡️</div>
+                <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-primary,#fff);letter-spacing:1px;margin-bottom:8px;">CROSS-WALLET SYBIL SCAN — PHASE 4</div>
+                <div style="font-size:11px;color:var(--text-muted);line-height:1.6;">
+                  Detecting shared funding, timing patterns and wallet
+                  clusters needs cross-wallet analysis across the blockchain.
+                  This unlocks in Phase 4.
                 </div>
-                <div class="sybil-info">
-                  <div class="sybil-status-title">LOW RISK · A-</div>
-                  <div class="sybil-desc">Portfolio diversity is solid. 2 wallets share similar timing patterns.</div>
-                </div>
-              </div>
-
-              <div class="warning-list">
-                <div class="warning-item wi-ok">
-                  <div class="wi-icon">✓</div>
-                  <div class="wi-text"><strong>Funding Diversity</strong> Wallets funded from 8 unique sources</div>
-                </div>
-                <div class="warning-item wi-warn">
-                  <div class="wi-icon">⚠</div>
-                  <div class="wi-text"><strong>Timing Pattern</strong> Alpha-03 and Alpha-07 transact within same hour window</div>
-                </div>
-                <div class="warning-item wi-warn">
-                  <div class="wi-icon">⚠</div>
-                  <div class="wi-text"><strong>Chain Overuse</strong> 6 wallets concentrated on zkSync — spread recommended</div>
-                </div>
-                <div class="warning-item wi-ok">
-                  <div class="wi-icon">✓</div>
-                  <div class="wi-text"><strong>IP Separation</strong> No shared IP clusters detected</div>
-                </div>
-                <div class="warning-item wi-danger">
-                  <div class="wi-icon">✕</div>
-                  <div class="wi-text"><strong>High Risk · Burner-02</strong> Similar on-chain route to Alpha-01 detected</div>
+                <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.07);font-size:11px;color:var(--text-muted);line-height:1.6;">
+                  <strong style="color:var(--text-primary,#fff);">Available now:</strong> each wallet's
+                  on-chain <em>Health Score</em> (age, activity, gas, multi-chain)
+                  is in the Wallet Health System above and the Airdrop Tracker.
                 </div>
               </div>
 
@@ -21269,7 +21229,15 @@ async function walletLoadFromSupabase() {
       return;
     }
     walletData = await window.API.getWallets();
+
+    // Load the on-chain Health Score cache (from the sybil system)
+    if (window.API.getWalletChainData) {
+      walletChainCache = await window.API.getWalletChainData();
+    }
+
     walletApplyFilters();
+    walletRenderHealthGrid();
+    walletRenderHeroStats();
   } catch (e) {
     console.error('walletLoadFromSupabase:', e);
   }
@@ -21915,39 +21883,127 @@ walletDrawGrid();
 window.addEventListener('resize', walletDrawGrid);
 
 /* ════════════════════════════════
-   RENDER: HEALTH SYSTEM
+   RENDER: HEALTH SYSTEM  ·  LIVE
+   Uses real wallets + wallet_chain_data Health Scores (Stages 1-3).
    ════════════════════════════════ */
+var walletChainCache = {};   // { wallet_id: chain_data_row }
+
 function walletRenderHealthGrid() {
   const g = document.getElementById('health-grid');
-  g.innerHTML = walletHealthData.map(w => {
-    const circumference = 2 * Math.PI * 22;
-    const offset = circumference - (w.score / 100) * circumference;
-    const barsHtml = w.bars.map(b => `
-      <div class="hwc-bar-row">
-        <div class="hwc-bar-label">${b.l}</div>
-        <div class="hwc-bar-track"><div class="hwc-bar-fill ${b.c}" style="width:${b.v}%"></div></div>
-      </div>`).join('');
-    return `
-    <div class="health-wallet-card">
-      <div class="hwc-header">
-        <div class="hwc-name">${w.name}</div>
-        <span class="status-badge ${w.score >= 80 ? 'sb-elite' : w.score >= 60 ? 'sb-farming' : 'sb-highrisk'}" style="font-size:9px;padding:3px 8px">${w.score >= 80 ? 'HEALTHY' : w.score >= 60 ? 'FAIR' : 'AT RISK'}</span>
-      </div>
-      <div class="hwc-score-ring">
-        <svg width="56" height="56" viewBox="0 0 56 56">
-          <circle cx="28" cy="28" r="22" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="5"/>
-          <circle cx="28" cy="28" r="22" fill="none" stroke="${w.color}" stroke-width="5"
-            stroke-dasharray="${circumference}" stroke-dashoffset="${offset}" stroke-linecap="round"
-            style="filter:drop-shadow(0 0 5px ${w.color})"/>
-        </svg>
-        <div class="hwc-score-val">
-          <div class="hwc-score-num" style="color:${w.color}">${w.score}</div>
-          <div class="hwc-score-label">SCORE</div>
-        </div>
-      </div>
-      <div class="hwc-bars">${barsHtml}</div>
-    </div>`;
+  if (!g) return;
+
+  if (!walletData.length) {
+    g.innerHTML = '<div style="grid-column:1/-1;padding:24px;text-align:center;' +
+      'color:var(--text-muted);font-size:12px;font-family:var(--font-mono);">' +
+      'No wallets yet. Add a wallet to see its health score.</div>';
+    return;
+  }
+
+  g.innerHTML = walletData.map(function(w) {
+    var cd = walletChainCache[w.id];
+    var circumference = 2 * Math.PI * 22;
+
+    // Not yet checked on-chain → prompt the user, no fake score
+    if (!cd || !cd.last_checked) {
+      return '<div class="health-wallet-card">' +
+        '<div class="hwc-header">' +
+          '<div class="hwc-name">' + walletEscapeHtml(w.name || 'Wallet') + '</div>' +
+          '<span class="status-badge sb-resting" style="font-size:9px;padding:3px 8px">NOT CHECKED</span>' +
+        '</div>' +
+        '<div style="padding:20px 6px;text-align:center;color:var(--text-muted);' +
+          'font-size:11px;font-family:var(--font-mono);line-height:1.6;">' +
+          'No on-chain data yet.<br>Open the Airdrop Tracker and tap ' +
+          '"Check On-Chain" for this wallet.</div>' +
+      '</div>';
+    }
+
+    var score = cd.health_score || 0;
+    var color = score >= 70 ? 'var(--green)' : (score >= 40 ? 'var(--gold)' : 'var(--red)');
+    var badge = score >= 70 ? 'HEALTHY' : (score >= 40 ? 'FAIR' : 'AT RISK');
+    var badgeCls = score >= 70 ? 'sb-elite' : (score >= 40 ? 'sb-farming' : 'sb-highrisk');
+    var offset = circumference - (score / 100) * circumference;
+
+    // Real signal bars from the on-chain data (scaled to 0-100)
+    var ageBar    = Math.min(Math.round((cd.age_days   || 0) / 365 * 100), 100);
+    var txBar     = Math.min(Math.round((cd.tx_count   || 0) / 100 * 100), 100);
+    var gasBar    = Math.min(Math.round((cd.gas_eth    || 0) / 0.05 * 100), 100);
+    var chainsBar = Math.min(Math.round((cd.chains_active || 0) / 5  * 100), 100);
+
+    var bars = [
+      { l: 'Wallet Age', v: ageBar,    c: 'hb-purple' },
+      { l: 'Activity',   v: txBar,     c: 'hb-gold'   },
+      { l: 'Gas Spent',  v: gasBar,    c: 'hb-cyan'   },
+      { l: 'Multi-Chain',v: chainsBar, c: 'hb-green'  }
+    ];
+    var barsHtml = bars.map(function(b) {
+      return '<div class="hwc-bar-row">' +
+        '<div class="hwc-bar-label">' + b.l + '</div>' +
+        '<div class="hwc-bar-track"><div class="hwc-bar-fill ' + b.c +
+        '" style="width:' + b.v + '%"></div></div></div>';
+    }).join('');
+
+    return '<div class="health-wallet-card">' +
+      '<div class="hwc-header">' +
+        '<div class="hwc-name">' + walletEscapeHtml(w.name || 'Wallet') + '</div>' +
+        '<span class="status-badge ' + badgeCls + '" style="font-size:9px;padding:3px 8px">' + badge + '</span>' +
+      '</div>' +
+      '<div class="hwc-score-ring">' +
+        '<svg width="56" height="56" viewBox="0 0 56 56">' +
+          '<circle cx="28" cy="28" r="22" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="5"/>' +
+          '<circle cx="28" cy="28" r="22" fill="none" stroke="' + color + '" stroke-width="5" ' +
+            'stroke-dasharray="' + circumference + '" stroke-dashoffset="' + offset + '" ' +
+            'stroke-linecap="round" style="filter:drop-shadow(0 0 5px ' + color + ')"/>' +
+        '</svg>' +
+        '<div class="hwc-score-val">' +
+          '<div class="hwc-score-num" style="color:' + color + '">' + score + '</div>' +
+          '<div class="hwc-score-label">SCORE</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="hwc-bars">' + barsHtml + '</div>' +
+    '</div>';
   }).join('');
+}
+
+// safe HTML escape for wallet text
+function walletEscapeHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Wire the real hero stats from wallets + chain-data
+function walletRenderHeroStats() {
+  var setText = function(id, val) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = val;
+  };
+
+  // Total Wallets — real count
+  setText('stat-total', walletData.length);
+
+  // Avg Health Score — average of checked wallets only
+  var checked = walletData
+    .map(function(w) { return walletChainCache[w.id]; })
+    .filter(function(cd) { return cd && cd.last_checked; });
+
+  var avgEl = document.getElementById('stat-avg-health');
+  var safetyEl = document.getElementById('stat-sybil-safety');
+  if (checked.length) {
+    var avg = Math.round(checked.reduce(function(s, cd) {
+      return s + (cd.health_score || 0);
+    }, 0) / checked.length);
+    if (avgEl) avgEl.innerHTML = avg + '<span style="font-size:14px;color:var(--text-muted)">/100</span>';
+
+    // Sybil Safety derived from average score
+    if (safetyEl) {
+      if (avg >= 70)      safetyEl.textContent = 'SAFE';
+      else if (avg >= 40) safetyEl.textContent = 'FAIR';
+      else                safetyEl.textContent = 'AT RISK';
+    }
+  } else {
+    if (avgEl) avgEl.innerHTML = '—';
+    if (safetyEl) safetyEl.textContent = '—';
+  }
 }
 
 /* ════════════════════════════════
@@ -22221,11 +22277,11 @@ function walletSyncWallets() {
   setTimeout(() => {
     clearInterval(interval);
     icon.style.transform = '';
-    walletShowToast('Wallets synced successfully!', 'green');
-    // Animate stat update
-    const el = document.getElementById('stat-active');
-    el.style.color = 'var(--green)';
-    setTimeout(() => { el.style.color = ''; }, 1500);
+    // Actually reload real wallet data from Supabase
+    if (typeof walletLoadFromSupabase === 'function') {
+      walletLoadFromSupabase();
+    }
+    walletShowToast('Wallets refreshed', 'green');
   }, 2000);
 }
 
