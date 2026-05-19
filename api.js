@@ -498,6 +498,7 @@
           gas_eth:       d.gas_eth    || 0,
           health_score:  d.health_score || 0,
           activity_risk: d.activity_risk || 'unknown',
+          chains_active: d.chains_active || 0,
           last_checked:  new Date().toISOString()
         };
 
