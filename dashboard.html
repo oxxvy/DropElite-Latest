@@ -14663,7 +14663,7 @@ canvas.mini-chart { width: 100% !important; }
             <div class="ring-title">MISSION PROGRESS</div>
           </div>
 
-          <div class="hero-rank-area">
+          <div class="hero-rank-area" style="display:none">
             <div class="rank-badge">
               <svg class="rank-hex" viewBox="0 0 100 110">
                 <polygon points="50,5 95,27.5 95,82.5 50,105 5,82.5 5,27.5"/>
@@ -14699,7 +14699,7 @@ canvas.mini-chart { width: 100% !important; }
 
             <!-- SECTION 2: DAILY MISSIONS LIST -->
             <div class="section-header">
-              <div class="section-title">Daily Missions</div>
+              <div class="section-title">Today's Tasks</div>
               <span class="section-badge badge-cyan" id="missionCountBadge">5 remaining</span>
             </div>
 
@@ -14793,7 +14793,7 @@ canvas.mini-chart { width: 100% !important; }
             </div>
 
             <!-- SECTION 4: XP & LEVELING -->
-            <div class="xp-panel glassmorphism">
+            <div class="xp-panel glassmorphism" style="display:none">
               <div class="section-header" style="margin-bottom:14px">
                 <div class="section-title gold">XP · Progression</div>
                 <span class="section-badge badge-gold">LV 17</span>
@@ -14906,7 +14906,7 @@ canvas.mini-chart { width: 100% !important; }
             </div>
 
             <!-- SECTION 8: LIVE FARMING ALERTS -->
-            <div class="alerts-panel glassmorphism">
+            <div class="alerts-panel glassmorphism" style="display:none">
               <div class="section-header" style="margin-bottom:0">
                 <div class="section-title">Live Alerts</div>
                 <div class="live-indicator"><div class="live-dot"></div>LIVE</div>
@@ -14917,7 +14917,7 @@ canvas.mini-chart { width: 100% !important; }
             </div>
 
             <!-- SECTION 9: PERFORMANCE SUMMARY -->
-            <div class="perf-panel glassmorphism">
+            <div class="perf-panel glassmorphism" style="display:none">
               <div class="section-header" style="margin-bottom:0">
                 <div class="section-title">Performance</div>
                 <span class="section-badge badge-green">TODAY</span>
@@ -15111,8 +15111,8 @@ canvas.mini-chart { width: 100% !important; }
           <div class="section-header">
             <div class="section-title">
               <span class="title-icon">◈</span>
-              AIRDROP DATABASE
-              <span class="title-count" id="tableCount">12 ENTRIES</span>
+              All Airdrops
+              <span class="title-count" id="tableCount">0</span>
             </div>
             <div class="section-actions">
               <button class="btn btn-ghost" style="font-size:11px;padding:6px 14px;" onclick="airdropShowToast('📋', 'View Mode', 'Switching to grid view...')">⊞ Grid</button>
@@ -16083,15 +16083,6 @@ canvas.mini-chart { width: 100% !important; }
             <div class="hero-actions">
               <button class="btn btn-primary" onclick="rewardsOpenAddModal()">
                 ＋ Add Reward
-              </button>
-              <button class="btn btn-secondary" onclick="rewardsShowToast('Sync', 'Auto-sync coming in Phase 3 (blockchain integration).')">
-                🔄 Sync Wallets
-              </button>
-              <button class="btn btn-ghost" onclick="rewardsShowToast('Export', 'PDF export coming soon.')">
-                📊 Export Report
-              </button>
-              <button class="btn btn-ghost">
-                🎯 Open Tracker
               </button>
             </div>
           </div>
