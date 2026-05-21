@@ -14276,22 +14276,20 @@ canvas.mini-chart { width: 100% !important; }
 
   <!-- ─── SIDEBAR ─── -->
   <nav class="sidebar">
-    <div class="nav-section-label">COMMAND</div>
+    <div class="nav-section-label">DASHBOARD</div>
     <a class="nav-item active" href="#overview" data-tab-target="overview" aria-current="page">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="7" height="7" rx="2"/><rect x="11" y="2" width="7" height="7" rx="2"/><rect x="2" y="11" width="7" height="7" rx="2"/><rect x="11" y="11" width="7" height="7" rx="2"/></svg>
       Overview
     </a>
     <a class="nav-item" href="#daily-missions" data-tab-target="daily-missions" aria-current="false">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10" cy="10" r="8"/><path d="M10 6v4l3 3"/></svg>
-      Daily Missions
-      <span class="badge">5</span>
+      Daily Operations
     </a>
 
     <div class="nav-section-label">FARMING</div>
     <a class="nav-item" href="#airdrop-tracker" data-tab-target="airdrop-tracker" aria-current="false">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h14M3 10h14M3 13h10"/><circle cx="16" cy="13" r="2"/></svg>
       Airdrops Tracker
-      <span class="badge gold">12</span>
     </a>
     <a class="nav-item" href="#wallets" data-tab-target="wallets" aria-current="false">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="14" height="11" rx="2"/><path d="M7 6V5a3 3 0 016 0v1"/></svg>
@@ -14301,31 +14299,19 @@ canvas.mini-chart { width: 100% !important; }
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 3a7 7 0 100 14A7 7 0 0010 3z"/><path d="M10 7v3l2 2"/></svg>
       Farming Routes
     </a>
-    <a class="nav-item" href="#rewards" data-tab-target="rewards" aria-current="false">
-      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 14 7 10 11 12 17 6"/></svg>
-      Rewards
-    </a>
 
     <div class="nav-section-label">INTEL</div>
     <a class="nav-item" href="#intel-hub" data-tab-target="intel-hub" aria-current="false">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10" cy="10" r="8"/><path d="M10 6v4"/><circle cx="10" cy="14" r="0.5" fill="currentColor"/></svg>
       Intel Hub
     </a>
-    <a class="nav-item" href="#analytics" data-tab-target="analytics" aria-current="false">
-      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M7 10h6M7 13h4"/></svg>
-      Analytics
-    </a>
-    <a class="nav-item" href="#reports" data-tab-target="reports" aria-current="false">
-      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h12v8H4z"/><path d="M8 12v4M12 12v4M6 16h8"/></svg>
-      Reports
+    <a class="nav-item" href="#rewards" data-tab-target="rewards" aria-current="false">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 14 7 10 11 12 17 6"/></svg>
+      Claims &amp; Rewards
     </a>
 
     <div class="nav-section-label">ACCOUNT</div>
     <a class="nav-item" href="#profile" data-tab-target="profile" aria-current="false">
-      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10" cy="8" r="4"/><path d="M3 18c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
-      Profile
-    </a>
-    <a class="nav-item" href="#">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10" cy="10" r="3"/><path d="M10 1v3M10 16v3M1 10h3M16 10h3M3.6 3.6l2.1 2.1M14.3 14.3l2.1 2.1M3.6 16.4l2.1-2.1M14.3 5.7l2.1-2.1"/></svg>
       Settings
     </a>
@@ -14630,8 +14616,8 @@ canvas.mini-chart { width: 100% !important; }
         ═══════════════════════════════════════════ -->
         <section class="hero-header">
           <div class="hero-left">
-            <div class="hero-tag">TODAY'S TASKS</div>
-            <h1 class="hero-title">Daily <span>Missions</span></h1>
+            <div class="hero-tag">TODAY'S OPERATIONS</div>
+            <h1 class="hero-title">Daily <span>Operations</span></h1>
             <p class="hero-subtitle">Complete today's curated tasks across active ecosystems. XP and streaks save automatically.</p>
             <div class="hero-stats">
               <div class="hero-stat">
@@ -15002,14 +14988,8 @@ canvas.mini-chart { width: 100% !important; }
               <button class="btn btn-primary btn-icon" onclick="airdropOpenModal()">
                 <span>＋</span> Add Airdrop
               </button>
-              <button class="btn btn-ghost" onclick="airdropShowToast('📥', 'Route Imported', '3 new farming routes added')">
-                ↓ Import Route
-              </button>
-              <button class="btn btn-ghost" onclick="airdropShowToast('🔗', 'Wallets Synced', 'All 4 wallets synchronized')">
-                ⟳ Sync Wallets
-              </button>
-              <button class="btn btn-ghost" onclick="airdropShowToast('📊', 'Report Exported', 'Farming report saved to device')">
-                ↗ Export Report
+              <button class="btn btn-ghost" onclick="airdropExportCsv()">
+                ↗ Export to CSV
               </button>
             </div>
           </div>
@@ -21012,6 +20992,55 @@ function airdropSortTable(col) {
   document.querySelectorAll('#tab-airdrop-tracker .data-table th').forEach((th, i) => {
     th.classList.toggle('sort-active', i === col);
   });
+}
+
+// ─── EXPORT: download tracked airdrops as CSV ───
+function airdropExportCsv() {
+  var rows = (typeof airdropTrackerData !== 'undefined' && Array.isArray(airdropTrackerData))
+    ? airdropTrackerData : [];
+
+  if (!rows.length) {
+    if (typeof airdropShowToast === 'function') {
+      airdropShowToast('📋', 'Nothing to export', 'Add some airdrops first');
+    }
+    return;
+  }
+
+  // CSV escape: wrap in quotes, double any internal quotes
+  function csvCell(v) {
+    if (v == null) return '';
+    var s = String(v).replace(/"/g, '""');
+    return '"' + s + '"';
+  }
+
+  var headers = ['Name', 'Ticker', 'Chain', 'Category', 'Status',
+                 'Progress %', 'Est. Reward', 'Snapshot Date', 'Notes'];
+
+  var lines = [headers.map(csvCell).join(',')];
+  rows.forEach(function(a) {
+    lines.push([
+      a.name, a.ticker, a.chain, a.category, a.status,
+      a.progress, a.est_reward, a.snapshot_date, a.notes
+    ].map(csvCell).join(','));
+  });
+
+  var csv = lines.join('\n');
+  var stamp = new Date().toISOString().slice(0, 10);   // YYYY-MM-DD
+
+  // Trigger a real file download
+  var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  var url  = URL.createObjectURL(blob);
+  var a    = document.createElement('a');
+  a.href = url;
+  a.download = 'dropelite-airdrops-' + stamp + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  if (typeof airdropShowToast === 'function') {
+    airdropShowToast('✓', 'Export ready', rows.length + ' airdrops exported');
+  }
 }
 
 // ─── MODAL: ADD / EDIT ───
