@@ -3516,6 +3516,387 @@ canvas.mini-chart { width: 100% !important; }
   .daily-missions-view .perf-grid { grid-template-columns: 1fr; }
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   v2.0 — MISSION CONTROL CARD DESIGN (overrides old .mission-card)
+   Scoped to .daily-missions-view so it doesn't affect other tabs.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.daily-missions-view .mission-card.v2 {
+  position: relative;
+  display: block;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 16px 20px 16px 24px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  backdrop-filter: blur(8px);
+}
+.daily-missions-view .mission-card.v2:hover {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(245,200,66,0.25);
+  transform: translateX(2px);
+}
+
+/* Rarity left accent bar */
+.daily-missions-view .mission-card.v2::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  transition: width 0.3s;
+}
+.daily-missions-view .mission-card.v2.rarity-common::before    { background: #6b7384; }
+.daily-missions-view .mission-card.v2.rarity-rare::before      { background: #4af0ff; box-shadow: 0 0 14px rgba(74,240,255,0.4); }
+.daily-missions-view .mission-card.v2.rarity-epic::before      { background: #b070ff; box-shadow: 0 0 14px rgba(176,112,255,0.4); }
+.daily-missions-view .mission-card.v2.rarity-legendary::before { background: #f5c842; box-shadow: 0 0 16px rgba(245,200,66,0.5); }
+.daily-missions-view .mission-card.v2.rarity-mythic::before    {
+  background: linear-gradient(180deg, #ff5e8a, #f5c842);
+  box-shadow: 0 0 20px rgba(255,94,138,0.4);
+}
+.daily-missions-view .mission-card.v2:hover::before { width: 4px; }
+
+/* Completed state */
+.daily-missions-view .mission-card.v2.completed { opacity: 0.55; }
+.daily-missions-view .mission-card.v2.completed::before {
+  background: #00e87a; box-shadow: 0 0 12px rgba(0,232,122,0.4);
+}
+
+/* Boost active animation */
+.daily-missions-view .mission-card.v2.boost-active {
+  animation: missionBoost 2.5s ease-in-out infinite;
+  border-color: rgba(245,200,66,0.25);
+}
+@keyframes missionBoost {
+  0%, 100% { box-shadow: inset 0 0 0 1px rgba(245,200,66,0); }
+  50%      { box-shadow: inset 0 0 0 1px rgba(245,200,66,0.18), 0 0 20px rgba(245,200,66,0.10); }
+}
+
+/* Boost ribbon */
+.daily-missions-view .m-boost-ribbon {
+  position: absolute;
+  top: -1px; right: 24px;
+  background: linear-gradient(135deg, #a8862a, #f5c842);
+  color: #0a0e1a;
+  font-family: var(--font-mono, 'Share Tech Mono', monospace);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 3px 10px;
+  border-radius: 0 0 6px 6px;
+  z-index: 1;
+}
+
+/* Main row grid */
+.daily-missions-view .mission-card.v2 .m-row {
+  display: grid;
+  grid-template-columns: 52px 1fr auto auto auto;
+  gap: 16px;
+  align-items: center;
+}
+
+/* Logo box (chain initials) */
+.daily-missions-view .mission-card.v2 .m-logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display, 'Orbitron', sans-serif);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.08);
+  flex-shrink: 0;
+  text-align: center;
+  line-height: 1;
+}
+
+/* Mission info column */
+.daily-missions-view .mission-card.v2 .m-info { min-width: 0; }
+.daily-missions-view .mission-card.v2 .m-id {
+  font-family: var(--font-mono, 'Share Tech Mono', monospace);
+  font-size: 9px;
+  color: rgba(150,160,180,0.6);
+  letter-spacing: 2px;
+  margin-bottom: 3px;
+}
+.daily-missions-view .mission-card.v2 .m-elite-tag {
+  color: #b070ff;
+  margin-left: 6px;
+  padding: 1px 6px;
+  background: rgba(176,112,255,0.10);
+  border: 1px solid rgba(176,112,255,0.25);
+  border-radius: 8px;
+  font-size: 8px;
+}
+.daily-missions-view .mission-card.v2 .m-title {
+  font-family: var(--font-body, 'Rajdhani', sans-serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: #e8eaf0;
+  letter-spacing: 0.3px;
+  line-height: 1.2;
+  margin-bottom: 3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.daily-missions-view .mission-card.v2 .m-desc {
+  font-size: 12.5px;
+  color: rgba(150,160,180,0.85);
+  line-height: 1.45;
+}
+
+/* Rarity tag (inline next to title) */
+.daily-missions-view .mission-card.v2 .m-rarity-tag {
+  font-family: var(--font-mono, 'Share Tech Mono', monospace);
+  font-size: 8px;
+  letter-spacing: 2px;
+  padding: 2px 7px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.daily-missions-view .mission-card.v2 .m-rarity-tag.rarity-rare       { background: rgba(74,240,255,0.10);  color: #4af0ff; border: 1px solid rgba(74,240,255,0.3); }
+.daily-missions-view .mission-card.v2 .m-rarity-tag.rarity-epic       { background: rgba(176,112,255,0.10); color: #b070ff; border: 1px solid rgba(176,112,255,0.3); }
+.daily-missions-view .mission-card.v2 .m-rarity-tag.rarity-legendary  { background: rgba(245,200,66,0.10);  color: #f5c842; border: 1px solid rgba(245,200,66,0.3); }
+.daily-missions-view .mission-card.v2 .m-rarity-tag.rarity-mythic     { background: rgba(255,94,138,0.10);  color: #ff5e8a; border: 1px solid rgba(255,94,138,0.3); }
+
+/* Steps row (when completion_mode = steps) */
+.daily-missions-view .mission-card.v2 .m-steps-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+}
+.daily-missions-view .mission-card.v2 .m-steps-label {
+  font-family: var(--font-mono, 'Share Tech Mono', monospace);
+  font-size: 9px;
+  color: rgba(150,160,180,0.6);
+  letter-spacing: 1.5px;
+  margin-right: 8px;
+}
+.daily-missions-view .mission-card.v2 .m-step-pip {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(245,200,66,0.3);
+  background: rgba(0,0,0,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono, 'Share Tech Mono', monospace);
+  font-size: 9px;
+  color: rgba(150,160,180,0.6);
+}
+.daily-missions-view .mission-card.v2 .m-step-pip.done {
+  border-color: #00e87a;
+  background: rgba(0,232,122,0.2);
+  color: #00e87a;
+}
+.daily-missions-view .mission-card.v2 .m-step-pip.current {
+  border-color: #f5c842;
+  color: #f5c842;
+  box-shadow: 0 0 8px rgba(245,200,66,0.4);
+}
+.daily-missions-view .mission-card.v2 .m-step-line {
+  width: 12px;
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+}
+.daily-missions-view .mission-card.v2 .m-step-line.done { background: #00e87a; }
+
+/* Tags column (difficulty + verified + meta) */
+.daily-missions-view .mission-card.v2 .m-tags {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+}
+.daily-missions-view .mission-card.v2 .m-tag-line {
+  display: flex; gap: 6px; align-items: center;
+}
+.daily-missions-view .mission-card.v2 .m-diff {
+  font-family: var(--font-mono, 'Share Tech Mono', monospace);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+.daily-missions-view .mission-card.v2 .m-diff.diff-easy   { background: rgba(0,232,122,0.10);  color: #00e87a; border: 1px solid rgba(0,232,122,0.3); }
+.daily-missions-view .mission-card.v2 .m-diff.diff-medium { background: rgba(255,144,70,0.10); color: #ff9046; border: 1px solid rgba(255,144,70,0.3); }
+.daily-missions-view .mission-card.v2 .m-diff.diff-hard   { background: rgba(255,71,87,0.10);  color: #ff4757; border: 1px solid rgba(255,71,87,0.3); }
+.daily-missions-view .mission-card.v2 .m-diff.diff-elite  { background: rgba(176,112,255,0.10);color: #b070ff; border: 1px solid rgba(176,112,255,0.3); }
+.daily-missions-view .mission-card.v2 .m-verified {
+  display: flex; align-items: center; gap: 4px;
+  background: rgba(74,240,255,0.08);
+  border: 1px solid rgba(74,240,255,0.25);
+  color: #4af0ff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-family: var(--font-mono, 'Share Tech Mono', monospace);
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+.daily-missions-view .mission-card.v2 .m-meta-line {
+  font-family: var(--font-mono, 'Share Tech Mono', monospace);
+  font-size: 10px;
+  color: rgba(150,160,180,0.7);
+  letter-spacing: 1px;
+}
+
+/* Reward column */
+.daily-missions-view .mission-card.v2 .m-reward {
+  text-align: right;
+  min-width: 110px;
+}
+.daily-missions-view .mission-card.v2 .m-xp {
+  font-family: var(--font-display, 'Orbitron', sans-serif);
+  font-size: 17px;
+  font-weight: 700;
+  color: #f5c842;
+  letter-spacing: 0.3px;
+  text-shadow: 0 0 10px rgba(245,200,66,0.3);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.daily-missions-view .mission-card.v2 .m-boost-mult {
+  font-size: 10px;
+  color: #ff9046;
+  letter-spacing: 1px;
+  margin-left: 2px;
+}
+.daily-missions-view .mission-card.v2 .m-value {
+  font-family: var(--font-mono, 'Share Tech Mono', monospace);
+  font-size: 11px;
+  color: #4af0ff;
+  letter-spacing: 0.5px;
+}
+.daily-missions-view .mission-card.v2 .m-value.high {
+  color: #b070ff;
+  font-family: var(--font-body, 'Rajdhani', sans-serif);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+
+/* Action button column */
+.daily-missions-view .mission-card.v2 .m-action {
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.daily-missions-view .mission-card.v2 .m-btn-start,
+.daily-missions-view .mission-card.v2 .m-btn-verify,
+.daily-missions-view .mission-card.v2 .m-btn-guide,
+.daily-missions-view .mission-card.v2 .m-btn-completed {
+  font-family: var(--font-display, 'Orbitron', sans-serif);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.daily-missions-view .mission-card.v2 .m-btn-start {
+  background: rgba(74,240,255,0.08);
+  border-color: #4af0ff;
+  color: #4af0ff;
+}
+.daily-missions-view .mission-card.v2 .m-btn-start:hover {
+  background: rgba(74,240,255,0.16);
+  box-shadow: 0 0 16px rgba(74,240,255,0.3);
+}
+.daily-missions-view .mission-card.v2 .m-btn-verify {
+  background: rgba(176,112,255,0.08);
+  border-color: #b070ff;
+  color: #b070ff;
+}
+.daily-missions-view .mission-card.v2 .m-btn-verify:hover {
+  background: rgba(176,112,255,0.16);
+  box-shadow: 0 0 16px rgba(176,112,255,0.3);
+}
+.daily-missions-view .mission-card.v2 .m-btn-guide {
+  background: rgba(245,200,66,0.08);
+  border-color: #f5c842;
+  color: #f5c842;
+}
+.daily-missions-view .mission-card.v2 .m-btn-guide:hover {
+  background: rgba(245,200,66,0.16);
+  box-shadow: 0 0 16px rgba(245,200,66,0.3);
+}
+.daily-missions-view .mission-card.v2 .m-btn-completed {
+  background: rgba(0,232,122,0.10);
+  border-color: #00e87a;
+  color: #00e87a;
+  cursor: default;
+}
+
+/* Bottom progress bar */
+.daily-missions-view .mission-card.v2 .m-progress-bar {
+  position: absolute;
+  left: 3px; right: 0; bottom: 0;
+  height: 2px;
+  background: rgba(255,255,255,0.03);
+}
+.daily-missions-view .mission-card.v2 .m-progress-fill {
+  height: 100%;
+  transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+.daily-missions-view .mission-card.v2 .m-progress-fill.gold   { background: #f5c842; box-shadow: 0 0 8px rgba(245,200,66,0.4); }
+.daily-missions-view .mission-card.v2 .m-progress-fill.cyan   { background: #4af0ff; box-shadow: 0 0 8px rgba(74,240,255,0.4); }
+.daily-missions-view .mission-card.v2 .m-progress-fill.purple { background: #b070ff; box-shadow: 0 0 8px rgba(176,112,255,0.4); }
+.daily-missions-view .mission-card.v2 .m-progress-fill.green  { background: #00e87a; box-shadow: 0 0 8px rgba(0,232,122,0.4); }
+
+/* ─── MOBILE: card stacks vertically ─── */
+@media (max-width: 720px) {
+  .daily-missions-view .mission-card.v2 { padding: 14px 16px 14px 20px; }
+  .daily-missions-view .mission-card.v2 .m-row {
+    grid-template-columns: 44px 1fr;
+    gap: 12px;
+  }
+  .daily-missions-view .mission-card.v2 .m-logo {
+    width: 44px; height: 44px; font-size: 12px;
+  }
+  .daily-missions-view .mission-card.v2 .m-tags {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+  .daily-missions-view .mission-card.v2 .m-tag-line { gap: 6px; }
+  .daily-missions-view .mission-card.v2 .m-meta-line { margin-left: auto; }
+  .daily-missions-view .mission-card.v2 .m-reward {
+    grid-column: 1 / -1;
+    text-align: left;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding-top: 6px;
+  }
+  .daily-missions-view .mission-card.v2 .m-action {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+  .daily-missions-view .mission-card.v2 .m-action button {
+    width: 100%;
+    padding: 12px;
+  }
+  .daily-missions-view .mission-card.v2 .m-boost-ribbon { right: 12px; }
+}
+
+/* END v2.0 MISSION CONTROL CARD STYLES */
+
 /* END DAILY MISSIONS TAB STYLES */
 /* START AIRDROP TRACKER TAB STYLES */
 .airdrop-tracker-view.tab-panel.active { display: block; }
@@ -14681,15 +15062,13 @@ canvas.mini-chart { width: 100% !important; }
           <!-- LEFT / MAIN COLUMN -->
           <div class="main-column">
 
-            <!-- SECTION 7: CATEGORY FILTER + SORT -->
+            <!-- SECTION 7: CATEGORY FILTER + SORT (v2.0) -->
             <div class="category-tabs">
-              <button class="cat-tab active" data-cat="all" onclick="dailyFilterCat(this, 'all')">⚡ All <span class="cat-count">9</span></button>
-              <button class="cat-tab" data-cat="bridge" onclick="dailyFilterCat(this, 'bridge')">🌉 Bridges <span class="cat-count">2</span></button>
-              <button class="cat-tab" data-cat="swap" onclick="dailyFilterCat(this, 'swap')">🔄 Swaps <span class="cat-count">2</span></button>
-              <button class="cat-tab" data-cat="testnet" onclick="dailyFilterCat(this, 'testnet')">🧪 Testnets <span class="cat-count">1</span></button>
-              <button class="cat-tab" data-cat="social" onclick="dailyFilterCat(this, 'social')">📡 Social <span class="cat-count">1</span></button>
-              <button class="cat-tab" data-cat="nft" onclick="dailyFilterCat(this, 'nft')">🖼️ NFTs <span class="cat-count">1</span></button>
-              <button class="cat-tab" data-cat="mainnet" onclick="dailyFilterCat(this, 'mainnet')">⛓️ Mainnet <span class="cat-count">2</span></button>
+              <button class="cat-tab active" data-cat="all" onclick="dailyFilterCat(this, 'all')">⚡ All <span class="cat-count" id="catCountAll">—</span></button>
+              <button class="cat-tab" data-cat="daily" onclick="dailyFilterCat(this, 'daily')">☀️ Daily <span class="cat-count" id="catCountDaily">—</span></button>
+              <button class="cat-tab" data-cat="weekly" onclick="dailyFilterCat(this, 'weekly')">📅 Weekly <span class="cat-count" id="catCountWeekly">—</span></button>
+              <button class="cat-tab" data-cat="onetime" onclick="dailyFilterCat(this, 'onetime')">🎯 One-time <span class="cat-count" id="catCountOnetime">—</span></button>
+              <button class="cat-tab" data-cat="boost" onclick="dailyFilterCat(this, 'boost')">⚡ Boost Now <span class="cat-count" id="catCountBoost">—</span></button>
               <div class="sort-controls">
                 <button class="sort-btn active" onclick="dailySortBy(this,'xp')">XP ↓</button>
                 <button class="sort-btn" onclick="dailySortBy(this,'time')">Time</button>
@@ -20319,21 +20698,59 @@ const DAILY_COLORS = ['#00FF87','#0052FF','#28A0F0','#8B5CF6','#F0B429','#00D4FF
 
 // Convert a Supabase mission row into the shape the UI expects
 function dailyMapMission(row, index) {
+  // Map difficulty values to canonical lowercase
+  let diff = (row.difficulty || 'easy').toLowerCase();
+  if (['easy','medium','hard','elite'].indexOf(diff) === -1) diff = 'easy';
+
+  // Pick category for filter — prefer quest_type when present, fall back to old fixed list
+  // Existing UI filter values: bridge / swap / testnet / social / nft / mainnet (kept for legacy)
+  // NEW v2 filter values: daily / weekly / one_time / boost
+  const qt  = row.quest_type || 'daily';
+  const cat = qt === 'boost' ? 'boost'
+            : qt === 'one_time' ? 'onetime'
+            : qt === 'weekly' ? 'weekly'
+            : 'daily';
+
+  // Estimated value pretty-printed
+  let rewardStr = '—';
+  if (row.est_value_usd != null && Number(row.est_value_usd) > 0) {
+    const n = Number(row.est_value_usd);
+    rewardStr = n >= 1000 ? '~$' + (n/1000).toFixed(1) + 'k' : '~$' + Math.round(n);
+  }
+
+  // Time pretty-printed
+  const tMin = row.time_minutes != null ? row.time_minutes : 5;
+  const timeStr = tMin < 60 ? tMin + ' min' : Math.round(tMin/60) + 'h';
+
   return {
     id: row.id,
-    cat: 'all',
-    icon: DAILY_ICONS[index % DAILY_ICONS.length],
+    cat: cat,
+    icon: row.icon || DAILY_ICONS[index % DAILY_ICONS.length],
     title: row.title,
+    description: row.description || '',
     chain: (row.project || 'MULTI-CHAIN').toUpperCase(),
     chainColor: DAILY_COLORS[index % DAILY_COLORS.length],
     xp: row.xp || 0,
-    reward: '—',
-    diff: 'easy',
-    time: '5 min',
+    reward: rewardStr,
+    diff: diff,
+    time: timeStr,
+    timeMinutes: tMin,
     progress: row.done ? 100 : 0,
     completed: !!row.done,
-    verified: true,
-    protocol: row.description || ''
+    verified: row.verified !== false,
+    protocol: row.description || '',
+    // NEW v2 fields
+    rarity:          row.rarity || 'common',          // common/rare/epic/legendary/mythic
+    questType:       qt,                              // daily/weekly/one_time/boost
+    completionMode:  row.completion_mode || 'checkbox', // one_click/steps/checkbox/tx_proof
+    questUrl:        row.quest_url || null,
+    instructions:    row.instructions || null,
+    steps:           Array.isArray(row.steps) ? row.steps : [],
+    boostActive:     row.boost_active === true,
+    boostMultiplier: row.boost_multiplier != null ? Number(row.boost_multiplier) : 1.0,
+    boostEndsAt:     row.boost_ends_at || null,
+    walletType:      row.wallet_type || null,
+    projectId:       row.project_id || null
   };
 }
 
@@ -20372,7 +20789,7 @@ async function dailyLoadFromSupabase() {
 let dailyCurrentFilter = 'all';
 
 // ═══════════════════════════════════════════
-// RENDER dailyMissionsData
+// RENDER dailyMissionsData  (v2.0 — Mission Control card design)
 // ═══════════════════════════════════════════
 function dailyRenderMissions() {
   const list = document.getElementById('missionsList');
@@ -20386,58 +20803,127 @@ function dailyRenderMissions() {
 
   const filtered = dailyCurrentFilter === 'all'
     ? dailyMissionsData
-    : dailyMissionsData.filter(m => m.cat === dailyCurrentFilter);
+    : dailyCurrentFilter === 'boost'
+      ? dailyMissionsData.filter(m => m.boostActive)
+      : dailyMissionsData.filter(m => m.cat === dailyCurrentFilter);
 
-  filtered.forEach(m => {
+  filtered.forEach((m, idx) => {
     const card = document.createElement('div');
-    card.className = 'mission-card' + (m.completed ? ' completed' : '');
+    card.className = 'mission-card v2 rarity-' + m.rarity
+      + (m.completed ? ' completed' : '')
+      + (m.boostActive ? ' boost-active' : '');
     card.dataset.id = m.id;
+
+    // ── 1. BOOST RIBBON ──
+    const boostRibbon = m.boostActive
+      ? `<div class="m-boost-ribbon">⚡ ${m.boostMultiplier}× BOOST</div>`
+      : '';
+
+    // ── 2. LOGO BOX (initials from chain or icon emoji) ──
+    const logoText = m.chain.length <= 3 ? m.chain : m.chain.slice(0, 2);
+    const logoStyle = `style="color:${m.chainColor};border-color:${m.chainColor}55;background:linear-gradient(135deg, ${m.chainColor}1a, rgba(0,0,0,0.4))"`;
+
+    // ── 3. RARITY TAG ──
+    const rarityTag = m.rarity !== 'common'
+      ? `<span class="m-rarity-tag rarity-${m.rarity}">${m.rarity.toUpperCase()}</span>`
+      : '';
+
+    // ── 4. STEPS PIPS (if step-by-step mode) ──
+    let stepsHtml = '';
+    if (m.completionMode === 'steps' && m.steps && m.steps.length > 0) {
+      const stepPips = m.steps.map((s, i) => {
+        // For now assume sequential — first incomplete is "current"
+        const done = m.completed || (m.progress >= ((i+1)/m.steps.length)*100);
+        const klass = done ? 'done' : (i === 0 ? 'current' : '');
+        const label = done ? '✓' : (i+1);
+        return `<div class="m-step-pip ${klass}">${label}</div>`
+          + (i < m.steps.length - 1 ? `<div class="m-step-line ${done ? 'done' : ''}"></div>` : '');
+      }).join('');
+      stepsHtml = `<div class="m-steps-row"><span class="m-steps-label">STEPS</span>${stepPips}</div>`;
+    }
+
+    // ── 5. ACTION BUTTON ──
+    let actionBtn = '';
+    if (m.completed) {
+      actionBtn = `<button class="m-btn-completed">✓ COMPLETED</button>`;
+    } else if (m.completionMode === 'tx_proof') {
+      actionBtn = `<button class="m-btn-verify" onclick="dailyOpenProof(event, ${m.id})">SUBMIT PROOF</button>`;
+    } else if (m.completionMode === 'steps' && m.steps && m.steps.length > 0) {
+      actionBtn = `<button class="m-btn-start" onclick="dailyStartMission(event, ${m.id})">${m.progress > 0 ? 'CONTINUE' : 'START'} →</button>`;
+    } else if (m.diff === 'hard' || m.diff === 'elite') {
+      actionBtn = `<button class="m-btn-guide" onclick="dailyStartMission(event, ${m.id})">VIEW GUIDE</button>`;
+    } else {
+      actionBtn = `<button class="m-btn-start" onclick="dailyStartMission(event, ${m.id})">START →</button>`;
+    }
+
+    // ── 6. PROGRESS COLOR (matches rarity) ──
+    const progColor = m.completed ? 'green'
+      : m.rarity === 'legendary' || m.rarity === 'mythic' ? 'gold'
+      : m.rarity === 'epic' ? 'purple'
+      : m.rarity === 'rare' ? 'cyan'
+      : 'cyan';
+
+    // ── 7. EST VALUE COLOR (high potential for high-XP missions) ──
+    const isHighPotential = m.xp >= 400;
+
+    // ── 8. BUILD CARD HTML ──
     card.innerHTML = `
-      <div class="mission-top">
-        <div class="mission-icon">${m.icon}</div>
-        <div class="mission-info">
-          <div class="mission-title">${m.title}</div>
-          <div class="mission-chain">
-            <div class="chain-dot" style="background:${m.chainColor}; box-shadow: 0 0 6px ${m.chainColor}"></div>
-            ${m.chain}
-            ${m.verified ? `<span style="font-family:var(--font-mono);font-size:9px;padding:1px 6px;background:rgba(0,255,135,0.08);border:1px solid rgba(0,255,135,0.2);border-radius:10px;color:var(--green);letter-spacing:1px">✓ VERIFIED</span>` : ''}
+      ${boostRibbon}
+      <div class="m-row">
+        <div class="m-logo" ${logoStyle}>${logoText}</div>
+        <div class="m-info">
+          <div class="m-id">MISSION ${String(idx+1).padStart(3,'0')}${m.diff === 'elite' ? ' <span class="m-elite-tag">ELITE</span>' : ''}</div>
+          <div class="m-title">${escapeHtml(m.title)} ${rarityTag}</div>
+          <div class="m-desc">${escapeHtml(m.description || '')}</div>
+          ${stepsHtml}
+        </div>
+        <div class="m-tags">
+          <div class="m-tag-line">
+            <span class="m-diff diff-${m.diff}">${m.diff.toUpperCase()}</span>
+            ${m.verified ? `<span class="m-verified">✓ VERIFIED</span>` : ''}
+          </div>
+          <div class="m-meta-line">
+            ⏱ ${m.time}${m.walletType ? ` · 🔒 ${escapeHtml(m.walletType)}` : ''}
           </div>
         </div>
-        <div class="mission-badges">
-          <div class="diff-badge diff-${m.diff}">${m.diff.toUpperCase()}</div>
-          <div class="verified-badge" title="${m.protocol}">🛡️</div>
+        <div class="m-reward">
+          <div class="m-xp">+${m.xp} XP${m.boostActive ? ` <span class="m-boost-mult">×${m.boostMultiplier}</span>` : ''}</div>
+          <div class="m-value ${isHighPotential ? 'high' : ''}">${isHighPotential && m.reward === '—' ? 'HIGH POTENTIAL' : m.reward}</div>
+        </div>
+        <div class="m-action">
+          ${actionBtn}
         </div>
       </div>
-      <div class="mission-meta">
-        <div class="meta-item">
-          <div class="meta-val">+${m.xp}</div>
-          <div class="meta-lbl">XP</div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-val green">${m.reward}</div>
-          <div class="meta-lbl">Est. Value</div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-val cyan">⏱ ${m.time}</div>
-          <div class="meta-lbl">Est. Time</div>
-        </div>
-        <div class="mission-progress">
-          <div class="mp-bar"><div class="mp-fill" style="width:${m.completed ? 100 : m.progress}%"></div></div>
-          <div class="mp-text">${m.completed ? '✓ COMPLETE' : (m.progress > 0 ? m.progress + '% done' : 'Not started')}</div>
-        </div>
-        <div class="mission-actions">
-          <div class="checkbox-wrap ${m.completed ? 'checked' : ''}" onclick="dailyToggleMission(event, ${m.id})">${m.completed ? '✓' : ''}</div>
-          ${m.completed
-            ? `<button class="btn-done">✓ DONE</button>`
-            : `<button class="btn-start" onclick="dailyStartMission(event, ${m.id})">START →</button>`
-          }
-        </div>
-      </div>
+      <div class="m-progress-bar"><div class="m-progress-fill ${progColor}" style="width:${m.completed ? 100 : m.progress}%"></div></div>
     `;
+
     list.appendChild(card);
   });
 
   dailyUpdateStats();
+}
+
+// Helper: safely escape HTML so admin-entered text can't break the page
+function escapeHtml(str) {
+  if (str == null) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// Open tx-proof modal (placeholder for now — full proof modal in Chunk 3B)
+function dailyOpenProof(e, id) {
+  e.stopPropagation();
+  const m = dailyMissionsData.find(x => x.id === id);
+  if (!m) return;
+  // For now, do the same as start — opens quest URL then marks done on user confirm
+  if (m.questUrl) {
+    window.open(m.questUrl, '_blank', 'noopener');
+  }
+  dailyShowToast('🛡️', 'TX Proof Required', 'Complete the quest, then click the checkbox to confirm.', '');
 }
 
 // ═══════════════════════════════════════════
@@ -20492,8 +20978,15 @@ async function dailyStartMission(e, id) {
   e.stopPropagation();
   const m = dailyMissionsData.find(x => x.id === id);
   if (!m || m.completed) return;
-  dailyShowToast('🚀', `Launching: ${m.title}`, m.protocol || 'Complete the task, then mark it done.', '');
-  // "Start" just opens/announces the mission. User marks it done with the checkbox.
+
+  // v2.0: If quest has a URL, open it in a new tab
+  if (m.questUrl) {
+    window.open(m.questUrl, '_blank', 'noopener,noreferrer');
+    dailyShowToast('🚀', `Opening: ${m.title}`, 'Complete the task, then mark it done.', '');
+    return;
+  }
+
+  dailyShowToast('🚀', `Launching: ${m.title}`, m.protocol || m.description || 'Complete the task, then mark it done.', '');
 }
 
 async function dailyStartAllMissions() {
@@ -20556,6 +21049,13 @@ function dailyUpdateStats() {
   setText('streakDisplay', dailyCurrentStreak);
   setText('longestStreakStat', dailyLongestStreak);
 
+  // v2.0 — Update category filter counts (Daily/Weekly/One-time/Boost)
+  setText('catCountAll',     total);
+  setText('catCountDaily',   dailyMissionsData.filter(m => m.cat === 'daily').length);
+  setText('catCountWeekly',  dailyMissionsData.filter(m => m.cat === 'weekly').length);
+  setText('catCountOnetime', dailyMissionsData.filter(m => m.cat === 'onetime').length);
+  setText('catCountBoost',   dailyMissionsData.filter(m => m.boostActive).length);
+
   const heroBar = document.getElementById('heroProgressBar');
   if (heroBar) heroBar.style.width = pct + '%';
 
@@ -20583,8 +21083,8 @@ function dailySortBy(btn, key) {
   if (key === 'xp')   dailyMissionsData.sort((a, b) => b.xp - a.xp);
   if (key === 'time') dailyMissionsData.sort((a, b) => parseInt(a.time) - parseInt(b.time));
   if (key === 'diff') {
-    const order = { easy: 0, medium: 1, hard: 2 };
-    dailyMissionsData.sort((a, b) => order[a.diff] - order[b.diff]);
+    const order = { easy: 0, medium: 1, hard: 2, elite: 3 };
+    dailyMissionsData.sort((a, b) => (order[a.diff]||0) - (order[b.diff]||0));
   }
   dailyRenderMissions();
 }
