@@ -1,7 +1,9 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   DROPELITE — API LAYER (api.js)  ·  LIVE / SUPABASE VERSION
+   DROPELITE — API LAYER (api.js)  ·  v2.0  ·  LIVE / SUPABASE VERSION
    ───────────────────────────────────────────────────────────────────────────
-   LIVE (real Supabase): Auth · Daily Missions · Airdrops · Wallets · Rewards · Farming Routes · Intel Hub
+   v1.0 LIVE: Auth · Daily Missions · Airdrops · Wallets · Rewards · Farming Routes · Intel Hub
+   v2.0 NEW:  Project Intelligence · Project Detail Pages · Intel Feed ·
+              Streak Shields · Step-by-step Quests · Logo Uploads · Admin Project CRUD
    DEMO (not yet wired): Reports · Profile · Admin (Users/Payments/Content)
 
    ⚠️ BEFORE THIS WORKS: paste your Supabase URL + anon key below (STEP 7b).
@@ -128,16 +130,24 @@
     // ───────────────────────────────────────────────────────────
 
     // Today's active missions + whether current user completed each
-    async getMissions() {
+    // Optional filters: { projectId, questType, rarity, boostOnly }
+    async getMissions(filters) {
+      filters = filters || {};
       if (!_live()) { _seedIfEmpty(); await _delay(); return _readStore('missions', []); }
 
       const user = await this.getCurrentUser();
       if (!user) return [];
 
-      const { data: missions, error: mErr } = await supa
-        .from('missions').select('*')
+      let q = supa.from('missions').select('*')
         .eq('active', true)
         .order('display_order', { ascending: true });
+
+      if (filters.projectId) q = q.eq('project_id', filters.projectId);
+      if (filters.questType) q = q.eq('quest_type', filters.questType);
+      if (filters.rarity)    q = q.eq('rarity',    filters.rarity);
+      if (filters.boostOnly) q = q.eq('boost_active', true);
+
+      const { data: missions, error: mErr } = await q;
       if (mErr) { console.error('getMissions:', mErr); return []; }
 
       const { data: completions, error: cErr } = await supa
@@ -153,12 +163,25 @@
         title: m.title,
         description: m.description,
         xp: m.xp,
-        project: m.project,
-        difficulty:    m.difficulty   || 'easy',
-        verified:      m.verified !== false,
-        time_minutes:  m.time_minutes != null ? m.time_minutes : 5,
-        est_value_usd: m.est_value_usd != null ? Number(m.est_value_usd) : 0,
-        display_order: m.display_order != null ? m.display_order : 0,
+        project: m.project,                                  // legacy text field
+        project_id:       m.project_id || null,              // NEW: FK to projects.id
+        difficulty:       m.difficulty   || 'easy',
+        verified:         m.verified !== false,
+        time_minutes:     m.time_minutes != null ? m.time_minutes : 5,
+        est_value_usd:    m.est_value_usd != null ? Number(m.est_value_usd) : 0,
+        display_order:    m.display_order != null ? m.display_order : 0,
+        // NEW v2 fields
+        rarity:           m.rarity || 'common',              // common/rare/epic/legendary/mythic
+        quest_type:       m.quest_type || 'daily',           // daily/weekly/one_time/boost
+        completion_mode:  m.completion_mode || 'checkbox',   // one_click/steps/checkbox/tx_proof
+        quest_url:        m.quest_url || null,
+        instructions:     m.instructions || null,
+        steps:            Array.isArray(m.steps) ? m.steps : (m.steps ? [] : []),
+        boost_active:     m.boost_active === true,
+        boost_multiplier: m.boost_multiplier != null ? Number(m.boost_multiplier) : 1.0,
+        boost_ends_at:    m.boost_ends_at || null,
+        wallet_type:      m.wallet_type || null,
+        icon:             m.icon || null,
         done: doneIds.has(m.id)
       }));
     },
@@ -1588,7 +1611,611 @@
         failedPayments: payments.filter(p => p.status === 'failed').length,
         currency: 'INR'
       };
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // ═══ v2.0 — PROJECT INTELLIGENCE API ═══════════════════════════════════
+    // ═══════════════════════════════════════════════════════════════════════
+    // All functions below use the new tables added in supabase-migration-v2.sql
+
+    // ───────────────────────────────────────────────────────────────────────
+    // ADMIN ROLE CHECK
+    // ───────────────────────────────────────────────────────────────────────
+    async isAdmin() {
+      if (!_live()) return false;
+      const profile = await this.getProfile();
+      return profile && (profile.role === 'admin' || profile.role === 'super_admin');
+    },
+
+    // ───────────────────────────────────────────────────────────────────────
+    // PROJECTS — User-facing read functions
+    // ───────────────────────────────────────────────────────────────────────
+
+    // Fetch all active projects, optionally filtered.
+    // filters: { ecosystem, featured, search, badges:[] }
+    async getProjects(filters) {
+      filters = filters || {};
+      if (!_live()) { await _delay(); return []; }
+
+      let q = supa.from('projects').select('*')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true });
+
+      if (filters.ecosystem)            q = q.eq('ecosystem', filters.ecosystem);
+      if (filters.featured === true)    q = q.eq('is_featured', true);
+      if (filters.search) {
+        const s = filters.search.trim();
+        q = q.or(`name.ilike.%${s}%,slug.ilike.%${s}%,subtitle.ilike.%${s}%`);
+      }
+      if (Array.isArray(filters.badges) && filters.badges.length) {
+        // overlaps: any of the supplied badges present
+        q = q.overlaps('badges', filters.badges);
+      }
+
+      const { data, error } = await q;
+      if (error) { console.error('getProjects:', error); return []; }
+      return data || [];
+    },
+
+    // Just the featured projects for main grid
+    async getFeaturedProjects() {
+      return this.getProjects({ featured: true });
+    },
+
+    // Single project by slug (for URL like /project/monad)
+    async getProjectBySlug(slug) {
+      if (!_live()) return null;
+      const { data, error } = await supa.from('projects').select('*').eq('slug', slug).eq('is_active', true).maybeSingle();
+      if (error) { console.error('getProjectBySlug:', error); return null; }
+      return data;
+    },
+
+    // Single project by id
+    async getProjectById(projectId) {
+      if (!_live()) return null;
+      const { data, error } = await supa.from('projects').select('*').eq('id', projectId).maybeSingle();
+      if (error) { console.error('getProjectById:', error); return null; }
+      return data;
+    },
+
+    // Full detail page bundle — one call returns everything for the detail screen
+    async getProjectDetail(projectIdOrSlug) {
+      if (!_live()) return null;
+
+      // Find project by id OR slug
+      let project = null;
+      if (typeof projectIdOrSlug === 'string' && projectIdOrSlug.length === 36 && projectIdOrSlug.indexOf('-') >= 0) {
+        project = await this.getProjectById(projectIdOrSlug);
+      } else {
+        project = await this.getProjectBySlug(projectIdOrSlug);
+      }
+      if (!project) return null;
+
+      // Parallel fetch related data
+      const [quickLinks, routeSteps, intelFeed, missions, userProgress] = await Promise.all([
+        this.getProjectQuickLinks(project.id),
+        this.getProjectRouteSteps(project.id),
+        this.getProjectIntelFeed(project.id, 10),
+        this.getProjectMissions(project.id),
+        this.getUserProjectProgressOne(project.id)
+      ]);
+
+      return {
+        project: project,
+        quickLinks: quickLinks,
+        routeSteps: routeSteps,
+        intelFeed: intelFeed,
+        missions: missions,
+        userProgress: userProgress
+      };
+    },
+
+    // Quick links for a project (website, twitter, discord, etc.)
+    async getProjectQuickLinks(projectId) {
+      if (!_live()) return [];
+      const { data, error } = await supa.from('project_quick_links')
+        .select('*')
+        .eq('project_id', projectId)
+        .order('display_order', { ascending: true });
+      if (error) { console.error('getProjectQuickLinks:', error); return []; }
+      return data || [];
+    },
+
+    // Farming route steps for a project
+    async getProjectRouteSteps(projectId) {
+      if (!_live()) return [];
+      const { data, error } = await supa.from('project_route_steps')
+        .select('*')
+        .eq('project_id', projectId)
+        .order('step_number', { ascending: true });
+      if (error) { console.error('getProjectRouteSteps:', error); return []; }
+      return data || [];
+    },
+
+    // Live intel feed for a project (most recent first)
+    async getProjectIntelFeed(projectId, limit) {
+      if (!_live()) return [];
+      limit = limit || 20;
+      const { data, error } = await supa.from('project_intel_feed')
+        .select('*')
+        .eq('project_id', projectId)
+        .eq('is_active', true)
+        .order('posted_at', { ascending: false })
+        .limit(limit);
+      if (error) { console.error('getProjectIntelFeed:', error); return []; }
+      return data || [];
+    },
+
+    // Missions linked to a project (with current user completion status)
+    async getProjectMissions(projectId) {
+      return this.getMissions({ projectId: projectId });
+    },
+
+    // Unique ecosystems list (for filter dropdowns)
+    async getProjectEcosystems() {
+      if (!_live()) return [];
+      const { data, error } = await supa.from('projects')
+        .select('ecosystem').eq('is_active', true);
+      if (error) return [];
+      const unique = Array.from(new Set((data || []).map(d => d.ecosystem).filter(Boolean)));
+      return unique.sort();
+    },
+
+    // ───────────────────────────────────────────────────────────────────────
+    // USER PROJECT PROGRESS (auto-tracked via DB trigger)
+    // ───────────────────────────────────────────────────────────────────────
+
+    // All projects' progress for the current user (returns map { projectId: progressRow })
+    async getUserProjectProgress() {
+      if (!_live()) return {};
+      const user = await this.getCurrentUser();
+      if (!user) return {};
+
+      const { data, error } = await supa.from('user_project_progress')
+        .select('*')
+        .eq('user_id', user.id);
+      if (error) { console.error('getUserProjectProgress:', error); return {}; }
+
+      const map = {};
+      (data || []).forEach(row => { map[row.project_id] = row; });
+      return map;
+    },
+
+    // One project's progress for current user
+    async getUserProjectProgressOne(projectId) {
+      if (!_live()) return null;
+      const user = await this.getCurrentUser();
+      if (!user) return null;
+
+      const { data, error } = await supa.from('user_project_progress')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('project_id', projectId)
+        .maybeSingle();
+      if (error) { console.error('getUserProjectProgressOne:', error); return null; }
+      return data;
+    },
+
+    // ───────────────────────────────────────────────────────────────────────
+    // STREAK SHIELDS (gamification)
+    // ───────────────────────────────────────────────────────────────────────
+
+    // Get current user's shield count
+    async getStreakShields() {
+      if (!_live()) return { shields_owned: 0, shields_used: 0 };
+      const user = await this.getCurrentUser();
+      if (!user) return { shields_owned: 0, shields_used: 0 };
+
+      const { data, error } = await supa.from('user_streak_shields')
+        .select('*').eq('user_id', user.id).maybeSingle();
+      if (error) { console.error('getStreakShields:', error); }
+
+      if (!data) {
+        // Auto-create row with 0 shields
+        await supa.from('user_streak_shields').insert({ user_id: user.id, shields_owned: 0 });
+        return { shields_owned: 0, shields_used: 0 };
+      }
+      return data;
+    },
+
+    // Consume one shield (returns true if successful)
+    async useStreakShield() {
+      if (!_live()) return { ok: false, error: 'Offline mode' };
+      const user = await this.getCurrentUser();
+      if (!user) return { ok: false, error: 'Not signed in' };
+
+      const current = await this.getStreakShields();
+      if (current.shields_owned <= 0) return { ok: false, error: 'No shields available' };
+
+      const { error } = await supa.from('user_streak_shields').update({
+        shields_owned: current.shields_owned - 1,
+        shields_used: (current.shields_used || 0) + 1,
+        last_used_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      }).eq('user_id', user.id);
+
+      if (error) return { ok: false, error: error.message };
+      await this.logActivity('shield', 'Streak Shield Used', 'Streak protected for the day');
+      return { ok: true };
+    },
+
+    // ───────────────────────────────────────────────────────────────────────
+    // STEP COMPLETIONS (for multi-step quests)
+    // ───────────────────────────────────────────────────────────────────────
+
+    // Get user's completed steps for a mission (returns array of step_index numbers)
+    async getStepCompletions(missionId) {
+      if (!_live()) return [];
+      const user = await this.getCurrentUser();
+      if (!user) return [];
+
+      const { data, error } = await supa.from('mission_step_completions')
+        .select('step_index, tx_hash, proof_url, completed_at')
+        .eq('user_id', user.id)
+        .eq('mission_id', missionId)
+        .order('step_index');
+      if (error) { console.error('getStepCompletions:', error); return []; }
+      return data || [];
+    },
+
+    // Mark a single step done (idempotent — safe to call twice)
+    async submitStepCompletion(missionId, stepIndex, txHash, proofUrl) {
+      if (!_live()) return { ok: false, error: 'Offline mode' };
+      const user = await this.getCurrentUser();
+      if (!user) return { ok: false, error: 'Not signed in' };
+
+      const { error } = await supa.from('mission_step_completions').insert({
+        user_id: user.id,
+        mission_id: missionId,
+        step_index: stepIndex,
+        tx_hash: txHash || null,
+        proof_url: proofUrl || null
+      });
+      // ignore duplicate-key errors (idempotent)
+      if (error && error.message.indexOf('duplicate') === -1) {
+        return { ok: false, error: error.message };
+      }
+      return { ok: true };
+    },
+
+    // ───────────────────────────────────────────────────────────────────────
+    // STORAGE / LOGO UPLOADS
+    // ───────────────────────────────────────────────────────────────────────
+
+    // Upload a project logo image to Supabase Storage.
+    // file: File object (from <input type=file>)
+    // projectSlug: string (e.g. "monad")
+    // Returns: { ok, publicUrl, path } on success
+    async uploadProjectLogo(file, projectSlug) {
+      if (!_live()) return { ok: false, error: 'Offline mode' };
+      if (!file) return { ok: false, error: 'No file provided' };
+
+      // Validate file
+      const allowed = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml', 'image/webp'];
+      if (allowed.indexOf(file.type) === -1) {
+        return { ok: false, error: 'Only PNG, JPG, SVG, WEBP allowed' };
+      }
+      if (file.size > 2 * 1024 * 1024) {
+        return { ok: false, error: 'File too large (max 2MB)' };
+      }
+
+      // Build filename: {slug}-{timestamp}.{ext}
+      const ext = (file.name.split('.').pop() || 'png').toLowerCase();
+      const safeSlug = (projectSlug || 'project').replace(/[^a-z0-9-]/gi, '-').toLowerCase();
+      const filename = `${safeSlug}-${Date.now()}.${ext}`;
+
+      const { data, error } = await supa.storage
+        .from('project-logos')
+        .upload(filename, file, { cacheControl: '3600', upsert: false });
+      if (error) return { ok: false, error: error.message };
+
+      // Get public URL
+      const { data: publicData } = supa.storage.from('project-logos').getPublicUrl(filename);
+
+      return { ok: true, publicUrl: publicData.publicUrl, path: filename };
+    },
+
+    // Delete a logo from Storage by full URL (or path)
+    async deleteProjectLogo(urlOrPath) {
+      if (!_live()) return { ok: false };
+      if (!urlOrPath) return { ok: false };
+
+      // Extract path from full URL if needed
+      let path = urlOrPath;
+      const idx = urlOrPath.indexOf('/project-logos/');
+      if (idx >= 0) path = urlOrPath.substring(idx + '/project-logos/'.length);
+
+      const { error } = await supa.storage.from('project-logos').remove([path]);
+      if (error) return { ok: false, error: error.message };
+      return { ok: true };
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // ADMIN — PROJECT CRUD (admin role required)
+    // ═══════════════════════════════════════════════════════════════════════
+
+    // List all projects for admin panel (includes inactive ones)
+    async adminListProjects() {
+      if (!_live()) return [];
+      const { data, error } = await supa.from('projects')
+        .select('*')
+        .order('display_order', { ascending: true });
+      if (error) { console.error('adminListProjects:', error); return []; }
+      return data || [];
+    },
+
+    // Create a new project. data = { slug, name, subtitle, ecosystem, ... }
+    async adminCreateProject(data) {
+      if (!_live()) return { ok: false, error: 'Offline mode' };
+      if (!data || !data.slug || !data.name) return { ok: false, error: 'slug and name required' };
+
+      // sanitize slug
+      data.slug = String(data.slug).toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-');
+
+      const user = await this.getCurrentUser();
+      if (user) data.created_by = user.id;
+
+      const { data: row, error } = await supa.from('projects').insert(data).select().single();
+      if (error) return { ok: false, error: error.message };
+      return { ok: true, project: row };
+    },
+
+    // Update an existing project
+    async adminUpdateProject(projectId, patch) {
+      if (!_live()) return { ok: false, error: 'Offline mode' };
+      if (!projectId) return { ok: false, error: 'projectId required' };
+
+      patch = Object.assign({}, patch || {}, { updated_at: new Date().toISOString() });
+      // Don't allow changing primary key or created_at
+      delete patch.id;
+      delete patch.created_at;
+
+      const { data: row, error } = await supa.from('projects')
+        .update(patch).eq('id', projectId).select().single();
+      if (error) return { ok: false, error: error.message };
+      return { ok: true, project: row };
+    },
+
+    // Delete a project (cascade deletes quick_links/route_steps/intel_feed)
+    async adminDeleteProject(projectId) {
+      if (!_live()) return { ok: false, error: 'Offline mode' };
+
+      // Try to delete logo from storage too
+      const project = await this.getProjectById(projectId);
+      if (project && project.logo_url) {
+        await this.deleteProjectLogo(project.logo_url);
+      }
+
+      const { error } = await supa.from('projects').delete().eq('id', projectId);
+      if (error) return { ok: false, error: error.message };
+      return { ok: true };
+    },
+
+    // Soft-delete: just mark inactive
+    async adminToggleProjectActive(projectId, isActive) {
+      return this.adminUpdateProject(projectId, { is_active: isActive });
+    },
+
+    // ───────────────────────────────────────────────────────────────────────
+    // ADMIN — PROJECT QUICK LINKS
+    // ───────────────────────────────────────────────────────────────────────
+
+    async adminAddQuickLink(projectId, linkType, label, url, displayOrder) {
+      if (!_live()) return { ok: false, error: 'Offline mode' };
+      if (!projectId || !label || !url) return { ok: false, error: 'projectId, label, url required' };
+
+      const { data, error } = await supa.from('project_quick_links').insert({
+        project_id: projectId,
+        link_type: linkType || 'custom',
+        label: label,
+        url: url,
+        display_order: displayOrder != null ? displayOrder : 100
+      }).select().single();
+      if (error) return { ok: false, error: error.message };
+      return { ok: true, link: data };
+    },
+
+    async adminUpdateQuickLink(linkId, patch) {
+      if (!_live()) return { ok: false, error: 'Offline mode' };
+      delete patch.id;
+      const { data, error } = await supa.from('project_quick_links')
+        .update(patch).eq('id', linkId).select().single();
+      if (error) return { ok: false, error: error.message };
+      return { ok: true, link: data };
+    },
+
+    async adminDeleteQuickLink(linkId) {
+      if (!_live()) return { ok: false, error: 'Offline mode' };
+      const { error } = await supa.from('project_quick_links').delete().eq('id', linkId);
+      if (error) return { ok: false, error: error.message };
+      return { ok: true };
+    },
+
+    // ───────────────────────────────────────────────────────────────────────
+    // ADMIN — PROJECT ROUTE STEPS (farming guide)
+    // ───────────────────────────────────────────────────────────────────────
+
+    async adminAddRouteStep(projectId, stepNumber, title, description, url) {
+      if (!_live()) return { ok: false, error: 'Offline mode' };
+      if (!projectId || !description) return { ok: false, error: 'projectId, description required' };
+
+      const { data, error } = await supa.from('project_route_steps').insert({
+        project_id: projectId,
+        step_number: stepNumber != null ? stepNumber : 1,
+        title: title || null,
+        description: description,
+        url: url || null
+      }).select().single();
+      if (error) return { ok: false, error: error.message };
+      return { ok: true, step: data };
+    },
+
+    async adminUpdateRouteStep(stepId, patch) {
+      if (!_live()) return { ok: false, error: 'Offline mode' };
+      delete patch.id;
+      const { data, error } = await supa.from('project_route_steps')
+        .update(patch).eq('id', stepId).select().single();
+      if (error) return { ok: false, error: error.message };
+      return { ok: true, step: data };
+    },
+
+    async adminDeleteRouteStep(stepId) {
+      if (!_live()) return { ok: false, error: 'Offline mode' };
+      const { error } = await supa.from('project_route_steps').delete().eq('id', stepId);
+      if (error) return { ok: false, error: error.message };
+      return { ok: true };
+    },
+
+    // ───────────────────────────────────────────────────────────────────────
+    // ADMIN — PROJECT INTEL FEED
+    // ───────────────────────────────────────────────────────────────────────
+
+    async adminAddIntelFeed(projectId, feedType, message, expiresAt) {
+      if (!_live()) return { ok: false, error: 'Offline mode' };
+      if (!projectId || !message) return { ok: false, error: 'projectId, message required' };
+
+      const user = await this.getCurrentUser();
+      const { data, error } = await supa.from('project_intel_feed').insert({
+        project_id: projectId,
+        feed_type: feedType || 'info',          // alert/good/info/warning
+        message: message,
+        expires_at: expiresAt || null,
+        created_by: user ? user.id : null
+      }).select().single();
+      if (error) return { ok: false, error: error.message };
+      return { ok: true, feed: data };
+    },
+
+    async adminListIntelFeed(projectId, includeInactive) {
+      if (!_live()) return [];
+      let q = supa.from('project_intel_feed').select('*').order('posted_at', { ascending: false });
+      if (projectId) q = q.eq('project_id', projectId);
+      if (!includeInactive) q = q.eq('is_active', true);
+      const { data, error } = await q;
+      if (error) { console.error('adminListIntelFeed:', error); return []; }
+      return data || [];
+    },
+
+    async adminUpdateIntelFeed(feedId, patch) {
+      if (!_live()) return { ok: false, error: 'Offline mode' };
+      delete patch.id;
+      const { data, error } = await supa.from('project_intel_feed')
+        .update(patch).eq('id', feedId).select().single();
+      if (error) return { ok: false, error: error.message };
+      return { ok: true, feed: data };
+    },
+
+    async adminDeleteIntelFeed(feedId) {
+      if (!_live()) return { ok: false, error: 'Offline mode' };
+      const { error } = await supa.from('project_intel_feed').delete().eq('id', feedId);
+      if (error) return { ok: false, error: error.message };
+      return { ok: true };
+    },
+
+    // ───────────────────────────────────────────────────────────────────────
+    // ADMIN — STREAK SHIELDS (grant shields to users)
+    // ───────────────────────────────────────────────────────────────────────
+
+    async adminGrantShield(userId, count) {
+      if (!_live()) return { ok: false, error: 'Offline mode' };
+      if (!userId) return { ok: false, error: 'userId required' };
+      count = parseInt(count, 10) || 1;
+
+      // Get current shield row (create if missing)
+      const { data: existing } = await supa.from('user_streak_shields')
+        .select('*').eq('user_id', userId).maybeSingle();
+
+      if (existing) {
+        const { error } = await supa.from('user_streak_shields').update({
+          shields_owned: (existing.shields_owned || 0) + count,
+          updated_at: new Date().toISOString()
+        }).eq('user_id', userId);
+        if (error) return { ok: false, error: error.message };
+      } else {
+        const { error } = await supa.from('user_streak_shields').insert({
+          user_id: userId,
+          shields_owned: count
+        });
+        if (error) return { ok: false, error: error.message };
+      }
+      return { ok: true };
+    },
+
+    // ───────────────────────────────────────────────────────────────────────
+    // ADMIN — MISSION CRUD (UPDATED for v2 schema)
+    // ───────────────────────────────────────────────────────────────────────
+    // Note: your existing adminSaveMission still works for legacy fields.
+    // This version supports all new v2 fields.
+
+    async adminSaveMissionV2(mission) {
+      if (!_live()) return { ok: false, error: 'Offline mode' };
+      if (!mission || !mission.title) return { ok: false, error: 'title required' };
+
+      const row = {
+        title:            mission.title,
+        description:      mission.description || '',
+        xp:               mission.xp != null ? Number(mission.xp) : 50,
+        project:          mission.project || null,       // legacy text
+        project_id:       mission.project_id || null,    // FK to projects table
+        active:           mission.active !== false,
+        display_order:    mission.display_order != null ? Number(mission.display_order) : 0,
+        difficulty:       mission.difficulty || 'easy',
+        verified:         mission.verified !== false,
+        time_minutes:     mission.time_minutes != null ? Number(mission.time_minutes) : 5,
+        est_value_usd:    mission.est_value_usd != null ? Number(mission.est_value_usd) : 0,
+        // NEW v2 fields
+        rarity:           mission.rarity || 'common',
+        quest_type:       mission.quest_type || 'daily',
+        completion_mode:  mission.completion_mode || 'checkbox',
+        quest_url:        mission.quest_url || null,
+        instructions:     mission.instructions || null,
+        steps:            Array.isArray(mission.steps) ? mission.steps : [],
+        boost_active:     mission.boost_active === true,
+        boost_multiplier: mission.boost_multiplier != null ? Number(mission.boost_multiplier) : 1.0,
+        boost_ends_at:    mission.boost_ends_at || null,
+        wallet_type:      mission.wallet_type || null,
+        icon:             mission.icon || null
+      };
+
+      if (mission.id) {
+        const { data, error } = await supa.from('missions').update(row).eq('id', mission.id).select().single();
+        if (error) return { ok: false, error: error.message };
+        return { ok: true, mission: data };
+      } else {
+        const { data, error } = await supa.from('missions').insert(row).select().single();
+        if (error) return { ok: false, error: error.message };
+        return { ok: true, mission: data };
+      }
+    },
+
+    // ───────────────────────────────────────────────────────────────────────
+    // ADMIN — USER LOOKUP (for granting shields, viewing progress, etc.)
+    // ───────────────────────────────────────────────────────────────────────
+
+    async adminSearchUsers(query) {
+      if (!_live()) return [];
+      let q = supa.from('profiles').select('id, name, email, role, plan, status, created_at')
+        .order('created_at', { ascending: false }).limit(50);
+      if (query) {
+        const s = query.trim();
+        q = q.or(`email.ilike.%${s}%,name.ilike.%${s}%`);
+      }
+      const { data, error } = await q;
+      if (error) { console.error('adminSearchUsers:', error); return []; }
+      return data || [];
+    },
+
+    // ───────────────────────────────────────────────────────────────────────
+    // HELPER — Generate slug from project name
+    // ───────────────────────────────────────────────────────────────────────
+    slugify(text) {
+      return String(text || '').toLowerCase().trim()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
     }
+
   };
 
   window.API = API;
