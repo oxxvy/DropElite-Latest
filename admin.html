@@ -531,9 +531,17 @@ tbody tr:last-child td { border-bottom: none; }
     </a>
 
     <div class="nav-section-label">MANAGEMENT</div>
+    <a class="nav-item" data-section="projects" onclick="switchSection('projects', this)">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3h6v6H3zM11 3h6v6h-6zM3 11h6v6H3zM11 11h6v6h-6z"/><circle cx="14" cy="6" r="1.5" fill="currentColor"/></svg>
+      Projects (NEW)
+    </a>
     <a class="nav-item" data-section="missions" onclick="switchSection('missions', this)">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 5h14M3 10h14M3 15h9"/><circle cx="16" cy="15" r="2"/></svg>
       Daily Missions
+    </a>
+    <a class="nav-item" data-section="project-feed" onclick="switchSection('project-feed', this)">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4h14v10H3z"/><path d="M3 7l7 5 7-5"/></svg>
+      Intel Feed (NEW)
     </a>
     <a class="nav-item" data-section="routes" onclick="switchSection('routes', this)">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="4" cy="5" r="1.8"/><circle cx="16" cy="10" r="1.8"/><circle cx="4" cy="15" r="1.8"/><path d="M4 7v6M5 5h9a2 2 0 0 1 2 2v1M16 12v1a2 2 0 0 1-2 2H5"/></svg>
@@ -613,6 +621,73 @@ tbody tr:last-child td { border-bottom: none; }
       </div>
     </section>
 
+    <!-- ═══════════════════════════════════════════
+         PROJECTS SECTION (v2.0 NEW)
+         Manage projects shown in Project Intelligence tab
+    ═══════════════════════════════════════════ -->
+    <section class="section" id="section-projects">
+      <div class="page-head">
+        <div>
+          <div class="page-title">PROJECTS</div>
+          <div class="page-sub">Manage projects shown in the Project Intelligence tab</div>
+        </div>
+        <button class="btn btn-primary" onclick="openProjectModal()">+ New Project</button>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">ALL PROJECTS</div>
+          <div class="card-tools">
+            <span id="projectCount" style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text-dim);"></span>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="projectsTable">
+            <thead><tr><th>Order</th><th>Logo</th><th>Name</th><th>Ecosystem</th><th>Momentum</th><th>Featured</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         PROJECT INTEL FEED SECTION (v2.0 NEW)
+         Post live intel updates per project
+    ═══════════════════════════════════════════ -->
+    <section class="section" id="section-project-feed">
+      <div class="page-head">
+        <div>
+          <div class="page-title">PROJECT INTEL FEED</div>
+          <div class="page-sub">Post live intel updates that appear on project detail pages</div>
+        </div>
+        <button class="btn btn-primary" onclick="openFeedModal()">+ New Feed Post</button>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">FILTER BY PROJECT</div>
+        </div>
+        <div style="padding: 14px 18px; display:flex; gap:12px; align-items:center;">
+          <select id="feedProjectFilter" onchange="renderProjectFeed()" style="flex:1; max-width:300px;">
+            <option value="">All projects</option>
+          </select>
+          <span id="feedCount" style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text-dim);"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">ALL FEED POSTS</div>
+        </div>
+        <div class="table-wrap">
+          <table id="feedTable">
+            <thead><tr><th>Posted</th><th>Project</th><th>Type</th><th>Message</th><th>Active</th><th>Actions</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="section-missions">
       <div class="page-head">
         <div>
@@ -631,7 +706,7 @@ tbody tr:last-child td { border-bottom: none; }
         </div>
         <div class="table-wrap">
           <table id="missionsTable">
-            <thead><tr><th>Order</th><th>Title</th><th>Project</th><th>XP</th><th>Status</th><th>Actions</th></tr></thead>
+            <thead><tr><th>Order</th><th>Title</th><th>Project</th><th>Rarity</th><th>Type</th><th>XP</th><th>Boost</th><th>Status</th><th>Actions</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -1076,8 +1151,9 @@ tbody tr:last-child td { border-bottom: none; }
 </div>
 
 <div class="modal-backdrop" id="missionModal">
-  <div class="modal">
+  <div class="modal" style="max-width:760px;max-height:90vh;overflow-y:auto;">
     <h3 id="missionModalTitle">NEW MISSION</h3>
+
     <div class="form-row">
       <label>Title</label>
       <input id="missionTitle" type="text" placeholder="e.g. Swap on LayerZero">
@@ -1086,28 +1162,453 @@ tbody tr:last-child td { border-bottom: none; }
       <label>Description</label>
       <input id="missionDescription" type="text" placeholder="e.g. Complete one swap using LayerZero bridge">
     </div>
-    <div class="form-row">
-      <label>Project / Chain</label>
-      <input id="missionProject" type="text" placeholder="e.g. LayerZero">
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="form-row">
+        <label>Project (link to Project Intelligence)</label>
+        <select id="missionProjectId">
+          <option value="">— No project link —</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Legacy project name (optional)</label>
+        <input id="missionProject" type="text" placeholder="e.g. LayerZero">
+      </div>
     </div>
-    <div class="form-row">
-      <label>XP Reward</label>
-      <input id="missionXp" type="number" value="50" min="0">
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div class="form-row">
+        <label>Rarity ★</label>
+        <select id="missionRarity">
+          <option value="common">Common (grey)</option>
+          <option value="rare">Rare (cyan)</option>
+          <option value="epic">Epic (purple)</option>
+          <option value="legendary">Legendary (gold)</option>
+          <option value="mythic">Mythic (pink/gold)</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Quest Type</label>
+        <select id="missionQuestType">
+          <option value="daily">☀️ Daily</option>
+          <option value="weekly">📅 Weekly</option>
+          <option value="one_time">🎯 One-time</option>
+          <option value="boost">⚡ Boost</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Difficulty</label>
+        <select id="missionDifficulty">
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+          <option value="elite">Elite</option>
+        </select>
+      </div>
     </div>
-    <div class="form-row">
-      <label>Display Order (lower = shown first)</label>
-      <input id="missionOrder" type="number" value="0" min="0">
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="form-row">
+        <label>Completion Mode</label>
+        <select id="missionCompletionMode">
+          <option value="checkbox">Checkbox (mark done)</option>
+          <option value="one_click">One-click (open URL)</option>
+          <option value="steps">Step-by-step</option>
+          <option value="tx_proof">TX Hash Proof</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Quest URL (for one-click mode)</label>
+        <input id="missionQuestUrl" type="url" placeholder="https://...">
+      </div>
     </div>
-    <div class="form-row">
-      <label>Status</label>
-      <select id="missionActive">
-        <option value="true">Active (visible to users)</option>
-        <option value="false">Inactive (hidden)</option>
-      </select>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;">
+      <div class="form-row">
+        <label>XP Reward</label>
+        <input id="missionXp" type="number" value="50" min="0">
+      </div>
+      <div class="form-row">
+        <label>Est. Value USD</label>
+        <input id="missionEstValue" type="number" value="0" min="0" step="0.01">
+      </div>
+      <div class="form-row">
+        <label>Time (minutes)</label>
+        <input id="missionTimeMinutes" type="number" value="5" min="1">
+      </div>
+      <div class="form-row">
+        <label>Display Order</label>
+        <input id="missionOrder" type="number" value="0" min="0">
+      </div>
     </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div class="form-row">
+        <label>Wallet Type</label>
+        <input id="missionWalletType" type="text" placeholder="e.g. ETH WALLET">
+      </div>
+      <div class="form-row">
+        <label>Verified</label>
+        <select id="missionVerified">
+          <option value="true">✓ Verified</option>
+          <option value="false">Unverified</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Status</label>
+        <select id="missionActive">
+          <option value="true">Active (visible)</option>
+          <option value="false">Inactive (hidden)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Boost section -->
+    <div style="background:rgba(245,200,66,0.04);border:1px solid rgba(245,200,66,0.18);border-radius:8px;padding:12px 14px;margin:14px 0;">
+      <div style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:2px;margin-bottom:10px;">⚡ BOOST WINDOW (optional)</div>
+      <div style="display:grid;grid-template-columns:auto 1fr 1fr;gap:12px;align-items:end;">
+        <div class="form-row">
+          <label>Active?</label>
+          <select id="missionBoostActive">
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Multiplier</label>
+          <input id="missionBoostMultiplier" type="number" value="1" min="1" max="10" step="0.5">
+        </div>
+        <div class="form-row">
+          <label>Ends at (ISO date, optional)</label>
+          <input id="missionBoostEndsAt" type="datetime-local">
+        </div>
+      </div>
+    </div>
+
+    <!-- Steps section (for step-by-step missions) -->
+    <div style="background:rgba(74,240,255,0.04);border:1px solid rgba(74,240,255,0.18);border-radius:8px;padding:12px 14px;margin:14px 0;">
+      <div style="font-family:'Share Tech Mono',monospace;font-size:11px;color:#4af0ff;letter-spacing:2px;margin-bottom:10px;">📋 STEPS (for step-by-step completion mode)</div>
+      <textarea id="missionSteps" rows="4" placeholder='[{"title":"Step 1","description":"Connect wallet"},{"title":"Step 2","description":"Bridge $50 ETH"}]' style="width:100%;padding:8px;background:rgba(0,0,0,0.3);border:1px solid rgba(74,240,255,0.2);color:#e8eaf0;border-radius:6px;font-family:'Share Tech Mono',monospace;font-size:11px;"></textarea>
+      <div style="font-size:11px;color:var(--text-dim);margin-top:6px;">⚠️ Must be valid JSON array. Leave empty (or [] ) if not using step mode.</div>
+    </div>
+
+    <div class="form-row">
+      <label>Instructions (optional, shown in tx_proof mode)</label>
+      <textarea id="missionInstructions" rows="3" placeholder="Multi-line instructions for the user..." style="width:100%;padding:8px;background:rgba(0,0,0,0.3);border:1px solid var(--border);color:#e8eaf0;border-radius:6px;"></textarea>
+    </div>
+
     <div class="modal-actions">
       <button class="btn" onclick="closeMissionModal()">Cancel</button>
       <button class="btn btn-primary" onclick="saveMission()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PROJECT MODAL (v2.0 NEW) — create/edit project + logo upload
+═══════════════════════════════════════════ -->
+<div class="modal-backdrop" id="projectModal">
+  <div class="modal" style="max-width:820px;max-height:90vh;overflow-y:auto;">
+    <h3 id="projectModalTitle">NEW PROJECT</h3>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="form-row">
+        <label>Name *</label>
+        <input id="projName" type="text" placeholder="e.g. MONAD">
+      </div>
+      <div class="form-row">
+        <label>Slug (URL-safe, auto from name)</label>
+        <input id="projSlug" type="text" placeholder="e.g. monad" oninput="this.dataset.touched='1'">
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="form-row">
+        <label>Subtitle</label>
+        <input id="projSubtitle" type="text" placeholder="e.g. EVM Compatible">
+      </div>
+      <div class="form-row">
+        <label>Ecosystem</label>
+        <select id="projEcosystem">
+          <option value="">— Select —</option>
+          <option value="EVM">EVM</option>
+          <option value="SOLANA">SOLANA</option>
+          <option value="COSMOS">COSMOS</option>
+          <option value="SUI">SUI</option>
+          <option value="APTOS">APTOS</option>
+          <option value="BITCOIN">BITCOIN</option>
+          <option value="OTHER">OTHER</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label>Tagline (short, shown on detail page)</label>
+      <input id="projTagline" type="text" placeholder="e.g. High-performance L1 with 10,000 TPS">
+    </div>
+
+    <div class="form-row">
+      <label>About (full description)</label>
+      <textarea id="projAbout" rows="3" placeholder="Tell users about this project..." style="width:100%;padding:8px;background:rgba(0,0,0,0.3);border:1px solid var(--border);color:#e8eaf0;border-radius:6px;"></textarea>
+    </div>
+
+    <!-- ═══ LOGO SECTION ═══ -->
+    <div style="background:rgba(245,200,66,0.04);border:1px solid rgba(245,200,66,0.18);border-radius:8px;padding:14px 16px;margin:14px 0;">
+      <div style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:2px;margin-bottom:12px;">🖼️ LOGO</div>
+
+      <div style="display:flex;gap:16px;align-items:center;margin-bottom:12px;">
+        <div id="projLogoPreview" style="width:60px;height:60px;border-radius:10px;background:rgba(0,0,0,0.4);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:20px;font-weight:800;color:var(--gold);overflow:hidden;">M</div>
+        <div style="flex:1;">
+          <input id="projLogoFile" type="file" accept="image/png,image/jpeg,image/svg+xml,image/webp" style="margin-bottom:6px;">
+          <div style="font-size:11px;color:var(--text-dim);">PNG/JPG/SVG/WEBP — max 2 MB</div>
+          <div id="projLogoUploadStatus" style="font-size:11px;color:var(--cyan);margin-top:4px;"></div>
+        </div>
+        <button class="btn" onclick="uploadProjectLogo()">Upload</button>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="form-row">
+          <label>Logo URL (auto-filled after upload)</label>
+          <input id="projLogoUrl" type="url" placeholder="https://..." oninput="updateLogoPreview()">
+        </div>
+        <div class="form-row">
+          <label>Initials fallback (if no image)</label>
+          <input id="projLogoInitials" type="text" maxlength="3" placeholder="e.g. M, LZ" oninput="updateLogoPreview()">
+        </div>
+      </div>
+      <div class="form-row">
+        <label>Logo color theme</label>
+        <select id="projLogoColor" onchange="updateLogoPreview()">
+          <option value="gold">Gold</option>
+          <option value="cyan">Cyan</option>
+          <option value="purple">Purple</option>
+          <option value="pink">Pink</option>
+          <option value="orange">Orange</option>
+          <option value="green">Green</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- ═══ INTELLIGENCE DATA ═══ -->
+    <div style="background:rgba(74,240,255,0.04);border:1px solid rgba(74,240,255,0.18);border-radius:8px;padding:14px 16px;margin:14px 0;">
+      <div style="font-family:'Share Tech Mono',monospace;font-size:11px;color:#4af0ff;letter-spacing:2px;margin-bottom:12px;">📊 INTELLIGENCE DATA (manual)</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+        <div class="form-row">
+          <label>Reward Level</label>
+          <select id="projRewardLevel">
+            <option value="">—</option>
+            <option value="VERY HIGH">VERY HIGH</option>
+            <option value="HIGH">HIGH</option>
+            <option value="MED">MED</option>
+            <option value="LOW">LOW</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Est. Value (text)</label>
+          <input id="projEstValue" type="text" placeholder="e.g. $3,200">
+        </div>
+        <div class="form-row">
+          <label>Snapshot % (0-100)</label>
+          <input id="projSnapshotPct" type="number" min="0" max="100" placeholder="e.g. 84">
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+        <div class="form-row">
+          <label>Competition</label>
+          <select id="projCompetition">
+            <option value="">—</option>
+            <option value="LOW">LOW</option>
+            <option value="MED">MED</option>
+            <option value="HIGH">HIGH</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Funding (text)</label>
+          <input id="projFundingUsd" type="text" placeholder="e.g. $225M">
+        </div>
+        <div class="form-row">
+          <label>Farmers (text)</label>
+          <input id="projFarmersCount" type="text" placeholder="e.g. 142K">
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+        <div class="form-row">
+          <label>Smart Money</label>
+          <select id="projSmartMoney">
+            <option value="">—</option>
+            <option value="HIGH">HIGH</option>
+            <option value="MED">MED</option>
+            <option value="LOW">LOW</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Sybil Risk</label>
+          <select id="projSybilRisk">
+            <option value="">—</option>
+            <option value="LOW">LOW</option>
+            <option value="MED">MED</option>
+            <option value="HIGH">HIGH</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Status</label>
+          <select id="projStatus">
+            <option value="">—</option>
+            <option value="LIVE">LIVE</option>
+            <option value="MAINNET">MAINNET</option>
+            <option value="TESTNET">TESTNET</option>
+            <option value="UPCOMING">UPCOMING</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="form-row">
+          <label>Momentum (0-100)</label>
+          <input id="projMomentum" type="number" min="0" max="100" value="50">
+        </div>
+        <div class="form-row">
+          <label>Beginner Friendly?</label>
+          <select id="projBeginner">
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ BADGES ═══ -->
+    <div style="background:rgba(176,112,255,0.04);border:1px solid rgba(176,112,255,0.18);border-radius:8px;padding:14px 16px;margin:14px 0;">
+      <div style="font-family:'Share Tech Mono',monospace;font-size:11px;color:#b070ff;letter-spacing:2px;margin-bottom:12px;">🏷️ BADGES</div>
+
+      <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px;">Built-in badges (check any that apply):</div>
+      <div id="projBadgeCheckboxes" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+        <!-- Built-in badge checkboxes generated by JS -->
+      </div>
+
+      <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px;">Custom badges (JSON array):</div>
+      <textarea id="projCustomBadges" rows="2" placeholder='[{"label":"AIRDROP","color":"#f5c842"}]' style="width:100%;padding:8px;background:rgba(0,0,0,0.3);border:1px solid rgba(176,112,255,0.2);color:#e8eaf0;border-radius:6px;font-family:'Share Tech Mono',monospace;font-size:11px;"></textarea>
+    </div>
+
+    <!-- ═══ QUICK LINKS ═══ -->
+    <div style="background:rgba(0,232,122,0.04);border:1px solid rgba(0,232,122,0.18);border-radius:8px;padding:14px 16px;margin:14px 0;">
+      <div style="font-family:'Share Tech Mono',monospace;font-size:11px;color:#00e87a;letter-spacing:2px;margin-bottom:12px;">🔗 QUICK LINKS</div>
+      <div id="projLinksList" style="margin-bottom:8px;"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1.5fr auto;gap:8px;align-items:end;">
+        <div class="form-row">
+          <label>Type</label>
+          <select id="newLinkType">
+            <option value="website">Website</option>
+            <option value="twitter">Twitter / X</option>
+            <option value="discord">Discord</option>
+            <option value="faucet">Faucet</option>
+            <option value="explorer">Explorer</option>
+            <option value="docs">Docs</option>
+            <option value="custom">Custom</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Label</label>
+          <input id="newLinkLabel" type="text" placeholder="Official Website">
+        </div>
+        <div class="form-row">
+          <label>URL</label>
+          <input id="newLinkUrl" type="url" placeholder="https://...">
+        </div>
+        <button class="btn btn-primary" onclick="addQuickLink()" style="height:36px;">+ Add</button>
+      </div>
+    </div>
+
+    <!-- ═══ ROUTE STEPS ═══ -->
+    <div style="background:rgba(255,144,70,0.04);border:1px solid rgba(255,144,70,0.18);border-radius:8px;padding:14px 16px;margin:14px 0;">
+      <div style="font-family:'Share Tech Mono',monospace;font-size:11px;color:#ff9046;letter-spacing:2px;margin-bottom:12px;">📋 FARMING ROUTE STEPS</div>
+      <div id="projRouteStepsList" style="margin-bottom:8px;"></div>
+      <div style="display:grid;grid-template-columns:1fr 1.4fr auto;gap:8px;align-items:end;">
+        <div class="form-row">
+          <label>Title (optional)</label>
+          <input id="newStepTitle" type="text" placeholder="Connect Wallet">
+        </div>
+        <div class="form-row">
+          <label>Description *</label>
+          <input id="newStepDesc" type="text" placeholder="Visit faucet.example.com to claim tokens">
+        </div>
+        <button class="btn btn-primary" onclick="addRouteStep()" style="height:36px;">+ Add Step</button>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div class="form-row">
+        <label>Display Order</label>
+        <input id="projDisplayOrder" type="number" value="100" min="0">
+      </div>
+      <div class="form-row">
+        <label>Featured?</label>
+        <select id="projFeatured">
+          <option value="true">Yes (show in grid)</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Status</label>
+        <select id="projActive">
+          <option value="true">Active (visible)</option>
+          <option value="false">Hidden</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label>Website URL (canonical)</label>
+      <input id="projWebsiteUrl" type="url" placeholder="https://...">
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn" onclick="closeProjectModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveProject()">Save Project</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     INTEL FEED MODAL (v2.0 NEW) — post live updates
+═══════════════════════════════════════════ -->
+<div class="modal-backdrop" id="feedModal">
+  <div class="modal">
+    <h3 id="feedModalTitle">NEW FEED POST</h3>
+
+    <div class="form-row">
+      <label>Project *</label>
+      <select id="feedProjectId">
+        <option value="">— Select project —</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <label>Feed Type</label>
+      <select id="feedType">
+        <option value="info">📊 Info (default)</option>
+        <option value="good">✓ Good news (green)</option>
+        <option value="alert">🚨 Alert (pink/red)</option>
+        <option value="warning">⚠️ Warning (orange)</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <label>Message *</label>
+      <textarea id="feedMessage" rows="3" placeholder="e.g. Snapshot expected within ~12 days" style="width:100%;padding:8px;background:rgba(0,0,0,0.3);border:1px solid var(--border);color:#e8eaf0;border-radius:6px;"></textarea>
+    </div>
+
+    <div class="form-row">
+      <label>Expires at (optional)</label>
+      <input id="feedExpiresAt" type="datetime-local">
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn" onclick="closeFeedModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveFeed()">Post</button>
     </div>
   </div>
 </div>
@@ -1791,6 +2292,9 @@ function switchSection(name, el) {
   if (name === 'payments') renderPayments();
   if (name === 'content') renderContent();
   if (name === 'dashboard') renderDashboard();
+  // v2.0 NEW routes
+  if (name === 'projects') renderProjects();
+  if (name === 'project-feed') renderProjectFeed();
 }
 
 let toastTimer;
@@ -1810,9 +2314,16 @@ let editingMissionId = null;
 
 async function renderMissions() {
   const tbody = document.querySelector('#missionsTable tbody');
-  tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:24px;">Loading…</td></tr>';
+  tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--text-dim);padding:24px;">Loading…</td></tr>';
 
   missionsCache = await API.adminListMissions();
+
+  // Also load projects so we can show the linked project name
+  if (typeof projectsCache === 'undefined' || projectsCache.length === 0) {
+    if (API.adminListProjects) projectsCache = await API.adminListProjects();
+  }
+  const projMap = {};
+  (window.projectsCache || []).forEach(p => { projMap[p.id] = p; });
 
   const countEl = document.getElementById('missionCount');
   if (countEl) {
@@ -1821,26 +2332,42 @@ async function renderMissions() {
   }
 
   if (!missionsCache.length) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:30px;">No missions yet. Click "+ New Mission" to add one.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--text-dim);padding:30px;">No missions yet. Click "+ New Mission" to add one.</td></tr>';
     return;
   }
 
-  tbody.innerHTML = missionsCache.map(m => `
-    <tr>
-      <td><span style="font-family:'Share Tech Mono',monospace;color:var(--text-dim);">${m.display_order != null ? m.display_order : 0}</span></td>
-      <td><strong>${escapeHtml(m.title)}</strong>${m.description ? '<br><span style="font-size:11px;color:var(--text-dim);">' + escapeHtml(m.description) + '</span>' : ''}</td>
-      <td>${m.project ? '<span class="badge badge-type">' + escapeHtml(m.project) + '</span>' : '<span style="color:var(--text-muted);">—</span>'}</td>
-      <td><strong style="color:var(--gold);">+${m.xp}</strong></td>
-      <td><span class="badge badge-${m.active ? 'active' : 'inactive'}">${m.active ? 'Active' : 'Inactive'}</span></td>
-      <td>
-        <div class="row-actions">
-          <button class="icon-btn" onclick="editMission(${m.id})" title="Edit">✎</button>
-          <button class="icon-btn" onclick="toggleMissionActive(${m.id})" title="${m.active ? 'Deactivate' : 'Activate'}">${m.active ? '◐' : '●'}</button>
-          <button class="icon-btn danger" onclick="deleteMission(${m.id})" title="Delete">×</button>
-        </div>
-      </td>
-    </tr>
-  `).join('');
+  const rarityColor = { common: '#6b7384', rare: '#4af0ff', epic: '#b070ff', legendary: '#f5c842', mythic: '#ff5e8a' };
+  const typeLabels  = { daily: '☀️ Daily', weekly: '📅 Weekly', one_time: '🎯 Once', boost: '⚡ Boost' };
+
+  tbody.innerHTML = missionsCache.map(m => {
+    const rarity = m.rarity || 'common';
+    const qtype  = m.quest_type || 'daily';
+    const projLabel = m.project_id && projMap[m.project_id]
+      ? '<span class="badge" style="background:rgba(74,240,255,0.10);color:#4af0ff;">' + escapeHtml(projMap[m.project_id].name) + '</span>'
+      : m.project
+        ? '<span class="badge badge-type">' + escapeHtml(m.project) + '</span>'
+        : '<span style="color:var(--text-muted);">—</span>';
+
+    return `
+      <tr>
+        <td><span style="font-family:'Share Tech Mono',monospace;color:var(--text-dim);">${m.display_order != null ? m.display_order : 0}</span></td>
+        <td><strong>${escapeHtml(m.title)}</strong>${m.description ? '<br><span style="font-size:11px;color:var(--text-dim);">' + escapeHtml(m.description) + '</span>' : ''}</td>
+        <td>${projLabel}</td>
+        <td><span class="badge" style="background:${rarityColor[rarity]}1a;color:${rarityColor[rarity]};border:1px solid ${rarityColor[rarity]}55;text-transform:uppercase;">${rarity}</span></td>
+        <td><span style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text-dim);">${typeLabels[qtype] || qtype}</span></td>
+        <td><strong style="color:var(--gold);">+${m.xp}</strong>${m.boost_active ? '<span style="font-size:10px;color:#ff9046;margin-left:4px;">×' + (m.boost_multiplier||1) + '</span>' : ''}</td>
+        <td>${m.boost_active ? '<span style="color:#f5c842;">⚡ ON</span>' : '<span style="color:var(--text-muted);">—</span>'}</td>
+        <td><span class="badge badge-${m.active ? 'active' : 'inactive'}">${m.active ? 'Active' : 'Inactive'}</span></td>
+        <td>
+          <div class="row-actions">
+            <button class="icon-btn" onclick="editMission(${m.id})" title="Edit">✎</button>
+            <button class="icon-btn" onclick="toggleMissionActive(${m.id})" title="${m.active ? 'Deactivate' : 'Activate'}">${m.active ? '◐' : '●'}</button>
+            <button class="icon-btn danger" onclick="deleteMission(${m.id})" title="Delete">×</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
 }
 
 // Small helper to prevent broken HTML if a title has < or > or &
@@ -1851,7 +2378,31 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
-function openMissionModal() {
+// Populate the project dropdown inside the mission modal
+async function populateMissionProjectDropdown(selectedId) {
+  const sel = document.getElementById('missionProjectId');
+  if (!sel) return;
+
+  // Load projects if not cached
+  if (!window.projectsCache || !window.projectsCache.length) {
+    if (API.adminListProjects) {
+      window.projectsCache = await API.adminListProjects();
+    } else {
+      window.projectsCache = [];
+    }
+  }
+
+  sel.innerHTML = '<option value="">— No project link —</option>';
+  (window.projectsCache || []).forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.id;
+    opt.textContent = p.name + (p.ecosystem ? ' (' + p.ecosystem + ')' : '');
+    if (selectedId && p.id === selectedId) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+async function openMissionModal() {
   editingMissionId = null;
   document.getElementById('missionModalTitle').textContent = 'NEW MISSION';
   document.getElementById('missionTitle').value = '';
@@ -1860,10 +2411,26 @@ function openMissionModal() {
   document.getElementById('missionXp').value = 50;
   document.getElementById('missionOrder').value = missionsCache.length;
   document.getElementById('missionActive').value = 'true';
+  // v2 defaults
+  document.getElementById('missionRarity').value = 'common';
+  document.getElementById('missionQuestType').value = 'daily';
+  document.getElementById('missionDifficulty').value = 'easy';
+  document.getElementById('missionCompletionMode').value = 'checkbox';
+  document.getElementById('missionQuestUrl').value = '';
+  document.getElementById('missionInstructions').value = '';
+  document.getElementById('missionSteps').value = '';
+  document.getElementById('missionEstValue').value = 0;
+  document.getElementById('missionTimeMinutes').value = 5;
+  document.getElementById('missionWalletType').value = '';
+  document.getElementById('missionVerified').value = 'true';
+  document.getElementById('missionBoostActive').value = 'false';
+  document.getElementById('missionBoostMultiplier').value = 1;
+  document.getElementById('missionBoostEndsAt').value = '';
+  await populateMissionProjectDropdown(null);
   document.getElementById('missionModal').classList.add('active');
 }
 
-function editMission(id) {
+async function editMission(id) {
   const m = missionsCache.find(x => x.id === id);
   if (!m) return;
   editingMissionId = id;
@@ -1874,6 +2441,34 @@ function editMission(id) {
   document.getElementById('missionXp').value = m.xp != null ? m.xp : 50;
   document.getElementById('missionOrder').value = m.display_order != null ? m.display_order : 0;
   document.getElementById('missionActive').value = String(m.active !== false);
+  // v2
+  document.getElementById('missionRarity').value         = m.rarity || 'common';
+  document.getElementById('missionQuestType').value      = m.quest_type || 'daily';
+  document.getElementById('missionDifficulty').value     = m.difficulty || 'easy';
+  document.getElementById('missionCompletionMode').value = m.completion_mode || 'checkbox';
+  document.getElementById('missionQuestUrl').value       = m.quest_url || '';
+  document.getElementById('missionInstructions').value   = m.instructions || '';
+  document.getElementById('missionSteps').value          = m.steps ? JSON.stringify(m.steps, null, 2) : '';
+  document.getElementById('missionEstValue').value       = m.est_value_usd != null ? m.est_value_usd : 0;
+  document.getElementById('missionTimeMinutes').value    = m.time_minutes != null ? m.time_minutes : 5;
+  document.getElementById('missionWalletType').value     = m.wallet_type || '';
+  document.getElementById('missionVerified').value       = String(m.verified !== false);
+  document.getElementById('missionBoostActive').value    = String(m.boost_active === true);
+  document.getElementById('missionBoostMultiplier').value = m.boost_multiplier != null ? m.boost_multiplier : 1;
+  // Convert ISO datetime back to local datetime-local input
+  if (m.boost_ends_at) {
+    try {
+      const d = new Date(m.boost_ends_at);
+      // datetime-local needs YYYY-MM-DDTHH:MM
+      const iso = d.toISOString().slice(0,16);
+      document.getElementById('missionBoostEndsAt').value = iso;
+    } catch(e) {
+      document.getElementById('missionBoostEndsAt').value = '';
+    }
+  } else {
+    document.getElementById('missionBoostEndsAt').value = '';
+  }
+  await populateMissionProjectDropdown(m.project_id);
   document.getElementById('missionModal').classList.add('active');
 }
 
@@ -1882,18 +2477,56 @@ function closeMissionModal() {
 }
 
 async function saveMission() {
+  // Parse steps JSON safely
+  let stepsArr = [];
+  const stepsRaw = document.getElementById('missionSteps').value.trim();
+  if (stepsRaw) {
+    try {
+      stepsArr = JSON.parse(stepsRaw);
+      if (!Array.isArray(stepsArr)) throw new Error('steps must be array');
+    } catch (e) {
+      toast('Steps field is not valid JSON: ' + e.message);
+      return;
+    }
+  }
+
+  // Boost ends_at — convert local datetime to ISO
+  let boostEndsAt = null;
+  const beVal = document.getElementById('missionBoostEndsAt').value;
+  if (beVal) {
+    try { boostEndsAt = new Date(beVal).toISOString(); } catch(e) {}
+  }
+
   const data = {
     id: editingMissionId,
-    title: document.getElementById('missionTitle').value.trim(),
-    description: document.getElementById('missionDescription').value.trim(),
-    project: document.getElementById('missionProject').value.trim(),
-    xp: parseInt(document.getElementById('missionXp').value, 10) || 0,
-    display_order: parseInt(document.getElementById('missionOrder').value, 10) || 0,
-    active: document.getElementById('missionActive').value === 'true'
+    title:            document.getElementById('missionTitle').value.trim(),
+    description:      document.getElementById('missionDescription').value.trim(),
+    project:          document.getElementById('missionProject').value.trim(),
+    project_id:       document.getElementById('missionProjectId').value || null,
+    xp:               parseInt(document.getElementById('missionXp').value, 10) || 0,
+    display_order:    parseInt(document.getElementById('missionOrder').value, 10) || 0,
+    active:           document.getElementById('missionActive').value === 'true',
+    // v2 fields
+    rarity:           document.getElementById('missionRarity').value || 'common',
+    quest_type:       document.getElementById('missionQuestType').value || 'daily',
+    difficulty:       document.getElementById('missionDifficulty').value || 'easy',
+    completion_mode:  document.getElementById('missionCompletionMode').value || 'checkbox',
+    quest_url:        document.getElementById('missionQuestUrl').value.trim() || null,
+    instructions:     document.getElementById('missionInstructions').value.trim() || null,
+    steps:            stepsArr,
+    time_minutes:     parseInt(document.getElementById('missionTimeMinutes').value, 10) || 5,
+    est_value_usd:    parseFloat(document.getElementById('missionEstValue').value) || 0,
+    boost_active:     document.getElementById('missionBoostActive').value === 'true',
+    boost_multiplier: parseFloat(document.getElementById('missionBoostMultiplier').value) || 1.0,
+    boost_ends_at:    boostEndsAt,
+    wallet_type:      document.getElementById('missionWalletType').value.trim() || null,
+    verified:         document.getElementById('missionVerified').value === 'true'
   };
   if (!data.title) { toast('Title is required'); return; }
 
-  const result = await API.adminSaveMission(data);
+  // Use V2 save function (falls back gracefully if not present)
+  const fn = (API.adminSaveMissionV2 ? API.adminSaveMissionV2 : API.adminSaveMission).bind(API);
+  const result = await fn(data);
   if (!result.ok) {
     toast('Save failed: ' + (result.error || 'unknown error'));
     return;
@@ -3447,6 +4080,526 @@ function refreshAll() {
 document.querySelectorAll('.modal-backdrop').forEach(m => {
   m.addEventListener('click', e => { if (e.target === m) m.classList.remove('active'); });
 });
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PROJECTS MANAGEMENT (v2.0 NEW)
+   ─────────────────────────────────────────────────────────────────────────── */
+window.projectsCache = [];
+let editingProjectId = null;
+let projectLinksLocal = [];     // links being edited locally before save
+let projectStepsLocal = [];     // route steps being edited locally
+let editingProjectLogoUrl = ''; // freshly uploaded URL (not yet saved)
+
+const BUILTIN_BADGES = [
+  { code: 'hottest',   label: '🔥 Hottest' },
+  { code: 'new',       label: 'New' },
+  { code: 'low-gas',   label: '⚡ Low Gas' },
+  { code: 'trending',  label: 'Trending' },
+  { code: 'whale',     label: '🐋 Whale Fav' },
+  { code: 'snapshot',  label: 'Snapshot Soon' },
+  { code: 'elite',     label: '💎 Elite' },
+  { code: 'mainnet',   label: 'Mainnet' },
+  { code: 'testnet',   label: '🧪 Testnet' },
+  { code: 'intel-new', label: 'New Intel' }
+];
+
+async function renderProjects() {
+  const tbody = document.querySelector('#projectsTable tbody');
+  tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-dim);padding:24px;">Loading…</td></tr>';
+
+  if (!API.adminListProjects) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#ff4757;padding:30px;">API function adminListProjects not found. Please update api.js to v2.0 first.</td></tr>';
+    return;
+  }
+  window.projectsCache = await API.adminListProjects();
+
+  const countEl = document.getElementById('projectCount');
+  if (countEl) {
+    const active = window.projectsCache.filter(p => p.is_active).length;
+    countEl.textContent = window.projectsCache.length + ' total · ' + active + ' active';
+  }
+
+  if (!window.projectsCache.length) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-dim);padding:30px;">No projects yet. Click "+ New Project" to add one.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = window.projectsCache.map(p => {
+    const logoCell = p.logo_url
+      ? `<img src="${escapeHtml(p.logo_url)}" alt="" style="width:32px;height:32px;border-radius:6px;object-fit:cover;">`
+      : `<div style="width:32px;height:32px;border-radius:6px;background:rgba(245,200,66,0.1);color:#f5c842;display:inline-flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:800;font-size:11px;">${escapeHtml(p.logo_initials || p.name.slice(0,2).toUpperCase())}</div>`;
+
+    return `
+      <tr>
+        <td><span style="font-family:'Share Tech Mono',monospace;color:var(--text-dim);">${p.display_order != null ? p.display_order : 100}</span></td>
+        <td>${logoCell}</td>
+        <td><strong>${escapeHtml(p.name)}</strong>${p.subtitle ? '<br><span style="font-size:11px;color:var(--text-dim);">' + escapeHtml(p.subtitle) + '</span>' : ''}</td>
+        <td><span class="badge badge-type">${escapeHtml(p.ecosystem || '—')}</span></td>
+        <td><strong style="color:var(--gold);">${p.momentum != null ? p.momentum : '—'}</strong></td>
+        <td>${p.is_featured ? '<span style="color:#00e87a;">★ Yes</span>' : '<span style="color:var(--text-muted);">—</span>'}</td>
+        <td><span class="badge badge-${p.is_active ? 'active' : 'inactive'}">${p.is_active ? 'Active' : 'Hidden'}</span></td>
+        <td>
+          <div class="row-actions">
+            <button class="icon-btn" onclick="editProject('${p.id}')" title="Edit">✎</button>
+            <button class="icon-btn" onclick="toggleProjectActive('${p.id}')" title="${p.is_active ? 'Hide' : 'Show'}">${p.is_active ? '◐' : '●'}</button>
+            <button class="icon-btn danger" onclick="deleteProject('${p.id}')" title="Delete">×</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function openProjectModal() {
+  editingProjectId = null;
+  editingProjectLogoUrl = '';
+  projectLinksLocal = [];
+  projectStepsLocal = [];
+
+  document.getElementById('projectModalTitle').textContent = 'NEW PROJECT';
+  ['projName','projSlug','projSubtitle','projTagline','projAbout','projLogoUrl','projLogoInitials',
+   'projRewardLevel','projEstValue','projSnapshotPct','projCompetition','projFundingUsd',
+   'projFarmersCount','projSmartMoney','projSybilRisk','projStatus','projWebsiteUrl','projCustomBadges'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('projEcosystem').value = 'EVM';
+  document.getElementById('projLogoColor').value = 'gold';
+  document.getElementById('projMomentum').value = 50;
+  document.getElementById('projBeginner').value = 'false';
+  document.getElementById('projDisplayOrder').value = (window.projectsCache.length + 1) * 10;
+  document.getElementById('projFeatured').value = 'true';
+  document.getElementById('projActive').value = 'true';
+  document.getElementById('projLogoUploadStatus').textContent = '';
+  if (document.getElementById('projSlug')) document.getElementById('projSlug').dataset.touched = '';
+
+  renderBadgeCheckboxes([]);
+  renderLocalLinks();
+  renderLocalSteps();
+  updateLogoPreview();
+
+  // Auto-slug from name
+  const nameEl = document.getElementById('projName');
+  nameEl.oninput = function() {
+    const slugEl = document.getElementById('projSlug');
+    if (!slugEl.dataset.touched) {
+      slugEl.value = API.slugify ? API.slugify(this.value) : this.value.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+    }
+  };
+
+  document.getElementById('projectModal').classList.add('active');
+}
+
+async function editProject(id) {
+  editingProjectId = id;
+  const p = window.projectsCache.find(x => x.id === id);
+  if (!p) return;
+  editingProjectLogoUrl = p.logo_url || '';
+
+  document.getElementById('projectModalTitle').textContent = 'EDIT PROJECT';
+  document.getElementById('projName').value = p.name || '';
+  document.getElementById('projSlug').value = p.slug || '';
+  document.getElementById('projSlug').dataset.touched = '1'; // don't auto-overwrite
+  document.getElementById('projSubtitle').value = p.subtitle || '';
+  document.getElementById('projTagline').value = p.tagline || '';
+  document.getElementById('projAbout').value = p.about || '';
+  document.getElementById('projEcosystem').value = p.ecosystem || 'EVM';
+  document.getElementById('projLogoUrl').value = p.logo_url || '';
+  document.getElementById('projLogoInitials').value = p.logo_initials || '';
+  document.getElementById('projLogoColor').value = p.logo_color || 'gold';
+  document.getElementById('projRewardLevel').value = p.reward_level || '';
+  document.getElementById('projEstValue').value = p.est_value_usd || '';
+  document.getElementById('projSnapshotPct').value = p.snapshot_pct != null ? p.snapshot_pct : '';
+  document.getElementById('projCompetition').value = p.competition || '';
+  document.getElementById('projFundingUsd').value = p.funding_usd || '';
+  document.getElementById('projFarmersCount').value = p.farmers_count || '';
+  document.getElementById('projSmartMoney').value = p.smart_money || '';
+  document.getElementById('projSybilRisk').value = p.sybil_risk || '';
+  document.getElementById('projStatus').value = p.status || '';
+  document.getElementById('projMomentum').value = p.momentum != null ? p.momentum : 50;
+  document.getElementById('projBeginner').value = String(p.beginner_friendly === true);
+  document.getElementById('projDisplayOrder').value = p.display_order != null ? p.display_order : 100;
+  document.getElementById('projFeatured').value = String(p.is_featured !== false);
+  document.getElementById('projActive').value = String(p.is_active !== false);
+  document.getElementById('projWebsiteUrl').value = p.website_url || '';
+  document.getElementById('projCustomBadges').value = p.custom_badges ? JSON.stringify(p.custom_badges, null, 2) : '';
+  document.getElementById('projLogoUploadStatus').textContent = '';
+
+  renderBadgeCheckboxes(Array.isArray(p.badges) ? p.badges : []);
+
+  // Load existing links + route steps
+  if (API.getProjectQuickLinks) {
+    projectLinksLocal = (await API.getProjectQuickLinks(id)) || [];
+  }
+  if (API.getProjectRouteSteps) {
+    projectStepsLocal = (await API.getProjectRouteSteps(id)) || [];
+  }
+  renderLocalLinks();
+  renderLocalSteps();
+  updateLogoPreview();
+
+  document.getElementById('projectModal').classList.add('active');
+}
+
+function closeProjectModal() {
+  document.getElementById('projectModal').classList.remove('active');
+}
+
+function renderBadgeCheckboxes(selectedBadges) {
+  const container = document.getElementById('projBadgeCheckboxes');
+  if (!container) return;
+  const selected = new Set(selectedBadges || []);
+  container.innerHTML = BUILTIN_BADGES.map(b => `
+    <label style="display:inline-flex;align-items:center;gap:6px;padding:6px 10px;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:6px;font-size:12px;cursor:pointer;">
+      <input type="checkbox" value="${b.code}" ${selected.has(b.code) ? 'checked' : ''}>
+      <span>${b.label}</span>
+    </label>
+  `).join('');
+}
+
+function getSelectedBadges() {
+  const checks = document.querySelectorAll('#projBadgeCheckboxes input[type=checkbox]:checked');
+  return Array.from(checks).map(c => c.value);
+}
+
+function updateLogoPreview() {
+  const preview = document.getElementById('projLogoPreview');
+  if (!preview) return;
+  const url = document.getElementById('projLogoUrl').value;
+  const initials = document.getElementById('projLogoInitials').value || 'P';
+  const color = document.getElementById('projLogoColor').value || 'gold';
+  const colorMap = {
+    gold: '#f5c842', cyan: '#4af0ff', purple: '#b070ff',
+    pink: '#ff5e8a', orange: '#ff9046', green: '#00e87a'
+  };
+  const c = colorMap[color] || '#f5c842';
+  if (url) {
+    preview.innerHTML = '<img src="' + escapeHtml(url) + '" style="width:100%;height:100%;object-fit:cover;" />';
+  } else {
+    preview.innerHTML = escapeHtml(initials.slice(0, 3).toUpperCase());
+    preview.style.color = c;
+    preview.style.background = c + '1a';
+    preview.style.borderColor = c + '55';
+  }
+}
+
+async function uploadProjectLogo() {
+  const fileInput = document.getElementById('projLogoFile');
+  if (!fileInput.files || !fileInput.files[0]) { toast('Pick an image first'); return; }
+  if (!API.uploadProjectLogo) { toast('uploadProjectLogo not available — update api.js'); return; }
+
+  const slug = document.getElementById('projSlug').value || 'project';
+  const statusEl = document.getElementById('projLogoUploadStatus');
+  statusEl.textContent = 'Uploading...';
+  statusEl.style.color = '#4af0ff';
+
+  const result = await API.uploadProjectLogo(fileInput.files[0], slug);
+  if (!result.ok) {
+    statusEl.textContent = '❌ ' + result.error;
+    statusEl.style.color = '#ff4757';
+    return;
+  }
+
+  document.getElementById('projLogoUrl').value = result.publicUrl;
+  editingProjectLogoUrl = result.publicUrl;
+  statusEl.textContent = '✓ Uploaded! URL filled in below.';
+  statusEl.style.color = '#00e87a';
+  updateLogoPreview();
+}
+
+function renderLocalLinks() {
+  const container = document.getElementById('projLinksList');
+  if (!container) return;
+  if (!projectLinksLocal.length) {
+    container.innerHTML = '<div style="font-size:11px;color:var(--text-dim);font-style:italic;padding:8px 0;">No links yet.</div>';
+    return;
+  }
+  container.innerHTML = projectLinksLocal.map((l, i) => `
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:rgba(0,0,0,0.2);border-radius:6px;margin-bottom:4px;">
+      <span style="font-family:'Share Tech Mono',monospace;font-size:10px;color:#00e87a;min-width:70px;">${escapeHtml(l.link_type)}</span>
+      <span style="flex:1;font-size:12px;"><strong>${escapeHtml(l.label)}</strong> <span style="color:var(--text-dim);">→ ${escapeHtml(l.url)}</span></span>
+      <button class="icon-btn danger" onclick="removeLocalLink(${i})">×</button>
+    </div>
+  `).join('');
+}
+
+function addQuickLink() {
+  const type  = document.getElementById('newLinkType').value;
+  const label = document.getElementById('newLinkLabel').value.trim();
+  const url   = document.getElementById('newLinkUrl').value.trim();
+  if (!label || !url) { toast('Label + URL required'); return; }
+  projectLinksLocal.push({ link_type: type, label: label, url: url, display_order: (projectLinksLocal.length + 1) * 10, _new: true });
+  document.getElementById('newLinkLabel').value = '';
+  document.getElementById('newLinkUrl').value = '';
+  renderLocalLinks();
+}
+
+function removeLocalLink(i) {
+  projectLinksLocal.splice(i, 1);
+  renderLocalLinks();
+}
+
+function renderLocalSteps() {
+  const container = document.getElementById('projRouteStepsList');
+  if (!container) return;
+  if (!projectStepsLocal.length) {
+    container.innerHTML = '<div style="font-size:11px;color:var(--text-dim);font-style:italic;padding:8px 0;">No route steps yet.</div>';
+    return;
+  }
+  container.innerHTML = projectStepsLocal.map((s, i) => `
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:rgba(0,0,0,0.2);border-radius:6px;margin-bottom:4px;">
+      <span style="font-family:'Share Tech Mono',monospace;font-size:10px;color:#ff9046;min-width:30px;">${String(s.step_number || (i+1)).padStart(2,'0')}</span>
+      <span style="flex:1;font-size:12px;">${s.title ? '<strong>' + escapeHtml(s.title) + '</strong> — ' : ''}${escapeHtml(s.description)}</span>
+      <button class="icon-btn danger" onclick="removeLocalStep(${i})">×</button>
+    </div>
+  `).join('');
+}
+
+function addRouteStep() {
+  const title = document.getElementById('newStepTitle').value.trim();
+  const desc  = document.getElementById('newStepDesc').value.trim();
+  if (!desc) { toast('Description required'); return; }
+  projectStepsLocal.push({ step_number: projectStepsLocal.length + 1, title: title || null, description: desc, _new: true });
+  document.getElementById('newStepTitle').value = '';
+  document.getElementById('newStepDesc').value = '';
+  renderLocalSteps();
+}
+
+function removeLocalStep(i) {
+  projectStepsLocal.splice(i, 1);
+  // Renumber
+  projectStepsLocal.forEach((s, idx) => { s.step_number = idx + 1; });
+  renderLocalSteps();
+}
+
+async function saveProject() {
+  const name = document.getElementById('projName').value.trim();
+  if (!name) { toast('Name is required'); return; }
+
+  let slug = document.getElementById('projSlug').value.trim();
+  if (!slug) slug = API.slugify ? API.slugify(name) : name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+
+  // Parse custom badges JSON safely
+  let customBadges = [];
+  const cbRaw = document.getElementById('projCustomBadges').value.trim();
+  if (cbRaw) {
+    try { customBadges = JSON.parse(cbRaw); }
+    catch(e) { toast('Custom badges field is not valid JSON: ' + e.message); return; }
+    if (!Array.isArray(customBadges)) { toast('Custom badges must be an array'); return; }
+  }
+
+  const data = {
+    slug: slug,
+    name: name,
+    subtitle: document.getElementById('projSubtitle').value.trim() || null,
+    tagline:  document.getElementById('projTagline').value.trim() || null,
+    about:    document.getElementById('projAbout').value.trim() || null,
+    ecosystem: document.getElementById('projEcosystem').value || null,
+    logo_url:      document.getElementById('projLogoUrl').value.trim() || null,
+    logo_initials: document.getElementById('projLogoInitials').value.trim() || null,
+    logo_color:    document.getElementById('projLogoColor').value || 'gold',
+    reward_level:  document.getElementById('projRewardLevel').value || null,
+    est_value_usd: document.getElementById('projEstValue').value.trim() || null,
+    snapshot_pct:  document.getElementById('projSnapshotPct').value ? parseInt(document.getElementById('projSnapshotPct').value, 10) : null,
+    competition:   document.getElementById('projCompetition').value || null,
+    funding_usd:   document.getElementById('projFundingUsd').value.trim() || null,
+    farmers_count: document.getElementById('projFarmersCount').value.trim() || null,
+    smart_money:   document.getElementById('projSmartMoney').value || null,
+    sybil_risk:    document.getElementById('projSybilRisk').value || null,
+    status:        document.getElementById('projStatus').value || null,
+    momentum:      parseInt(document.getElementById('projMomentum').value, 10) || 50,
+    beginner_friendly: document.getElementById('projBeginner').value === 'true',
+    badges:        getSelectedBadges(),
+    custom_badges: customBadges,
+    is_featured:   document.getElementById('projFeatured').value === 'true',
+    is_active:     document.getElementById('projActive').value === 'true',
+    display_order: parseInt(document.getElementById('projDisplayOrder').value, 10) || 100,
+    website_url:   document.getElementById('projWebsiteUrl').value.trim() || null
+  };
+
+  let result;
+  if (editingProjectId) {
+    result = await API.adminUpdateProject(editingProjectId, data);
+  } else {
+    result = await API.adminCreateProject(data);
+  }
+  if (!result.ok) { toast('Save failed: ' + (result.error || 'unknown')); return; }
+
+  const savedProjectId = editingProjectId || (result.project && result.project.id);
+
+  // Sync links: for new project just add all; for edit, this approach is simple — keep existing,
+  // delete removed ones, add new ones. For now: only add the new ones flagged with _new.
+  for (const l of projectLinksLocal) {
+    if (l._new && savedProjectId) {
+      await API.adminAddQuickLink(savedProjectId, l.link_type, l.label, l.url, l.display_order);
+    }
+  }
+  // Sync steps similarly
+  for (const s of projectStepsLocal) {
+    if (s._new && savedProjectId) {
+      await API.adminAddRouteStep(savedProjectId, s.step_number, s.title, s.description, s.url || null);
+    }
+  }
+
+  closeProjectModal();
+  toast(editingProjectId ? 'Project updated' : 'Project created');
+  renderProjects();
+}
+
+async function toggleProjectActive(id) {
+  const p = window.projectsCache.find(x => x.id === id);
+  if (!p) return;
+  const result = await API.adminToggleProjectActive(id, !p.is_active);
+  if (!result.ok) { toast('Update failed: ' + (result.error || '')); return; }
+  toast(p.is_active ? 'Project hidden' : 'Project shown');
+  renderProjects();
+}
+
+async function deleteProject(id) {
+  if (!confirm('Delete this project? This will also delete its quick links, route steps, intel feed, and unlink missions. This cannot be undone.')) return;
+  const result = await API.adminDeleteProject(id);
+  if (!result.ok) { toast('Delete failed: ' + (result.error || '')); return; }
+  toast('Project deleted');
+  renderProjects();
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PROJECT INTEL FEED MANAGEMENT (v2.0 NEW)
+   ─────────────────────────────────────────────────────────────────────────── */
+let feedCache = [];
+let editingFeedId = null;
+
+async function renderProjectFeed() {
+  const tbody = document.querySelector('#feedTable tbody');
+  tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:24px;">Loading…</td></tr>';
+
+  if (!API.adminListIntelFeed) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#ff4757;padding:30px;">API function not available. Update api.js to v2.0 first.</td></tr>';
+    return;
+  }
+
+  // Populate filter dropdown
+  await ensureProjectsCached();
+  const filterSel = document.getElementById('feedProjectFilter');
+  if (filterSel.options.length <= 1) {
+    window.projectsCache.forEach(p => {
+      const opt = document.createElement('option');
+      opt.value = p.id;
+      opt.textContent = p.name;
+      filterSel.appendChild(opt);
+    });
+  }
+
+  const filterId = filterSel.value || null;
+  feedCache = await API.adminListIntelFeed(filterId, true);
+
+  const countEl = document.getElementById('feedCount');
+  if (countEl) countEl.textContent = feedCache.length + ' posts';
+
+  if (!feedCache.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:30px;">No feed posts yet. Click "+ New Feed Post" to add one.</td></tr>';
+    return;
+  }
+
+  const projMap = {};
+  window.projectsCache.forEach(p => projMap[p.id] = p);
+  const typeColors = { info: '#7a849a', good: '#00e87a', alert: '#ff5e8a', warning: '#ff9046' };
+  const typeIcons  = { info: '📊', good: '✓', alert: '🚨', warning: '⚠️' };
+
+  tbody.innerHTML = feedCache.map(f => {
+    const proj = projMap[f.project_id];
+    const color = typeColors[f.feed_type] || '#7a849a';
+    const icon  = typeIcons[f.feed_type] || '📊';
+    const posted = f.posted_at ? new Date(f.posted_at).toLocaleString() : '—';
+    return `
+      <tr>
+        <td><span style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text-dim);">${escapeHtml(posted)}</span></td>
+        <td>${proj ? '<strong>' + escapeHtml(proj.name) + '</strong>' : '<span style="color:var(--text-muted);">— deleted —</span>'}</td>
+        <td><span style="color:${color};font-family:'Share Tech Mono',monospace;font-size:11px;">${icon} ${escapeHtml(f.feed_type || 'info').toUpperCase()}</span></td>
+        <td>${escapeHtml(f.message || '')}</td>
+        <td><span class="badge badge-${f.is_active ? 'active' : 'inactive'}">${f.is_active ? 'Active' : 'Hidden'}</span></td>
+        <td>
+          <div class="row-actions">
+            <button class="icon-btn" onclick="toggleFeedActive('${f.id}')" title="${f.is_active ? 'Hide' : 'Show'}">${f.is_active ? '◐' : '●'}</button>
+            <button class="icon-btn danger" onclick="deleteFeed('${f.id}')" title="Delete">×</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+async function ensureProjectsCached() {
+  if (!window.projectsCache || !window.projectsCache.length) {
+    if (API.adminListProjects) {
+      window.projectsCache = await API.adminListProjects();
+    } else {
+      window.projectsCache = [];
+    }
+  }
+}
+
+async function openFeedModal() {
+  editingFeedId = null;
+  await ensureProjectsCached();
+
+  const sel = document.getElementById('feedProjectId');
+  sel.innerHTML = '<option value="">— Select project —</option>';
+  window.projectsCache.forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.id;
+    opt.textContent = p.name;
+    sel.appendChild(opt);
+  });
+
+  document.getElementById('feedModalTitle').textContent = 'NEW FEED POST';
+  document.getElementById('feedType').value = 'info';
+  document.getElementById('feedMessage').value = '';
+  document.getElementById('feedExpiresAt').value = '';
+  document.getElementById('feedModal').classList.add('active');
+}
+
+function closeFeedModal() {
+  document.getElementById('feedModal').classList.remove('active');
+}
+
+async function saveFeed() {
+  const projectId = document.getElementById('feedProjectId').value;
+  const message   = document.getElementById('feedMessage').value.trim();
+  const feedType  = document.getElementById('feedType').value;
+  if (!projectId || !message) { toast('Project and message required'); return; }
+
+  let expiresAt = null;
+  const exVal = document.getElementById('feedExpiresAt').value;
+  if (exVal) {
+    try { expiresAt = new Date(exVal).toISOString(); } catch(e) {}
+  }
+
+  const result = await API.adminAddIntelFeed(projectId, feedType, message, expiresAt);
+  if (!result.ok) { toast('Save failed: ' + (result.error || '')); return; }
+  closeFeedModal();
+  toast('Feed post created');
+  renderProjectFeed();
+}
+
+async function toggleFeedActive(id) {
+  const f = feedCache.find(x => x.id === id);
+  if (!f) return;
+  const result = await API.adminUpdateIntelFeed(id, { is_active: !f.is_active });
+  if (!result.ok) { toast('Update failed'); return; }
+  toast(f.is_active ? 'Post hidden' : 'Post shown');
+  renderProjectFeed();
+}
+
+async function deleteFeed(id) {
+  if (!confirm('Delete this feed post? Cannot be undone.')) return;
+  const result = await API.adminDeleteIntelFeed(id);
+  if (!result.ok) { toast('Delete failed: ' + (result.error || '')); return; }
+  toast('Post deleted');
+  renderProjectFeed();
+}
+
+/* End v2.0 Admin extensions */
 
 renderDashboard();
 </script>
