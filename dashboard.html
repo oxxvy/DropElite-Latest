@@ -4814,6 +4814,92 @@ canvas.mini-chart { width: 100% !important; }
   .project-intel-view .pi-detail-body { padding: 18px; }
 }
 
+/* ─── v2.1 — INVESTOR TIER CHIPS ─── */
+
+/* Compact chip shown on card grid */
+.project-intel-view .pi-tier-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 12px 0;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-family: var(--pi-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border: 1px solid;
+  text-align: center;
+  transition: all 0.3s;
+}
+.project-intel-view .pi-tier-chip.tier-1 {
+  color: var(--gold);
+  background: linear-gradient(135deg, rgba(245,200,66,0.08), rgba(245,200,66,0.02));
+  border-color: rgba(245,200,66,0.4);
+  box-shadow: 0 0 12px rgba(245,200,66,0.15);
+}
+.project-intel-view .pi-tier-chip.tier-2 {
+  color: var(--cyan);
+  background: linear-gradient(135deg, rgba(74,240,255,0.08), rgba(74,240,255,0.02));
+  border-color: rgba(74,240,255,0.4);
+  box-shadow: 0 0 12px rgba(74,240,255,0.15);
+}
+.project-intel-view .pi-tier-chip.tier-3 {
+  color: var(--purple);
+  background: linear-gradient(135deg, rgba(176,112,255,0.08), rgba(176,112,255,0.02));
+  border-color: rgba(176,112,255,0.4);
+  box-shadow: 0 0 12px rgba(176,112,255,0.15);
+}
+.project-intel-view .pi-card:hover .pi-tier-chip { transform: translateY(-1px); }
+
+/* Larger version shown on detail page (under tagline) */
+.project-intel-view .pi-tier-detail {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 6px 0 12px 0;
+}
+.project-intel-view .pi-tier-chip-large {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-family: var(--pi-font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border: 1px solid;
+  flex-shrink: 0;
+}
+.project-intel-view .pi-tier-chip-large.tier-1 {
+  color: var(--gold);
+  background: linear-gradient(135deg, rgba(245,200,66,0.12), rgba(245,200,66,0.04));
+  border-color: rgba(245,200,66,0.5);
+  box-shadow: 0 0 16px rgba(245,200,66,0.25);
+}
+.project-intel-view .pi-tier-chip-large.tier-2 {
+  color: var(--cyan);
+  background: linear-gradient(135deg, rgba(74,240,255,0.12), rgba(74,240,255,0.04));
+  border-color: rgba(74,240,255,0.5);
+  box-shadow: 0 0 16px rgba(74,240,255,0.25);
+}
+.project-intel-view .pi-tier-chip-large.tier-3 {
+  color: var(--purple);
+  background: linear-gradient(135deg, rgba(176,112,255,0.12), rgba(176,112,255,0.04));
+  border-color: rgba(176,112,255,0.5);
+  box-shadow: 0 0 16px rgba(176,112,255,0.25);
+}
+.project-intel-view .pi-tier-reason {
+  font-size: 12px;
+  color: var(--pi-text-dim);
+  font-style: italic;
+  letter-spacing: 0.3px;
+  line-height: 1.45;
+}
+
 /* END PROJECT INTELLIGENCE TAB STYLES */
 /* START AIRDROP TRACKER TAB STYLES */
 .airdrop-tracker-view.tab-panel.active { display: block; }
@@ -16348,6 +16434,7 @@ canvas.mini-chart { width: 100% !important; }
             <div class="pi-detail-name-block">
               <h1 class="pi-detail-name" id="piDetailName">PROJECT NAME</h1>
               <div class="pi-detail-tagline" id="piDetailTagline">Loading...</div>
+              <div id="piDetailTier" class="pi-tier-detail" style="display:none;"></div>
               <div class="pi-detail-badges" id="piDetailBadges"></div>
             </div>
           </div>
@@ -22573,6 +22660,9 @@ function piBuildCard(p) {
     actionBtn = '<button class="pi-card-btn boost">⚡ BOOST NOW</button>';
   }
 
+  // v2.1 — Investor tier chip
+  const tierChip = piBuildTierChip(p.investor_tier);
+
   card.innerHTML = `
     <div class="pi-card-top">
       <div class="pi-logo">${logoHtml}</div>
@@ -22582,6 +22672,7 @@ function piBuildCard(p) {
       </div>
       <div class="pi-card-badges">${badgesHtml}</div>
     </div>
+    ${tierChip}
     <div class="pi-intel-grid">${intelCells}</div>
     <div class="pi-mom-row">
       <span class="pi-mom-label">MOMENTUM</span>
@@ -22603,6 +22694,20 @@ function piBuildCard(p) {
   `;
 
   return card;
+}
+
+// ─── BUILD TIER CHIP (v2.1) ───
+// Returns HTML for a one-line investor-tier chip, or '' if no tier set
+function piBuildTierChip(tier) {
+  if (!tier) return '';
+  const map = {
+    tier_1: { label: '💎 TIER 1 BACKED', cls: 'tier-1' },
+    tier_2: { label: '⭐ TIER 2 BACKED', cls: 'tier-2' },
+    tier_3: { label: '🌱 TIER 3 BACKED', cls: 'tier-3' }
+  };
+  const m = map[tier];
+  if (!m) return '';
+  return `<div class="pi-tier-chip ${m.cls}"><span>${m.label}</span></div>`;
 }
 
 // ─── BUILD INTEL DATA CELLS (3x2 grid) ───
@@ -22780,6 +22885,31 @@ function piRenderDetail(detail) {
   // Name + tagline
   document.getElementById('piDetailName').textContent = p.name || '—';
   document.getElementById('piDetailTagline').textContent = p.tagline || p.subtitle || '';
+
+  // v2.1 — Investor tier chip + optional reason
+  const tierEl = document.getElementById('piDetailTier');
+  if (tierEl) {
+    if (p.investor_tier) {
+      const tierMap = {
+        tier_1: { label: '💎 TIER 1 BACKED', cls: 'tier-1' },
+        tier_2: { label: '⭐ TIER 2 BACKED', cls: 'tier-2' },
+        tier_3: { label: '🌱 TIER 3 BACKED', cls: 'tier-3' }
+      };
+      const t = tierMap[p.investor_tier];
+      if (t) {
+        const reasonHtml = p.investor_reason
+          ? `<span class="pi-tier-reason">${piEsc(p.investor_reason)}</span>`
+          : '';
+        tierEl.innerHTML = `<span class="pi-tier-chip-large ${t.cls}">${t.label}</span>${reasonHtml}`;
+        tierEl.style.display = 'flex';
+      } else {
+        tierEl.style.display = 'none';
+      }
+    } else {
+      tierEl.style.display = 'none';
+      tierEl.innerHTML = '';
+    }
+  }
 
   // Badges
   const badgesEl = document.getElementById('piDetailBadges');
