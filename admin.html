@@ -643,7 +643,7 @@ tbody tr:last-child td { border-bottom: none; }
         </div>
         <div class="table-wrap">
           <table id="projectsTable">
-            <thead><tr><th>Order</th><th>Logo</th><th>Name</th><th>Ecosystem</th><th>Momentum</th><th>Featured</th><th>Status</th><th>Actions</th></tr></thead>
+            <thead><tr><th>Order</th><th>Logo</th><th>Name</th><th>Ecosystem</th><th>Tier</th><th>Momentum</th><th>Featured</th><th>Status</th><th>Actions</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -1491,6 +1491,30 @@ tbody tr:last-child td { border-bottom: none; }
 
       <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px;">Custom badges (JSON array):</div>
       <textarea id="projCustomBadges" rows="2" placeholder='[{"label":"AIRDROP","color":"#f5c842"}]' style="width:100%;padding:8px;background:rgba(0,0,0,0.3);border:1px solid rgba(176,112,255,0.2);color:#e8eaf0;border-radius:6px;font-family:'Share Tech Mono',monospace;font-size:11px;"></textarea>
+    </div>
+
+    <!-- ═══ INVESTOR TIER (v2.1 NEW) ═══ -->
+    <div style="background:rgba(245,200,66,0.04);border:1px solid rgba(245,200,66,0.18);border-radius:8px;padding:14px 16px;margin:14px 0;">
+      <div style="font-family:'Share Tech Mono',monospace;font-size:11px;color:#f5c842;letter-spacing:2px;margin-bottom:12px;">💎 INVESTOR BACKING TIER</div>
+
+      <div class="form-row">
+        <label>Tier (powerful trust signal for users)</label>
+        <select id="projInvestorTier">
+          <option value="">— No backing info / Self-funded —</option>
+          <option value="tier_1">💎 TIER 1 — Top VCs (Paradigm, a16z, Sequoia, Coinbase Ventures, Binance Labs)</option>
+          <option value="tier_2">⭐ TIER 2 — Strong VCs (Dragonfly, Polychain, Pantera, Multicoin, Variant)</option>
+          <option value="tier_3">🌱 TIER 3 — Smaller funds, angels, accelerators</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label>Optional reason / backer list (shown on detail page)</label>
+        <textarea id="projInvestorReason" rows="2" placeholder="e.g. Backed by Paradigm, a16z, Coinbase Ventures ($225M raised)" style="width:100%;padding:8px;background:rgba(0,0,0,0.3);border:1px solid rgba(245,200,66,0.2);color:#e8eaf0;border-radius:6px;font-size:12px;"></textarea>
+      </div>
+
+      <div style="font-size:11px;color:var(--text-dim);margin-top:4px;line-height:1.5;">
+        💡 <strong>Tier guide:</strong> Tier 1 = household-name VCs. Tier 2 = respected crypto-native funds. Tier 3 = early/smaller backers. Leave blank for self-funded or unknown.
+      </div>
     </div>
 
     <!-- ═══ QUICK LINKS ═══ -->
@@ -4105,10 +4129,10 @@ const BUILTIN_BADGES = [
 
 async function renderProjects() {
   const tbody = document.querySelector('#projectsTable tbody');
-  tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-dim);padding:24px;">Loading…</td></tr>';
+  tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--text-dim);padding:24px;">Loading…</td></tr>';
 
   if (!API.adminListProjects) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#ff4757;padding:30px;">API function adminListProjects not found. Please update api.js to v2.0 first.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#ff4757;padding:30px;">API function adminListProjects not found. Please update api.js to v2.0 first.</td></tr>';
     return;
   }
   window.projectsCache = await API.adminListProjects();
@@ -4120,14 +4144,23 @@ async function renderProjects() {
   }
 
   if (!window.projectsCache.length) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-dim);padding:30px;">No projects yet. Click "+ New Project" to add one.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--text-dim);padding:30px;">No projects yet. Click "+ New Project" to add one.</td></tr>';
     return;
   }
+
+  // Tier display helpers
+  const tierLabel = { tier_1: '💎 T1', tier_2: '⭐ T2', tier_3: '🌱 T3' };
+  const tierColor = { tier_1: '#f5c842', tier_2: '#4af0ff', tier_3: '#b070ff' };
 
   tbody.innerHTML = window.projectsCache.map(p => {
     const logoCell = p.logo_url
       ? `<img src="${escapeHtml(p.logo_url)}" alt="" style="width:32px;height:32px;border-radius:6px;object-fit:cover;">`
       : `<div style="width:32px;height:32px;border-radius:6px;background:rgba(245,200,66,0.1);color:#f5c842;display:inline-flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:800;font-size:11px;">${escapeHtml(p.logo_initials || p.name.slice(0,2).toUpperCase())}</div>`;
+
+    const tier = p.investor_tier;
+    const tierCell = tier
+      ? `<span style="font-family:'Share Tech Mono',monospace;font-size:11px;font-weight:700;color:${tierColor[tier]};padding:3px 8px;background:${tierColor[tier]}1a;border:1px solid ${tierColor[tier]}55;border-radius:6px;letter-spacing:1px;">${tierLabel[tier]}</span>`
+      : '<span style="color:var(--text-muted);font-size:11px;">—</span>';
 
     return `
       <tr>
@@ -4135,6 +4168,7 @@ async function renderProjects() {
         <td>${logoCell}</td>
         <td><strong>${escapeHtml(p.name)}</strong>${p.subtitle ? '<br><span style="font-size:11px;color:var(--text-dim);">' + escapeHtml(p.subtitle) + '</span>' : ''}</td>
         <td><span class="badge badge-type">${escapeHtml(p.ecosystem || '—')}</span></td>
+        <td>${tierCell}</td>
         <td><strong style="color:var(--gold);">${p.momentum != null ? p.momentum : '—'}</strong></td>
         <td>${p.is_featured ? '<span style="color:#00e87a;">★ Yes</span>' : '<span style="color:var(--text-muted);">—</span>'}</td>
         <td><span class="badge badge-${p.is_active ? 'active' : 'inactive'}">${p.is_active ? 'Active' : 'Hidden'}</span></td>
@@ -4159,7 +4193,8 @@ function openProjectModal() {
   document.getElementById('projectModalTitle').textContent = 'NEW PROJECT';
   ['projName','projSlug','projSubtitle','projTagline','projAbout','projLogoUrl','projLogoInitials',
    'projRewardLevel','projEstValue','projSnapshotPct','projCompetition','projFundingUsd',
-   'projFarmersCount','projSmartMoney','projSybilRisk','projStatus','projWebsiteUrl','projCustomBadges'].forEach(id => {
+   'projFarmersCount','projSmartMoney','projSybilRisk','projStatus','projWebsiteUrl','projCustomBadges',
+   'projInvestorTier','projInvestorReason'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
@@ -4223,6 +4258,8 @@ async function editProject(id) {
   document.getElementById('projActive').value = String(p.is_active !== false);
   document.getElementById('projWebsiteUrl').value = p.website_url || '';
   document.getElementById('projCustomBadges').value = p.custom_badges ? JSON.stringify(p.custom_badges, null, 2) : '';
+  document.getElementById('projInvestorTier').value = p.investor_tier || '';
+  document.getElementById('projInvestorReason').value = p.investor_reason || '';
   document.getElementById('projLogoUploadStatus').textContent = '';
 
   renderBadgeCheckboxes(Array.isArray(p.badges) ? p.badges : []);
@@ -4414,7 +4451,9 @@ async function saveProject() {
     is_featured:   document.getElementById('projFeatured').value === 'true',
     is_active:     document.getElementById('projActive').value === 'true',
     display_order: parseInt(document.getElementById('projDisplayOrder').value, 10) || 100,
-    website_url:   document.getElementById('projWebsiteUrl').value.trim() || null
+    website_url:   document.getElementById('projWebsiteUrl').value.trim() || null,
+    investor_tier:   document.getElementById('projInvestorTier').value || null,
+    investor_reason: document.getElementById('projInvestorReason').value.trim() || null
   };
 
   let result;
