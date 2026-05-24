@@ -1714,6 +1714,1097 @@ canvas.mini-chart { width: 100% !important; }
 .fade-in:nth-child(5){animation-delay:.25s}
 .fade-in:nth-child(6){animation-delay:.30s}
 @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   v3.0 — OVERVIEW TAB REDESIGN (Chunk 5)
+   All styles scoped to .overview-view to prevent leakage into other tabs.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.overview-view {
+  --ov-gold:        #f5c842;
+  --ov-gold-bright: #ffe066;
+  --ov-gold-dim:    #a8862a;
+  --ov-gold-soft:   rgba(245,200,66,0.08);
+  --ov-gold-glow:   rgba(245,200,66,0.25);
+  --ov-cyan:        #4af0ff;
+  --ov-cyan-soft:   rgba(74,240,255,0.08);
+  --ov-cyan-glow:   rgba(74,240,255,0.25);
+  --ov-purple:      #b070ff;
+  --ov-purple-soft: rgba(176,112,255,0.08);
+  --ov-purple-glow: rgba(176,112,255,0.25);
+  --ov-pink:        #ff5e8a;
+  --ov-pink-soft:   rgba(255,94,138,0.08);
+  --ov-pink-glow:   rgba(255,94,138,0.25);
+  --ov-orange:      #ff9046;
+  --ov-orange-soft: rgba(255,144,70,0.08);
+  --ov-green:       #00e87a;
+  --ov-green-soft:  rgba(0,232,122,0.08);
+  --ov-green-glow:  rgba(0,232,122,0.25);
+  --ov-red:         #ff4757;
+  --ov-text:        #e8eaf0;
+  --ov-text-dim:    #7a849a;
+  --ov-text-muted:  #4d556b;
+  --ov-bg-card:     rgba(255,255,255,0.025);
+  --ov-bg-card-hi:  rgba(255,255,255,0.04);
+  --ov-border:      rgba(255,255,255,0.06);
+  --ov-border-br:   rgba(245,200,66,0.25);
+
+  font-family: 'Rajdhani', sans-serif;
+  color: var(--ov-text);
+  padding: 4px;
+}
+
+.overview-view.tab-panel.active {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.overview-view * { box-sizing: border-box; }
+
+/* ═══ Reusable card primitive ═══ */
+.overview-view .ov-card {
+  background: var(--ov-bg-card);
+  border: 1px solid var(--ov-border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+}
+.overview-view .ov-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.overview-view .ov-card-title {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.overview-view .ov-card-title.gold   { color: var(--ov-gold); }
+.overview-view .ov-card-title.cyan   { color: var(--ov-cyan); }
+.overview-view .ov-card-title.pink   { color: var(--ov-pink); }
+.overview-view .ov-card-title.purple { color: var(--ov-purple); }
+.overview-view .ov-card-title.white  { color: var(--ov-text); }
+
+.overview-view .ov-link-btn {
+  background: transparent;
+  border: 1px solid var(--ov-border);
+  color: var(--ov-text-dim);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  padding: 5px 11px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.overview-view .ov-link-btn:hover {
+  color: var(--ov-cyan);
+  border-color: var(--ov-cyan);
+  background: var(--ov-cyan-soft);
+}
+
+.overview-view .ov-no-data {
+  padding: 18px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--ov-text-dim);
+  font-style: italic;
+  background: rgba(0,0,0,0.18);
+  border: 1px dashed var(--ov-border);
+  border-radius: 8px;
+}
+
+/* ═══ ROW 1 — Hero + AI Score ═══ */
+.overview-view .ov-row-1 {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 18px;
+}
+
+/* HERO CARD */
+.overview-view .ov-hero {
+  position: relative;
+  background: linear-gradient(135deg, rgba(15,20,35,0.6), rgba(30,20,50,0.4));
+  border: 1px solid var(--ov-border);
+  border-radius: 12px;
+  padding: 28px 32px;
+  overflow: hidden;
+  min-height: 280px;
+}
+.overview-view .ov-hero-bg-globe {
+  position: absolute;
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 360px;
+  height: 360px;
+  background: radial-gradient(circle at 50% 50%, var(--ov-gold-glow) 0%, transparent 35%, transparent 100%);
+  opacity: 0.6;
+  pointer-events: none;
+}
+.overview-view .ov-hero-bg-globe::before,
+.overview-view .ov-hero-bg-globe::after {
+  content: '';
+  position: absolute;
+  inset: 25%;
+  border: 1px solid rgba(245,200,66,0.2);
+  border-radius: 50%;
+}
+.overview-view .ov-hero-bg-globe::after {
+  inset: 38%;
+  border-color: rgba(74,240,255,0.15);
+  animation: ovRotateGlobe 22s linear infinite;
+}
+@keyframes ovRotateGlobe {
+  from { transform: rotate(0deg) scale(1); }
+  to   { transform: rotate(360deg) scale(1.05); }
+}
+.overview-view .ov-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+}
+.overview-view .ov-hero-tag {
+  display: inline-block;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--ov-purple);
+  background: var(--ov-purple-soft);
+  border: 1px solid rgba(176,112,255,0.3);
+  padding: 4px 10px;
+  border-radius: 16px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.overview-view .ov-hero-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  line-height: 1.1;
+  margin: 0 0 6px 0;
+  color: var(--ov-text);
+}
+.overview-view .ov-hero-title span {
+  color: var(--ov-gold);
+  text-shadow: 0 0 20px var(--ov-gold-glow);
+}
+.overview-view .ov-hero-sub {
+  font-size: 14px;
+  color: var(--ov-text-dim);
+  margin: 0 0 18px 0;
+  letter-spacing: 0.3px;
+}
+.overview-view .ov-hero-sub strong { color: var(--ov-text); font-weight: 700; }
+
+/* 4 stat pills */
+.overview-view .ov-hero-pills {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+  max-width: 620px;
+}
+.overview-view .ov-pill {
+  background: rgba(0,0,0,0.35);
+  border: 1px solid var(--ov-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s;
+}
+.overview-view .ov-pill:hover { transform: translateY(-2px); border-color: var(--ov-border-br); }
+.overview-view .ov-pill-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.overview-view .ov-pill.purple .ov-pill-icon { background: var(--ov-purple-soft); }
+.overview-view .ov-pill.green  .ov-pill-icon { background: var(--ov-green-soft); }
+.overview-view .ov-pill.cyan   .ov-pill-icon { background: var(--ov-cyan-soft); }
+.overview-view .ov-pill.orange .ov-pill-icon { background: var(--ov-orange-soft); }
+.overview-view .ov-pill-body { min-width: 0; }
+.overview-view .ov-pill-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--ov-text-dim);
+  letter-spacing: 1.3px;
+  margin-bottom: 2px;
+}
+.overview-view .ov-pill-val {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.overview-view .ov-pill.purple .ov-pill-val { color: var(--ov-purple); }
+.overview-view .ov-pill.green  .ov-pill-val { color: var(--ov-green); }
+.overview-view .ov-pill.cyan   .ov-pill-val { color: var(--ov-cyan); }
+.overview-view .ov-pill.orange .ov-pill-val { color: var(--ov-orange); }
+
+/* Hero CTA + system reset */
+.overview-view .ov-hero-cta-row {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+.overview-view .ov-hero-cta {
+  flex: 1;
+  min-width: 280px;
+  background: linear-gradient(135deg, var(--ov-gold-soft), rgba(245,200,66,0.03));
+  border: 1px solid rgba(245,200,66,0.3);
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.25s;
+  color: inherit;
+  font-family: inherit;
+}
+.overview-view .ov-hero-cta:hover {
+  background: linear-gradient(135deg, rgba(245,200,66,0.15), rgba(245,200,66,0.05));
+  box-shadow: 0 0 18px var(--ov-gold-glow);
+  transform: translateY(-1px);
+}
+.overview-view .ov-cta-num {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ov-gold);
+  letter-spacing: 0.5px;
+}
+.overview-view .ov-cta-lbl {
+  font-size: 12px;
+  color: var(--ov-text-dim);
+  margin-top: 2px;
+}
+.overview-view .ov-cta-lbl span { color: var(--ov-text); font-weight: 700; }
+.overview-view .ov-cta-arrow {
+  font-size: 28px;
+  color: var(--ov-gold);
+  font-weight: 300;
+  margin-left: 12px;
+}
+
+/* System reset countdown */
+.overview-view .ov-system-reset {
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,71,87,0.2);
+  border-radius: 10px;
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 130px;
+}
+.overview-view .ov-sr-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--ov-red);
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+.overview-view .ov-sr-time {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ov-red);
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 10px rgba(255,71,87,0.4);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ═══ AI FARMING SCORE ═══ */
+.overview-view .ov-ai-score {
+  background: linear-gradient(180deg, rgba(245,200,66,0.04), rgba(176,112,255,0.04));
+  border: 1px solid rgba(245,200,66,0.25);
+  border-radius: 12px;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.overview-view .ov-ai-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.overview-view .ov-ai-title {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--ov-gold);
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+.overview-view .ov-ai-badge {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px;
+  background: var(--ov-purple-soft);
+  color: var(--ov-purple);
+  border: 1px solid rgba(176,112,255,0.4);
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+.overview-view .ov-gauge-wrap {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  margin-bottom: 14px;
+}
+.overview-view .ov-gauge-svg {
+  width: 100%; height: 100%;
+  transform: rotate(-90deg);
+}
+.overview-view .ov-gauge-bg {
+  fill: none;
+  stroke: rgba(255,255,255,0.06);
+  stroke-width: 8;
+}
+.overview-view .ov-gauge-fill {
+  fill: none;
+  stroke: var(--ov-gold);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 326.7;       /* 2 * PI * 52 ≈ 326.7 */
+  stroke-dashoffset: 326.7;
+  filter: drop-shadow(0 0 6px var(--ov-gold-glow));
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1);
+}
+.overview-view .ov-gauge-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.overview-view .ov-gauge-val {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 38px;
+  font-weight: 800;
+  color: var(--ov-text);
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+.overview-view .ov-gauge-tier {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--ov-gold);
+  letter-spacing: 2.5px;
+  margin-top: 4px;
+  font-weight: 700;
+}
+
+.overview-view .ov-ai-sub {
+  font-size: 12px;
+  color: var(--ov-text-dim);
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+.overview-view .ov-ai-sub strong { color: var(--ov-cyan); }
+
+.overview-view .ov-ai-analysis-btn {
+  width: 100%;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid var(--ov-border);
+  color: var(--ov-text);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  padding: 9px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.overview-view .ov-ai-analysis-btn:hover {
+  border-color: var(--ov-gold);
+  color: var(--ov-gold);
+  background: var(--ov-gold-soft);
+}
+
+/* ═══ ROW 2 — Opportunities + Heatmap + Alerts ═══ */
+.overview-view .ov-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 320px;
+  gap: 18px;
+}
+
+/* Opportunities */
+.overview-view .ov-opps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.overview-view .ov-opp-row {
+  display: grid;
+  grid-template-columns: 36px 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+  background: rgba(0,0,0,0.22);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 8px;
+  padding: 10px 12px;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.overview-view .ov-opp-row:hover {
+  border-color: var(--ov-border-br);
+  transform: translateX(2px);
+}
+.overview-view .ov-opp-logo {
+  width: 36px; height: 36px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.overview-view .ov-opp-logo img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.overview-view .ov-opp-body { min-width: 0; }
+.overview-view .ov-opp-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ov-text);
+  margin-bottom: 2px;
+  letter-spacing: 0.2px;
+}
+.overview-view .ov-opp-meta {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.overview-view .ov-opp-tag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+.overview-view .ov-opp-tag.testnet { background: rgba(255,144,70,0.10); color: var(--ov-orange); }
+.overview-view .ov-opp-tag.mainnet { background: rgba(0,232,122,0.10);  color: var(--ov-green); }
+.overview-view .ov-opp-tag.mission { background: rgba(74,240,255,0.10); color: var(--ov-cyan); }
+.overview-view .ov-opp-tag.high    { background: var(--ov-gold-soft); color: var(--ov-gold); }
+.overview-view .ov-opp-tag.med     { background: rgba(255,144,70,0.10); color: var(--ov-orange); }
+.overview-view .ov-opp-tag.snapshot{ background: rgba(255,94,138,0.10); color: var(--ov-pink); }
+.overview-view .ov-opp-reward {
+  text-align: right;
+  font-family: 'Orbitron', sans-serif;
+}
+.overview-view .ov-opp-rlbl {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8.5px;
+  color: var(--ov-text-dim);
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+.overview-view .ov-opp-rval {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ov-green);
+}
+.overview-view .ov-opp-btn {
+  background: var(--ov-gold-soft);
+  border: 1px solid var(--ov-gold);
+  color: var(--ov-gold);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 7px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.overview-view .ov-opp-btn:hover {
+  background: rgba(245,200,66,0.18);
+  box-shadow: 0 0 10px var(--ov-gold-glow);
+}
+
+/* ═══ ECOSYSTEM HEATMAP (organic hex layout from Mockup 1) ═══ */
+.overview-view .ov-hex-grid {
+  position: relative;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.overview-view .ov-hex {
+  position: absolute;
+  width: 84px;
+  height: 96px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.overview-view .ov-hex-shape {
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+.overview-view .ov-hex::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: rgba(255,255,255,0.08);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  z-index: -1;
+}
+.overview-view .ov-hex:hover { transform: scale(1.06); z-index: 5; }
+.overview-view .ov-hex:hover::before { background: var(--ov-gold); }
+
+.overview-view .ov-hex.heat-hot::before    { background: rgba(255,71,87,0.6); }
+.overview-view .ov-hex.heat-warm::before   { background: rgba(255,144,70,0.5); }
+.overview-view .ov-hex.heat-medium::before { background: rgba(245,200,66,0.5); }
+.overview-view .ov-hex.heat-cool::before   { background: rgba(74,240,255,0.4); }
+.overview-view .ov-hex.heat-cold::before   { background: rgba(176,112,255,0.4); }
+
+.overview-view .ov-hex-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--ov-text);
+  margin-bottom: 2px;
+}
+.overview-view .ov-hex-score {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1;
+}
+.overview-view .ov-hex.heat-hot    .ov-hex-score { color: var(--ov-red); }
+.overview-view .ov-hex.heat-warm   .ov-hex-score { color: var(--ov-orange); }
+.overview-view .ov-hex.heat-medium .ov-hex-score { color: var(--ov-gold); }
+.overview-view .ov-hex.heat-cool   .ov-hex-score { color: var(--ov-cyan); }
+.overview-view .ov-hex.heat-cold   .ov-hex-score { color: var(--ov-purple); }
+.overview-view .ov-hex-tag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 7.5px;
+  letter-spacing: 1px;
+  margin-top: 2px;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+/* Position the 7 hexes organically: 1 center + 6 around */
+.overview-view .ov-hex.pos-center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.overview-view .ov-hex.pos-tl     { top: 18%;  left: 18%; }
+.overview-view .ov-hex.pos-tr     { top: 18%;  right: 18%; }
+.overview-view .ov-hex.pos-l      { top: 50%;  left: 4%;  transform: translateY(-50%); }
+.overview-view .ov-hex.pos-r      { top: 50%;  right: 4%; transform: translateY(-50%); }
+.overview-view .ov-hex.pos-bl     { bottom: 8%; left: 18%; }
+.overview-view .ov-hex.pos-br     { bottom: 8%; right: 18%; }
+.overview-view .ov-hex.pos-center:hover { transform: translate(-50%, -50%) scale(1.06); }
+.overview-view .ov-hex.pos-l:hover, .overview-view .ov-hex.pos-r:hover {
+  transform: translateY(-50%) scale(1.06);
+}
+
+/* ═══ URGENT ALERTS ═══ */
+.overview-view .ov-alerts {
+  display: flex;
+  flex-direction: column;
+}
+.overview-view .ov-alert-badge {
+  background: var(--ov-red);
+  color: white;
+  font-size: 10px;
+  padding: 1px 7px;
+  border-radius: 10px;
+  font-weight: 700;
+  margin-left: 6px;
+}
+.overview-view .ov-alerts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.overview-view .ov-alert-item {
+  background: rgba(0,0,0,0.22);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-left: 3px solid var(--ov-pink);
+  border-radius: 6px;
+  padding: 9px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.overview-view .ov-alert-item.good    { border-left-color: var(--ov-green); }
+.overview-view .ov-alert-item.warning { border-left-color: var(--ov-orange); }
+.overview-view .ov-alert-item.info    { border-left-color: var(--ov-cyan); }
+.overview-view .ov-alert-item:hover {
+  border-color: rgba(255,255,255,0.1);
+  transform: translateX(2px);
+}
+.overview-view .ov-alert-icon {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.overview-view .ov-alert-body { flex: 1; min-width: 0; }
+.overview-view .ov-alert-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ov-text);
+  margin-bottom: 1px;
+}
+.overview-view .ov-alert-sub {
+  font-size: 10.5px;
+  color: var(--ov-text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.overview-view .ov-alert-arrow {
+  color: var(--ov-text-muted);
+  font-size: 16px;
+}
+.overview-view .ov-alerts-view-all { margin-top: 10px; align-self: flex-start; }
+
+/* ═══ ROW 3 — Portfolio + Progress + Activity ═══ */
+.overview-view .ov-row-3 {
+  display: grid;
+  grid-template-columns: 1.1fr 1.1fr 1fr;
+  gap: 18px;
+}
+
+/* PORTFOLIO DONUT */
+.overview-view .ov-portfolio-body {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+.overview-view .ov-donut-wrap {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+}
+.overview-view .ov-donut {
+  width: 100%; height: 100%;
+  transform: rotate(-90deg);
+}
+.overview-view .ov-donut-bg {
+  fill: none;
+  stroke: rgba(255,255,255,0.04);
+  stroke-width: 18;
+}
+.overview-view .ov-donut-seg {
+  fill: none;
+  stroke-width: 18;
+  stroke-dasharray: 301.6;     /* 2 * PI * 48 ≈ 301.6 */
+  stroke-dashoffset: 301.6;
+  transition: all 0.8s cubic-bezier(0.4,0,0.2,1);
+}
+.overview-view .ov-donut-seg.seg-purple { stroke: var(--ov-purple); }
+.overview-view .ov-donut-seg.seg-orange { stroke: var(--ov-orange); }
+.overview-view .ov-donut-seg.seg-cyan   { stroke: var(--ov-cyan); }
+.overview-view .ov-donut-seg.seg-gold   { stroke: var(--ov-gold); }
+
+.overview-view .ov-donut-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.overview-view .ov-donut-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--ov-text-dim);
+  letter-spacing: 1.5px;
+}
+.overview-view .ov-donut-val {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 21px;
+  font-weight: 800;
+  color: var(--ov-text);
+  letter-spacing: 0.3px;
+  margin: 2px 0;
+}
+.overview-view .ov-donut-change {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--ov-green);
+  font-weight: 700;
+}
+
+.overview-view .ov-port-legend {
+  flex: 1;
+  min-width: 0;
+}
+.overview-view .ov-port-row {
+  display: grid;
+  grid-template-columns: 12px 1fr auto;
+  gap: 8px;
+  align-items: center;
+  padding: 5px 0;
+  font-size: 12px;
+}
+.overview-view .ov-port-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+}
+.overview-view .ov-port-dot.dot-purple { background: var(--ov-purple); }
+.overview-view .ov-port-dot.dot-orange { background: var(--ov-orange); }
+.overview-view .ov-port-dot.dot-cyan   { background: var(--ov-cyan); }
+.overview-view .ov-port-dot.dot-gold   { background: var(--ov-gold); }
+.overview-view .ov-port-name { color: var(--ov-text-dim); }
+.overview-view .ov-port-val {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  color: var(--ov-text);
+}
+.overview-view .ov-port-note {
+  font-size: 10px;
+  color: var(--ov-text-muted);
+  font-style: italic;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--ov-border);
+}
+
+/* ═══ FARMING PROGRESS ═══ */
+.overview-view .ov-progress-period {
+  background: rgba(0,0,0,0.4);
+  border: 1px solid var(--ov-border);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--ov-text-dim);
+  letter-spacing: 1px;
+}
+.overview-view .ov-xp-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.overview-view .ov-xp-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--ov-text-dim);
+  letter-spacing: 1.5px;
+  font-weight: 700;
+}
+.overview-view .ov-xp-level {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ov-gold);
+}
+.overview-view .ov-xp-bar {
+  height: 8px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+.overview-view .ov-xp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ov-gold-dim), var(--ov-gold), var(--ov-gold-bright));
+  box-shadow: 0 0 10px var(--ov-gold-glow);
+  border-radius: 4px;
+  transition: width 0.8s;
+}
+.overview-view .ov-xp-text {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--ov-text-dim);
+  margin-bottom: 16px;
+  letter-spacing: 0.5px;
+}
+
+.overview-view .ov-progress-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.overview-view .ov-ps-cell {
+  background: rgba(0,0,0,0.22);
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+.overview-view .ov-ps-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--ov-text-dim);
+  letter-spacing: 1.2px;
+  margin-bottom: 4px;
+}
+.overview-view .ov-ps-val {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+}
+.overview-view .ov-ps-val.gold  { color: var(--ov-gold); }
+.overview-view .ov-ps-val.green { color: var(--ov-green); }
+.overview-view .ov-ps-val.cyan  { color: var(--ov-cyan); }
+.overview-view .ov-ps-delta {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--ov-green);
+  margin-top: 2px;
+}
+
+/* Streak milestone line */
+.overview-view .ov-streak-mini {
+  background: rgba(255,144,70,0.04);
+  border: 1px solid rgba(255,144,70,0.15);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.overview-view .ov-streak-mini-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.overview-view .ov-streak-mini-fire { font-size: 16px; }
+.overview-view .ov-streak-mini-num {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ov-orange);
+}
+.overview-view .ov-streak-mini-lbl {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--ov-text-dim);
+  letter-spacing: 1.5px;
+}
+.overview-view .ov-streak-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.overview-view .ov-streak-dot {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.4);
+  border: 2px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ov-text-dim);
+  flex-shrink: 0;
+  transition: all 0.3s;
+}
+.overview-view .ov-streak-dot.reached {
+  background: rgba(255,144,70,0.2);
+  border-color: var(--ov-orange);
+  color: var(--ov-orange);
+  box-shadow: 0 0 12px rgba(255,144,70,0.4);
+}
+.overview-view .ov-streak-bar {
+  flex: 1;
+  height: 2px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 1px;
+  overflow: hidden;
+}
+.overview-view .ov-streak-fill {
+  height: 100%;
+  background: var(--ov-orange);
+  width: 0%;
+  transition: width 0.6s;
+}
+
+/* ═══ RECENT ACTIVITY ═══ */
+.overview-view .ov-activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+.overview-view .ov-activity-list::-webkit-scrollbar { width: 4px; }
+.overview-view .ov-activity-list::-webkit-scrollbar-thumb { background: var(--ov-border); border-radius: 2px; }
+.overview-view .ov-activity-item {
+  display: grid;
+  grid-template-columns: 14px 1fr auto auto;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px dashed rgba(255,255,255,0.04);
+}
+.overview-view .ov-activity-item:last-child { border-bottom: none; }
+.overview-view .ov-activity-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--ov-green);
+}
+.overview-view .ov-activity-dot.complete { background: var(--ov-green); }
+.overview-view .ov-activity-dot.start    { background: var(--ov-cyan); }
+.overview-view .ov-activity-dot.claim    { background: var(--ov-gold); }
+.overview-view .ov-activity-dot.shield   { background: var(--ov-purple); }
+.overview-view .ov-activity-title {
+  font-size: 12px;
+  color: var(--ov-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.overview-view .ov-activity-xp {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ov-green);
+}
+.overview-view .ov-activity-time {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  color: var(--ov-text-muted);
+  letter-spacing: 0.5px;
+  min-width: 50px;
+  text-align: right;
+}
+
+/* ═══ ELITE INSIGHT FOOTER BAR ═══ */
+.overview-view .ov-insight-bar {
+  display: grid;
+  grid-template-columns: 48px 2fr auto auto;
+  gap: 18px;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(176,112,255,0.06), rgba(245,200,66,0.04));
+  border: 1px solid rgba(176,112,255,0.25);
+  border-radius: 12px;
+  padding: 14px 20px;
+}
+.overview-view .ov-insight-icon {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--ov-purple), var(--ov-gold));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.overview-view .ov-insight-title {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--ov-purple);
+  letter-spacing: 2px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.overview-view .ov-insight-text {
+  font-size: 13px;
+  color: var(--ov-text);
+  line-height: 1.4;
+}
+.overview-view .ov-insight-stats {
+  display: flex;
+  gap: 18px;
+}
+.overview-view .ov-is-cell { text-align: center; }
+.overview-view .ov-is-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8.5px;
+  color: var(--ov-text-dim);
+  letter-spacing: 1.5px;
+  margin-bottom: 2px;
+}
+.overview-view .ov-is-val {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ov-gold);
+}
+.overview-view .ov-insight-cta {
+  background: linear-gradient(135deg, var(--ov-gold-dim), var(--ov-gold));
+  color: #0a0e1a;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+}
+.overview-view .ov-insight-cta:hover {
+  background: linear-gradient(135deg, var(--ov-gold), var(--ov-gold-bright));
+  box-shadow: 0 0 14px var(--ov-gold-glow);
+}
+
+/* ═══ MOBILE RESPONSIVE ═══ */
+@media (max-width: 1280px) {
+  .overview-view .ov-row-2 { grid-template-columns: 1fr 1fr; }
+  .overview-view .ov-alerts { grid-column: 1 / -1; }
+  .overview-view .ov-row-3 { grid-template-columns: 1fr 1fr; }
+  .overview-view .ov-activity { grid-column: 1 / -1; }
+}
+@media (max-width: 900px) {
+  .overview-view .ov-row-1 { grid-template-columns: 1fr; }
+  .overview-view .ov-row-2 { grid-template-columns: 1fr; }
+  .overview-view .ov-row-3 { grid-template-columns: 1fr; }
+  .overview-view .ov-hero-pills { grid-template-columns: 1fr 1fr; }
+  .overview-view .ov-insight-bar {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .overview-view .ov-insight-icon { margin: 0 auto; }
+  .overview-view .ov-insight-stats { justify-content: center; }
+  .overview-view .ov-portfolio-body { flex-direction: column; }
+}
+@media (max-width: 640px) {
+  .overview-view .ov-hero { padding: 20px 18px; }
+  .overview-view .ov-hero-title { font-size: 24px; }
+  .overview-view .ov-hero-pills { grid-template-columns: 1fr; }
+  .overview-view .ov-hex { width: 70px; height: 80px; }
+  .overview-view .ov-hex-grid { height: 240px; }
+}
+
+/* END v3.0 OVERVIEW TAB STYLES */
+
 /* START DAILY MISSIONS TAB STYLES */
 .tab-panel { display: none; }
 .tab-panel.active { display: flex; flex-direction: column; gap: 22px; }
@@ -16135,275 +17226,284 @@ canvas.mini-chart { width: 100% !important; }
       </div>
     </div>
 
-    <section class="tab-panel active" id="tab-overview" data-tab-panel="overview">
+    <!-- ═══════════════════════════════════════════════════════════════════
+         OVERVIEW TAB — v3.0 REDESIGN (Chunk 5)
+         Layout based on Mockup 2 (clean SaaS feel) with selective elements
+         from Mockup 1 (organic hex heatmap, milestone dots, system countdown)
+         Scoped via .overview-view to prevent style bleed
+    ═══════════════════════════════════════════════════════════════════ -->
+    <section class="tab-panel active overview-view" id="tab-overview" data-tab-panel="overview">
 
+      <!-- ═══ ROW 1: HERO + AI FARMING SCORE ═══ -->
+      <div class="ov-row-1">
 
-    <!-- ══ 1. HERO ══ -->
-    <div class="card card-gold-border hero-card fade-in">
-      <div class="hero-inner">
-        <div class="hero-left">
-          <div class="hero-label">✦ DASHBOARD</div>
-          <h1 class="hero-title">Welcome back, <span id="ov-username">Operator</span></h1>
-          <p class="hero-sub">Your farming intelligence is ready. <strong id="ov-priority-count">0 priority missions</strong> await execution today.</p>
-          <div class="hero-meta">
-            <div class="hero-stat">
-              <div class="hero-stat-val" id="ov-streak">🔥 0</div>
-              <div class="hero-stat-label">Day Streak</div>
-            </div>
-            <div class="hero-stat-sep"></div>
-            <div class="hero-stat">
-              <div class="hero-stat-val" id="ov-xp-today">+0</div>
-              <div class="hero-stat-label">XP Today</div>
-            </div>
-            <div class="hero-stat-sep"></div>
-            <div class="hero-stat">
-              <div class="hero-stat-val" id="ov-missions-done" style="color:var(--green)">0/0</div>
-              <div class="hero-stat-label">Missions Done</div>
-            </div>
-          </div>
-          <div class="hero-cta">
-            <button class="btn btn-gold" id="ov-start-missions">
-              <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 10 5 17 5 3"/></svg>
-              Start Missions
-            </button>
-            <button class="btn btn-outline" data-tab-target="intel-hub">
-              <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="8"/><path d="M10 6v4"/><circle cx="10" cy="14" r="0.5" fill="currentColor"/></svg>
-              Open Intel
-            </button>
-          </div>
-        </div>
-        <div class="hero-mid">
-          <div class="gwei-widget">
-            <div class="gwei-head">
-              <span class="gwei-dot"></span>
-              ⛽ ETHEREUM GAS · LIVE
-            </div>
-            <div class="gwei-main">
-              <div class="gwei-big" id="gwei-propose">--</div>
-              <div class="gwei-unit">GWEI</div>
-            </div>
-            <div class="gwei-sub" id="gwei-status">Connecting to Etherscan…</div>
-            <div class="gwei-row">
-              <div class="gwei-cell">
-                <div class="gwei-cell-val" id="gwei-safe">--</div>
-                <div class="gwei-cell-lbl">SAFE</div>
+        <!-- HERO CARD -->
+        <div class="ov-hero">
+          <div class="ov-hero-bg-globe"></div>
+          <div class="ov-hero-content">
+            <div class="ov-hero-tag">✦ WELCOME BACK, ELITE FARMER</div>
+            <h1 class="ov-hero-title">Welcome back, <span id="ov-username">Operator</span></h1>
+            <p class="ov-hero-sub">Your mission is the alpha. <strong>Execute. Farm. Dominate.</strong></p>
+
+            <!-- 4 STAT PILLS -->
+            <div class="ov-hero-pills">
+              <div class="ov-pill purple">
+                <div class="ov-pill-icon">💎</div>
+                <div class="ov-pill-body">
+                  <div class="ov-pill-label">Elite Rank</div>
+                  <div class="ov-pill-val" id="ov-elite-rank">#—</div>
+                </div>
               </div>
-              <div class="gwei-cell">
-                <div class="gwei-cell-val" id="gwei-fast">--</div>
-                <div class="gwei-cell-lbl">FAST</div>
+              <div class="ov-pill green">
+                <div class="ov-pill-icon">🌍</div>
+                <div class="ov-pill-body">
+                  <div class="ov-pill-label">Global Rank</div>
+                  <div class="ov-pill-val" id="ov-global-rank">—</div>
+                </div>
               </div>
-              <div class="gwei-cell">
-                <div class="gwei-cell-val" id="gwei-base">--</div>
-                <div class="gwei-cell-lbl">BASE FEE</div>
+              <div class="ov-pill cyan">
+                <div class="ov-pill-icon">⚡</div>
+                <div class="ov-pill-body">
+                  <div class="ov-pill-label">Farming Score</div>
+                  <div class="ov-pill-val" id="ov-farming-score">0</div>
+                </div>
+              </div>
+              <div class="ov-pill orange">
+                <div class="ov-pill-icon">🔥</div>
+                <div class="ov-pill-body">
+                  <div class="ov-pill-label">Streak</div>
+                  <div class="ov-pill-val" id="ov-streak-pill">0 Days</div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="hero-right">
-          <div class="mission-timer">
-            <div class="timer-label">⏱ MISSION RESET IN</div>
-            <div class="timer-value" id="reset-timer">00:00:00</div>
-          </div>
-          <div class="mission-progress">
-            <div class="mp-label">
-              DAILY PROGRESS
-              <span id="prog-pct">0%</span>
-            </div>
-            <div class="mp-bar-bg">
-              <div class="mp-bar" id="prog-bar" style="width:0%"></div>
-            </div>
-          </div>
-          <div style="display:flex;gap:6px;">
-            <div style="flex:1;background:rgba(0,232,122,0.08);border:1px solid rgba(0,232,122,0.2);border-radius:9px;padding:10px 12px;text-align:center;">
-              <div id="ov-hero-rewards" style="font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;color:var(--green);">$0</div>
-              <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-muted);margin-top:2px;">EST. REWARDS</div>
-            </div>
-            <div style="flex:1;background:rgba(74,240,255,0.07);border:1px solid rgba(74,240,255,0.18);border-radius:9px;padding:10px 12px;text-align:center;">
-              <div id="ov-hero-drops" style="font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;color:var(--blue);">0</div>
-              <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-muted);margin-top:2px;">ACTIVE DROPS</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- ══ 2. STATS GRID ══ -->
-    <div class="stats-grid">
-      <div class="card stat-card fade-in">
-        <div class="stat-top">
-          <div class="stat-icon icon-gold">🎯</div>
-        </div>
-        <div class="stat-val" id="ov-stat-airdrops">0</div>
-        <div class="stat-lbl">Active Airdrops</div>
-        <div class="stat-sub" id="ov-stat-airdrops-sub">0 high-priority</div>
-      </div>
-      <div class="card stat-card fade-in">
-        <div class="stat-top">
-          <div class="stat-icon icon-green">💰</div>
-        </div>
-        <div class="stat-val" id="ov-stat-rewards">$0</div>
-        <div class="stat-lbl">Est. Rewards</div>
-        <div class="stat-sub" id="ov-stat-rewards-sub">0 claiming soon</div>
-      </div>
-      <div class="card stat-card fade-in">
-        <div class="stat-top">
-          <div class="stat-icon icon-blue">🔗</div>
-        </div>
-        <div class="stat-val" id="ov-stat-wallets">0</div>
-        <div class="stat-lbl">Wallets Active</div>
-        <div class="stat-sub" id="ov-stat-wallets-sub">across all chains</div>
-      </div>
-      <div class="card stat-card fade-in">
-        <div class="stat-top">
-          <div class="stat-icon icon-orange">⚡</div>
-        </div>
-        <div class="stat-val" id="ov-stat-xp">0</div>
-        <div class="stat-lbl">Current XP</div>
-        <div class="stat-sub" id="ov-stat-xp-sub">to next level</div>
-      </div>
-      <div class="card stat-card fade-in">
-        <div class="stat-top">
-          <div class="stat-icon icon-green">📊</div>
-        </div>
-        <div class="stat-val" id="ov-stat-weekly">0%</div>
-        <div class="stat-lbl">Weekly Completion</div>
-        <div class="stat-sub" id="ov-stat-weekly-sub">missions this week</div>
-      </div>
-    </div>
+            <!-- OPPORTUNITIES CTA -->
+            <div class="ov-hero-cta-row">
+              <button class="ov-hero-cta" id="ov-cta-opps" onclick="ovGoToProjects()">
+                <div class="ov-cta-text">
+                  <div class="ov-cta-num" id="ov-opps-count">0</div>
+                  <div class="ov-cta-lbl">New Opportunities Across <span id="ov-ecosystems-count">0</span> Ecosystems</div>
+                </div>
+                <div class="ov-cta-arrow">›</div>
+              </button>
 
-    <!-- ══ 3. PRIORITY MISSIONS + QUICK ACTIONS ══ -->
-    <div class="col-6040">
-
-      <!-- Priority Missions -->
-      <div class="card priority-panel fade-in">
-        <div class="section-title">Today's Priority Missions</div>
-        <div class="mission-list" id="ov-mission-list">
-          <div style="padding:28px;text-align:center;color:var(--text-dim);font-family:'Share Tech Mono',monospace;font-size:12px;">Loading missions…</div>
-        </div>
-      </div>
-
-      <!-- Right column: Quick Actions + Alerts -->
-      <div style="display:flex;flex-direction:column;gap:22px;">
-
-        <!-- Quick Actions -->
-        <div class="card quick-actions fade-in">
-          <div class="section-title">Quick Actions</div>
-          <div class="qa-grid">
-            <div class="qa-btn" data-tab-target="wallets">
-              <div class="qa-icon">🔗</div>
-              <div class="qa-label">Add Wallet</div>
-            </div>
-            <div class="qa-btn" data-tab-target="airdrop-tracker">
-              <div class="qa-icon">📡</div>
-              <div class="qa-label">Track Airdrop</div>
-            </div>
-            <div class="qa-btn" data-tab-target="farming-routes">
-              <div class="qa-icon">▶</div>
-              <div class="qa-label">Daily Route</div>
-            </div>
-            <div class="qa-btn" data-tab-target="rewards">
-              <div class="qa-icon">🏅</div>
-              <div class="qa-label">Rewards</div>
-            </div>
-            <div class="qa-btn" data-tab-target="wallets">
-              <div class="qa-icon">🔄</div>
-              <div class="qa-label">My Wallets</div>
-            </div>
-            <div class="qa-btn" data-tab-target="intel-hub">
-              <div class="qa-icon">📊</div>
-              <div class="qa-label">Analytics</div>
+              <!-- System Reset countdown (borrowed from Mockup 1) -->
+              <div class="ov-system-reset">
+                <div class="ov-sr-label">⏱ NEXT RESET</div>
+                <div class="ov-sr-time" id="ov-reset-time">--:--:--</div>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Alerts — real claim deadlines from your Rewards tracker -->
-        <div class="card alerts-panel fade-in">
-          <div class="section-title">Claim Deadline Alerts</div>
-          <div class="alert-list" id="ov-alert-list">
-            <div style="padding:22px;text-align:center;color:var(--text-dim);font-family:'Share Tech Mono',monospace;font-size:11px;">Loading alerts…</div>
+        <!-- AI FARMING SCORE GAUGE (right side) -->
+        <div class="ov-ai-score">
+          <div class="ov-ai-head">
+            <div class="ov-ai-title">⚡ AI FARMING SCORE</div>
+            <span class="ov-ai-badge">BETA</span>
           </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- ══ 4. XP + ACTIVITY + ANALYTICS ══ -->
-    <div class="three-col">
-
-      <!-- XP & Streak -->
-      <div class="card xp-panel fade-in">
-        <div class="section-title">XP & Streak System</div>
-
-        <div class="xp-bar-wrap">
-          <div class="xp-bar-top">
-            <div class="xp-level" id="xp-level">LEVEL 1</div>
-            <div class="xp-numbers"><span id="xp-current">0</span> / <span id="xp-target">1,000</span> XP</div>
+          <!-- Circular gauge -->
+          <div class="ov-gauge-wrap">
+            <svg class="ov-gauge-svg" viewBox="0 0 120 120">
+              <circle class="ov-gauge-bg" cx="60" cy="60" r="52" />
+              <circle class="ov-gauge-fill" id="ov-gauge-fill" cx="60" cy="60" r="52" />
+            </svg>
+            <div class="ov-gauge-center">
+              <div class="ov-gauge-val" id="ov-ai-score-val">—</div>
+              <div class="ov-gauge-tier" id="ov-ai-score-tier">—</div>
+            </div>
           </div>
-          <div class="xp-bg"><div class="xp-fill" id="xp-fill" style="width:0%"></div></div>
-          <div id="xp-next" style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text-muted);margin-top:5px;">
-            1,000 XP to LEVEL 2
-          </div>
-        </div>
 
-        <div class="streak-row" id="streak-row">
-          <div class="streak-day"><span class="streak-checkmark">·</span>MON</div>
-          <div class="streak-day"><span class="streak-checkmark">·</span>TUE</div>
-          <div class="streak-day"><span class="streak-checkmark">·</span>WED</div>
-          <div class="streak-day"><span class="streak-checkmark">·</span>THU</div>
-          <div class="streak-day"><span class="streak-checkmark">·</span>FRI</div>
-          <div class="streak-day"><span class="streak-checkmark">·</span>SAT</div>
-          <div class="streak-day"><span class="streak-checkmark">·</span>SUN</div>
-        </div>
+          <div class="ov-ai-sub">You're outperforming <strong id="ov-ai-percentile">—</strong> of active farmers</div>
 
-        <div id="streak-text" style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--gold);text-align:center;">
-          Start your farming streak today!
+          <button class="ov-ai-analysis-btn" onclick="ovGoToAnalytics()">
+            View Full Analysis <span style="margin-left:6px;">📊</span>
+          </button>
         </div>
       </div>
 
-      <!-- Activity Feed -->
-      <div class="card activity-feed fade-in">
-        <div class="section-title" style="justify-content:space-between">
-          <span style="display:flex;align-items:center;gap:8px;">
-            <span style="display:inline-block;width:3px;height:14px;background:var(--gold);border-radius:2px;box-shadow:0 0 8px var(--gold)"></span>
-            Live Activity Feed
-          </span>
-          <span style="font-size:10px;color:var(--green);font-family:'Share Tech Mono',monospace;display:flex;align-items:center;gap:5px;">
-            <span style="width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);display:inline-block;animation:pulse 2s infinite"></span>
-            LIVE
-          </span>
+      <!-- ═══ ROW 2: TOP OPPORTUNITIES + ECOSYSTEM HEATMAP + URGENT ALERTS ═══ -->
+      <div class="ov-row-2">
+
+        <!-- TODAY'S TOP OPPORTUNITIES -->
+        <div class="ov-card ov-opps">
+          <div class="ov-card-head">
+            <div class="ov-card-title gold">🎯 TODAY'S TOP OPPORTUNITIES</div>
+            <button class="ov-link-btn" onclick="ovGoToProjects()">View All <span id="ov-opps-total">(0)</span></button>
+          </div>
+          <div class="ov-opps-list" id="ov-opps-list">
+            <div class="ov-no-data">Loading opportunities…</div>
+          </div>
         </div>
-        <div class="feed-list" id="feed-list">
-          <div style="padding:24px;text-align:center;color:var(--text-dim);font-family:'Share Tech Mono',monospace;font-size:11px;">Loading activity…</div>
+
+        <!-- ECOSYSTEM HEATMAP -->
+        <div class="ov-card ov-heatmap">
+          <div class="ov-card-head">
+            <div class="ov-card-title cyan">🌐 ECOSYSTEM HEATMAP</div>
+            <button class="ov-link-btn" onclick="ovGoToProjects()">View All</button>
+          </div>
+          <div class="ov-hex-grid" id="ov-hex-grid">
+            <div class="ov-no-data">Loading ecosystems…</div>
+          </div>
+        </div>
+
+        <!-- URGENT ALERTS -->
+        <div class="ov-card ov-alerts">
+          <div class="ov-card-head">
+            <div class="ov-card-title pink">🚨 URGENT ALERTS <span class="ov-alert-badge" id="ov-alert-count">0</span></div>
+          </div>
+          <div class="ov-alerts-list" id="ov-alerts-list">
+            <div class="ov-no-data">No urgent alerts.</div>
+          </div>
+          <button class="ov-link-btn ov-alerts-view-all" onclick="ovGoToIntelHub()">View All Alerts ›</button>
         </div>
       </div>
 
-      <!-- Mini Analytics -->
-      <div class="card analytics-panel fade-in">
-        <div class="section-title">Mini Analytics</div>
+      <!-- ═══ ROW 3: PORTFOLIO + FARMING PROGRESS + RECENT ACTIVITY ═══ -->
+      <div class="ov-row-3">
 
-        <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text-dim);margin-bottom:8px;letter-spacing:1px;">WEEKLY FARMING ACTIVITY</div>
-        <div class="chart-wrap">
-          <canvas id="mini-chart" class="mini-chart" height="80"></canvas>
-        </div>
-        <div class="chart-label-row">
-          <span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
-        </div>
-        <div id="mini-chart-note" style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text-muted);margin-top:8px;text-align:center;">
-          Missions completed each day
-        </div>
-
-        <div style="margin-top:16px;display:flex;gap:8px;">
-          <div style="flex:1;background:rgba(0,232,122,0.07);border:1px solid rgba(0,232,122,0.2);border-radius:9px;padding:10px;text-align:center;">
-            <div id="mini-week-missions" style="font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--green)">0</div>
-            <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-muted);margin-top:2px">MISSIONS THIS WEEK</div>
+        <!-- PORTFOLIO OVERVIEW -->
+        <div class="ov-card ov-portfolio">
+          <div class="ov-card-head">
+            <div class="ov-card-title white">PORTFOLIO OVERVIEW</div>
+            <button class="ov-link-btn" onclick="ovGoToWallets()">View Portfolio</button>
           </div>
-          <div style="flex:1;background:rgba(245,200,66,0.07);border:1px solid rgba(245,200,66,0.18);border-radius:9px;padding:10px;text-align:center;">
-            <div id="mini-week-xp" style="font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--gold)">+0</div>
-            <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-muted);margin-top:2px">XP THIS WEEK</div>
+          <div class="ov-portfolio-body">
+            <!-- Donut chart -->
+            <div class="ov-donut-wrap">
+              <svg class="ov-donut" viewBox="0 0 120 120">
+                <circle class="ov-donut-bg" cx="60" cy="60" r="48" />
+                <circle id="ov-donut-1" class="ov-donut-seg seg-purple" cx="60" cy="60" r="48" />
+                <circle id="ov-donut-2" class="ov-donut-seg seg-orange" cx="60" cy="60" r="48" />
+                <circle id="ov-donut-3" class="ov-donut-seg seg-cyan"   cx="60" cy="60" r="48" />
+                <circle id="ov-donut-4" class="ov-donut-seg seg-gold"   cx="60" cy="60" r="48" />
+              </svg>
+              <div class="ov-donut-center">
+                <div class="ov-donut-label">Total Value</div>
+                <div class="ov-donut-val" id="ov-port-total">$0</div>
+                <div class="ov-donut-change" id="ov-port-change">+0.0%</div>
+              </div>
+            </div>
+            <!-- Legend -->
+            <div class="ov-port-legend">
+              <div class="ov-port-row">
+                <span class="ov-port-dot dot-purple"></span>
+                <span class="ov-port-name">Wallet Balance</span>
+                <span class="ov-port-val" id="ov-port-wallet">$0</span>
+              </div>
+              <div class="ov-port-row">
+                <span class="ov-port-dot dot-orange"></span>
+                <span class="ov-port-name">Claimable</span>
+                <span class="ov-port-val" id="ov-port-claimable">$0</span>
+              </div>
+              <div class="ov-port-row">
+                <span class="ov-port-dot dot-cyan"></span>
+                <span class="ov-port-name">Pending Rewards</span>
+                <span class="ov-port-val" id="ov-port-pending">$0</span>
+              </div>
+              <div class="ov-port-row">
+                <span class="ov-port-dot dot-gold"></span>
+                <span class="ov-port-name">Invested</span>
+                <span class="ov-port-val" id="ov-port-invested">$0</span>
+              </div>
+              <div class="ov-port-note">💡 Connect wallets to refine estimates</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FARMING PROGRESS -->
+        <div class="ov-card ov-progress">
+          <div class="ov-card-head">
+            <div class="ov-card-title white">FARMING PROGRESS</div>
+            <span class="ov-progress-period">This Week</span>
+          </div>
+
+          <div class="ov-xp-row">
+            <div class="ov-xp-label">XP Progress</div>
+            <div class="ov-xp-level">Level <span id="ov-level">1</span> <span style="color:#f5c842;">👑</span></div>
+          </div>
+          <div class="ov-xp-bar">
+            <div class="ov-xp-fill" id="ov-xp-fill" style="width:0%"></div>
+          </div>
+          <div class="ov-xp-text" id="ov-xp-text">0 / 1,000 XP</div>
+
+          <!-- Stat trio -->
+          <div class="ov-progress-stats">
+            <div class="ov-ps-cell">
+              <div class="ov-ps-label">Missions Done</div>
+              <div class="ov-ps-val gold" id="ov-pm-done">0</div>
+              <div class="ov-ps-delta" id="ov-pm-delta">+0%</div>
+            </div>
+            <div class="ov-ps-cell">
+              <div class="ov-ps-label">Success Rate</div>
+              <div class="ov-ps-val green" id="ov-success-rate">0%</div>
+              <div class="ov-ps-delta" id="ov-success-delta">+0%</div>
+            </div>
+            <div class="ov-ps-cell">
+              <div class="ov-ps-label">Avg. ROI</div>
+              <div class="ov-ps-val cyan" id="ov-avg-roi">0×</div>
+              <div class="ov-ps-delta" id="ov-roi-delta">+0%</div>
+            </div>
+          </div>
+
+          <!-- MISSION STREAK milestone dots (borrowed from Mockup 1) -->
+          <div class="ov-streak-mini">
+            <div class="ov-streak-mini-head">
+              <span class="ov-streak-mini-fire">🔥</span>
+              <span class="ov-streak-mini-num" id="ov-streak-mini">0</span>
+              <span class="ov-streak-mini-lbl">Day Streak</span>
+            </div>
+            <div class="ov-streak-line">
+              <div class="ov-streak-dot" data-target="7"  id="ov-streak-d7"><span>7</span></div>
+              <div class="ov-streak-bar"><div class="ov-streak-fill" id="ov-streak-fill-1"></div></div>
+              <div class="ov-streak-dot" data-target="14" id="ov-streak-d14"><span>14</span></div>
+              <div class="ov-streak-bar"><div class="ov-streak-fill" id="ov-streak-fill-2"></div></div>
+              <div class="ov-streak-dot" data-target="30" id="ov-streak-d30"><span>30</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RECENT ACTIVITY -->
+        <div class="ov-card ov-activity">
+          <div class="ov-card-head">
+            <div class="ov-card-title white">RECENT ACTIVITY</div>
+            <button class="ov-link-btn" onclick="ovGoToActivity()">View All</button>
+          </div>
+          <div class="ov-activity-list" id="ov-activity-list">
+            <div class="ov-no-data">No activity yet. Start a mission to begin!</div>
           </div>
         </div>
       </div>
-    </div>
+
+      <!-- ═══ ELITE INSIGHT FOOTER BANNER ═══ -->
+      <div class="ov-insight-bar">
+        <div class="ov-insight-icon">👑</div>
+        <div class="ov-insight-body">
+          <div class="ov-insight-title">ELITE INSIGHT</div>
+          <div class="ov-insight-text" id="ov-insight-text">Cross-chain DeFi activity is heating up. Focus on snapshot-ready projects this week.</div>
+        </div>
+        <div class="ov-insight-stats">
+          <div class="ov-is-cell">
+            <div class="ov-is-label">TOTAL AIRDROPS</div>
+            <div class="ov-is-val" id="ov-is-airdrops">0</div>
+          </div>
+          <div class="ov-is-cell">
+            <div class="ov-is-label">TOTAL VALUE</div>
+            <div class="ov-is-val" id="ov-is-value">$0</div>
+          </div>
+          <div class="ov-is-cell">
+            <div class="ov-is-label">ACTIVE FARMERS</div>
+            <div class="ov-is-val" id="ov-is-farmers">0</div>
+          </div>
+        </div>
+        <button class="ov-insight-cta" onclick="ovGoToIntelHub()">
+          Open Intel Hub <span style="margin-left:6px;">›</span>
+        </button>
+      </div>
+
     </section>
+
 
     <!-- START DAILY MISSIONS TAB CONTENT -->
     <section class="tab-panel daily-missions-view" id="tab-daily-missions" data-tab-panel="daily-missions">
@@ -21712,54 +22812,673 @@ updateClock();
 
     var s = await window.API.getOverviewStats();
 
-    // Hero — welcome line
+    // ═══════════════════════════════════════════════════════════════════════
+    // v3.0 OVERVIEW — populate the new Mockup-2 design IDs
+    // ═══════════════════════════════════════════════════════════════════════
+
+    // Hero — welcome name
     if (ovEl('ov-username'))  ovEl('ov-username').textContent = s.name || 'Operator';
-    var remaining = Math.max(0, (s.missionsTotal || 0) - (s.missionsDone || 0));
-    if (ovEl('ov-priority-count')) {
-      ovEl('ov-priority-count').textContent =
-        remaining + (remaining === 1 ? ' priority mission' : ' priority missions');
+
+    // Hero stat pills (4)
+    var totalXp     = s.totalXp || 0;
+    var streak      = s.currentStreak || 0;
+    var missionsDone= s.missionsDone || 0;
+    var missionsTotal = s.missionsTotal || 0;
+
+    // Elite Rank — based on user's XP brackets (transparent, no fake leaderboard)
+    // Brackets: <500 = Recruit, <2000 = Operator, <5000 = Pro, <15000 = Elite, <50000 = Master, >=50000 = Legend
+    var rankLabel = ovComputeRankLabel(totalXp);
+    if (ovEl('ov-elite-rank')) ovEl('ov-elite-rank').textContent = rankLabel;
+
+    // Global Rank — honest framing
+    if (ovEl('ov-global-rank')) {
+      if (totalXp === 0) {
+        ovEl('ov-global-rank').textContent = 'New';
+      } else if (totalXp < 500) {
+        ovEl('ov-global-rank').textContent = 'Climbing';
+      } else if (totalXp < 5000) {
+        ovEl('ov-global-rank').textContent = 'Active';
+      } else {
+        ovEl('ov-global-rank').textContent = 'Top Tier';
+      }
     }
 
-    // Hero — meta stats
-    if (ovEl('ov-streak'))        ovEl('ov-streak').textContent = '🔥 ' + (s.currentStreak || 0);
-    if (ovEl('ov-xp-today'))      ovEl('ov-xp-today').textContent = '+' + (s.xpToday || 0);
-    if (ovEl('ov-missions-done')) ovEl('ov-missions-done').textContent =
-        (s.missionsDone || 0) + '/' + (s.missionsTotal || 0);
+    // Farming Score — formula: (XP/1000 base) * (1 + streak/30 streak bonus) * (1 + activeWallets/20 wallet bonus)
+    var fScore = ovComputeFarmingScore(s);
+    if (ovEl('ov-farming-score')) ovEl('ov-farming-score').textContent = fScore.toLocaleString();
 
-    // Hero — right side: daily progress bar
-    var pct = (s.missionsTotal > 0)
-      ? Math.round((s.missionsDone / s.missionsTotal) * 100) : 0;
-    if (ovEl('prog-pct')) ovEl('prog-pct').textContent = pct + '%';
-    if (ovEl('prog-bar')) ovEl('prog-bar').style.width = pct + '%';
+    // Streak pill
+    if (ovEl('ov-streak-pill')) ovEl('ov-streak-pill').textContent = streak + (streak === 1 ? ' Day' : ' Days');
 
-    // Hero — reward + drops boxes
-    if (ovEl('ov-hero-rewards')) ovEl('ov-hero-rewards').textContent =
-        '$' + (s.estRewardsUsd || 0).toLocaleString();
-    if (ovEl('ov-hero-drops'))   ovEl('ov-hero-drops').textContent = s.activeDrops || 0;
+    // CTA — new opportunities count
+    var opps = await ovLoadOpportunities();   // also renders the list
+    if (ovEl('ov-opps-count'))      ovEl('ov-opps-count').textContent = opps.length || 0;
+    if (ovEl('ov-opps-total'))      ovEl('ov-opps-total').textContent = '(' + (opps.length || 0) + ')';
 
-    // Stat grid card 1 — Active Airdrops
-    if (ovEl('ov-stat-airdrops')) ovEl('ov-stat-airdrops').textContent = s.activeAirdrops || 0;
-    if (ovEl('ov-stat-airdrops-sub')) ovEl('ov-stat-airdrops-sub').textContent =
-        (s.highPriorityAirdrops || 0) + ' high-priority';
+    // System reset countdown — start ticking
+    ovStartResetCountdown();
 
-    // Stat grid card 2 — Est. Rewards
-    if (ovEl('ov-stat-rewards')) ovEl('ov-stat-rewards').textContent =
-        '$' + (s.estRewardsUsd || 0).toLocaleString();
-    if (ovEl('ov-stat-rewards-sub')) ovEl('ov-stat-rewards-sub').textContent =
-        (s.claimingSoon || 0) + ' claiming soon';
+    // ═══ AI FARMING SCORE GAUGE ═══
+    // Score 0-10 based on combination of factors (formula-based, marked Beta)
+    var aiScore = ovComputeAiScore(s);
+    ovRenderGauge(aiScore);
 
-    // Stat grid card 3 — Wallets
-    if (ovEl('ov-stat-wallets')) ovEl('ov-stat-wallets').textContent = s.walletsActive || 0;
+    // Outperforming X — honest framing
+    var pct = ovComputePercentile(totalXp);
+    if (ovEl('ov-ai-percentile')) ovEl('ov-ai-percentile').textContent = pct + '%';
 
-    // Stat grid card 4 — Current XP (+ XP needed for next 1,000-XP level)
-    if (ovEl('ov-stat-xp')) ovEl('ov-stat-xp').textContent = (s.totalXp || 0).toLocaleString();
-    var toNext = 1000 - ((s.totalXp || 0) % 1000);
-    if (ovEl('ov-stat-xp-sub')) ovEl('ov-stat-xp-sub').textContent =
-        toNext.toLocaleString() + ' XP to next level';
+    // ═══ ECOSYSTEM HEATMAP ═══
+    await ovRenderHeatmap();
+    // ecosystems-count after heatmap renders
+    if (ovEl('ov-ecosystems-count')) {
+      var ecoCount = (window._ovHeatmapEcosystems || []).length;
+      ovEl('ov-ecosystems-count').textContent = ecoCount || 0;
+    }
 
-    // Stat grid card 5 — Weekly Completion (missions done in last 7 days)
-    ovLoadWeekly();
+    // ═══ URGENT ALERTS ═══
+    await ovRenderUrgentAlerts();
+
+    // ═══ PORTFOLIO ═══
+    ovRenderPortfolio(s);
+
+    // ═══ FARMING PROGRESS ═══
+    // XP / level
+    var lvl = Math.floor(totalXp / 1000) + 1;
+    var xpInLvl = totalXp % 1000;
+    var pctXp = Math.min(100, Math.round((xpInLvl / 1000) * 100));
+    if (ovEl('ov-level'))    ovEl('ov-level').textContent = lvl;
+    if (ovEl('ov-xp-text'))  ovEl('ov-xp-text').textContent = xpInLvl.toLocaleString() + ' / 1,000 XP';
+    if (ovEl('ov-xp-fill'))  ovEl('ov-xp-fill').style.width = pctXp + '%';
+
+    // Stat trio
+    if (ovEl('ov-pm-done'))      ovEl('ov-pm-done').textContent = missionsDone;
+    if (ovEl('ov-pm-delta'))     ovEl('ov-pm-delta').textContent = (missionsDone > 0 ? '+' : '') + missionsDone + ' today';
+    // Success rate = missionsDone / missionsTotal if there are any, else 0
+    var successRate = missionsTotal > 0 ? Math.round((missionsDone / missionsTotal) * 100) : 0;
+    if (ovEl('ov-success-rate')) ovEl('ov-success-rate').textContent = successRate + '%';
+    if (ovEl('ov-success-delta'))ovEl('ov-success-delta').textContent = missionsDone === missionsTotal && missionsTotal > 0 ? 'perfect day' : 'today';
+    // ROI = est rewards / completed missions (rough)
+    var avgRoi = missionsDone > 0 ? ((s.estRewardsUsd || 0) / missionsDone).toFixed(1) : '0.0';
+    if (ovEl('ov-avg-roi'))      ovEl('ov-avg-roi').textContent = '$' + avgRoi;
+    if (ovEl('ov-roi-delta'))    ovEl('ov-roi-delta').textContent = 'avg/mission';
+
+    // Streak mini + milestones
+    if (ovEl('ov-streak-mini')) ovEl('ov-streak-mini').textContent = streak;
+    ovRenderStreakMilestones(streak);
+
+    // ═══ RECENT ACTIVITY ═══
+    await ovRenderActivity();
+
+    // ═══ ELITE INSIGHT FOOTER ═══
+    ovRenderInsightFooter(s);
+
+    // Legacy stat-grid IDs (kept for backward compat with old code paths — silently no-op since IDs no longer exist)
+    if (ovEl('ov-priority-count')) {
+      var remaining = Math.max(0, missionsTotal - missionsDone);
+      ovEl('ov-priority-count').textContent = remaining + (remaining === 1 ? ' priority mission' : ' priority missions');
+    }
   }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // v3.0 OVERVIEW — SUPPORTING FUNCTIONS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // ─── Rank label brackets ───
+  function ovComputeRankLabel(xp) {
+    if (xp >= 50000) return '#1 Legend';
+    if (xp >= 15000) return '#2 Master';
+    if (xp >= 5000)  return '#3 Elite';
+    if (xp >= 2000)  return '#4 Pro';
+    if (xp >= 500)   return '#5 Operator';
+    return '#6 Recruit';
+  }
+
+  // ─── Farming Score formula ───
+  // Combines XP, streak bonus, wallet diversity
+  function ovComputeFarmingScore(s) {
+    var xpBase = (s.totalXp || 0);
+    var streakMult = 1 + ((s.currentStreak || 0) / 30) * 0.5;       // up to +50% for 30-day streak
+    var walletMult = 1 + ((s.walletsActive || 0) / 20) * 0.3;       // up to +30% for 20+ wallets
+    return Math.round(xpBase * streakMult * walletMult);
+  }
+
+  // ─── AI Farming Score (0-10 scale, formula-based) ───
+  function ovComputeAiScore(s) {
+    var xp = s.totalXp || 0;
+    var streak = s.currentStreak || 0;
+    var wallets = s.walletsActive || 0;
+    var done = s.missionsDone || 0;
+    var total = s.missionsTotal || 0;
+
+    var components = [];
+    components.push(Math.min(10, xp / 1500));              // XP component (10 at 15k XP)
+    components.push(Math.min(10, streak / 3));             // Streak component (10 at 30 days)
+    components.push(Math.min(10, wallets * 1.5));          // Wallet diversity (10 at 7 wallets)
+    if (total > 0) components.push((done / total) * 10);   // Today's completion %
+
+    var avg = components.reduce(function(a,b){ return a + b; }, 0) / components.length;
+    return Math.round(avg * 10) / 10;  // 1 decimal place
+  }
+
+  function ovRenderGauge(score) {
+    // Score 0-10 → fill stroke offset
+    var circumference = 326.7;
+    var fill = (Math.max(0, Math.min(10, score)) / 10);
+    var offset = circumference * (1 - fill);
+
+    var gauge = ovEl('ov-gauge-fill');
+    if (gauge) gauge.style.strokeDashoffset = offset;
+
+    if (ovEl('ov-ai-score-val')) ovEl('ov-ai-score-val').textContent = score.toFixed(1);
+
+    // Tier label
+    var tier;
+    if (score >= 8.5) tier = 'ELITE';
+    else if (score >= 6.5) tier = 'PRO';
+    else if (score >= 4.5) tier = 'ACTIVE';
+    else if (score >= 2.5) tier = 'GROWING';
+    else tier = 'RECRUIT';
+    if (ovEl('ov-ai-score-tier')) ovEl('ov-ai-score-tier').textContent = tier;
+  }
+
+  // ─── Percentile (formula based on absolute XP) ───
+  function ovComputePercentile(xp) {
+    // Honest: 0 XP = "no rank", positive XP = your relative bracket
+    if (xp === 0) return 0;
+    if (xp >= 15000) return 95;
+    if (xp >= 5000)  return 85;
+    if (xp >= 2000)  return 70;
+    if (xp >= 500)   return 50;
+    if (xp >= 100)   return 30;
+    return 15;
+  }
+
+  // ─── System Reset Countdown ───
+  var _ovResetInterval = null;
+  function ovStartResetCountdown() {
+    if (_ovResetInterval) return; // already running
+    function tick() {
+      var now = new Date();
+      var nextUtcMidnight = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0));
+      var ms = nextUtcMidnight - now;
+      var h = Math.floor(ms / 3600000);
+      var m = Math.floor((ms % 3600000) / 60000);
+      var sec = Math.floor((ms % 60000) / 1000);
+      var fmt = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
+      if (ovEl('ov-reset-time')) ovEl('ov-reset-time').textContent = fmt;
+    }
+    tick();
+    _ovResetInterval = setInterval(tick, 1000);
+  }
+
+  // ─── Smart Opportunities Algorithm ───
+  // Returns mix of: snapshot-urgent projects + high-momentum + top-XP missions
+  async function ovLoadOpportunities() {
+    var listEl = ovEl('ov-opps-list');
+    if (!listEl) return [];
+
+    var opps = [];
+
+    try {
+      // 1. Get projects with snapshot >= 75 (urgency)
+      if (window.API.getProjects) {
+        var projects = await window.API.getProjects({ featured: false });
+        var snapshotProjs = (projects || []).filter(function(p){
+          return p.snapshot_pct && p.snapshot_pct >= 75;
+        }).sort(function(a,b){ return (b.snapshot_pct||0) - (a.snapshot_pct||0); });
+
+        snapshotProjs.slice(0, 2).forEach(function(p){
+          opps.push({
+            type: 'snapshot',
+            id: p.id,
+            name: p.name,
+            logoUrl: p.logo_url,
+            logoInitials: p.logo_initials || p.name.slice(0,2).toUpperCase(),
+            logoColor: p.logo_color || 'gold',
+            tag: 'SNAPSHOT ' + p.snapshot_pct + '%',
+            tagClass: 'snapshot',
+            reward: p.est_value_usd || (p.reward_level || 'HIGH'),
+            ecosystem: p.ecosystem || ''
+          });
+        });
+
+        // 2. High-momentum projects
+        var momentumProjs = (projects || []).filter(function(p){
+          return p.momentum != null && p.momentum >= 70;
+        }).sort(function(a,b){ return (b.momentum||0) - (a.momentum||0); });
+        momentumProjs.slice(0, 2).forEach(function(p){
+          if (opps.findIndex(function(o){ return o.id === p.id; }) >= 0) return; // skip dupes
+          opps.push({
+            type: 'momentum',
+            id: p.id,
+            name: p.name,
+            logoUrl: p.logo_url,
+            logoInitials: p.logo_initials || p.name.slice(0,2).toUpperCase(),
+            logoColor: p.logo_color || 'gold',
+            tag: p.status || 'MOMENTUM',
+            tagClass: p.status === 'TESTNET' ? 'testnet' : 'mainnet',
+            reward: p.est_value_usd || p.reward_level || 'HIGH',
+            ecosystem: p.ecosystem || ''
+          });
+        });
+      }
+
+      // 3. High-XP missions (not done today)
+      if (window.API.getMissions) {
+        var missions = await window.API.getMissions();
+        var topXp = (missions || []).filter(function(m){ return !m.done; })
+          .sort(function(a,b){ return (b.xp||0) - (a.xp||0); });
+        topXp.slice(0, 2).forEach(function(m){
+          opps.push({
+            type: 'mission',
+            id: 'm_' + m.id,
+            missionId: m.id,
+            name: m.title,
+            logoUrl: null,
+            logoInitials: (m.project || 'M').slice(0,2).toUpperCase(),
+            logoColor: 'cyan',
+            tag: 'MISSION',
+            tagClass: 'mission',
+            reward: '+' + m.xp + ' XP',
+            ecosystem: m.project || ''
+          });
+        });
+      }
+
+      // Render (max 5 to avoid overflow)
+      opps = opps.slice(0, 5);
+      ovRenderOpportunityList(opps);
+      return opps;
+    } catch (e) {
+      console.error('[OV] opportunities failed:', e);
+      listEl.innerHTML = '<div class="ov-no-data">Could not load opportunities.</div>';
+      return [];
+    }
+  }
+
+  function ovRenderOpportunityList(opps) {
+    var listEl = ovEl('ov-opps-list');
+    if (!listEl) return;
+
+    if (!opps.length) {
+      listEl.innerHTML = '<div class="ov-no-data">No top opportunities right now. Add projects & missions via admin.</div>';
+      return;
+    }
+
+    var colorMap = { gold: '#f5c842', cyan: '#4af0ff', purple: '#b070ff', pink: '#ff5e8a', orange: '#ff9046', green: '#00e87a' };
+    var html = opps.map(function(o){
+      var c = colorMap[o.logoColor] || '#f5c842';
+      var logoHtml;
+      if (o.logoUrl) {
+        logoHtml = '<img src="' + ovEsc(o.logoUrl) + '" alt="">';
+      } else {
+        logoHtml = ovEsc(o.logoInitials);
+      }
+      var logoStyle = o.logoUrl ? '' : 'background:' + c + '20;color:' + c + ';border:1px solid ' + c + '55;';
+      var rewardDisplay = (typeof o.reward === 'number') ? '$' + o.reward.toLocaleString() : ovEsc(String(o.reward));
+
+      return ''
+        + '<div class="ov-opp-row" onclick="ovOpenOpportunity(\'' + ovEsc(o.id) + '\',\'' + o.type + '\')">'
+        +   '<div class="ov-opp-logo" style="' + logoStyle + '">' + logoHtml + '</div>'
+        +   '<div class="ov-opp-body">'
+        +     '<div class="ov-opp-title">' + ovEsc(o.name) + '</div>'
+        +     '<div class="ov-opp-meta">'
+        +       '<span class="ov-opp-tag ' + o.tagClass + '">' + ovEsc(o.tag) + '</span>'
+        +       (o.ecosystem ? '<span class="ov-opp-tag high">' + ovEsc(o.ecosystem) + '</span>' : '')
+        +     '</div>'
+        +   '</div>'
+        +   '<div class="ov-opp-reward"><div class="ov-opp-rlbl">REWARD</div><div class="ov-opp-rval">' + rewardDisplay + '</div></div>'
+        +   '<button class="ov-opp-btn" onclick="event.stopPropagation();ovOpenOpportunity(\'' + ovEsc(o.id) + '\',\'' + o.type + '\')">START</button>'
+        + '</div>';
+    }).join('');
+    listEl.innerHTML = html;
+  }
+
+  // Expose click handler
+  window.ovOpenOpportunity = function(id, type) {
+    if (type === 'mission') {
+      // Switch to Daily Operations
+      var btn = document.querySelector('[data-tab-target="daily-missions"]');
+      if (btn) btn.click();
+    } else {
+      // Project: switch to Project Intelligence and open detail
+      var btn = document.querySelector('[data-tab-target="project-intel"]');
+      if (btn) btn.click();
+      setTimeout(function(){
+        if (window.piOpenDetail) window.piOpenDetail(id);
+      }, 300);
+    }
+  };
+
+  // ─── Ecosystem Heatmap ───
+  window._ovHeatmapEcosystems = [];
+  async function ovRenderHeatmap() {
+    var grid = ovEl('ov-hex-grid');
+    if (!grid) return;
+    if (!window.API.getProjects) {
+      grid.innerHTML = '<div class="ov-no-data">Projects API not available.</div>';
+      return;
+    }
+
+    try {
+      var projects = await window.API.getProjects({ featured: false });
+
+      // Count per ecosystem
+      var counts = {};
+      (projects || []).forEach(function(p){
+        var eco = (p.ecosystem || 'OTHER').toUpperCase();
+        counts[eco] = (counts[eco] || 0) + 1;
+      });
+
+      // Sort by count desc
+      var ecoList = Object.keys(counts).map(function(name){
+        return { name: name, count: counts[name] };
+      }).sort(function(a,b){ return b.count - a.count; });
+
+      window._ovHeatmapEcosystems = ecoList;
+
+      if (!ecoList.length) {
+        grid.innerHTML = '<div class="ov-no-data">No ecosystems yet. Add projects via admin.</div>';
+        return;
+      }
+
+      // Heat: relative to max count
+      var max = ecoList[0].count;
+      function heatClass(c) {
+        if (max === 0) return 'heat-cold';
+        var ratio = c / max;
+        if (ratio >= 0.85) return 'heat-hot';
+        if (ratio >= 0.65) return 'heat-warm';
+        if (ratio >= 0.45) return 'heat-medium';
+        if (ratio >= 0.25) return 'heat-cool';
+        return 'heat-cold';
+      }
+      function heatLabel(c) {
+        if (max === 0) return 'cold';
+        var ratio = c / max;
+        if (ratio >= 0.85) return 'hot';
+        if (ratio >= 0.65) return 'warm';
+        if (ratio >= 0.45) return 'medium';
+        if (ratio >= 0.25) return 'cool';
+        return 'cold';
+      }
+
+      // 7 positions: center, tl, tr, l, r, bl, br
+      var positions = ['center', 'tl', 'tr', 'l', 'r', 'bl', 'br'];
+      var ecosToShow = ecoList.slice(0, 7);
+
+      var html = ecosToShow.map(function(e, i){
+        return ''
+          + '<div class="ov-hex pos-' + positions[i] + ' ' + heatClass(e.count) + '" '
+          +    'onclick="ovFilterByEcosystem(\'' + ovEsc(e.name) + '\')" title="' + ovEsc(e.name) + ': ' + e.count + ' projects">'
+          +   '<div class="ov-hex-shape">'
+          +     '<div class="ov-hex-name">' + ovEsc(e.name).slice(0, 8) + '</div>'
+          +     '<div class="ov-hex-score">' + e.count + '</div>'
+          +     '<div class="ov-hex-tag">' + heatLabel(e.count) + '</div>'
+          +   '</div>'
+          + '</div>';
+      }).join('');
+
+      grid.innerHTML = html;
+    } catch (e) {
+      console.error('[OV] heatmap failed:', e);
+      grid.innerHTML = '<div class="ov-no-data">Could not load heatmap.</div>';
+    }
+  }
+
+  window.ovFilterByEcosystem = function(ecosystem) {
+    // Go to Project Intelligence + select that ecosystem
+    var btn = document.querySelector('[data-tab-target="project-intel"]');
+    if (btn) btn.click();
+    // The PI tab's filter UI uses piFilterEcosystem — try to invoke it
+    setTimeout(function(){
+      if (window.piFilterEcosystem) {
+        var tabBtn = document.querySelector('.project-intel-view .pi-tab[data-ecosystem="' + ecosystem + '"]');
+        if (tabBtn) window.piFilterEcosystem(tabBtn, ecosystem);
+      }
+    }, 300);
+  };
+
+  // ─── Urgent Alerts (from project_intel_feed) ───
+  async function ovRenderUrgentAlerts() {
+    var listEl = ovEl('ov-alerts-list');
+    var countEl = ovEl('ov-alert-count');
+    if (!listEl) return;
+    if (!window.API.adminListIntelFeed && !window.API.getProjectIntelFeed) {
+      listEl.innerHTML = '<div class="ov-no-data">Alerts API not available.</div>';
+      return;
+    }
+
+    try {
+      // Pull recent alerts via adminListIntelFeed (works for both admin and user — filters by is_active)
+      var alerts = [];
+      if (window.API.adminListIntelFeed) {
+        alerts = await window.API.adminListIntelFeed(null, false);  // active only
+      }
+
+      // Get projects for name lookup
+      var projects = window.API.getProjects ? (await window.API.getProjects({ featured: false })) : [];
+      var projMap = {};
+      (projects || []).forEach(function(p){ projMap[p.id] = p; });
+
+      // Filter: only alert + warning types, and limit to 5 most recent
+      var urgent = (alerts || []).filter(function(a){
+        return a.feed_type === 'alert' || a.feed_type === 'warning';
+      }).slice(0, 5);
+
+      if (countEl) countEl.textContent = urgent.length;
+
+      if (!urgent.length) {
+        listEl.innerHTML = '<div class="ov-no-data">No urgent alerts. All quiet on the elite front.</div>';
+        return;
+      }
+
+      var iconMap = { alert: '🚨', warning: '⚠️', good: '✓', info: '📊' };
+      var html = urgent.map(function(a){
+        var p = projMap[a.project_id];
+        var title = p ? p.name + ' Alert' : 'Project Alert';
+        return ''
+          + '<div class="ov-alert-item ' + (a.feed_type || 'info') + '" onclick="ovGoToIntelHub()">'
+          +   '<div class="ov-alert-icon">' + (iconMap[a.feed_type] || '🚨') + '</div>'
+          +   '<div class="ov-alert-body">'
+          +     '<div class="ov-alert-title">' + ovEsc(title) + '</div>'
+          +     '<div class="ov-alert-sub">' + ovEsc(a.message || '') + '</div>'
+          +   '</div>'
+          +   '<div class="ov-alert-arrow">›</div>'
+          + '</div>';
+      }).join('');
+      listEl.innerHTML = html;
+    } catch (e) {
+      console.error('[OV] alerts failed:', e);
+      listEl.innerHTML = '<div class="ov-no-data">Could not load alerts.</div>';
+    }
+  }
+
+  // ─── Portfolio Donut ───
+  function ovRenderPortfolio(s) {
+    // Phase 1: use estimates from existing data
+    // wallet = active wallets count × $100 estimate (very rough)
+    // claimable = estRewardsUsd if any
+    // pending = (claimingSoon * $50 estimate)
+    // invested = 0 (no real tracking yet)
+
+    var claimable = Math.round(s.estRewardsUsd || 0);
+    var pendingRough = (s.claimingSoon || 0) * 50;
+    var walletRough = (s.walletsActive || 0) * 100;
+    var investedRough = 0;
+    var total = claimable + pendingRough + walletRough + investedRough;
+
+    if (ovEl('ov-port-total'))     ovEl('ov-port-total').textContent = '$' + total.toLocaleString();
+    if (ovEl('ov-port-change'))    ovEl('ov-port-change').textContent = total > 0 ? '+ active' : '—';
+    if (ovEl('ov-port-wallet'))    ovEl('ov-port-wallet').textContent = '$' + walletRough.toLocaleString();
+    if (ovEl('ov-port-claimable')) ovEl('ov-port-claimable').textContent = '$' + claimable.toLocaleString();
+    if (ovEl('ov-port-pending'))   ovEl('ov-port-pending').textContent = '$' + pendingRough.toLocaleString();
+    if (ovEl('ov-port-invested'))  ovEl('ov-port-invested').textContent = '$' + investedRough.toLocaleString();
+
+    // Donut: 4 segments
+    var circumference = 301.6;
+    var segments = [
+      { id: 'ov-donut-1', val: walletRough },
+      { id: 'ov-donut-2', val: claimable },
+      { id: 'ov-donut-3', val: pendingRough },
+      { id: 'ov-donut-4', val: investedRough }
+    ];
+    if (total === 0) {
+      // No data — leave donut empty (just bg ring)
+      segments.forEach(function(seg){
+        var el = ovEl(seg.id);
+        if (el) {
+          el.style.strokeDasharray = '0 ' + circumference;
+          el.style.strokeDashoffset = 0;
+        }
+      });
+      return;
+    }
+
+    var offsetAccum = 0;
+    segments.forEach(function(seg){
+      var el = ovEl(seg.id);
+      if (!el) return;
+      var fraction = seg.val / total;
+      var arcLen = fraction * circumference;
+      el.style.strokeDasharray = arcLen + ' ' + circumference;
+      el.style.strokeDashoffset = -offsetAccum;
+      offsetAccum += arcLen;
+    });
+  }
+
+  // ─── Streak milestones ───
+  function ovRenderStreakMilestones(streak) {
+    var targets = [
+      { dotId: 'ov-streak-d7',  fillId: 'ov-streak-fill-1', target: 7,  prev: 0  },
+      { dotId: 'ov-streak-d14', fillId: 'ov-streak-fill-2', target: 14, prev: 7  },
+      { dotId: 'ov-streak-d30', fillId: null,               target: 30, prev: 14 }
+    ];
+    targets.forEach(function(t){
+      var dot = ovEl(t.dotId);
+      if (dot) dot.classList.toggle('reached', streak >= t.target);
+      if (t.fillId) {
+        var fill = ovEl(t.fillId);
+        if (fill) {
+          var range = t.target - t.prev;
+          var progressInRange = Math.max(0, Math.min(range, streak - t.prev));
+          fill.style.width = (progressInRange / range * 100) + '%';
+        }
+      }
+    });
+  }
+
+  // ─── Recent Activity ───
+  async function ovRenderActivity() {
+    var listEl = ovEl('ov-activity-list');
+    if (!listEl) return;
+    if (!window.API.getActivityFeed) {
+      listEl.innerHTML = '<div class="ov-no-data">Activity API not available.</div>';
+      return;
+    }
+
+    try {
+      var activity = await window.API.getActivityFeed(8);
+      if (!activity || !activity.length) {
+        listEl.innerHTML = '<div class="ov-no-data">No activity yet. Start a mission to begin!</div>';
+        return;
+      }
+
+      var html = activity.map(function(a){
+        var kind = a.kind || 'other';
+        var dotClass = kind === 'mission'  ? 'complete'
+                    : kind === 'airdrop'  ? 'start'
+                    : kind === 'reward'   ? 'claim'
+                    : kind === 'shield'   ? 'shield'
+                    : kind === 'wallet'   ? 'start'
+                    : 'complete';
+        // Try to extract XP from detail text (e.g. "+50 XP earned")
+        var xpStr = '';
+        var detail = a.detail || '';
+        var xpMatch = detail.match(/\+?\s*(\d+)\s*XP/i);
+        if (xpMatch) xpStr = '+' + xpMatch[1] + ' XP';
+
+        var timeStr = a.created_at ? ovTimeAgo(a.created_at) : '';
+        var title = a.title || 'Activity';
+
+        return ''
+          + '<div class="ov-activity-item">'
+          +   '<span class="ov-activity-dot ' + dotClass + '"></span>'
+          +   '<span class="ov-activity-title">' + ovEsc(title) + '</span>'
+          +   '<span class="ov-activity-xp">' + xpStr + '</span>'
+          +   '<span class="ov-activity-time">' + timeStr + '</span>'
+          + '</div>';
+      }).join('');
+      listEl.innerHTML = html;
+    } catch (e) {
+      console.error('[OV] activity failed:', e);
+      listEl.innerHTML = '<div class="ov-no-data">Could not load activity.</div>';
+    }
+  }
+
+  function ovTimeAgo(timestamp) {
+    var ms = Date.now() - new Date(timestamp).getTime();
+    var mins = Math.floor(ms / 60000);
+    if (mins < 1) return 'just now';
+    if (mins < 60) return mins + 'm';
+    var hours = Math.floor(mins / 60);
+    if (hours < 24) return hours + 'h';
+    var days = Math.floor(hours / 24);
+    return days + 'd';
+  }
+
+  // ─── Elite Insight Footer ───
+  function ovRenderInsightFooter(s) {
+    // Rotating inspirational messages (cycles weekly)
+    var messages = [
+      'Cross-chain DeFi activity is heating up this week. Focus on snapshot-ready projects.',
+      'Snapshot season — projects with 80%+ snapshot pct are highest priority right now.',
+      'Diversify across 3+ ecosystems for resilient airdrop farming.',
+      'Tier 1 backed projects historically deliver 5–10× higher avg airdrop value.',
+      'Multi-language community engagement = unique edge. Use it.',
+      'Daily streaks unlock multipliers — even small daily wins compound over weeks.',
+      'Smart-money wallets watch Layer-2 activity closely. Track via DeBank / Arkham.'
+    ];
+    var weekIdx = Math.floor(Date.now() / (7 * 24 * 3600 * 1000)) % messages.length;
+    if (ovEl('ov-insight-text')) ovEl('ov-insight-text').textContent = messages[weekIdx];
+
+    // Stats — count from real data
+    if (ovEl('ov-is-airdrops')) ovEl('ov-is-airdrops').textContent = (s.activeAirdrops || 0);
+    if (ovEl('ov-is-value'))    ovEl('ov-is-value').textContent    = '$' + (s.estRewardsUsd || 0).toLocaleString();
+    if (ovEl('ov-is-farmers'))  ovEl('ov-is-farmers').textContent  = 'You';
+  }
+
+  // ─── Helpers ───
+  function ovEsc(str) {
+    if (str == null) return '';
+    return String(str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  // ─── Tab nav helpers (expose for inline onclick handlers) ───
+  window.ovGoToProjects = function() {
+    var btn = document.querySelector('[data-tab-target="project-intel"]');
+    if (btn) btn.click();
+  };
+  window.ovGoToIntelHub = function() {
+    var btn = document.querySelector('[data-tab-target="intel-hub"]');
+    if (btn) btn.click();
+  };
+  window.ovGoToWallets = function() {
+    var btn = document.querySelector('[data-tab-target="wallets"]');
+    if (btn) btn.click();
+  };
+  window.ovGoToActivity = function() {
+    var btn = document.querySelector('[data-tab-target="profile"]');
+    if (btn) btn.click();
+  };
+  window.ovGoToAnalytics = function() {
+    // No analytics tab yet; open intel hub as best alternative
+    var btn = document.querySelector('[data-tab-target="intel-hub"]');
+    if (btn) btn.click();
+  };
+
 
   // ── Weekly Completion: count this user's completions in the last 7 days ──
   async function ovLoadWeekly() {
