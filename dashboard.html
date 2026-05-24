@@ -4900,6 +4900,416 @@ canvas.mini-chart { width: 100% !important; }
   line-height: 1.45;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   v2.2 — PROJECT MISSIONS REDESIGN
+   Compact mission rows with rarity glow + inline START button
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* Progress bar at top of section */
+.project-intel-view .pi-pm-progress-wrap {
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(74,240,255,0.18);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+}
+.project-intel-view .pi-pm-progress-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.project-intel-view .pi-pm-progress-label {
+  font-family: var(--pi-font-mono);
+  font-size: 10px;
+  color: var(--cyan);
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+.project-intel-view .pi-pm-progress-text {
+  font-family: var(--pi-font-mono);
+  font-size: 11px;
+  color: var(--pi-text);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.project-intel-view .pi-pm-progress-bar {
+  height: 4px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.project-intel-view .pi-pm-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1099b8, var(--cyan), #aff8ff);
+  box-shadow: 0 0 8px var(--cyan-glow);
+  transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+.project-intel-view .pi-pm-progress-fill.gold {
+  background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--gold-bright));
+  box-shadow: 0 0 12px var(--gold-glow);
+}
+
+/* Filter + sort controls */
+.project-intel-view .pi-pm-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.project-intel-view .pi-pm-filters,
+.project-intel-view .pi-pm-sort {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.project-intel-view .pi-pm-tab,
+.project-intel-view .pi-pm-sort-btn {
+  background: transparent;
+  border: 1px solid var(--pi-border);
+  color: var(--pi-text-dim);
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-family: var(--pi-font-mono);
+  font-size: 9.5px;
+  letter-spacing: 1.2px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.project-intel-view .pi-pm-tab .pi-pm-count {
+  background: rgba(255,255,255,0.06);
+  padding: 1px 5px;
+  border-radius: 8px;
+  font-size: 9px;
+}
+.project-intel-view .pi-pm-tab:hover,
+.project-intel-view .pi-pm-sort-btn:hover {
+  color: var(--pi-text);
+  border-color: var(--pi-border-br);
+}
+.project-intel-view .pi-pm-tab.active {
+  color: var(--cyan);
+  border-color: var(--cyan);
+  background: var(--cyan-soft);
+}
+.project-intel-view .pi-pm-tab.active .pi-pm-count { background: rgba(74,240,255,0.18); color: var(--cyan); }
+.project-intel-view .pi-pm-sort-btn.active {
+  color: var(--gold);
+  border-color: var(--gold);
+  background: var(--gold-soft);
+}
+
+/* ─── COMPACT MISSION ROW (the main redesign) ─── */
+.project-intel-view .pi-pm-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.project-intel-view .pi-pm-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 36px auto 1fr auto auto auto;
+  gap: 12px;
+  align-items: center;
+  background: rgba(255,255,255,0.022);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 8px;
+  padding: 11px 14px 11px 18px;
+  transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+  overflow: hidden;
+}
+
+/* Rarity left accent strip */
+.project-intel-view .pi-pm-row::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  transition: width 0.25s;
+}
+.project-intel-view .pi-pm-row.rarity-common::before    { background: #6b7384; }
+.project-intel-view .pi-pm-row.rarity-rare::before      { background: var(--cyan);   box-shadow: 0 0 10px var(--cyan-glow); }
+.project-intel-view .pi-pm-row.rarity-epic::before      { background: var(--purple); box-shadow: 0 0 10px var(--purple-glow); }
+.project-intel-view .pi-pm-row.rarity-legendary::before { background: var(--gold);   box-shadow: 0 0 12px var(--gold-glow); }
+.project-intel-view .pi-pm-row.rarity-mythic::before    {
+  background: linear-gradient(180deg, var(--pink), var(--gold));
+  box-shadow: 0 0 14px var(--pink-glow);
+}
+
+.project-intel-view .pi-pm-row:hover {
+  background: rgba(255,255,255,0.04);
+  border-color: var(--pi-border-br);
+  transform: translateX(2px);
+}
+.project-intel-view .pi-pm-row:hover::before { width: 4px; }
+
+.project-intel-view .pi-pm-row.done {
+  opacity: 0.55;
+}
+.project-intel-view .pi-pm-row.done::before {
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green-glow);
+}
+
+/* Boost active pulse */
+.project-intel-view .pi-pm-row.boost-active {
+  animation: pmBoostPulse 2.4s ease-in-out infinite;
+  border-color: rgba(245,200,66,0.25);
+}
+@keyframes pmBoostPulse {
+  0%, 100% { box-shadow: inset 0 0 0 1px rgba(245,200,66,0); }
+  50%      { box-shadow: inset 0 0 0 1px rgba(245,200,66,0.20), 0 0 14px rgba(245,200,66,0.10); }
+}
+
+/* Rarity icon (left column) */
+.project-intel-view .pi-pm-rarity-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.project-intel-view .pi-pm-row.rarity-common    .pi-pm-rarity-icon { color: #6b7384; }
+.project-intel-view .pi-pm-row.rarity-rare      .pi-pm-rarity-icon { color: var(--cyan);   border-color: rgba(74,240,255,0.3); }
+.project-intel-view .pi-pm-row.rarity-epic      .pi-pm-rarity-icon { color: var(--purple); border-color: rgba(176,112,255,0.3); }
+.project-intel-view .pi-pm-row.rarity-legendary .pi-pm-rarity-icon { color: var(--gold);   border-color: rgba(245,200,66,0.4); box-shadow: 0 0 8px rgba(245,200,66,0.2); }
+.project-intel-view .pi-pm-row.rarity-mythic    .pi-pm-rarity-icon { color: var(--pink);   border-color: rgba(255,94,138,0.4); }
+.project-intel-view .pi-pm-row.done .pi-pm-rarity-icon {
+  color: var(--green);
+  border-color: rgba(0,232,122,0.4);
+}
+
+/* Mission ID (M001) */
+.project-intel-view .pi-pm-id {
+  font-family: var(--pi-font-mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  min-width: 40px;
+}
+
+/* Mission body (title + description) */
+.project-intel-view .pi-pm-body {
+  min-width: 0;
+}
+.project-intel-view .pi-pm-title {
+  font-family: var(--pi-font-body);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--pi-text);
+  letter-spacing: 0.2px;
+  line-height: 1.25;
+}
+.project-intel-view .pi-pm-desc {
+  font-size: 11.5px;
+  color: var(--pi-text-dim);
+  margin-top: 2px;
+  line-height: 1.4;
+  /* Truncate if too long */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.project-intel-view .pi-pm-row.done .pi-pm-title {
+  text-decoration: line-through;
+  text-decoration-color: rgba(0,232,122,0.5);
+}
+
+/* Tags (difficulty + time) */
+.project-intel-view .pi-pm-tags {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.project-intel-view .pi-pm-diff {
+  font-family: var(--pi-font-mono);
+  font-size: 8.5px;
+  letter-spacing: 1.2px;
+  padding: 3px 7px;
+  border-radius: 5px;
+  font-weight: 700;
+}
+.project-intel-view .pi-pm-diff.diff-easy   { background: rgba(0,232,122,0.10);  color: var(--green);  border: 1px solid rgba(0,232,122,0.3); }
+.project-intel-view .pi-pm-diff.diff-medium { background: rgba(255,144,70,0.10); color: var(--orange); border: 1px solid rgba(255,144,70,0.3); }
+.project-intel-view .pi-pm-diff.diff-hard   { background: rgba(255,71,87,0.10);  color: var(--red);    border: 1px solid rgba(255,71,87,0.3); }
+.project-intel-view .pi-pm-diff.diff-elite  { background: rgba(176,112,255,0.10);color: var(--purple); border: 1px solid rgba(176,112,255,0.3); }
+.project-intel-view .pi-pm-time {
+  font-family: var(--pi-font-mono);
+  font-size: 9.5px;
+  color: var(--pi-text-dim);
+  letter-spacing: 0.5px;
+}
+
+/* XP reward */
+.project-intel-view .pi-pm-xp {
+  font-family: var(--pi-font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 8px var(--gold-glow);
+  min-width: 60px;
+  text-align: right;
+}
+.project-intel-view .pi-pm-xp .pi-pm-boost-x {
+  font-size: 9px;
+  color: var(--orange);
+  font-family: var(--pi-font-mono);
+  margin-left: 2px;
+}
+
+/* Action button */
+.project-intel-view .pi-pm-action {
+  flex-shrink: 0;
+}
+.project-intel-view .pi-pm-btn {
+  font-family: var(--pi-font-display);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 7px 14px;
+  border-radius: 6px;
+  border: 1px solid;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+.project-intel-view .pi-pm-btn.start {
+  background: var(--cyan-soft);
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+.project-intel-view .pi-pm-btn.start:hover {
+  background: rgba(74,240,255,0.16);
+  box-shadow: 0 0 12px var(--cyan-glow);
+}
+.project-intel-view .pi-pm-btn.boost {
+  background: var(--gold-soft);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.project-intel-view .pi-pm-btn.boost:hover {
+  background: rgba(245,200,66,0.16);
+  box-shadow: 0 0 12px var(--gold-glow);
+}
+.project-intel-view .pi-pm-btn.done {
+  background: rgba(0,232,122,0.10);
+  border-color: var(--green);
+  color: var(--green);
+  cursor: default;
+}
+.project-intel-view .pi-pm-btn.guide {
+  background: rgba(176,112,255,0.10);
+  border-color: var(--purple);
+  color: var(--purple);
+}
+.project-intel-view .pi-pm-btn.guide:hover {
+  background: rgba(176,112,255,0.18);
+  box-shadow: 0 0 12px var(--purple-glow);
+}
+
+/* Boost mini ribbon (top corner of row) */
+.project-intel-view .pi-pm-boost-ribbon {
+  position: absolute;
+  top: -1px; right: 14px;
+  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  color: #0a0e1a;
+  font-family: var(--pi-font-mono);
+  font-size: 7.5px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  padding: 2px 8px;
+  border-radius: 0 0 5px 5px;
+  z-index: 1;
+}
+
+/* "All complete" celebration banner */
+.project-intel-view .pi-pm-celebrate {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  margin-top: 12px;
+  background: linear-gradient(135deg, rgba(245,200,66,0.10), rgba(0,232,122,0.06));
+  border: 1px solid rgba(245,200,66,0.3);
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(245,200,66,0.15);
+}
+.project-intel-view .pi-pm-celebrate-icon { font-size: 32px; }
+.project-intel-view .pi-pm-celebrate-title {
+  font-family: var(--pi-font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+.project-intel-view .pi-pm-celebrate-sub {
+  font-size: 12px;
+  color: var(--pi-text-dim);
+}
+
+/* Toast popup when START clicked */
+.project-intel-view .pi-pm-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: rgba(8,13,26,0.95);
+  border: 1px solid var(--cyan);
+  color: var(--pi-text);
+  padding: 14px 18px;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(74,240,255,0.25), 0 0 0 1px rgba(74,240,255,0.1);
+  font-size: 12.5px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  max-width: 360px;
+  backdrop-filter: blur(8px);
+}
+.project-intel-view .pi-pm-toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+.project-intel-view .pi-pm-toast .pi-pm-toast-icon {
+  font-size: 18px;
+}
+
+/* ─── MOBILE RESPONSIVE ─── */
+@media (max-width: 720px) {
+  .project-intel-view .pi-pm-controls { flex-direction: column; align-items: stretch; }
+  .project-intel-view .pi-pm-row {
+    grid-template-columns: 32px 1fr auto;
+    gap: 8px;
+    padding: 10px 12px 10px 16px;
+  }
+  .project-intel-view .pi-pm-id { display: none; }
+  .project-intel-view .pi-pm-tags { grid-column: 2 / 4; padding-top: 2px; }
+  .project-intel-view .pi-pm-desc { white-space: normal; }
+  .project-intel-view .pi-pm-xp { font-size: 12px; min-width: 0; }
+  .project-intel-view .pi-pm-btn { font-size: 9px; padding: 6px 10px; }
+}
+
+/* END v2.2 PROJECT MISSIONS REDESIGN */
+
 /* END PROJECT INTELLIGENCE TAB STYLES */
 /* START AIRDROP TRACKER TAB STYLES */
 .airdrop-tracker-view.tab-panel.active { display: block; }
@@ -16455,11 +16865,50 @@ canvas.mini-chart { width: 100% !important; }
               <p class="pi-about-text" id="piDetailAbout">Loading...</p>
             </div>
 
-            <!-- MISSIONS LIST -->
+            <!-- MISSIONS LIST (v2.2 redesigned) -->
             <div class="pi-block">
               <div class="pi-block-title cyan">PROJECT MISSIONS <span class="pi-block-count" id="piMissionsCount">(0)</span></div>
+
+              <!-- Progress bar (top of section) -->
+              <div class="pi-pm-progress-wrap" id="piPmProgressWrap" style="display:none;">
+                <div class="pi-pm-progress-top">
+                  <span class="pi-pm-progress-label">YOUR COMPLETION</span>
+                  <span class="pi-pm-progress-text" id="piPmProgressText">0 / 0 (0%)</span>
+                </div>
+                <div class="pi-pm-progress-bar">
+                  <div class="pi-pm-progress-fill" id="piPmProgressFill" style="width:0%"></div>
+                </div>
+              </div>
+
+              <!-- Filter + sort controls -->
+              <div class="pi-pm-controls" id="piPmControls" style="display:none;">
+                <div class="pi-pm-filters">
+                  <button class="pi-pm-tab active" data-filter="all" onclick="piPmFilter(this,'all')">⚡ All <span class="pi-pm-count" id="piPmCountAll">0</span></button>
+                  <button class="pi-pm-tab" data-filter="daily" onclick="piPmFilter(this,'daily')">☀️ Daily <span class="pi-pm-count" id="piPmCountDaily">0</span></button>
+                  <button class="pi-pm-tab" data-filter="weekly" onclick="piPmFilter(this,'weekly')">📅 Weekly <span class="pi-pm-count" id="piPmCountWeekly">0</span></button>
+                  <button class="pi-pm-tab" data-filter="one_time" onclick="piPmFilter(this,'one_time')">🎯 Once <span class="pi-pm-count" id="piPmCountOnce">0</span></button>
+                  <button class="pi-pm-tab" data-filter="boost" onclick="piPmFilter(this,'boost')">⚡ Boost <span class="pi-pm-count" id="piPmCountBoost">0</span></button>
+                </div>
+                <div class="pi-pm-sort">
+                  <button class="pi-pm-sort-btn active" data-sort="default" onclick="piPmSort(this,'default')">↕ Default</button>
+                  <button class="pi-pm-sort-btn" data-sort="xp" onclick="piPmSort(this,'xp')">XP ↓</button>
+                  <button class="pi-pm-sort-btn" data-sort="diff" onclick="piPmSort(this,'diff')">Easy → Hard</button>
+                  <button class="pi-pm-sort-btn" data-sort="status" onclick="piPmSort(this,'status')">Todo first</button>
+                </div>
+              </div>
+
+              <!-- Mission rows -->
               <div class="pi-missions-list" id="piMissionsList">
                 <div class="pi-no-data">No missions yet for this project.</div>
+              </div>
+
+              <!-- "All complete" celebration banner (shows when 100%) -->
+              <div class="pi-pm-celebrate" id="piPmCelebrate" style="display:none;">
+                <span class="pi-pm-celebrate-icon">🏆</span>
+                <div>
+                  <div class="pi-pm-celebrate-title">ALL MISSIONS COMPLETE</div>
+                  <div class="pi-pm-celebrate-sub">Elite operator status confirmed for this project.</div>
+                </div>
               </div>
             </div>
 
@@ -22989,27 +23438,244 @@ function piBuildDetailQuickStats(p) {
   `).join('');
 }
 
+// ─── v2.2 — PROJECT MISSIONS (redesigned) ───
+// State for filters/sort within current detail view
+let piPmCurrentFilter = 'all';
+let piPmCurrentSort   = 'default';
+let piPmAllMissions   = []; // unfiltered list for current project
+
 function piRenderDetailMissions(missions) {
   const list = document.getElementById('piMissionsList');
   const count = document.getElementById('piMissionsCount');
-  if (count) count.textContent = `(${missions.length})`;
+  const controlsEl = document.getElementById('piPmControls');
+  const progressWrap = document.getElementById('piPmProgressWrap');
+  const celebrate = document.getElementById('piPmCelebrate');
 
-  if (missions.length === 0) {
+  // Cache list for re-sort/filter without re-fetching
+  piPmAllMissions = Array.isArray(missions) ? missions.slice() : [];
+  // Reset filter/sort each time a new project opens
+  piPmCurrentFilter = 'all';
+  piPmCurrentSort = 'default';
+
+  // Reset tab/sort button visual state
+  document.querySelectorAll('.project-intel-view .pi-pm-tab').forEach(b => b.classList.toggle('active', b.dataset.filter === 'all'));
+  document.querySelectorAll('.project-intel-view .pi-pm-sort-btn').forEach(b => b.classList.toggle('active', b.dataset.sort === 'default'));
+
+  if (count) count.textContent = `(${piPmAllMissions.length})`;
+
+  // Empty state — hide all controls + progress + celebrate
+  if (piPmAllMissions.length === 0) {
+    if (controlsEl)   controlsEl.style.display   = 'none';
+    if (progressWrap) progressWrap.style.display = 'none';
+    if (celebrate)    celebrate.style.display    = 'none';
     list.innerHTML = '<div class="pi-no-data">No missions yet for this project.</div>';
     return;
   }
 
-  list.innerHTML = '';
-  missions.forEach((m, i) => {
-    const div = document.createElement('div');
-    div.className = 'pi-mini-mission' + (m.done ? ' done' : '');
-    div.innerHTML = `
-      <span class="pi-mm-num">M${String(i+1).padStart(3,'0')}</span>
-      <span class="pi-mm-title">${piEsc(m.title)}</span>
-      <span class="pi-mm-xp">+${m.xp} XP</span>
-    `;
-    list.appendChild(div);
-  });
+  // Show controls + progress
+  if (controlsEl)   controlsEl.style.display   = 'flex';
+  if (progressWrap) progressWrap.style.display = 'block';
+
+  piPmUpdateCounts();
+  piPmUpdateProgress();
+  piPmRenderRows();
+}
+
+// Update per-filter counts and progress bar
+function piPmUpdateCounts() {
+  const all = piPmAllMissions;
+  const setText = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+
+  setText('piPmCountAll',    all.length);
+  setText('piPmCountDaily',  all.filter(m => (m.quest_type || 'daily') === 'daily').length);
+  setText('piPmCountWeekly', all.filter(m => m.quest_type === 'weekly').length);
+  setText('piPmCountOnce',   all.filter(m => m.quest_type === 'one_time').length);
+  setText('piPmCountBoost',  all.filter(m => m.boost_active === true).length);
+}
+
+function piPmUpdateProgress() {
+  const all  = piPmAllMissions;
+  const done = all.filter(m => m.done).length;
+  const total = all.length;
+  const pct  = total > 0 ? Math.round((done / total) * 100) : 0;
+
+  const fill = document.getElementById('piPmProgressFill');
+  const text = document.getElementById('piPmProgressText');
+  const celebrate = document.getElementById('piPmCelebrate');
+
+  if (fill) {
+    fill.style.width = pct + '%';
+    fill.classList.toggle('gold', pct >= 100);
+  }
+  if (text) text.textContent = `${done} / ${total} (${pct}%)`;
+  if (celebrate) celebrate.style.display = (total > 0 && done === total) ? 'flex' : 'none';
+}
+
+// Render the actual rows based on current filter + sort
+function piPmRenderRows() {
+  const list = document.getElementById('piMissionsList');
+  if (!list) return;
+
+  // Apply filter
+  let rows = piPmAllMissions.slice();
+  if (piPmCurrentFilter === 'boost') {
+    rows = rows.filter(m => m.boost_active === true);
+  } else if (piPmCurrentFilter !== 'all') {
+    rows = rows.filter(m => (m.quest_type || 'daily') === piPmCurrentFilter);
+  }
+
+  // Apply sort
+  if (piPmCurrentSort === 'xp') {
+    rows.sort((a, b) => (b.xp || 0) - (a.xp || 0));
+  } else if (piPmCurrentSort === 'diff') {
+    const order = { easy: 0, medium: 1, hard: 2, elite: 3 };
+    rows.sort((a, b) => (order[a.difficulty] || 0) - (order[b.difficulty] || 0));
+  } else if (piPmCurrentSort === 'status') {
+    // Todo first (not done), then completed at bottom
+    rows.sort((a, b) => (a.done ? 1 : 0) - (b.done ? 1 : 0));
+  }
+  // 'default' = original order from DB (display_order)
+
+  if (rows.length === 0) {
+    list.innerHTML = '<div class="pi-no-data">No missions match this filter.</div>';
+    return;
+  }
+
+  // Build row HTML
+  list.className = 'pi-missions-list pi-pm-list';
+  list.innerHTML = rows.map((m, idx) => piPmBuildRow(m, idx)).join('');
+}
+
+// Build one row's HTML
+function piPmBuildRow(m, idx) {
+  const rarity = m.rarity || 'common';
+  const diff   = (m.difficulty || 'easy').toLowerCase();
+  const safeDiff = ['easy','medium','hard','elite'].indexOf(diff) >= 0 ? diff : 'easy';
+  const done   = !!m.done;
+
+  // Rarity icon mapping
+  const rarityIcons = {
+    common:    '⚪',
+    rare:      '🌟',
+    epic:      '⭐',
+    legendary: '💎',
+    mythic:    '🔥'
+  };
+  const icon = done ? '✓' : (rarityIcons[rarity] || '⚪');
+
+  // Determine button type
+  let btnHtml;
+  if (done) {
+    btnHtml = '<button class="pi-pm-btn done">✓ DONE</button>';
+  } else if (m.boost_active) {
+    btnHtml = `<button class="pi-pm-btn boost" onclick="piPmStart(event, ${piEsc2(m.id)})">⚡ BOOST →</button>`;
+  } else if (safeDiff === 'hard' || safeDiff === 'elite') {
+    btnHtml = `<button class="pi-pm-btn guide" onclick="piPmStart(event, ${piEsc2(m.id)})">VIEW GUIDE</button>`;
+  } else {
+    btnHtml = `<button class="pi-pm-btn start" onclick="piPmStart(event, ${piEsc2(m.id)})">START →</button>`;
+  }
+
+  // Time display
+  const tMin = m.time_minutes != null ? m.time_minutes : 5;
+  const timeStr = tMin < 60 ? `⏱${tMin}m` : `⏱${Math.round(tMin/60)}h`;
+
+  // Boost mini ribbon (only if boost active)
+  const boostRibbon = m.boost_active
+    ? `<div class="pi-pm-boost-ribbon">⚡ ${m.boost_multiplier || 2}×</div>`
+    : '';
+
+  // XP with optional boost multiplier
+  const xpHtml = m.boost_active
+    ? `+${m.xp} XP<span class="pi-pm-boost-x">×${m.boost_multiplier || 2}</span>`
+    : `+${m.xp} XP`;
+
+  // Mission code
+  const code = 'M' + String(idx + 1).padStart(3, '0');
+
+  // Description (truncated by CSS on desktop)
+  const descHtml = m.description
+    ? `<div class="pi-pm-desc">${piEsc(m.description)}</div>`
+    : '';
+
+  return `
+    <div class="pi-pm-row rarity-${rarity}${done ? ' done' : ''}${m.boost_active ? ' boost-active' : ''}" data-id="${piEsc2(m.id)}">
+      ${boostRibbon}
+      <div class="pi-pm-rarity-icon">${icon}</div>
+      <div class="pi-pm-id">${code}</div>
+      <div class="pi-pm-body">
+        <div class="pi-pm-title">${piEsc(m.title)}</div>
+        ${descHtml}
+      </div>
+      <div class="pi-pm-tags">
+        <span class="pi-pm-diff diff-${safeDiff}">${safeDiff.toUpperCase()}</span>
+        <span class="pi-pm-time">${timeStr}</span>
+      </div>
+      <div class="pi-pm-xp">${xpHtml}</div>
+      <div class="pi-pm-action">${btnHtml}</div>
+    </div>
+  `;
+}
+
+// Safely escape values used inside HTML attributes (e.g., data-id=)
+function piEsc2(val) {
+  if (val == null) return '';
+  return String(val).replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+}
+
+// ─── Filter / Sort button handlers (called from HTML) ───
+window.piPmFilter = function(btn, filterKey) {
+  piPmCurrentFilter = filterKey;
+  document.querySelectorAll('.project-intel-view .pi-pm-tab').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  piPmRenderRows();
+};
+
+window.piPmSort = function(btn, sortKey) {
+  piPmCurrentSort = sortKey;
+  document.querySelectorAll('.project-intel-view .pi-pm-sort-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  piPmRenderRows();
+};
+
+// ─── Click handler for START button ───
+window.piPmStart = function(e, missionId) {
+  if (e) { e.stopPropagation(); e.preventDefault(); }
+  // Find the mission
+  const m = piPmAllMissions.find(x => String(x.id) === String(missionId));
+  if (!m) return;
+
+  // Open quest URL in new tab if available
+  if (m.quest_url) {
+    window.open(m.quest_url, '_blank', 'noopener,noreferrer');
+    piPmShowToast('🚀', m.title, 'Opened quest URL — complete the task, then mark it done on Daily Operations.');
+  } else {
+    // No URL → just show a toast pointing to Daily Ops
+    piPmShowToast('📋', m.title, 'No direct link set. Find this mission on Daily Operations to mark complete.');
+  }
+};
+
+// ─── Toast popup helper ───
+function piPmShowToast(icon, title, body) {
+  // Remove any existing toast
+  const existing = document.querySelector('.pi-pm-toast');
+  if (existing) existing.remove();
+
+  const toast = document.createElement('div');
+  toast.className = 'pi-pm-toast';
+  toast.innerHTML = `
+    <span class="pi-pm-toast-icon">${icon}</span>
+    <div>
+      <div style="font-weight:700;color:#4af0ff;margin-bottom:2px;">${piEsc(title)}</div>
+      <div style="color:#7a849a;font-size:11.5px;">${piEsc(body)}</div>
+    </div>
+  `;
+  document.body.appendChild(toast);
+  // Force reflow then add 'show' class for transition
+  requestAnimationFrame(() => toast.classList.add('show'));
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 400);
+  }, 4000);
 }
 
 function piRenderDetailRoute(steps) {
