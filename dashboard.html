@@ -22810,7 +22810,12 @@ updateClock();
   async function ovLoadStats() {
     if (!window.API || !window.API.isLive || !window.API.isLive()) return;
 
+    // v3.0 — defensive wrapper so any failure in Overview render
+    // can never break tab switching or other tabs.
+    try {
+
     var s = await window.API.getOverviewStats();
+    s = s || {};   // defensive
 
     // ═══════════════════════════════════════════════════════════════════════
     // v3.0 OVERVIEW — populate the new Mockup-2 design IDs
@@ -22916,6 +22921,11 @@ updateClock();
     if (ovEl('ov-priority-count')) {
       var remaining = Math.max(0, missionsTotal - missionsDone);
       ovEl('ov-priority-count').textContent = remaining + (remaining === 1 ? ' priority mission' : ' priority missions');
+    }
+
+    } catch (err) {
+      // v3.0 defensive: log but never crash the page
+      console.error('[ovLoadStats] non-fatal render error:', err);
     }
   }
 
@@ -23562,9 +23572,9 @@ updateClock();
 
   // ── Master loader: refresh the whole Overview tab ──
   async function ovLoadAll() {
-    await ovLoadMissions();
-    await ovLoadStats();
-    await ovLoadAlerts();
+    try { await ovLoadMissions(); } catch(e) { console.error('[ovLoadMissions]', e); }
+    try { await ovLoadStats();    } catch(e) { console.error('[ovLoadStats]', e); }
+    try { await ovLoadAlerts();   } catch(e) { console.error('[ovLoadAlerts]', e); }
   }
 
   // ── Event delegation for the mission START / ✓ buttons ──
