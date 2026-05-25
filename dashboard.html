@@ -22661,12 +22661,16 @@ setInterval(updateClock, 1000);
 updateClock();
 
 /* ═══════════════════════════════════════════
-   RESET TIMER COUNTDOWN
+   RESET TIMER COUNTDOWN (legacy — element renamed in v3.0 overview)
 ═══════════════════════════════════════════ */
 (function() {
   const el = document.getElementById('reset-timer');
+  // v3.0 — bail out if element doesn't exist (it was renamed to ov-reset-time)
+  // The new countdown is now handled by ovStartResetCountdown() in the Overview script.
+  if (!el) return;
   // Reset at next midnight UTC
   function tick() {
+    if (!el) return; // double safety in case DOM changes
     const now = new Date();
     const midnight = new Date(Date.UTC(
       now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1
