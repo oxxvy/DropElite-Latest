@@ -8896,6 +8896,1057 @@ canvas.mini-chart { width: 100% !important; }
 .airdrop-tracker-view .section:nth-child(4) { animation: airdrop-fadeUp 0.5s 0.3s ease both; }
 
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   v3.2 — AIRDROP TRACKER REDESIGN (Chunk 7)
+   Merged "Discover + My Farms" — Mockup-approved design
+   All styles scoped to .airdrop-tracker-view .atv2-* to avoid leaks.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.airdrop-tracker-view .atv2-page {
+  --av-gold:        #f5c842;
+  --av-gold-bright: #ffe066;
+  --av-gold-dim:    #a8862a;
+  --av-gold-soft:   rgba(245,200,66,0.08);
+  --av-gold-glow:   rgba(245,200,66,0.25);
+  --av-cyan:        #4af0ff;
+  --av-cyan-soft:   rgba(74,240,255,0.08);
+  --av-cyan-glow:   rgba(74,240,255,0.25);
+  --av-purple:      #b070ff;
+  --av-purple-soft: rgba(176,112,255,0.08);
+  --av-pink:        #ff5e8a;
+  --av-pink-soft:   rgba(255,94,138,0.08);
+  --av-orange:      #ff9046;
+  --av-orange-soft: rgba(255,144,70,0.08);
+  --av-green:       #00e87a;
+  --av-green-soft:  rgba(0,232,122,0.08);
+  --av-green-glow:  rgba(0,232,122,0.25);
+  --av-red:         #ff4757;
+  --av-red-soft:    rgba(255,71,87,0.08);
+  --av-text:        #e8eaf0;
+  --av-text-dim:    #7a849a;
+  --av-text-muted:  #4d556b;
+  --av-bg-card:     rgba(255,255,255,0.025);
+  --av-bg-card-hi:  rgba(255,255,255,0.04);
+  --av-bg-card-dk:  rgba(0,0,0,0.25);
+  --av-border:      rgba(255,255,255,0.06);
+  --av-border-br:   rgba(245,200,66,0.25);
+
+  font-family: 'Rajdhani', sans-serif;
+  color: var(--av-text);
+  padding: 4px;
+}
+
+.airdrop-tracker-view .atv2-page * { box-sizing: border-box; }
+
+/* ═══ PAGE HEADER ═══ */
+.airdrop-tracker-view .atv2-page-head { margin-bottom: 22px; }
+.airdrop-tracker-view .atv2-bc {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--av-cyan);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.airdrop-tracker-view .atv2-bc-sep { color: var(--av-gold); }
+.airdrop-tracker-view .atv2-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  line-height: 1;
+  margin: 0 0 8px 0;
+  color: var(--av-text);
+}
+.airdrop-tracker-view .atv2-title span {
+  color: var(--av-gold);
+  text-shadow: 0 0 18px var(--av-gold-glow);
+}
+.airdrop-tracker-view .atv2-sub {
+  font-size: 13.5px;
+  color: var(--av-text-dim);
+  margin: 0;
+  letter-spacing: 0.2px;
+}
+
+/* ═══ KPI ROW ═══ */
+.airdrop-tracker-view .atv2-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.airdrop-tracker-view .atv2-kpi-card {
+  background: var(--av-bg-card);
+  border: 1px solid var(--av-border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  transition: all 0.25s;
+}
+.airdrop-tracker-view .atv2-kpi-card:hover {
+  border-color: var(--av-border-br);
+  transform: translateY(-2px);
+}
+.airdrop-tracker-view .atv2-kpi-head {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 10px;
+}
+.airdrop-tracker-view .atv2-kpi-icon {
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+.airdrop-tracker-view .atv2-kpi-icon.gold   { background: var(--av-gold-soft);   color: var(--av-gold); }
+.airdrop-tracker-view .atv2-kpi-icon.green  { background: var(--av-green-soft);  color: var(--av-green); }
+.airdrop-tracker-view .atv2-kpi-icon.cyan   { background: var(--av-cyan-soft);   color: var(--av-cyan); }
+.airdrop-tracker-view .atv2-kpi-icon.purple { background: var(--av-purple-soft); color: var(--av-purple); }
+.airdrop-tracker-view .atv2-kpi-icon.orange { background: var(--av-orange-soft); color: var(--av-orange); }
+.airdrop-tracker-view .atv2-kpi-lbl {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  color: var(--av-text-dim);
+  letter-spacing: 1.3px;
+  font-weight: 700;
+}
+.airdrop-tracker-view .atv2-kpi-val {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--av-text);
+  line-height: 1;
+  margin-bottom: 4px;
+  letter-spacing: 0.3px;
+}
+.airdrop-tracker-view .atv2-kpi-val.gold   { color: var(--av-gold); }
+.airdrop-tracker-view .atv2-kpi-val.green  { color: var(--av-green); }
+.airdrop-tracker-view .atv2-kpi-val.cyan   { color: var(--av-cyan); }
+.airdrop-tracker-view .atv2-kpi-val.purple { color: var(--av-purple); }
+.airdrop-tracker-view .atv2-kpi-val.orange { color: var(--av-orange); }
+.airdrop-tracker-view .atv2-kpi-delta {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--av-green);
+  letter-spacing: 0.4px;
+}
+.airdrop-tracker-view .atv2-kpi-delta.dim { color: var(--av-text-dim); }
+
+/* ═══ MODE BAR ═══ */
+.airdrop-tracker-view .atv2-mode-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.airdrop-tracker-view .atv2-mode-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--av-bg-card-dk);
+  border: 1px solid var(--av-border);
+  padding: 4px;
+  border-radius: 10px;
+}
+.airdrop-tracker-view .atv2-mode-tab {
+  background: transparent;
+  border: none;
+  color: var(--av-text-dim);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 9px 18px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.25s;
+  display: flex; align-items: center; gap: 8px;
+}
+.airdrop-tracker-view .atv2-mode-tab:hover { color: var(--av-text); }
+.airdrop-tracker-view .atv2-mode-tab.active {
+  background: linear-gradient(135deg, var(--av-gold-dim), var(--av-gold));
+  color: #0a0e1a;
+  box-shadow: 0 0 14px var(--av-gold-glow);
+}
+.airdrop-tracker-view .atv2-tab-count {
+  background: rgba(0,0,0,0.25);
+  padding: 1px 7px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-family: 'Share Tech Mono', monospace;
+}
+.airdrop-tracker-view .atv2-mode-tab.active .atv2-tab-count {
+  background: rgba(255,255,255,0.2);
+  color: #0a0e1a;
+}
+.airdrop-tracker-view .atv2-mode-actions { display: flex; gap: 8px; }
+.airdrop-tracker-view .atv2-top-btn {
+  background: var(--av-bg-card-dk);
+  border: 1px solid var(--av-border);
+  color: var(--av-text-dim);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  padding: 9px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex; align-items: center; gap: 6px;
+}
+.airdrop-tracker-view .atv2-top-btn:hover { color: var(--av-cyan); border-color: var(--av-cyan); }
+.airdrop-tracker-view .atv2-top-btn.gold { color: var(--av-gold); border-color: var(--av-border-br); }
+
+/* ═══ MAIN GRID ═══ */
+.airdrop-tracker-view .atv2-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 18px;
+  align-items: start;
+}
+.airdrop-tracker-view .atv2-table-col { min-width: 0; }
+
+/* ═══ FILTER BAR ═══ */
+.airdrop-tracker-view .atv2-filter-bar {
+  background: var(--av-bg-card);
+  border: 1px solid var(--av-border);
+  border-radius: 12px 12px 0 0;
+  border-bottom: none;
+  padding: 12px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.airdrop-tracker-view .atv2-search-box {
+  flex: 1;
+  min-width: 200px;
+  background: var(--av-bg-card-dk);
+  border: 1px solid var(--av-border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: var(--av-text);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.airdrop-tracker-view .atv2-search-box:focus { border-color: var(--av-cyan); }
+.airdrop-tracker-view .atv2-search-box::placeholder { color: var(--av-text-muted); }
+.airdrop-tracker-view .atv2-filter-select {
+  background: var(--av-bg-card-dk);
+  border: 1px solid var(--av-border);
+  color: var(--av-text-dim);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  outline: none;
+}
+.airdrop-tracker-view .atv2-filter-select:hover { color: var(--av-text); border-color: var(--av-border-br); }
+
+/* ═══ TABLE ═══ */
+.airdrop-tracker-view .atv2-table-wrap {
+  background: var(--av-bg-card);
+  border: 1px solid var(--av-border);
+  border-radius: 0 0 12px 12px;
+  overflow-x: auto;
+}
+.airdrop-tracker-view .atv2-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+.airdrop-tracker-view .atv2-table thead tr { background: var(--av-bg-card-dk); }
+.airdrop-tracker-view .atv2-table th {
+  text-align: left;
+  padding: 12px 14px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  color: var(--av-text-dim);
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  border-bottom: 1px solid var(--av-border);
+}
+.airdrop-tracker-view .atv2-table th.atv2-sortable { cursor: pointer; }
+.airdrop-tracker-view .atv2-table th.atv2-sortable:hover { color: var(--av-gold); }
+.airdrop-tracker-view .atv2-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  font-size: 13px;
+  vertical-align: middle;
+}
+.airdrop-tracker-view .atv2-table tbody tr {
+  transition: all 0.15s;
+  cursor: pointer;
+}
+.airdrop-tracker-view .atv2-table tbody tr:hover { background: var(--av-bg-card-hi); }
+.airdrop-tracker-view .atv2-table tbody tr.atv2-tracked {
+  background: linear-gradient(90deg, rgba(245,200,66,0.04), transparent);
+  border-left: 2px solid var(--av-gold);
+}
+.airdrop-tracker-view .atv2-table tbody tr.atv2-selected {
+  background: linear-gradient(90deg, rgba(74,240,255,0.06), transparent);
+  border-left: 2px solid var(--av-cyan);
+}
+.airdrop-tracker-view .atv2-loading {
+  padding: 30px;
+  text-align: center;
+  color: var(--av-text-dim);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+/* Table cell components */
+.airdrop-tracker-view .atv2-row-num {
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--av-text-muted);
+  font-size: 11px;
+}
+.airdrop-tracker-view .atv2-star-btn {
+  background: transparent; border: none; cursor: pointer;
+  font-size: 18px; color: var(--av-text-muted);
+  transition: all 0.2s;
+  padding: 0;
+}
+.airdrop-tracker-view .atv2-star-btn:hover { color: var(--av-gold); transform: scale(1.15); }
+.airdrop-tracker-view .atv2-star-btn.active { color: var(--av-gold); }
+.airdrop-tracker-view .atv2-project-cell {
+  display: flex; align-items: center; gap: 10px;
+}
+.airdrop-tracker-view .atv2-project-logo {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.airdrop-tracker-view .atv2-project-logo img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.airdrop-tracker-view .atv2-project-name {
+  font-weight: 700; color: var(--av-text); margin-bottom: 2px;
+}
+.airdrop-tracker-view .atv2-project-tag {
+  font-size: 10.5px; color: var(--av-text-dim);
+}
+.airdrop-tracker-view .atv2-hot-badge {
+  display: inline-block;
+  background: var(--av-red-soft); color: var(--av-red);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8.5px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.airdrop-tracker-view .atv2-new-badge {
+  background: var(--av-green-soft); color: var(--av-green);
+}
+.airdrop-tracker-view .atv2-chain-mini {
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.airdrop-tracker-view .atv2-cat-pill {
+  display: inline-block;
+  background: rgba(255,255,255,0.04);
+  color: var(--av-text);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  padding: 4px 9px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+.airdrop-tracker-view .atv2-score-cell {
+  display: flex; align-items: center; gap: 8px;
+}
+.airdrop-tracker-view .atv2-score-num {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  color: var(--av-text);
+  min-width: 30px;
+}
+.airdrop-tracker-view .atv2-score-bar-bg {
+  flex: 1;
+  height: 4px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 2px;
+  overflow: hidden;
+  min-width: 60px;
+}
+.airdrop-tracker-view .atv2-score-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--av-green-soft), var(--av-green));
+  border-radius: 2px;
+}
+.airdrop-tracker-view .atv2-reward-cell {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  color: var(--av-gold);
+}
+.airdrop-tracker-view .atv2-reward-tier {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  color: var(--av-text-dim);
+  letter-spacing: 1px;
+  font-weight: 400;
+}
+.airdrop-tracker-view .atv2-diff-pill {
+  display: inline-block;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  padding: 3px 9px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+.airdrop-tracker-view .atv2-diff-pill.easy   { background: var(--av-green-soft);  color: var(--av-green); }
+.airdrop-tracker-view .atv2-diff-pill.medium { background: var(--av-orange-soft); color: var(--av-orange); }
+.airdrop-tracker-view .atv2-diff-pill.hard   { background: var(--av-red-soft);    color: var(--av-red); }
+.airdrop-tracker-view .atv2-status-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--av-green);
+  margin-right: 6px;
+  box-shadow: 0 0 6px var(--av-green-glow);
+}
+.airdrop-tracker-view .atv2-progress-cell {
+  display: flex; align-items: center; gap: 8px;
+  min-width: 120px;
+}
+.airdrop-tracker-view .atv2-progress-bar-bg {
+  flex: 1;
+  height: 6px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.airdrop-tracker-view .atv2-progress-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s;
+}
+.airdrop-tracker-view .atv2-progress-bar-fill.high { background: linear-gradient(90deg, #00d870, var(--av-green)); }
+.airdrop-tracker-view .atv2-progress-bar-fill.mid  { background: linear-gradient(90deg, #d8a040, var(--av-gold)); }
+.airdrop-tracker-view .atv2-progress-bar-fill.low  { background: linear-gradient(90deg, #d84757, var(--av-red)); }
+.airdrop-tracker-view .atv2-progress-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  min-width: 36px;
+  text-align: right;
+}
+.airdrop-tracker-view .atv2-track-btn {
+  background: var(--av-gold-soft);
+  border: 1px solid var(--av-gold);
+  color: var(--av-gold);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  padding: 6px 11px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.airdrop-tracker-view .atv2-track-btn:hover {
+  background: rgba(245,200,66,0.18);
+  box-shadow: 0 0 10px var(--av-gold-glow);
+}
+.airdrop-tracker-view .atv2-track-btn.tracked {
+  background: var(--av-green-soft);
+  color: var(--av-green);
+  border-color: var(--av-green);
+}
+.airdrop-tracker-view .atv2-row-arrow {
+  color: var(--av-text-muted);
+  font-size: 18px;
+  transition: all 0.2s;
+}
+.airdrop-tracker-view .atv2-table tbody tr:hover .atv2-row-arrow {
+  color: var(--av-gold);
+  transform: translateX(3px);
+}
+
+/* ═══ PAGINATION ═══ */
+.airdrop-tracker-view .atv2-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  background: var(--av-bg-card-dk);
+  font-size: 11px;
+  color: var(--av-text-dim);
+  border-top: 1px solid var(--av-border);
+}
+.airdrop-tracker-view .atv2-page-controls {
+  display: flex;
+  gap: 4px;
+}
+.airdrop-tracker-view .atv2-page-btn {
+  background: transparent;
+  border: 1px solid var(--av-border);
+  color: var(--av-text-dim);
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  transition: all 0.2s;
+}
+.airdrop-tracker-view .atv2-page-btn:hover { color: var(--av-text); border-color: var(--av-border-br); }
+.airdrop-tracker-view .atv2-page-btn.active {
+  background: var(--av-gold-soft);
+  color: var(--av-gold);
+  border-color: var(--av-gold);
+}
+.airdrop-tracker-view .atv2-page-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* ═══ SIDEBAR ═══ */
+.airdrop-tracker-view .atv2-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.airdrop-tracker-view .atv2-side-card {
+  background: var(--av-bg-card);
+  border: 1px solid var(--av-border);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.airdrop-tracker-view .atv2-side-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px;
+}
+.airdrop-tracker-view .atv2-side-title {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  display: flex; align-items: center; gap: 7px;
+}
+.airdrop-tracker-view .atv2-side-title.cyan   { color: var(--av-cyan); }
+.airdrop-tracker-view .atv2-side-title.gold   { color: var(--av-gold); }
+.airdrop-tracker-view .atv2-side-title.purple { color: var(--av-purple); }
+.airdrop-tracker-view .atv2-side-desc {
+  font-size: 11px;
+  color: var(--av-text-dim);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.airdrop-tracker-view .atv2-side-action {
+  background: transparent;
+  border: 1px solid var(--av-border);
+  color: var(--av-text-dim);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  padding: 4px 9px;
+  border-radius: 5px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.2s;
+}
+.airdrop-tracker-view .atv2-side-action:hover {
+  color: var(--av-cyan);
+  border-color: var(--av-cyan);
+}
+.airdrop-tracker-view .atv2-ai-badge {
+  background: var(--av-purple-soft);
+  color: var(--av-purple);
+  border: 1px solid rgba(176,112,255,0.3);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+.airdrop-tracker-view .atv2-no-data {
+  padding: 14px;
+  text-align: center;
+  color: var(--av-text-dim);
+  font-size: 12px;
+  font-style: italic;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+/* AI Top Pick card */
+.airdrop-tracker-view .atv2-ai-pick {
+  background: linear-gradient(135deg, rgba(176,112,255,0.06), rgba(245,200,66,0.04));
+  border: 1px solid rgba(176,112,255,0.25);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 12px;
+  min-height: 80px;
+}
+.airdrop-tracker-view .atv2-ai-pick-head {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  color: var(--av-text-dim);
+  letter-spacing: 1.5px;
+  margin-bottom: 10px;
+}
+.airdrop-tracker-view .atv2-ai-pick-body {
+  display: flex; align-items: center; gap: 12px;
+}
+.airdrop-tracker-view .atv2-ai-pick-logo {
+  width: 38px; height: 38px;
+  border-radius: 8px;
+  background: var(--av-purple-soft);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--av-purple);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.airdrop-tracker-view .atv2-ai-pick-logo img { width: 100%; height: 100%; object-fit: cover; }
+.airdrop-tracker-view .atv2-ai-pick-name { font-weight: 700; color: var(--av-text); margin-bottom: 2px; }
+.airdrop-tracker-view .atv2-ai-pick-meta {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--av-text-dim);
+  letter-spacing: 0.5px;
+}
+.airdrop-tracker-view .atv2-ai-pick-score {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--av-gold);
+  text-shadow: 0 0 10px var(--av-gold-glow);
+}
+.airdrop-tracker-view .atv2-view-analysis {
+  width: 100%;
+  background: var(--av-bg-card-dk);
+  border: 1px solid var(--av-border);
+  color: var(--av-cyan);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  padding: 8px;
+  border-radius: 7px;
+  letter-spacing: 1.2px;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: all 0.2s;
+}
+.airdrop-tracker-view .atv2-view-analysis:hover {
+  background: var(--av-cyan-soft);
+  border-color: var(--av-cyan);
+}
+
+/* Smart Filters */
+.airdrop-tracker-view .atv2-fg { margin-bottom: 14px; }
+.airdrop-tracker-view .atv2-fg-lbl {
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--av-text-dim);
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+}
+.airdrop-tracker-view .atv2-fg-all { color: var(--av-cyan); cursor: pointer; }
+.airdrop-tracker-view .atv2-chain-pills {
+  display: flex; flex-wrap: wrap; gap: 5px;
+}
+.airdrop-tracker-view .atv2-chain-pill {
+  background: var(--av-bg-card-dk);
+  border: 1px solid var(--av-border);
+  min-width: 30px;
+  height: 30px;
+  padding: 0 8px;
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--av-text-dim);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.airdrop-tracker-view .atv2-chain-pill:hover {
+  border-color: var(--av-gold);
+  color: var(--av-text);
+  transform: translateY(-1px);
+}
+.airdrop-tracker-view .atv2-chain-pill.selected {
+  background: var(--av-gold-soft);
+  border-color: var(--av-gold);
+  color: var(--av-gold);
+}
+.airdrop-tracker-view .atv2-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 2px;
+  outline: none;
+  margin: 8px 0;
+}
+.airdrop-tracker-view .atv2-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px; height: 16px;
+  background: var(--av-gold);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 8px var(--av-gold-glow);
+}
+.airdrop-tracker-view .atv2-slider::-moz-range-thumb {
+  width: 16px; height: 16px;
+  background: var(--av-gold);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 8px var(--av-gold-glow);
+}
+.airdrop-tracker-view .atv2-slider-vals {
+  display: flex; justify-content: space-between;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--av-text-dim);
+}
+.airdrop-tracker-view .atv2-diff-checks {
+  display: flex; gap: 8px;
+}
+.airdrop-tracker-view .atv2-diff-check {
+  flex: 1;
+  background: var(--av-bg-card-dk);
+  border: 1px solid var(--av-border);
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+  color: var(--av-text-dim);
+  letter-spacing: 1px;
+}
+.airdrop-tracker-view .atv2-diff-check.on {
+  background: var(--av-gold-soft);
+  border-color: var(--av-gold);
+  color: var(--av-gold);
+}
+.airdrop-tracker-view .atv2-apply-row {
+  display: flex; gap: 8px; margin-top: 12px;
+}
+.airdrop-tracker-view .atv2-apply-btn {
+  flex: 1;
+  background: linear-gradient(135deg, var(--av-gold-dim), var(--av-gold));
+  color: #0a0e1a;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 9px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.airdrop-tracker-view .atv2-apply-btn:hover {
+  box-shadow: 0 0 12px var(--av-gold-glow);
+}
+.airdrop-tracker-view .atv2-reset-btn {
+  background: var(--av-bg-card-dk);
+  border: 1px solid var(--av-border);
+  color: var(--av-text-dim);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  padding: 9px 14px;
+  border-radius: 7px;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+/* Ecosystem Heatmap */
+.airdrop-tracker-view .atv2-heat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+.airdrop-tracker-view .atv2-heat-cell {
+  background: var(--av-bg-card-dk);
+  padding: 9px 10px;
+  border-radius: 6px;
+  border-left: 3px solid;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.airdrop-tracker-view .atv2-heat-cell:hover { background: var(--av-bg-card-hi); }
+.airdrop-tracker-view .atv2-heat-name { font-weight: 700; color: var(--av-text); font-size: 12px; }
+.airdrop-tracker-view .atv2-heat-tag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+.airdrop-tracker-view .atv2-heat-cell.hot     { border-color: var(--av-red); }
+.airdrop-tracker-view .atv2-heat-cell.hot .atv2-heat-tag { color: var(--av-red); }
+.airdrop-tracker-view .atv2-heat-cell.veryhot { border-color: var(--av-red); background: linear-gradient(90deg, rgba(255,71,87,0.08), transparent); }
+.airdrop-tracker-view .atv2-heat-cell.veryhot .atv2-heat-tag { color: var(--av-red); }
+.airdrop-tracker-view .atv2-heat-cell.warm    { border-color: var(--av-orange); }
+.airdrop-tracker-view .atv2-heat-cell.warm .atv2-heat-tag { color: var(--av-orange); }
+.airdrop-tracker-view .atv2-heat-cell.cool    { border-color: var(--av-cyan); }
+.airdrop-tracker-view .atv2-heat-cell.cool .atv2-heat-tag { color: var(--av-cyan); }
+.airdrop-tracker-view .atv2-heat-cell.cold    { border-color: var(--av-purple); }
+.airdrop-tracker-view .atv2-heat-cell.cold .atv2-heat-tag { color: var(--av-purple); }
+
+/* ═══ MY FARMS detail sidebar ═══ */
+.airdrop-tracker-view .atv2-task-detail-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--av-border);
+  margin-bottom: 12px;
+}
+.airdrop-tracker-view .atv2-back-link {
+  background: transparent; border: none;
+  color: var(--av-cyan);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  display: flex; align-items: center; gap: 5px;
+}
+.airdrop-tracker-view .atv2-detail-status {
+  background: var(--av-orange-soft);
+  color: var(--av-orange);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  padding: 3px 9px;
+  border-radius: 12px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+.airdrop-tracker-view .atv2-detail-status.done {
+  background: var(--av-green-soft);
+  color: var(--av-green);
+}
+.airdrop-tracker-view .atv2-detail-logo-row {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 14px;
+}
+.airdrop-tracker-view .atv2-detail-big-logo {
+  width: 50px; height: 50px;
+  border-radius: 12px;
+  background: var(--av-cyan-soft);
+  border: 1px solid var(--av-cyan);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--av-cyan);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.airdrop-tracker-view .atv2-detail-big-logo img { width: 100%; height: 100%; object-fit: cover; }
+.airdrop-tracker-view .atv2-detail-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--av-text);
+  margin-bottom: 4px;
+}
+.airdrop-tracker-view .atv2-detail-cats { display: flex; gap: 6px; flex-wrap: wrap; }
+.airdrop-tracker-view .atv2-detail-cat-pill {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  padding: 2px 6px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  color: var(--av-text-dim);
+}
+.airdrop-tracker-view .atv2-detail-stats-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding: 12px;
+  background: var(--av-bg-card-dk);
+  border-radius: 8px;
+}
+.airdrop-tracker-view .atv2-detail-stat-cell { text-align: center; }
+.airdrop-tracker-view .atv2-detail-stat-lbl {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--av-text-dim);
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+}
+.airdrop-tracker-view .atv2-detail-stat-val {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--av-text);
+}
+.airdrop-tracker-view .atv2-detail-stat-val.gold { color: var(--av-gold); }
+.airdrop-tracker-view .atv2-detail-stat-val.cyan { color: var(--av-cyan); }
+.airdrop-tracker-view .atv2-checklist-title {
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--av-text);
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+.airdrop-tracker-view .atv2-checklist-count { color: var(--av-cyan); }
+.airdrop-tracker-view .atv2-task-group {
+  background: var(--av-bg-card-dk);
+  border: 1px solid var(--av-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 6px;
+}
+.airdrop-tracker-view .atv2-task-group-head {
+  display: flex; align-items: center; gap: 8px;
+  cursor: pointer;
+}
+.airdrop-tracker-view .atv2-task-group-icon { font-size: 14px; }
+.airdrop-tracker-view .atv2-task-group-name {
+  flex: 1; font-weight: 700; font-size: 12.5px;
+}
+.airdrop-tracker-view .atv2-task-group-progress {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--av-text-dim);
+}
+.airdrop-tracker-view .atv2-task-group-status {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+.airdrop-tracker-view .atv2-task-group-status.done {
+  background: var(--av-green-soft);
+  color: var(--av-green);
+}
+.airdrop-tracker-view .atv2-task-group-status.progress {
+  background: var(--av-orange-soft);
+  color: var(--av-orange);
+}
+.airdrop-tracker-view .atv2-task-group.expanded .atv2-task-list { display: block; }
+.airdrop-tracker-view .atv2-task-list { display: none; margin-top: 10px; }
+.airdrop-tracker-view .atv2-task-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 0;
+  font-size: 11.5px;
+}
+.airdrop-tracker-view .atv2-task-check { font-size: 14px; }
+.airdrop-tracker-view .atv2-task-check.done { color: var(--av-green); }
+.airdrop-tracker-view .atv2-task-check.pending { color: var(--av-text-muted); }
+.airdrop-tracker-view .atv2-task-name {
+  flex: 1;
+  color: var(--av-text-dim);
+}
+.airdrop-tracker-view .atv2-task-item.done .atv2-task-name { color: var(--av-text); }
+.airdrop-tracker-view .atv2-task-status-mini {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+.airdrop-tracker-view .atv2-task-status-mini.completed { color: var(--av-green); }
+.airdrop-tracker-view .atv2-task-status-mini.pending { color: var(--av-text-muted); }
+
+/* Recent transactions */
+.airdrop-tracker-view .atv2-recent-tx-list {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.airdrop-tracker-view .atv2-tx-item {
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 10px;
+  background: var(--av-bg-card-dk);
+  border-radius: 6px;
+  font-size: 11px;
+}
+.airdrop-tracker-view .atv2-tx-icon {
+  width: 24px; height: 24px;
+  border-radius: 5px;
+  background: var(--av-cyan-soft);
+  color: var(--av-cyan);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+}
+.airdrop-tracker-view .atv2-tx-body { min-width: 0; }
+.airdrop-tracker-view .atv2-tx-name {
+  color: var(--av-text); font-weight: 600;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.airdrop-tracker-view .atv2-tx-meta {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  color: var(--av-text-dim);
+}
+.airdrop-tracker-view .atv2-tx-time {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  color: var(--av-text-muted);
+  text-align: right;
+}
+
+/* Empty state */
+.airdrop-tracker-view .atv2-empty {
+  text-align: center;
+  padding: 50px 20px;
+  color: var(--av-text-dim);
+}
+.airdrop-tracker-view .atv2-empty-icon { font-size: 48px; margin-bottom: 12px; opacity: 0.5; }
+.airdrop-tracker-view .atv2-empty-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--av-text);
+  margin-bottom: 6px;
+}
+.airdrop-tracker-view .atv2-empty-sub { font-size: 12px; }
+.airdrop-tracker-view .atv2-empty-sub b { color: var(--av-gold); }
+
+/* ═══ MOBILE RESPONSIVE ═══ */
+@media (max-width: 1280px) {
+  .airdrop-tracker-view .atv2-main-grid { grid-template-columns: 1fr; }
+  .airdrop-tracker-view .atv2-sidebar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .airdrop-tracker-view .atv2-side-card { flex: 1 1 280px; min-width: 280px; }
+  .airdrop-tracker-view .atv2-kpi-row { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 900px) {
+  .airdrop-tracker-view .atv2-kpi-row { grid-template-columns: repeat(2, 1fr); }
+  .airdrop-tracker-view .atv2-sidebar { flex-direction: column; }
+  .airdrop-tracker-view .atv2-side-card { min-width: 0; }
+  .airdrop-tracker-view .atv2-mode-bar { flex-direction: column; align-items: stretch; }
+  .airdrop-tracker-view .atv2-mode-tabs { justify-content: center; }
+}
+@media (max-width: 640px) {
+  .airdrop-tracker-view .atv2-title { font-size: 24px; }
+  .airdrop-tracker-view .atv2-kpi-row { grid-template-columns: 1fr 1fr; }
+  .airdrop-tracker-view .atv2-mode-tab { font-size: 10px; padding: 7px 12px; }
+  .airdrop-tracker-view .atv2-filter-bar { flex-direction: column; align-items: stretch; }
+  .airdrop-tracker-view .atv2-filter-select { width: 100%; }
+}
+
+/* END v3.2 AIRDROP TRACKER REDESIGN */
+
 /* END AIRDROP TRACKER TAB STYLES */
 /* START WALLETS TAB STYLES */
 .wallets-view.tab-panel.active { display: block; }
@@ -19074,331 +20125,252 @@ canvas.mini-chart { width: 100% !important; }
 
 
     <!-- START AIRDROP TRACKER TAB CONTENT -->
+    <!-- ═══════════════════════════════════════════════════════════════════
+         AIRDROP TRACKER TAB — v3.2 (Chunk 7)
+         Merged design: Discover (browse) + My Farms (track) in one tab
+         Two modes via tab switcher, each with contextual sidebar
+         Scope: .airdrop-tracker-view (CSS leak protection)
+    ═══════════════════════════════════════════════════════════════════ -->
     <section class="tab-panel airdrop-tracker-view" id="tab-airdrop-tracker" data-tab-panel="airdrop-tracker">
-      <div class="page-wrap">
-      <div class="glow-line"></div>
 
-        <!-- HERO -->
-        <div class="hero">
-          <div class="hero-top">
-            <div class="hero-title-block">
-              <div class="hero-eyebrow">// AIRDROP TRACKER</div>
-              <div class="hero-title">Your Tracked <span>Airdrops</span></div>
-              <div class="hero-subtitle">Track, manage and progress every airdrop opportunity in one place.</div>
-            </div>
-            <div class="hero-actions">
-              <button class="btn btn-primary btn-icon" onclick="airdropOpenModal()">
-                <span>＋</span> Add Airdrop
-              </button>
-              <button class="btn btn-ghost" onclick="airdropExportCsv()">
-                ↗ Export to CSV
-              </button>
-            </div>
+      <div class="atv2-page">
+
+        <!-- ═══ HEADER ═══ -->
+        <div class="atv2-page-head">
+          <div class="atv2-bc">✦ DROP ELITE <span class="atv2-bc-sep">/</span> AIRDROP TRACKER</div>
+          <h1 class="atv2-title">Airdrop <span>Tracker</span></h1>
+          <p class="atv2-sub" id="atv2Sub">Discover, farm, and track all your airdrop opportunities in one place.</p>
+        </div>
+
+        <!-- ═══ KPI CARDS (5) — content changes per mode ═══ -->
+        <div class="atv2-kpi-row" id="atv2KpiRow">
+          <!-- KPI cards injected by JS per mode -->
+        </div>
+
+        <!-- ═══ MODE TOGGLE BAR ═══ -->
+        <div class="atv2-mode-bar">
+          <div class="atv2-mode-tabs">
+            <button class="atv2-mode-tab active" data-mode="discover" onclick="atv2SwitchMode('discover')">
+              🔍 DISCOVER <span class="atv2-tab-count" id="atv2CountDiscover">0</span>
+            </button>
+            <button class="atv2-mode-tab" data-mode="farms" onclick="atv2SwitchMode('farms')">
+              📋 MY FARMS <span class="atv2-tab-count" id="atv2CountFarms">0</span>
+            </button>
           </div>
-
-          <div class="stats-grid">
-            <div class="stat-card">
-              <div class="stat-label">Active Opportunities</div>
-              <div class="stat-value gold" id="adStatActive">—</div>
-              <div class="stat-delta up" id="adStatActiveSub">tracked airdrops</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">Est. Farming Value</div>
-              <div class="stat-value gold" id="adStatValue">—</div>
-              <div class="stat-delta up" id="adStatValueSub">total rewards logged</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">Success Rate</div>
-              <div class="stat-value green" id="adStatSuccess">—</div>
-              <div class="stat-delta neutral">coming soon</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">Wallets Active</div>
-              <div class="stat-value cyan" id="adStatWallets">—</div>
-              <div class="stat-delta neutral">coming soon</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">Pending Claims</div>
-              <div class="stat-value red" id="adStatPending">—</div>
-              <div class="stat-delta neutral" id="adStatPendingSub">in progress</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">Snapshot Alerts</div>
-              <div class="stat-value red" id="adStatSnapshot">—</div>
-              <div class="stat-delta neutral">coming soon</div>
-            </div>
+          <div class="atv2-mode-actions">
+            <button class="atv2-top-btn" onclick="atv2OpenFilters()"><span>⚙</span> Filters</button>
+            <button class="atv2-top-btn gold" onclick="atv2SaveView()"><span>💾</span> Save View</button>
           </div>
         </div>
 
-        <!-- HIGH PRIORITY -->
-        <div class="section">
-          <div class="section-header">
-            <div class="section-title">
-              <span class="title-icon">⚡</span>
-              HIGH PRIORITY TARGETS
-              <span class="title-count" id="hpt-count">0 URGENT</span>
-            </div>
-            <div class="section-actions">
-              <button class="btn btn-ghost" style="font-size:11px;padding:6px 14px;" data-tab-target="intel-hub">View All Intel</button>
-            </div>
-          </div>
-          <div class="priority-grid" id="hpt-grid">
-            <div style="grid-column:1/-1;padding:28px;text-align:center;color:var(--text-muted);font-size:12px;font-family:'Share Tech Mono',monospace;">Loading priority targets…</div>
-          </div>
-        </div>
+        <!-- ═══ MAIN GRID (table + sidebar) ═══ -->
+        <div class="atv2-main-grid">
 
-        <!-- FILTER BAR -->
-        <div class="filter-bar">
-          <div class="filter-row">
-            <span class="filter-label">FILTER:</span>
-            <div class="search-wrap">
-              <span class="search-icon">⌕</span>
-              <input class="search-input" type="text" placeholder="Search project name, chain, category..." oninput="airdropFilterTable(this.value)" id="searchInput">
-            </div>
-            <select class="filter-select" onchange="airdropFilterTable()">
-              <option value="">All Chains</option>
-              <option>Ethereum</option>
-              <option>Arbitrum</option>
-              <option>Optimism</option>
-              <option>Solana</option>
-              <option>Cosmos</option>
-              <option>zkSync</option>
-              <option>Starknet</option>
-              <option>Aptos</option>
-            </select>
-            <select class="filter-select" id="statusFilter" onchange="airdropFilterTable()">
-              <option value="">All Status</option>
-              <option>Farming</option>
-              <option>Active</option>
-              <option>Watching</option>
-              <option>Completed</option>
-              <option>Claimed</option>
-              <option>Expired</option>
-            </select>
-            <select class="filter-select" onchange="airdropFilterTable()">
-              <option value="">Difficulty</option>
-              <option>Easy</option>
-              <option>Medium</option>
-              <option>Advanced</option>
-              <option>Whale</option>
-            </select>
-            <select class="filter-select" onchange="airdropFilterTable()">
-              <option value="">Reward Size</option>
-              <option>$100+</option>
-              <option>$500+</option>
-              <option>$1000+</option>
-              <option>$5000+</option>
-            </select>
-          </div>
-          <div class="filter-row">
-            <span class="filter-label">QUICK:</span>
-            <div class="quick-tags">
-              <span class="tag active" onclick="airdropToggleTag(this)">All</span>
-              <span class="tag" onclick="airdropToggleTag(this)">Mainnet</span>
-              <span class="tag" onclick="airdropToggleTag(this)">Testnet</span>
-              <span class="tag" onclick="airdropToggleTag(this)">DeFi</span>
-              <span class="tag" onclick="airdropToggleTag(this)">Layer 2</span>
-              <span class="tag" onclick="airdropToggleTag(this)">NFT</span>
-              <span class="tag" onclick="airdropToggleTag(this)">Infrastructure</span>
-              <span class="tag" onclick="airdropToggleTag(this)">GameFi</span>
-              <span class="tag" onclick="airdropToggleTag(this)">DAO</span>
-              <span class="tag" onclick="airdropToggleTag(this)">High Value</span>
-              <span class="tag" onclick="airdropToggleTag(this)">Snapshot Soon</span>
-            </div>
-          </div>
-        </div>
+          <!-- LEFT — Table area -->
+          <div class="atv2-table-col">
 
-        <!-- MAIN TABLE -->
-        <div class="section">
-          <div class="section-header">
-            <div class="section-title">
-              <span class="title-icon">◈</span>
-              All Airdrops
-              <span class="title-count" id="tableCount">0</span>
+            <!-- Filter row -->
+            <div class="atv2-filter-bar">
+              <input class="atv2-search-box" placeholder="🔍 Search projects, chains, categories..." id="atv2Search" oninput="atv2ApplyFilters()">
+              <select class="atv2-filter-select" id="atv2CategoryFilter" onchange="atv2ApplyFilters()">
+                <option value="">All Categories</option>
+              </select>
+              <select class="atv2-filter-select" id="atv2StatusFilter" onchange="atv2ApplyFilters()">
+                <option value="">All Status</option>
+                <option value="LIVE">Live</option>
+                <option value="TESTNET">Testnet</option>
+                <option value="MAINNET">Mainnet</option>
+              </select>
+              <select class="atv2-filter-select" id="atv2SortBy" onchange="atv2ApplyFilters()">
+                <option value="momentum">Sort: Momentum ↓</option>
+                <option value="name">Sort: Name A-Z</option>
+                <option value="created">Sort: Recently Added</option>
+                <option value="reward">Sort: Reward ↓</option>
+              </select>
             </div>
-            <div class="section-actions">
-              <button class="btn btn-ghost" style="font-size:11px;padding:6px 14px;" onclick="airdropShowToast('📋', 'View Mode', 'Switching to grid view...')">⊞ Grid</button>
-              <button class="btn btn-ghost" style="font-size:11px;padding:6px 14px;">⬇ Sort</button>
-            </div>
-          </div>
-          <div class="table-wrap">
-            <table class="data-table" id="mainTable">
-              <thead>
-                <tr>
-                  <th onclick="airdropSortTable(0)">PROJECT ↕</th>
-                  <th onclick="airdropSortTable(1)">CHAIN</th>
-                  <th onclick="airdropSortTable(2)">CATEGORY</th>
-                  <th onclick="airdropSortTable(3)">STATUS</th>
-                  <th onclick="airdropSortTable(4)">TRUST SCORE</th>
-                  <th onclick="airdropSortTable(5)">EST. REWARD</th>
-                  <th onclick="airdropSortTable(6)">DIFFICULTY</th>
-                  <th onclick="airdropSortTable(7)">TIME LEFT</th>
-                  <th onclick="airdropSortTable(8)">PROGRESS</th>
-                  <th onclick="airdropSortTable(9)">WALLETS</th>
-                  <th>ACTIONS</th>
-                </tr>
-              </thead>
-              <tbody id="tableBody">
-              </tbody>
-            </table>
-          </div>
-        </div>
 
-        <!-- BOTTOM GRID: Deadlines + Intel -->
-        <div class="bottom-grid">
-          <!-- Deadlines -->
-          <div class="section" style="margin-bottom:0">
-            <div class="section-header">
-              <div class="section-title">
-                <span class="title-icon">⏱</span>
-                DEADLINE & SNAPSHOT CENTER
+            <!-- DISCOVER TABLE -->
+            <div class="atv2-table-wrap" id="atv2DiscoverWrap">
+              <table class="atv2-table">
+                <thead>
+                  <tr>
+                    <th style="width:38px;">#</th>
+                    <th style="width:36px;"></th>
+                    <th>PROJECT</th>
+                    <th>CHAIN</th>
+                    <th>CATEGORY</th>
+                    <th class="atv2-sortable" onclick="atv2QuickSort('momentum')">SCORE ↓</th>
+                    <th>EST. REWARD</th>
+                    <th>DIFFICULTY</th>
+                    <th>STATUS</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="atv2DiscoverBody">
+                  <tr><td colspan="10" class="atv2-loading">Loading projects...</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- MY FARMS TABLE -->
+            <div class="atv2-table-wrap" id="atv2FarmsWrap" style="display:none;">
+              <table class="atv2-table">
+                <thead>
+                  <tr>
+                    <th style="width:38px;">#</th>
+                    <th>PROJECT</th>
+                    <th>PROGRESS</th>
+                    <th>COMPLETED</th>
+                    <th>XP EARNED</th>
+                    <th>LAST ACTIVITY</th>
+                    <th>STATUS</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="atv2FarmsBody">
+                  <tr><td colspan="8" class="atv2-loading">Loading your farms...</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="atv2-pagination">
+              <span id="atv2PageInfo">Showing 0 of 0</span>
+              <div class="atv2-page-controls" id="atv2PageControls">
+                <!-- Page buttons injected by JS -->
               </div>
-            </div>
-            <div class="deadline-list" id="deadline-list">
-              <div style="padding:24px;text-align:center;color:var(--text-muted);font-size:12px;font-family:'Share Tech Mono',monospace;">Loading deadlines…</div>
             </div>
           </div>
 
-          <!-- Intelligence Panel -->
-          <div class="intel-panel">
-            <div class="intel-header">
-              <span style="font-size:14px">◈</span>
-              <span class="intel-title">ALPHA INTELLIGENCE</span>
-              <div class="intel-live"><div class="status-dot"></div> LIVE</div>
-            </div>
-            <div class="intel-body">
-              <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px;">TRENDING ECOSYSTEMS</div>
-              <div id="intel-ecosystems">
-                <div style="padding:14px;text-align:center;color:var(--text-muted);font-size:11px;font-family:'Share Tech Mono',monospace;">Loading…</div>
+          <!-- RIGHT — Contextual sidebar -->
+          <div class="atv2-sidebar">
+
+            <!-- DISCOVER MODE SIDEBAR -->
+            <div id="atv2DiscoverSidebar">
+
+              <!-- AI Intelligence -->
+              <div class="atv2-side-card">
+                <div class="atv2-side-head">
+                  <div class="atv2-side-title purple">⚡ AI INTELLIGENCE <span class="atv2-ai-badge">BETA</span></div>
+                </div>
+                <div class="atv2-side-desc">Based on momentum, funding, and community activity.</div>
+                <div class="atv2-ai-pick" id="atv2AiPick">
+                  <div class="atv2-no-data">Loading top pick...</div>
+                </div>
+                <button class="atv2-view-analysis" onclick="atv2ViewAiAnalysis()">View Full Analysis 📊</button>
               </div>
 
-              <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--text-muted);text-transform:uppercase;margin:14px 0 10px;">RECENT FUNDING ROUNDS</div>
-              <div id="intel-funding">
-                <div style="padding:14px;text-align:center;color:var(--text-muted);font-size:11px;font-family:'Share Tech Mono',monospace;">Loading…</div>
-              </div>
-            </div>
-          </div>
-        </div>
+              <!-- Smart Filters -->
+              <div class="atv2-side-card">
+                <div class="atv2-side-head">
+                  <div class="atv2-side-title cyan">🎚 SMART FILTERS</div>
+                  <button class="atv2-side-action" onclick="atv2SaveFilter()">💾 SAVE</button>
+                </div>
 
-        <!-- WALLET SYSTEM -->
-        <div class="section">
-          <div class="section-header">
-            <div class="section-title">
-              <span class="title-icon">◎</span>
-              WALLET PARTICIPATION SYSTEM
-              <span class="title-count" id="atw-count">0 WALLETS</span>
-            </div>
-            <button class="btn btn-ghost" style="font-size:11px;padding:6px 14px;" data-tab-target="wallets">＋ Add Wallet</button>
-          </div>
-          <div class="wallet-grid" id="atw-grid">
-            <div style="grid-column:1/-1;padding:28px;text-align:center;color:var(--text-muted);font-size:12px;font-family:'Share Tech Mono',monospace;">Loading wallets…</div>
-          </div>
-        </div>
+                <div class="atv2-fg">
+                  <div class="atv2-fg-lbl"><span>CHAINS</span><span class="atv2-fg-all" onclick="atv2ResetChains()">All</span></div>
+                  <div class="atv2-chain-pills" id="atv2ChainPills">
+                    <!-- Chain pills injected by JS -->
+                  </div>
+                </div>
 
-      </div><!-- /page-wrap -->
+                <div class="atv2-fg">
+                  <div class="atv2-fg-lbl"><span>MOMENTUM SCORE</span><span id="atv2ScoreVal">0 — 100</span></div>
+                  <input type="range" min="0" max="100" value="0" class="atv2-slider" id="atv2ScoreSlider" oninput="atv2OnScoreSlide(this)">
+                  <div class="atv2-slider-vals"><span>0</span><span>100</span></div>
+                </div>
 
-      <!-- ADD AIRDROP MODAL -->
-      <div class="modal-overlay" id="modal">
-        <div class="modal">
-          <div class="modal-header">
-            <div class="modal-title" id="airdropModalTitle">// ADD NEW AIRDROP</div>
-            <button class="modal-close" onclick="airdropCloseModal()">✕</button>
-          </div>
-          <div class="modal-body">
-            <div class="form-row">
-              <div class="form-field">
-                <label class="form-label">Project Name *</label>
-                <input class="form-input" id="adName" type="text" placeholder="e.g. LayerZero">
+                <div class="atv2-fg">
+                  <div class="atv2-fg-lbl"><span>DIFFICULTY</span></div>
+                  <div class="atv2-diff-checks">
+                    <div class="atv2-diff-check on" data-diff="easy" onclick="atv2ToggleDiff(this)">EASY</div>
+                    <div class="atv2-diff-check on" data-diff="medium" onclick="atv2ToggleDiff(this)">MEDIUM</div>
+                    <div class="atv2-diff-check on" data-diff="hard" onclick="atv2ToggleDiff(this)">HARD</div>
+                  </div>
+                </div>
+
+                <div class="atv2-apply-row">
+                  <button class="atv2-apply-btn" onclick="atv2ApplyFilters()">APPLY FILTERS</button>
+                  <button class="atv2-reset-btn" onclick="atv2ResetFilters()">RESET</button>
+                </div>
               </div>
-              <div class="form-field">
-                <label class="form-label">Token Ticker</label>
-                <input class="form-input" id="adTicker" type="text" placeholder="e.g. ZRO">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-field">
-                <label class="form-label">Blockchain</label>
-                <select class="form-select" id="adChain">
-                  <option>Ethereum</option>
-                  <option>Arbitrum</option>
-                  <option>Optimism</option>
-                  <option>Base</option>
-                  <option>zkSync</option>
-                  <option>Scroll</option>
-                  <option>Linea</option>
-                  <option>Solana</option>
-                  <option>Cosmos</option>
-                  <option>Starknet</option>
-                  <option>Other</option>
-                </select>
-              </div>
-              <div class="form-field">
-                <label class="form-label">Category</label>
-                <select class="form-select" id="adCategory">
-                  <option>DeFi</option>
-                  <option>Layer 2</option>
-                  <option>Infrastructure</option>
-                  <option>NFT</option>
-                  <option>GameFi</option>
-                  <option>DAO</option>
-                  <option>Restaking</option>
-                  <option>Other</option>
-                </select>
+
+              <!-- Ecosystem Heatmap -->
+              <div class="atv2-side-card">
+                <div class="atv2-side-head">
+                  <div class="atv2-side-title gold">🌐 ECOSYSTEM HEATMAP</div>
+                  <button class="atv2-side-action" onclick="atv2GoToOverview()">VIEW ALL</button>
+                </div>
+                <div class="atv2-heat-grid" id="atv2HeatGrid">
+                  <div class="atv2-no-data">Loading heatmap...</div>
+                </div>
               </div>
             </div>
-            <div class="form-row">
-              <div class="form-field">
-                <label class="form-label">Status</label>
-                <select class="form-select" id="adStatus">
-                  <option value="watching">Watching</option>
-                  <option value="farming">Farming</option>
-                  <option value="active">Active</option>
-                  <option value="claimed">Claimed</option>
-                  <option value="completed">Completed</option>
-                  <option value="missed">Missed</option>
-                </select>
+
+            <!-- MY FARMS MODE SIDEBAR -->
+            <div id="atv2FarmsSidebar" style="display:none;">
+
+              <!-- Selected project detail -->
+              <div class="atv2-side-card" id="atv2FarmDetailCard">
+                <div class="atv2-no-data" id="atv2FarmDetailEmpty">
+                  Click a project row to see its task checklist.
+                </div>
+                <div id="atv2FarmDetailBody" style="display:none;">
+                  <div class="atv2-task-detail-head">
+                    <button class="atv2-back-link" onclick="atv2CloseFarmDetail()">← BACK</button>
+                    <span class="atv2-detail-status" id="atv2DetailStatus">⚡ IN PROGRESS</span>
+                  </div>
+
+                  <div class="atv2-detail-logo-row">
+                    <div class="atv2-detail-big-logo" id="atv2DetailLogo">—</div>
+                    <div>
+                      <div class="atv2-detail-name" id="atv2DetailName">Project Name</div>
+                      <div class="atv2-detail-cats" id="atv2DetailCats"></div>
+                    </div>
+                  </div>
+
+                  <div class="atv2-detail-stats-row">
+                    <div class="atv2-detail-stat-cell">
+                      <div class="atv2-detail-stat-lbl">PROGRESS</div>
+                      <div class="atv2-detail-stat-val gold" id="atv2DetailProgress">0%</div>
+                    </div>
+                    <div class="atv2-detail-stat-cell">
+                      <div class="atv2-detail-stat-lbl">COMPLETED</div>
+                      <div class="atv2-detail-stat-val" id="atv2DetailCompleted">0 / 0</div>
+                    </div>
+                    <div class="atv2-detail-stat-cell">
+                      <div class="atv2-detail-stat-lbl">XP EARNED</div>
+                      <div class="atv2-detail-stat-val cyan" id="atv2DetailPoints">0</div>
+                    </div>
+                  </div>
+
+                  <div class="atv2-checklist-title">
+                    TASK CHECKLIST <span class="atv2-checklist-count" id="atv2ChecklistCount">0 / 0 ✓</span>
+                  </div>
+
+                  <div id="atv2TaskGroups">
+                    <!-- Task groups injected by JS -->
+                  </div>
+
+                  <button class="atv2-view-analysis" onclick="atv2ViewFullReport()" style="margin-top:14px;">View Full Project Report →</button>
+                </div>
               </div>
-              <div class="form-field">
-                <label class="form-label">Progress (%)</label>
-                <input class="form-input" id="adProgress" type="number" min="0" max="100" value="0" placeholder="0-100">
+
+              <!-- Recent Activity (user-wide) -->
+              <div class="atv2-side-card">
+                <div class="atv2-side-head">
+                  <div class="atv2-side-title cyan">⚡ RECENT ACTIVITY</div>
+                  <button class="atv2-side-action" onclick="atv2GoToProfile()">VIEW ALL</button>
+                </div>
+                <div class="atv2-recent-tx-list" id="atv2RecentTxList">
+                  <div class="atv2-no-data">Loading activity...</div>
+                </div>
               </div>
             </div>
-            <div class="form-row">
-              <div class="form-field">
-                <label class="form-label">Reward Received ($)</label>
-                <input class="form-input" id="adReward" type="number" min="0" step="0.01" value="0" placeholder="e.g. 1500">
-              </div>
-              <div class="form-field">
-                <label class="form-label">Date Joined</label>
-                <input class="form-input" id="adDateJoined" type="date">
-              </div>
-            </div>
-            <div class="form-field">
-              <label class="form-label">Wallets Used</label>
-              <input class="form-input" id="adWallets" type="text" placeholder="e.g. Main Wallet, Farm Wallet 2">
-            </div>
-            <div class="form-field">
-              <label class="form-label">Farming Notes</label>
-              <textarea class="form-textarea" id="adNotes" placeholder="Key steps, strategy notes, sybil considerations..."></textarea>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-ghost" onclick="airdropCloseModal()">Cancel</button>
-            <button class="btn btn-primary" id="airdropSaveBtn" onclick="airdropAddFromModal()">Add to Tracker →</button>
+
           </div>
         </div>
       </div>
-
-      <!-- TOAST -->
-      <div class="toast" id="toast">
-        <div class="toast-icon" id="toastIcon">✓</div>
-        <div>
-          <div class="toast-text" id="toastText">Action completed</div>
-          <div class="toast-sub" id="toastSub">DropElite system updated</div>
-        </div>
-      </div>
-
-
     </section>
     <!-- END AIRDROP TRACKER TAB CONTENT -->
 
@@ -26864,431 +27836,1021 @@ window.piRefresh = piLoadFromSupabase;
 })();
 /* END PROJECT INTELLIGENCE TAB SCRIPT */
 
-/* START AIRDROP TRACKER TAB SCRIPT */
+/* START AIRDROP TRACKER TAB SCRIPT — v3.2 (Chunk 7) */
+/* Merged Discover + My Farms — uses real projects + user_project_progress data */
 (function() {
 
-// ─── STATE — loaded from Supabase ───
-let airdropTrackerData = [];   // the current user's airdrops
-let airdropEditingId = null;   // null = adding new, otherwise editing this id
+// ─── STATE ───
+let atv2AllProjects   = [];     // all projects from DB
+let atv2UserProgress  = {};     // map of project_id → user_project_progress row
+let atv2CurrentMode   = 'discover';  // 'discover' or 'farms'
+let atv2SelectedFarmId = null;  // currently expanded farm in My Farms sidebar
+let atv2PageSize      = 10;
+let atv2CurrentPage   = 1;
+let atv2FiltersDiff   = { easy: true, medium: true, hard: true };
+let atv2FiltersChains = new Set();   // empty = all
+let atv2MinScore      = 0;
 
-// ─── LOAD FROM SUPABASE ───
-async function airdropLoadFromSupabase() {
-  try {
-    if (!window.API || !window.API.isLive()) {
-      const tbody = document.getElementById('tableBody');
-      if (tbody) tbody.innerHTML = '<tr><td colspan="9" style="padding:30px;text-align:center;color:var(--text-secondary);font-size:12px;">Supabase not connected. Check api.js keys.</td></tr>';
-      return;
-    }
-    airdropTrackerData = await window.API.getAirdrops();
-    airdropFilterTable();
-    airdropUpdateStats();
-  } catch (e) {
-    console.error('airdropLoadFromSupabase:', e);
-  }
-}
+// Defensive: get element OR return null
+function atv2El(id) { return document.getElementById(id); }
 
-// ─── REAL STATS (computed from the user's airdrop data) ───
-async function airdropUpdateStats() {
-  const data = airdropTrackerData;
-
-  // Active Opportunities = airdrops not yet finished (not claimed/completed/missed)
-  const activeStatuses = ['watching', 'farming', 'active'];
-  const activeCount = data.filter(a => activeStatuses.includes(a.status)).length;
-
-  // Est. Farming Value = sum of all reward_usd
-  const totalValue = data.reduce((sum, a) => sum + Number(a.reward_usd || 0), 0);
-
-  // Pending = airdrops currently being farmed (farming or active status)
-  const pendingCount = data.filter(a => a.status === 'farming' || a.status === 'active').length;
-
-  const setText = (id, val) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = val;
-  };
-
-  setText('adStatActive', activeCount);
-  setText('adStatActiveSub', activeCount === 1 ? 'tracked airdrop' : 'tracked airdrops');
-  setText('adStatValue', '$' + totalValue.toLocaleString());
-  setText('adStatPending', pendingCount);
-  setText('adStatPendingSub', pendingCount === 1 ? 'being farmed' : 'being farmed');
-
-  // Wallets Active — real count from the wallets table
-  try {
-    if (window.API && window.API.isLive && window.API.isLive()) {
-      const wallets = await window.API.getWallets();
-      setText('adStatWallets', wallets.length);
-      const sub = document.querySelector('#adStatWallets + .stat-delta');
-      if (sub) sub.textContent = wallets.length === 1 ? 'wallet tracked' : 'wallets tracked';
-    }
-  } catch (e) { console.error('airdrop stats — wallets:', e); }
-
-  // Snapshot Alerts — count of upcoming admin-published deadline alerts
-  try {
-    if (window.API && window.API.getAlerts) {
-      const alerts = await window.API.getAlerts();
-      const now = Date.now();
-      const upcoming = alerts.filter(a => {
-        if (!a.deadline) return false;
-        const dl = new Date(a.deadline).getTime();
-        return !isNaN(dl) && dl > now;
-      }).length;
-      setText('adStatSnapshot', upcoming);
-      const sub = document.querySelector('#adStatSnapshot + .stat-delta');
-      if (sub) sub.textContent = 'upcoming deadlines';
-    }
-  } catch (e) { console.error('airdrop stats — snapshot:', e); }
-
-  // Success Rate stays "—" until claimed-vs-missed history exists.
-}
-
-// ─── HELPERS ───
-function airdropGetStatusClass(s) {
-  const m = { farming:'status-farming', active:'status-active', watching:'status-watching', completed:'status-completed', claimed:'status-claimed', missed:'status-expired', expired:'status-expired' };
-  return m[s] || 'status-watching';
-}
-
-// Pick an emoji + color based on chain (so cards still look colorful without a DB field)
-function airdropVisuals(a) {
-  const map = {
-    'ethereum': { e:'⬡', c:'#00d4ff' }, 'arbitrum': { e:'💧', c:'#28A0F0' },
-    'optimism': { e:'🔴', c:'#FF0420' }, 'base': { e:'🔵', c:'#0052FF' },
-    'zksync':   { e:'⚡', c:'#a78bfa' }, 'scroll': { e:'📜', c:'#ff8c00' },
-    'linea':    { e:'◈', c:'#00e676' }, 'solana': { e:'◎', c:'#14F195' },
-    'cosmos':   { e:'🌐', c:'#7c3aed' }, 'starknet': { e:'★', c:'#ff3b6b' }
-  };
-  const key = (a.chain || '').toLowerCase();
-  return map[key] || { e:'⬢', c:'#f0b429' };
-}
-
-// ─── RENDER TABLE ───
-function airdropRenderTable(data) {
-  const tbody = document.getElementById('tableBody');
-  tbody.innerHTML = '';
-
-  if (!data.length) {
-    tbody.innerHTML = '<tr><td colspan="9" style="padding:36px;text-align:center;color:var(--text-secondary);font-size:13px;">No airdrops tracked yet. Click <strong style="color:var(--gold)">+ Add Airdrop</strong> to start.</td></tr>';
-    const tc = document.getElementById('tableCount');
-    if (tc) tc.textContent = '0 ENTRIES';
-    return;
-  }
-
-  data.forEach((a) => {
-    const vis = airdropVisuals(a);
-    const reward = Number(a.reward_usd || 0);
-    const rewardStr = reward > 0 ? ('$' + reward.toLocaleString()) : '—';
-    const joined = a.date_joined ? a.date_joined : '—';
-
-    const tr = document.createElement('tr');
-    tr.dataset.id = a.id;
-    tr.innerHTML = `
-      <td>
-        <div class="project-cell">
-          <div class="project-logo" style="background:linear-gradient(135deg,${vis.c}22,${vis.c}11)">${vis.e}</div>
-          <div>
-            <div class="project-name">${airdropEsc(a.name)}</div>
-            <div class="project-ticker">${airdropEsc(a.ticker || '—')}</div>
-          </div>
-        </div>
-      </td>
-      <td><span class="chain-badge">${airdropEsc(a.chain || '—')}</span></td>
-      <td><span class="cat-pill">${airdropEsc(a.category || '—')}</span></td>
-      <td><span class="status-badge ${airdropGetStatusClass(a.status)}"><span class="status-dot-sm"></span>${(a.status || 'watching').toUpperCase()}</span></td>
-      <td>
-        <div class="reward-val">${rewardStr}</div>
-        <div class="reward-range">${reward > 0 ? 'received' : 'not yet'}</div>
-      </td>
-      <td>
-        <div class="mini-progress">
-          <div class="mini-pct">${a.progress || 0}%</div>
-          <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${a.progress || 0}%;background:${vis.c}"></div></div>
-        </div>
-      </td>
-      <td><span class="time-cell time-safe">${joined}</span></td>
-      <td>
-        <div class="wallets-count" style="font-size:11px;color:var(--text-secondary)">
-          ${a.wallets_used ? airdropEsc(a.wallets_used) : '—'}
-        </div>
-      </td>
-      <td>
-        <div class="row-actions">
-          <div class="icon-btn" onclick="event.stopPropagation();airdropEdit(${a.id})" title="Edit">✎</div>
-          <div class="icon-btn" onclick="event.stopPropagation();airdropDelete(${a.id})" title="Delete">✕</div>
-        </div>
-      </td>
-    `;
-    tbody.appendChild(tr);
-
-    // Expandable notes row
-    if (a.notes) {
-      const expandTr = document.createElement('tr');
-      expandTr.className = 'expand-row';
-      expandTr.innerHTML = `
-        <td colspan="9" class="expand-content" style="display:table-cell;padding:0">
-          <div style="padding:10px 18px;font-size:12px;color:var(--text-secondary);border-left:2px solid ${vis.c}">
-            <strong style="color:var(--text-primary)">Notes:</strong> ${airdropEsc(a.notes)}
-          </div>
-        </td>
-      `;
-      tbody.appendChild(expandTr);
-    }
-  });
-
-  const tc = document.getElementById('tableCount');
-  if (tc) tc.textContent = data.length + (data.length === 1 ? ' ENTRY' : ' ENTRIES');
-}
-
-// Escape HTML so notes/names with < > & don't break layout
-function airdropEsc(str) {
+// HTML escape
+function atv2Esc(str) {
   if (str == null) return '';
   return String(str)
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
-// ─── FILTER ───
-function airdropFilterTable() {
-  const searchEl = document.getElementById('searchInput');
-  const statusEl = document.getElementById('statusFilter');
-  const search = searchEl ? searchEl.value.toLowerCase() : '';
-  const statusFilter = statusEl ? statusEl.value.toLowerCase() : '';
-
-  const filtered = airdropTrackerData.filter(a => {
-    const matchSearch = !search
-      || (a.name || '').toLowerCase().includes(search)
-      || (a.chain || '').toLowerCase().includes(search)
-      || (a.category || '').toLowerCase().includes(search);
-    const matchStatus = !statusFilter || a.status === statusFilter;
-    return matchSearch && matchStatus;
-  });
-  airdropRenderTable(filtered);
-}
-
-function airdropToggleTag(el) {
-  document.querySelectorAll('#tab-airdrop-tracker .tag').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-}
-
-function airdropSortTable(col) {
-  document.querySelectorAll('#tab-airdrop-tracker .data-table th').forEach((th, i) => {
-    th.classList.toggle('sort-active', i === col);
-  });
-}
-
-// ─── EXPORT: download tracked airdrops as CSV ───
-function airdropExportCsv() {
-  var rows = (typeof airdropTrackerData !== 'undefined' && Array.isArray(airdropTrackerData))
-    ? airdropTrackerData : [];
-
-  if (!rows.length) {
-    if (typeof airdropShowToast === 'function') {
-      airdropShowToast('📋', 'Nothing to export', 'Add some airdrops first');
+// ─── MAIN LOAD ───
+async function atv2LoadAll() {
+  try {
+    if (!window.API || !window.API.isLive || !window.API.isLive()) {
+      const body = atv2El('atv2DiscoverBody');
+      if (body) body.innerHTML = '<tr><td colspan="10" class="atv2-loading">Supabase not connected. Check api.js.</td></tr>';
+      return;
     }
+
+    // Fetch in parallel for speed
+    const [projects, progressMap] = await Promise.all([
+      window.API.getProjects ? window.API.getProjects({ featured: false }) : Promise.resolve([]),
+      window.API.getUserProjectProgress ? window.API.getUserProjectProgress() : Promise.resolve({})
+    ]);
+
+    atv2AllProjects = projects || [];
+    atv2UserProgress = progressMap || {};
+
+    // Render everything
+    atv2RenderAll();
+    atv2InitFilters();
+    atv2RenderAiPick();
+    atv2RenderHeatmap();
+    atv2RenderRecentActivity();
+  } catch (e) {
+    console.error('[atv2LoadAll] failed:', e);
+  }
+}
+
+// Renders both views + KPIs + counts
+function atv2RenderAll() {
+  // Tab counts
+  const trackedIds = Object.keys(atv2UserProgress);
+  const discoverCount = atv2El('atv2CountDiscover');
+  const farmsCount    = atv2El('atv2CountFarms');
+  if (discoverCount) discoverCount.textContent = atv2AllProjects.length;
+  if (farmsCount)    farmsCount.textContent    = trackedIds.length;
+
+  atv2RenderKpis();
+
+  if (atv2CurrentMode === 'discover') {
+    atv2RenderDiscoverTable();
+  } else {
+    atv2RenderFarmsTable();
+  }
+}
+
+// ─── KPI ROW ───
+function atv2RenderKpis() {
+  const row = atv2El('atv2KpiRow');
+  if (!row) return;
+
+  if (atv2CurrentMode === 'discover') {
+    const total = atv2AllProjects.length;
+    const highPotential = atv2AllProjects.filter(p => (p.momentum || 0) >= 70).length;
+    const avgScore = total > 0
+      ? (atv2AllProjects.reduce((a, p) => a + (p.momentum || 0), 0) / total / 10).toFixed(1)
+      : '0.0';
+    const trackedCount = Object.keys(atv2UserProgress).length;
+    const ecosystems = new Set(atv2AllProjects.map(p => (p.ecosystem || 'OTHER').toUpperCase())).size;
+
+    row.innerHTML = `
+      <div class="atv2-kpi-card">
+        <div class="atv2-kpi-head"><div class="atv2-kpi-icon gold">🎯</div><div class="atv2-kpi-lbl">TOTAL OPPORTUNITIES</div></div>
+        <div class="atv2-kpi-val gold">${total}</div>
+        <div class="atv2-kpi-delta">+ Live tracking</div>
+      </div>
+      <div class="atv2-kpi-card">
+        <div class="atv2-kpi-head"><div class="atv2-kpi-icon green">📈</div><div class="atv2-kpi-lbl">HIGH POTENTIAL</div></div>
+        <div class="atv2-kpi-val green">${highPotential}</div>
+        <div class="atv2-kpi-delta dim">${total > 0 ? Math.round(highPotential / total * 100) : 0}% of total</div>
+      </div>
+      <div class="atv2-kpi-card">
+        <div class="atv2-kpi-head"><div class="atv2-kpi-icon cyan">⚡</div><div class="atv2-kpi-lbl">AVG. MOMENTUM</div></div>
+        <div class="atv2-kpi-val cyan">${avgScore}/10</div>
+        <div class="atv2-kpi-delta">cohort strength</div>
+      </div>
+      <div class="atv2-kpi-card">
+        <div class="atv2-kpi-head"><div class="atv2-kpi-icon orange">⭐</div><div class="atv2-kpi-lbl">TRACKED BY YOU</div></div>
+        <div class="atv2-kpi-val orange">${trackedCount}</div>
+        <div class="atv2-kpi-delta dim">in My Farms</div>
+      </div>
+      <div class="atv2-kpi-card">
+        <div class="atv2-kpi-head"><div class="atv2-kpi-icon purple">🌐</div><div class="atv2-kpi-lbl">ECOSYSTEMS</div></div>
+        <div class="atv2-kpi-val purple">${ecosystems}</div>
+        <div class="atv2-kpi-delta dim">covered</div>
+      </div>
+    `;
+  } else {
+    const farms = atv2GetFarms();
+    const totalDone = farms.reduce((a, f) => a + (f.missions_completed || 0), 0);
+    const totalTasks = farms.reduce((a, f) => a + (f.missions_total || 0), 0);
+    const totalXp = farms.reduce((a, f) => a + (f.xp_earned || 0), 0);
+    const avgProg = farms.length > 0
+      ? Math.round(farms.reduce((a, f) => a + Number(f.completion_pct || 0), 0) / farms.length)
+      : 0;
+
+    row.innerHTML = `
+      <div class="atv2-kpi-card">
+        <div class="atv2-kpi-head"><div class="atv2-kpi-icon gold">📋</div><div class="atv2-kpi-lbl">PROJECTS TRACKED</div></div>
+        <div class="atv2-kpi-val gold">${farms.length}</div>
+        <div class="atv2-kpi-delta">active farms</div>
+      </div>
+      <div class="atv2-kpi-card">
+        <div class="atv2-kpi-head"><div class="atv2-kpi-icon green">✓</div><div class="atv2-kpi-lbl">TASKS COMPLETED</div></div>
+        <div class="atv2-kpi-val green">${totalDone}${totalTasks > 0 ? ' / ' + totalTasks : ''}</div>
+        <div class="atv2-kpi-delta">${totalTasks > 0 ? Math.round(totalDone / totalTasks * 100) + '%' : '—'}</div>
+      </div>
+      <div class="atv2-kpi-card">
+        <div class="atv2-kpi-head"><div class="atv2-kpi-icon cyan">🎯</div><div class="atv2-kpi-lbl">XP EARNED</div></div>
+        <div class="atv2-kpi-val cyan">${totalXp.toLocaleString()}</div>
+        <div class="atv2-kpi-delta">accumulating</div>
+      </div>
+      <div class="atv2-kpi-card">
+        <div class="atv2-kpi-head"><div class="atv2-kpi-icon purple">📊</div><div class="atv2-kpi-lbl">AVG. PROGRESS</div></div>
+        <div class="atv2-kpi-val purple">${avgProg}%</div>
+        <div class="atv2-kpi-delta dim">across farms</div>
+      </div>
+      <div class="atv2-kpi-card">
+        <div class="atv2-kpi-head"><div class="atv2-kpi-icon orange">🔥</div><div class="atv2-kpi-lbl">LATEST FARM</div></div>
+        <div class="atv2-kpi-val orange">${farms.length > 0 ? atv2Esc((farms[0].project_name || farms[0].name || 'New').slice(0, 8)) : '—'}</div>
+        <div class="atv2-kpi-delta">just added</div>
+      </div>
+    `;
+  }
+}
+
+// ─── DISCOVER TABLE ───
+function atv2RenderDiscoverTable() {
+  const body = atv2El('atv2DiscoverBody');
+  if (!body) return;
+
+  // Apply filters
+  let rows = atv2AllProjects.slice();
+
+  // Search
+  const search = (atv2El('atv2Search') && atv2El('atv2Search').value || '').toLowerCase().trim();
+  if (search) {
+    rows = rows.filter(p =>
+      ((p.name || '') + ' ' + (p.ecosystem || '') + ' ' + (p.subtitle || '')).toLowerCase().indexOf(search) >= 0
+    );
+  }
+
+  // Category filter
+  const catFilter = (atv2El('atv2CategoryFilter') && atv2El('atv2CategoryFilter').value || '').toLowerCase();
+  if (catFilter) {
+    rows = rows.filter(p => ((p.ecosystem || '') + '').toLowerCase() === catFilter);
+  }
+
+  // Status filter
+  const statusFilter = atv2El('atv2StatusFilter') && atv2El('atv2StatusFilter').value || '';
+  if (statusFilter) {
+    rows = rows.filter(p => (p.status || '').toUpperCase() === statusFilter);
+  }
+
+  // Chain filter
+  if (atv2FiltersChains.size > 0) {
+    rows = rows.filter(p => atv2FiltersChains.has((p.ecosystem || '').toUpperCase()));
+  }
+
+  // Min score filter (momentum / 10 = score out of 10, but we store 0-100)
+  if (atv2MinScore > 0) {
+    rows = rows.filter(p => (p.momentum || 0) >= atv2MinScore);
+  }
+
+  // Difficulty filter — projects don't have difficulty natively; we'll approximate from competition
+  // For now, show all (difficulty filtering only affects mission-level)
+
+  // Sort
+  const sortBy = atv2El('atv2SortBy') && atv2El('atv2SortBy').value || 'momentum';
+  if (sortBy === 'momentum') {
+    rows.sort((a, b) => (b.momentum || 0) - (a.momentum || 0));
+  } else if (sortBy === 'name') {
+    rows.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+  } else if (sortBy === 'created') {
+    rows.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+  } else if (sortBy === 'reward') {
+    rows.sort((a, b) => (b.est_value_usd || 0) - (a.est_value_usd || 0));
+  }
+
+  // Pagination
+  const total = rows.length;
+  const pages = Math.max(1, Math.ceil(total / atv2PageSize));
+  if (atv2CurrentPage > pages) atv2CurrentPage = pages;
+  const start = (atv2CurrentPage - 1) * atv2PageSize;
+  const pageRows = rows.slice(start, start + atv2PageSize);
+
+  // Empty state
+  if (pageRows.length === 0) {
+    body.innerHTML = `
+      <tr><td colspan="10">
+        <div class="atv2-empty">
+          <div class="atv2-empty-icon">🔍</div>
+          <div class="atv2-empty-title">No projects match your filters</div>
+          <div class="atv2-empty-sub">Try resetting filters or <b>add projects via admin</b>.</div>
+        </div>
+      </td></tr>`;
+    atv2RenderPagination(0, 1);
     return;
   }
 
-  // CSV escape: wrap in quotes, double any internal quotes
-  function csvCell(v) {
-    if (v == null) return '';
-    var s = String(v).replace(/"/g, '""');
-    return '"' + s + '"';
-  }
+  // Render rows
+  body.innerHTML = pageRows.map((p, i) => atv2BuildDiscoverRow(p, start + i)).join('');
+  atv2RenderPagination(total, pages);
+}
 
-  var headers = ['Name', 'Ticker', 'Chain', 'Category', 'Status',
-                 'Progress %', 'Est. Reward', 'Snapshot Date', 'Notes'];
+function atv2BuildDiscoverRow(p, idx) {
+  const isTracked = !!atv2UserProgress[p.id];
+  const initials = p.logo_initials || (p.name || '?').slice(0, 2).toUpperCase();
+  const logoUrl = p.logo_url;
+  const logoColor = p.logo_color || '#7a849a';
+  const chain = p.ecosystem || 'OTHER';
+  const score = ((p.momentum || 0) / 10).toFixed(1);
+  const reward = p.est_value_usd ? '$' + Number(p.est_value_usd).toLocaleString() + '+' : (p.reward_level || 'TBD');
+  const rewardTier = p.reward_level || (p.momentum >= 70 ? 'HIGH' : p.momentum >= 50 ? 'MEDIUM' : 'LOW');
+  const competition = (p.competition || 'MEDIUM').toLowerCase();
+  const diff = competition === 'low' ? 'easy' : competition === 'high' ? 'hard' : 'medium';
+  const status = (p.status || 'ACTIVE').toUpperCase();
+  const isHot = (p.momentum || 0) >= 80;
+  const isNew = (() => {
+    if (!p.created_at) return false;
+    return (Date.now() - new Date(p.created_at).getTime()) < (14 * 24 * 3600 * 1000);
+  })();
 
-  var lines = [headers.map(csvCell).join(',')];
-  rows.forEach(function(a) {
-    lines.push([
-      a.name, a.ticker, a.chain, a.category, a.status,
-      a.progress, a.est_reward, a.snapshot_date, a.notes
-    ].map(csvCell).join(','));
+  const logoHtml = logoUrl
+    ? `<img src="${atv2Esc(logoUrl)}" alt="">`
+    : atv2Esc(initials);
+  const logoStyle = logoUrl
+    ? ''
+    : `background:${logoColor}22;color:${logoColor};border:1px solid ${logoColor}55;`;
+
+  return `
+    <tr class="${isTracked ? 'atv2-tracked' : ''}" onclick="atv2OpenProject('${atv2Esc(p.id)}')">
+      <td><span class="atv2-row-num">${String(idx + 1).padStart(2, '0')}</span></td>
+      <td><button class="atv2-star-btn ${isTracked ? 'active' : ''}" onclick="atv2ToggleTrack(event, '${atv2Esc(p.id)}')">${isTracked ? '★' : '☆'}</button></td>
+      <td>
+        <div class="atv2-project-cell">
+          <div class="atv2-project-logo" style="${logoStyle}">${logoHtml}</div>
+          <div>
+            <div class="atv2-project-name">${atv2Esc(p.name || 'Untitled')}${isHot ? '<span class="atv2-hot-badge">HOT</span>' : ''}${isNew ? '<span class="atv2-hot-badge atv2-new-badge">NEW</span>' : ''}</div>
+            <div class="atv2-project-tag">${atv2Esc(p.subtitle || chain)}</div>
+          </div>
+        </div>
+      </td>
+      <td><div class="atv2-chain-mini" style="background:${logoColor}22;color:${logoColor};">${atv2Esc(chain.slice(0, 4))}</div></td>
+      <td><span class="atv2-cat-pill">${atv2Esc(p.subtitle || chain)}</span></td>
+      <td>
+        <div class="atv2-score-cell">
+          <span class="atv2-score-num">${score}</span>
+          <div class="atv2-score-bar-bg"><div class="atv2-score-bar-fill" style="width:${Math.min(100, p.momentum || 0)}%"></div></div>
+        </div>
+      </td>
+      <td>
+        <div class="atv2-reward-cell">${atv2Esc(reward)}</div>
+        <div class="atv2-reward-tier">${atv2Esc(rewardTier)}</div>
+      </td>
+      <td><span class="atv2-diff-pill ${diff}">${diff.toUpperCase()}</span></td>
+      <td><span class="atv2-status-dot"></span><span style="font-size:11.5px;color:var(--av-green);">${atv2Esc(status)}</span></td>
+      <td><button class="atv2-track-btn ${isTracked ? 'tracked' : ''}" onclick="atv2ToggleTrack(event, '${atv2Esc(p.id)}')">${isTracked ? '✓ TRACKING' : '⭐ TRACK'}</button></td>
+    </tr>
+  `;
+}
+
+// ─── MY FARMS TABLE ───
+function atv2GetFarms() {
+  // Combine project data with user_project_progress
+  const trackedIds = Object.keys(atv2UserProgress);
+  const farms = [];
+  trackedIds.forEach(pid => {
+    const proj = atv2AllProjects.find(p => String(p.id) === String(pid));
+    if (proj) {
+      const prog = atv2UserProgress[pid] || {};
+      farms.push({
+        ...proj,
+        project_id: pid,
+        project_name: proj.name,
+        completion_pct: Number(prog.completion_pct || 0),
+        missions_completed: prog.missions_completed || 0,
+        missions_total: prog.missions_total || 0,
+        xp_earned: prog.xp_earned || 0,
+        first_activity_at: prog.first_activity_at,
+        last_activity_at: prog.last_activity_at,
+        is_active: prog.is_active !== false
+      });
+    }
   });
 
-  var csv = lines.join('\n');
-  var stamp = new Date().toISOString().slice(0, 10);   // YYYY-MM-DD
+  // Sort by progress desc by default
+  farms.sort((a, b) => Number(b.completion_pct) - Number(a.completion_pct));
+  return farms;
+}
 
-  // Trigger a real file download
-  var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-  var url  = URL.createObjectURL(blob);
-  var a    = document.createElement('a');
-  a.href = url;
-  a.download = 'dropelite-airdrops-' + stamp + '.csv';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+function atv2RenderFarmsTable() {
+  const body = atv2El('atv2FarmsBody');
+  if (!body) return;
 
-  if (typeof airdropShowToast === 'function') {
-    airdropShowToast('✓', 'Export ready', rows.length + ' airdrops exported');
+  const farms = atv2GetFarms();
+  const total = farms.length;
+  const pages = Math.max(1, Math.ceil(total / atv2PageSize));
+  if (atv2CurrentPage > pages) atv2CurrentPage = pages;
+  const start = (atv2CurrentPage - 1) * atv2PageSize;
+  const pageRows = farms.slice(start, start + atv2PageSize);
+
+  if (pageRows.length === 0) {
+    body.innerHTML = `
+      <tr><td colspan="8">
+        <div class="atv2-empty">
+          <div class="atv2-empty-icon">📋</div>
+          <div class="atv2-empty-title">No farms yet</div>
+          <div class="atv2-empty-sub">Click <b>⭐ TRACK</b> on any project in <b>Discover</b> mode to start tracking it.</div>
+        </div>
+      </td></tr>`;
+    atv2RenderPagination(0, 1);
+    return;
   }
+
+  body.innerHTML = pageRows.map((f, i) => atv2BuildFarmRow(f, start + i)).join('');
+  atv2RenderPagination(total, pages);
 }
 
-// ─── MODAL: ADD / EDIT ───
-function airdropOpenModal() {
-  airdropEditingId = null;
-  const t = document.getElementById('airdropModalTitle');
-  if (t) t.textContent = '// ADD NEW AIRDROP';
-  const btn = document.getElementById('airdropSaveBtn');
-  if (btn) btn.textContent = 'Add to Tracker →';
-  // Clear all fields
-  airdropSetField('adName', '');
-  airdropSetField('adTicker', '');
-  airdropSetField('adChain', 'Ethereum');
-  airdropSetField('adCategory', 'DeFi');
-  airdropSetField('adStatus', 'watching');
-  airdropSetField('adProgress', '0');
-  airdropSetField('adReward', '0');
-  airdropSetField('adDateJoined', '');
-  airdropSetField('adWallets', '');
-  airdropSetField('adNotes', '');
-  document.getElementById('modal').classList.add('open');
+function atv2BuildFarmRow(f, idx) {
+  const initials = f.logo_initials || (f.name || '?').slice(0, 2).toUpperCase();
+  const logoUrl = f.logo_url;
+  const logoColor = f.logo_color || '#7a849a';
+  const pct = Math.round(Number(f.completion_pct) || 0);
+  const progClass = pct >= 70 ? 'high' : pct >= 40 ? 'mid' : 'low';
+  const progColor = pct >= 70 ? 'var(--av-green)' : pct >= 40 ? 'var(--av-gold)' : 'var(--av-red)';
+
+  const status = pct >= 100 ? 'COMPLETED' : pct > 0 ? 'IN PROGRESS' : 'STARTED';
+  const statusColor = pct >= 100 ? 'var(--av-green)' : 'var(--av-orange)';
+  const statusBg = pct >= 100 ? 'var(--av-green-soft)' : 'var(--av-orange-soft)';
+
+  const activity = atv2TimeAgo(f.last_activity_at);
+  const isSelected = atv2SelectedFarmId === String(f.project_id);
+
+  const logoHtml = logoUrl
+    ? `<img src="${atv2Esc(logoUrl)}" alt="">`
+    : atv2Esc(initials);
+  const logoStyle = logoUrl
+    ? ''
+    : `background:${logoColor}22;color:${logoColor};border:1px solid ${logoColor}55;`;
+
+  return `
+    <tr class="${isSelected ? 'atv2-selected' : ''}" onclick="atv2SelectFarm('${atv2Esc(f.project_id)}')">
+      <td><span class="atv2-row-num">${String(idx + 1).padStart(2, '0')}</span></td>
+      <td>
+        <div class="atv2-project-cell">
+          <div class="atv2-project-logo" style="${logoStyle}">${logoHtml}</div>
+          <div>
+            <div class="atv2-project-name">${atv2Esc(f.name || 'Untitled')}</div>
+            <div class="atv2-project-tag">${atv2Esc(f.ecosystem || '')}</div>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="atv2-progress-cell">
+          <div class="atv2-progress-bar-bg"><div class="atv2-progress-bar-fill ${progClass}" style="width:${pct}%"></div></div>
+          <span class="atv2-progress-text" style="color:${progColor};">${pct}%</span>
+        </div>
+      </td>
+      <td><span class="atv2-reward-cell" style="color:var(--av-text)">${f.missions_completed}<span style="color:var(--av-text-muted);font-weight:400;"> / ${f.missions_total || 0}</span></span></td>
+      <td><span class="atv2-reward-cell" style="color:var(--av-cyan)">${Number(f.xp_earned || 0).toLocaleString()}</span></td>
+      <td><span style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--av-text-dim);">${atv2Esc(activity)}</span></td>
+      <td><span style="font-family:'Share Tech Mono',monospace;font-size:9px;color:${statusColor};letter-spacing:1px;font-weight:700;background:${statusBg};padding:3px 9px;border-radius:4px;">${status}</span></td>
+      <td><span class="atv2-row-arrow">›</span></td>
+    </tr>
+  `;
 }
 
-function airdropCloseModal() {
-  document.getElementById('modal').classList.remove('open');
+function atv2TimeAgo(ts) {
+  if (!ts) return 'never';
+  const ms = Date.now() - new Date(ts).getTime();
+  if (ms < 0) return 'just now';
+  const mins = Math.floor(ms / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return mins + 'm ago';
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return hours + 'h ago';
+  const days = Math.floor(hours / 24);
+  return days + 'd ago';
 }
 
-function airdropEdit(id) {
-  const a = airdropTrackerData.find(x => x.id === id);
-  if (!a) return;
-  airdropEditingId = id;
-  const t = document.getElementById('airdropModalTitle');
-  if (t) t.textContent = '// EDIT AIRDROP';
-  const btn = document.getElementById('airdropSaveBtn');
-  if (btn) btn.textContent = 'Save Changes →';
-  airdropSetField('adName', a.name || '');
-  airdropSetField('adTicker', a.ticker || '');
-  airdropSetField('adChain', a.chain || 'Ethereum');
-  airdropSetField('adCategory', a.category || 'DeFi');
-  airdropSetField('adStatus', a.status || 'watching');
-  airdropSetField('adProgress', String(a.progress || 0));
-  airdropSetField('adReward', String(a.reward_usd || 0));
-  airdropSetField('adDateJoined', a.date_joined || '');
-  airdropSetField('adWallets', a.wallets_used || '');
-  airdropSetField('adNotes', a.notes || '');
-  document.getElementById('modal').classList.add('open');
+// ─── PAGINATION ───
+function atv2RenderPagination(total, pages) {
+  const info = atv2El('atv2PageInfo');
+  const controls = atv2El('atv2PageControls');
+  if (!info || !controls) return;
+
+  if (total === 0) {
+    info.textContent = 'Showing 0 of 0';
+    controls.innerHTML = '';
+    return;
+  }
+
+  const start = (atv2CurrentPage - 1) * atv2PageSize + 1;
+  const end = Math.min(total, atv2CurrentPage * atv2PageSize);
+  info.textContent = `Showing ${start} to ${end} of ${total} results`;
+
+  // Build pagination
+  let html = '';
+  html += `<button class="atv2-page-btn" onclick="atv2PageGo(${atv2CurrentPage - 1})" ${atv2CurrentPage === 1 ? 'disabled' : ''}>‹</button>`;
+  for (let p = 1; p <= pages; p++) {
+    if (p === 1 || p === pages || Math.abs(p - atv2CurrentPage) <= 1) {
+      html += `<button class="atv2-page-btn ${p === atv2CurrentPage ? 'active' : ''}" onclick="atv2PageGo(${p})">${p}</button>`;
+    } else if (p === atv2CurrentPage - 2 || p === atv2CurrentPage + 2) {
+      html += `<span class="atv2-page-btn" style="border-color:transparent;cursor:default;">...</span>`;
+    }
+  }
+  html += `<button class="atv2-page-btn" onclick="atv2PageGo(${atv2CurrentPage + 1})" ${atv2CurrentPage === pages ? 'disabled' : ''}>›</button>`;
+  controls.innerHTML = html;
 }
 
-function airdropSetField(id, val) {
-  const el = document.getElementById(id);
-  if (el) el.value = val;
-}
-function airdropGetField(id) {
-  const el = document.getElementById(id);
-  return el ? el.value : '';
-}
+window.atv2PageGo = function(p) {
+  atv2CurrentPage = Math.max(1, p);
+  if (atv2CurrentMode === 'discover') atv2RenderDiscoverTable();
+  else atv2RenderFarmsTable();
+};
 
-// Save (handles both add and edit)
-async function airdropAddFromModal() {
-  const name = airdropGetField('adName').trim();
-  if (!name) { airdropShowToast('⚠️', 'Name Required', 'Please enter a project name.'); return; }
+// ─── MODE SWITCH ───
+window.atv2SwitchMode = function(mode) {
+  atv2CurrentMode = mode;
+  atv2CurrentPage = 1;
 
-  const payload = {
-    name:         name,
-    ticker:       airdropGetField('adTicker').trim(),
-    chain:        airdropGetField('adChain'),
-    category:     airdropGetField('adCategory'),
-    status:       airdropGetField('adStatus'),
-    progress:     parseInt(airdropGetField('adProgress'), 10) || 0,
-    reward_usd:   parseFloat(airdropGetField('adReward')) || 0,
-    date_joined:  airdropGetField('adDateJoined') || null,
-    wallets_used: airdropGetField('adWallets').trim(),
-    notes:        airdropGetField('adNotes').trim()
-  };
+  document.querySelectorAll('.airdrop-tracker-view .atv2-mode-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.mode === mode);
+  });
 
-  const btn = document.getElementById('airdropSaveBtn');
-  if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+  const discWrap   = atv2El('atv2DiscoverWrap');
+  const farmsWrap  = atv2El('atv2FarmsWrap');
+  const discSide   = atv2El('atv2DiscoverSidebar');
+  const farmsSide  = atv2El('atv2FarmsSidebar');
+  const sub        = atv2El('atv2Sub');
 
-  let result;
-  if (airdropEditingId) {
-    result = await window.API.updateAirdrop(airdropEditingId, payload);
+  if (mode === 'discover') {
+    if (discWrap)  discWrap.style.display  = '';
+    if (farmsWrap) farmsWrap.style.display = 'none';
+    if (discSide)  discSide.style.display  = '';
+    if (farmsSide) farmsSide.style.display = 'none';
+    if (sub) sub.textContent = 'Discover, farm, and track all your airdrop opportunities in one place.';
+    atv2RenderDiscoverTable();
   } else {
-    result = await window.API.addAirdrop(payload);
+    if (discWrap)  discWrap.style.display  = 'none';
+    if (farmsWrap) farmsWrap.style.display = '';
+    if (discSide)  discSide.style.display  = 'none';
+    if (farmsSide) farmsSide.style.display = '';
+    if (sub) sub.textContent = 'Track your personal farming progress across active airdrop projects.';
+    atv2RenderFarmsTable();
   }
 
-  if (btn) btn.disabled = false;
+  atv2RenderKpis();
+};
 
-  if (!result.ok) {
-    airdropShowToast('⚠️', 'Save Failed', result.error || 'Could not save. Try again.');
-    if (btn) btn.textContent = airdropEditingId ? 'Save Changes →' : 'Add to Tracker →';
+// ─── TOGGLE TRACK (★ star button) ───
+window.atv2ToggleTrack = async function(e, projectId) {
+  if (e) { e.stopPropagation(); e.preventDefault(); }
+  if (!window.API || !window.API.isLive || !window.API.isLive()) return;
+
+  const isTracked = !!atv2UserProgress[projectId];
+
+  try {
+    if (isTracked) {
+      // UNTRACK — soft delete via direct Supabase if API method doesn't exist
+      if (window.API.untrackProject) {
+        await window.API.untrackProject(projectId);
+      } else if (window.supa) {
+        const user = await window.API.getCurrentUser();
+        if (user) {
+          await window.supa.from('user_project_progress')
+            .delete()
+            .eq('user_id', user.id)
+            .eq('project_id', projectId);
+        }
+      }
+      delete atv2UserProgress[projectId];
+      atv2ShowToast('⭐', 'Untracked', 'Project removed from My Farms.');
+    } else {
+      // TRACK — insert row in user_project_progress
+      if (window.API.trackProject) {
+        await window.API.trackProject(projectId);
+      } else if (window.supa) {
+        const user = await window.API.getCurrentUser();
+        if (user) {
+          const { error } = await window.supa.from('user_project_progress')
+            .upsert({
+              user_id:     user.id,
+              project_id:  projectId,
+              first_activity_at: new Date().toISOString(),
+              last_activity_at:  new Date().toISOString(),
+              is_active:   true
+            }, { onConflict: 'user_id,project_id' });
+          if (error) console.error('[atv2ToggleTrack] insert error:', error);
+        }
+      }
+
+      // Refresh progress map locally (the DB trigger will fill in actual values)
+      if (window.API.getUserProjectProgress) {
+        const newMap = await window.API.getUserProjectProgress();
+        atv2UserProgress = newMap || {};
+      } else {
+        atv2UserProgress[projectId] = { project_id: projectId, completion_pct: 0, missions_completed: 0, missions_total: 0 };
+      }
+      atv2ShowToast('⭐', 'Tracked!', 'Added to My Farms — open My Farms tab to see progress.');
+    }
+
+    atv2RenderAll();
+  } catch (err) {
+    console.error('[atv2ToggleTrack] failed:', err);
+    atv2ShowToast('⚠️', 'Failed', 'Could not update tracking. Check console.');
+  }
+};
+
+// ─── OPEN PROJECT (clicking a row in Discover) ───
+window.atv2OpenProject = function(projectId) {
+  // Go to Project Intelligence + open detail
+  const btn = document.querySelector('[data-tab-target="project-intel"]');
+  if (btn) btn.click();
+  setTimeout(function() {
+    if (window.piOpenDetail) window.piOpenDetail(projectId);
+  }, 300);
+};
+
+// ─── SELECT FARM (clicking row in My Farms) ───
+window.atv2SelectFarm = async function(projectId) {
+  atv2SelectedFarmId = String(projectId);
+
+  // Highlight selected row
+  document.querySelectorAll('.airdrop-tracker-view #atv2FarmsBody tr').forEach(r => r.classList.remove('atv2-selected'));
+  const row = document.querySelector(`.airdrop-tracker-view #atv2FarmsBody tr[onclick*="'${projectId}'"]`);
+  if (row) row.classList.add('atv2-selected');
+
+  // Populate detail card
+  const empty = atv2El('atv2FarmDetailEmpty');
+  const body  = atv2El('atv2FarmDetailBody');
+  if (empty) empty.style.display = 'none';
+  if (body)  body.style.display  = '';
+
+  const farm = atv2GetFarms().find(f => String(f.project_id) === String(projectId));
+  if (!farm) return;
+
+  // Header
+  const statusEl = atv2El('atv2DetailStatus');
+  const pct = Math.round(Number(farm.completion_pct) || 0);
+  if (statusEl) {
+    if (pct >= 100) {
+      statusEl.className = 'atv2-detail-status done';
+      statusEl.textContent = '✓ COMPLETED';
+    } else {
+      statusEl.className = 'atv2-detail-status';
+      statusEl.textContent = '⚡ IN PROGRESS';
+    }
+  }
+
+  // Logo + name
+  const logoEl = atv2El('atv2DetailLogo');
+  if (logoEl) {
+    if (farm.logo_url) {
+      logoEl.innerHTML = `<img src="${atv2Esc(farm.logo_url)}" alt="">`;
+    } else {
+      const initials = farm.logo_initials || (farm.name || '?').slice(0, 2).toUpperCase();
+      logoEl.textContent = initials;
+      logoEl.style.background = (farm.logo_color || '#7a849a') + '22';
+      logoEl.style.color = farm.logo_color || '#4af0ff';
+      logoEl.style.borderColor = (farm.logo_color || '#444') + '55';
+    }
+  }
+
+  const nameEl = atv2El('atv2DetailName');
+  if (nameEl) nameEl.textContent = farm.name || 'Project';
+
+  const catsEl = atv2El('atv2DetailCats');
+  if (catsEl) {
+    const cats = [];
+    if (farm.ecosystem) cats.push(farm.ecosystem.toUpperCase());
+    if (farm.subtitle) cats.push(farm.subtitle.toUpperCase());
+    catsEl.innerHTML = cats.map(c => `<span class="atv2-detail-cat-pill">${atv2Esc(c)}</span>`).join('');
+  }
+
+  // Stats
+  const setText = (id, v) => { const el = atv2El(id); if (el) el.textContent = v; };
+  setText('atv2DetailProgress', pct + '%');
+  setText('atv2DetailCompleted', (farm.missions_completed || 0) + ' / ' + (farm.missions_total || 0));
+  setText('atv2DetailPoints', Number(farm.xp_earned || 0).toLocaleString());
+  setText('atv2ChecklistCount', (farm.missions_completed || 0) + ' / ' + (farm.missions_total || 0) + ' ✓');
+
+  // Task checklist — fetch project missions
+  await atv2RenderTaskChecklist(projectId);
+};
+
+window.atv2CloseFarmDetail = function() {
+  atv2SelectedFarmId = null;
+  const empty = atv2El('atv2FarmDetailEmpty');
+  const body  = atv2El('atv2FarmDetailBody');
+  if (empty) empty.style.display = '';
+  if (body)  body.style.display  = 'none';
+  document.querySelectorAll('.airdrop-tracker-view #atv2FarmsBody tr').forEach(r => r.classList.remove('atv2-selected'));
+};
+
+async function atv2RenderTaskChecklist(projectId) {
+  const wrap = atv2El('atv2TaskGroups');
+  if (!wrap) return;
+
+  if (!window.API.getProjectMissions) {
+    wrap.innerHTML = '<div class="atv2-no-data">Task data unavailable.</div>';
     return;
   }
 
-  airdropCloseModal();
-  airdropShowToast('✓', airdropEditingId ? 'Airdrop Updated' : 'Airdrop Added',
-    airdropEditingId ? (name + ' updated.') : (name + ' added to your tracker.'));
-  await airdropLoadFromSupabase();
+  try {
+    const missions = await window.API.getProjectMissions(projectId);
+    if (!missions || missions.length === 0) {
+      wrap.innerHTML = '<div class="atv2-no-data">No tasks defined for this project yet.</div>';
+      return;
+    }
+
+    // Group missions by quest_type
+    const groups = {
+      daily:    { icon: '☀️', name: 'Daily Tasks',   items: [] },
+      weekly:   { icon: '📅', name: 'Weekly Tasks',  items: [] },
+      one_time: { icon: '🎯', name: 'One-time Tasks', items: [] },
+      boost:    { icon: '⚡', name: 'Boost Tasks',   items: [] }
+    };
+    missions.forEach(m => {
+      const qt = m.quest_type || 'daily';
+      if (groups[qt]) groups[qt].items.push(m);
+      else groups.daily.items.push(m);
+    });
+
+    let html = '';
+    Object.keys(groups).forEach((key, idx) => {
+      const g = groups[key];
+      if (g.items.length === 0) return;
+      const doneCount = g.items.filter(m => m.done).length;
+      const totalCount = g.items.length;
+      const status = doneCount === totalCount ? 'done' : 'progress';
+      const statusText = doneCount === totalCount ? 'DONE' : 'ACTIVE';
+
+      const taskItems = g.items.map(m => {
+        const isDone = !!m.done;
+        return `
+          <div class="atv2-task-item ${isDone ? 'done' : ''}">
+            <span class="atv2-task-check ${isDone ? 'done' : 'pending'}">${isDone ? '✓' : '○'}</span>
+            <span class="atv2-task-name">${atv2Esc(m.title || 'Untitled')}</span>
+            <span class="atv2-task-status-mini ${isDone ? 'completed' : 'pending'}">${isDone ? 'DONE' : 'PENDING'}</span>
+          </div>
+        `;
+      }).join('');
+
+      // First group expanded by default
+      html += `
+        <div class="atv2-task-group ${idx === 0 ? 'expanded' : ''}">
+          <div class="atv2-task-group-head" onclick="this.parentElement.classList.toggle('expanded')">
+            <span class="atv2-task-group-icon">${g.icon}</span>
+            <span class="atv2-task-group-name">${atv2Esc(g.name)}</span>
+            <span class="atv2-task-group-progress">(${doneCount}/${totalCount})</span>
+            <span class="atv2-task-group-status ${status}">${statusText}</span>
+          </div>
+          <div class="atv2-task-list">${taskItems}</div>
+        </div>
+      `;
+    });
+
+    wrap.innerHTML = html || '<div class="atv2-no-data">No tasks defined yet.</div>';
+  } catch (e) {
+    console.error('[atv2RenderTaskChecklist] failed:', e);
+    wrap.innerHTML = '<div class="atv2-no-data">Could not load tasks.</div>';
+  }
 }
 
-async function airdropDelete(id) {
-  const a = airdropTrackerData.find(x => x.id === id);
-  if (!a) return;
-  if (!confirm('Delete "' + a.name + '" from your tracker? This cannot be undone.')) return;
+// ─── AI PICK (top momentum project) ───
+function atv2RenderAiPick() {
+  const wrap = atv2El('atv2AiPick');
+  if (!wrap) return;
 
-  const result = await window.API.deleteAirdrop(id);
-  if (!result.ok) {
-    airdropShowToast('⚠️', 'Delete Failed', result.error || 'Could not delete.');
+  if (atv2AllProjects.length === 0) {
+    wrap.innerHTML = '<div class="atv2-no-data">Add projects to see AI picks.</div>';
     return;
   }
-  airdropShowToast('✓', 'Airdrop Removed', a.name + ' removed from tracker.');
-  await airdropLoadFromSupabase();
+
+  // Top by momentum
+  const top = atv2AllProjects.slice().sort((a, b) => (b.momentum || 0) - (a.momentum || 0))[0];
+  if (!top) return;
+
+  const initials = top.logo_initials || (top.name || '?').slice(0, 2).toUpperCase();
+  const logoUrl = top.logo_url;
+  const score = ((top.momentum || 0) / 10).toFixed(1);
+  const reward = top.est_value_usd ? '$' + Number(top.est_value_usd).toLocaleString() + '+' : (top.reward_level || 'TBD');
+
+  const logoHtml = logoUrl
+    ? `<img src="${atv2Esc(logoUrl)}" alt="">`
+    : atv2Esc(initials);
+
+  wrap.innerHTML = `
+    <div class="atv2-ai-pick-head">⭐ TOP PICK THIS WEEK</div>
+    <div class="atv2-ai-pick-body">
+      <div class="atv2-ai-pick-logo">${logoHtml}</div>
+      <div style="flex:1;min-width:0;">
+        <div class="atv2-ai-pick-name">${atv2Esc(top.name || 'Project')}</div>
+        <div class="atv2-ai-pick-meta">MOMENTUM SCORE</div>
+        <div class="atv2-ai-pick-score">${score} / 10</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="atv2-ai-pick-meta">EST. REWARD</div>
+        <div style="font-family:'Orbitron',sans-serif;font-weight:700;color:var(--av-gold);">${atv2Esc(reward)}</div>
+      </div>
+    </div>
+  `;
 }
 
-document.getElementById('modal').addEventListener('click', function(e) {
-  if (e.target === this) airdropCloseModal();
-});
+window.atv2ViewAiAnalysis = function() {
+  // Go to Overview tab where AI Score lives
+  const btn = document.querySelector('[data-tab-target="overview"]');
+  if (btn) btn.click();
+};
+
+// ─── HEATMAP ───
+function atv2RenderHeatmap() {
+  const wrap = atv2El('atv2HeatGrid');
+  if (!wrap) return;
+
+  // Count projects per ecosystem
+  const counts = {};
+  atv2AllProjects.forEach(p => {
+    const eco = (p.ecosystem || 'OTHER').toUpperCase();
+    counts[eco] = (counts[eco] || 0) + 1;
+  });
+
+  const ecos = Object.keys(counts).map(name => ({ name, count: counts[name] }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 6);
+
+  if (ecos.length === 0) {
+    wrap.innerHTML = '<div class="atv2-no-data">No ecosystems yet.</div>';
+    return;
+  }
+
+  const max = ecos[0].count;
+  function heatClass(c) {
+    const r = c / max;
+    if (r >= 0.85) return 'veryhot';
+    if (r >= 0.65) return 'hot';
+    if (r >= 0.4)  return 'warm';
+    if (r >= 0.2)  return 'cool';
+    return 'cold';
+  }
+  function heatLabel(c) {
+    const r = c / max;
+    if (r >= 0.85) return 'VERY HOT';
+    if (r >= 0.65) return 'HOT';
+    if (r >= 0.4)  return 'WARM';
+    if (r >= 0.2)  return 'COOL';
+    return 'COLD';
+  }
+
+  wrap.innerHTML = ecos.map(e => `
+    <div class="atv2-heat-cell ${heatClass(e.count)}" onclick="atv2FilterByChain('${atv2Esc(e.name)}')">
+      <div class="atv2-heat-name">${atv2Esc(e.name)}</div>
+      <div class="atv2-heat-tag">${heatLabel(e.count)}</div>
+    </div>
+  `).join('');
+}
+
+window.atv2FilterByChain = function(eco) {
+  atv2FiltersChains.clear();
+  atv2FiltersChains.add(eco);
+  // Update chain pills visual
+  document.querySelectorAll('.airdrop-tracker-view #atv2ChainPills .atv2-chain-pill').forEach(p => {
+    p.classList.toggle('selected', p.dataset.chain === eco);
+  });
+  atv2CurrentPage = 1;
+  atv2RenderDiscoverTable();
+};
+
+// ─── RECENT ACTIVITY ───
+async function atv2RenderRecentActivity() {
+  const wrap = atv2El('atv2RecentTxList');
+  if (!wrap) return;
+  if (!window.API.getActivityFeed) {
+    wrap.innerHTML = '<div class="atv2-no-data">Activity feed unavailable.</div>';
+    return;
+  }
+
+  try {
+    const activity = await window.API.getActivityFeed(6);
+    if (!activity || activity.length === 0) {
+      wrap.innerHTML = '<div class="atv2-no-data">No activity yet.</div>';
+      return;
+    }
+
+    const iconMap = { mission: '✓', airdrop: '↗', reward: '🎁', wallet: '👛' };
+    wrap.innerHTML = activity.map(a => `
+      <div class="atv2-tx-item">
+        <div class="atv2-tx-icon">${iconMap[a.kind] || '⚡'}</div>
+        <div class="atv2-tx-body">
+          <div class="atv2-tx-name">${atv2Esc(a.title || 'Activity')}</div>
+          <div class="atv2-tx-meta">${atv2Esc(a.detail || a.kind || '')}</div>
+        </div>
+        <div class="atv2-tx-time">${atv2TimeAgo(a.created_at)}</div>
+      </div>
+    `).join('');
+  } catch (e) {
+    console.error('[atv2RenderRecentActivity] failed:', e);
+    wrap.innerHTML = '<div class="atv2-no-data">Could not load activity.</div>';
+  }
+}
+
+// ─── INIT FILTERS (chain pills, category dropdown) ───
+function atv2InitFilters() {
+  // Chain pills
+  const pillsEl = atv2El('atv2ChainPills');
+  if (pillsEl) {
+    const ecoSet = new Set();
+    atv2AllProjects.forEach(p => ecoSet.add((p.ecosystem || 'OTHER').toUpperCase()));
+    const ecos = Array.from(ecoSet).slice(0, 6);
+    pillsEl.innerHTML = ecos.map(e => `
+      <div class="atv2-chain-pill" data-chain="${atv2Esc(e)}" onclick="atv2ToggleChainPill(this)" title="${atv2Esc(e)}">${atv2Esc(e.slice(0, 3))}</div>
+    `).join('');
+    if (ecoSet.size > 6) {
+      pillsEl.insertAdjacentHTML('beforeend', `<div class="atv2-chain-pill" style="opacity:0.6;">+${ecoSet.size - 6}</div>`);
+    }
+  }
+
+  // Category dropdown
+  const catEl = atv2El('atv2CategoryFilter');
+  if (catEl) {
+    const cats = new Set();
+    atv2AllProjects.forEach(p => {
+      if (p.subtitle) cats.add(p.subtitle);
+      if (p.ecosystem) cats.add(p.ecosystem);
+    });
+    Array.from(cats).forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c.toLowerCase();
+      opt.textContent = c;
+      catEl.appendChild(opt);
+    });
+  }
+}
+
+window.atv2ToggleChainPill = function(el) {
+  const chain = el.dataset.chain;
+  if (atv2FiltersChains.has(chain)) {
+    atv2FiltersChains.delete(chain);
+    el.classList.remove('selected');
+  } else {
+    atv2FiltersChains.add(chain);
+    el.classList.add('selected');
+  }
+  atv2CurrentPage = 1;
+  atv2RenderDiscoverTable();
+};
+
+window.atv2ResetChains = function() {
+  atv2FiltersChains.clear();
+  document.querySelectorAll('.airdrop-tracker-view #atv2ChainPills .atv2-chain-pill').forEach(p => p.classList.remove('selected'));
+  atv2CurrentPage = 1;
+  atv2RenderDiscoverTable();
+};
+
+window.atv2OnScoreSlide = function(slider) {
+  atv2MinScore = parseInt(slider.value, 10) || 0;
+  const valEl = atv2El('atv2ScoreVal');
+  if (valEl) valEl.textContent = atv2MinScore + ' — 100';
+};
+
+window.atv2ToggleDiff = function(el) {
+  const diff = el.dataset.diff;
+  el.classList.toggle('on');
+  atv2FiltersDiff[diff] = el.classList.contains('on');
+};
+
+window.atv2ApplyFilters = function() {
+  atv2CurrentPage = 1;
+  if (atv2CurrentMode === 'discover') atv2RenderDiscoverTable();
+  else atv2RenderFarmsTable();
+};
+
+window.atv2ResetFilters = function() {
+  // Reset all filter UI
+  const search = atv2El('atv2Search');         if (search) search.value = '';
+  const cat = atv2El('atv2CategoryFilter');    if (cat) cat.value = '';
+  const status = atv2El('atv2StatusFilter');   if (status) status.value = '';
+  const sort = atv2El('atv2SortBy');           if (sort) sort.value = 'momentum';
+  const slider = atv2El('atv2ScoreSlider');    if (slider) slider.value = 0;
+  const scoreVal = atv2El('atv2ScoreVal');     if (scoreVal) scoreVal.textContent = '0 — 100';
+
+  atv2FiltersChains.clear();
+  document.querySelectorAll('.airdrop-tracker-view #atv2ChainPills .atv2-chain-pill').forEach(p => p.classList.remove('selected'));
+  document.querySelectorAll('.airdrop-tracker-view .atv2-diff-check').forEach(d => { d.classList.add('on'); });
+  atv2FiltersDiff = { easy: true, medium: true, hard: true };
+  atv2MinScore = 0;
+
+  atv2CurrentPage = 1;
+  atv2ApplyFilters();
+};
+
+window.atv2QuickSort = function(col) {
+  const sort = atv2El('atv2SortBy');
+  if (sort) {
+    sort.value = col;
+    atv2ApplyFilters();
+  }
+};
+
+// Top-bar buttons
+window.atv2OpenFilters = function() {
+  atv2ShowToast('🎚', 'Tip', 'Smart Filters are in the sidebar →');
+};
+
+window.atv2SaveView = function() {
+  try {
+    const state = {
+      mode: atv2CurrentMode,
+      chains: Array.from(atv2FiltersChains),
+      minScore: atv2MinScore,
+      search: atv2El('atv2Search') ? atv2El('atv2Search').value : '',
+      sortBy: atv2El('atv2SortBy') ? atv2El('atv2SortBy').value : 'momentum'
+    };
+    localStorage.setItem('atv2SavedView', JSON.stringify(state));
+    atv2ShowToast('💾', 'View Saved', 'Your filter setup is saved.');
+  } catch (e) { console.error('save view:', e); }
+};
+
+window.atv2SaveFilter = function() {
+  atv2SaveView();
+};
+
+window.atv2GoToOverview = function() {
+  const btn = document.querySelector('[data-tab-target="overview"]');
+  if (btn) btn.click();
+};
+
+window.atv2GoToProfile = function() {
+  const btn = document.querySelector('[data-tab-target="profile"]');
+  if (btn) btn.click();
+};
+
+window.atv2ViewFullReport = function() {
+  if (atv2SelectedFarmId) atv2OpenProject(atv2SelectedFarmId);
+};
 
 // ─── TOAST ───
-let airdropToastTimer;
-function airdropShowToast(icon, title, sub) {
-  const t = document.getElementById('toast');
-  if (!t) return;
-  const iconEl = document.getElementById('toastIcon');
-  const textEl = document.getElementById('toastText');
-  const subEl  = document.getElementById('toastSub');
-  if (iconEl) iconEl.textContent = icon;
-  if (textEl) textEl.textContent = title;
-  if (subEl)  subEl.textContent  = sub;
-  t.classList.add('show');
-  clearTimeout(airdropToastTimer);
-  airdropToastTimer = setTimeout(() => t.classList.remove('show'), 3200);
-}
+function atv2ShowToast(icon, title, body) {
+  // Reuse existing toast container if available
+  let container = document.getElementById('toastContainer');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'toastContainer';
+    container.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;';
+    document.body.appendChild(container);
+  }
 
-// ─── MINI CHARTS (decorative — kept as-is) ───
-function airdropBuildCharts() {
-  const configs = [
-    { id: 'chart1', type: 'gold', vals: [55,60,58,65,70,72,78] },
-    { id: 'chart2', type: 'cyan', vals: [400,650,800,700,900,1100,1240] },
-    { id: 'chart3', type: 'gold', vals: [2,3,4,4,5,5,6] },
-    { id: 'chart4', type: 'green', vals: [900,1100,1200,1300,1400,1500,1581] },
-    { id: 'chart5', type: 'gold', vals: [70,75,80,82,85,90,92] },
-    { id: 'chart6', type: 'cyan', vals: [1.5,2,2.2,2.5,3,3.2,3.4] },
-  ];
-  configs.forEach(cfg => {
-    const el = document.getElementById(cfg.id);
-    if (!el) return;
-    el.innerHTML = '';
-    const max = Math.max(...cfg.vals);
-    cfg.vals.forEach(v => {
-      const bar = document.createElement('div');
-      bar.className = `chart-bar ${cfg.type}-bar`;
-      bar.style.height = `${(v / max) * 28}px`;
-      el.appendChild(bar);
-    });
+  const toast = document.createElement('div');
+  toast.style.cssText = 'background:rgba(8,13,26,0.95);border:1px solid #4af0ff;color:#e8eaf0;padding:14px 18px;border-radius:10px;box-shadow:0 8px 32px rgba(74,240,255,0.25);font-size:12.5px;display:flex;align-items:center;gap:10px;max-width:360px;backdrop-filter:blur(8px);opacity:0;transform:translateY(20px);transition:all 0.3s;';
+  toast.innerHTML = `
+    <span style="font-size:18px;">${icon}</span>
+    <div>
+      <div style="font-weight:700;color:#4af0ff;margin-bottom:2px;">${atv2Esc(title)}</div>
+      <div style="color:#7a849a;font-size:11.5px;">${atv2Esc(body)}</div>
+    </div>
+  `;
+  container.appendChild(toast);
+  requestAnimationFrame(() => {
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateY(0)';
   });
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(20px)';
+    setTimeout(() => toast.remove(), 400);
+  }, 3500);
 }
 
-// Expose functions used by inline onclick handlers
-Object.assign(window, {
-  airdropOpenModal, airdropCloseModal, airdropAddFromModal,
-  airdropShowToast, airdropFilterTable, airdropToggleTag,
-  airdropSortTable, airdropEdit, airdropDelete
+// ─── INITIAL LOAD ───
+document.addEventListener('DOMContentLoaded', function() {
+  // Small delay so Supabase + auth is ready
+  setTimeout(function() {
+    try { atv2LoadAll(); } catch (e) { console.error('[atv2 init]', e); }
+  }, 650);
 });
 
-// ─── INIT ───
-airdropBuildCharts();
-// Load real airdrops once Supabase + auth are ready
-setTimeout(airdropLoadFromSupabase, 600);
+// Refresh when user switches to Airdrop Tracker tab (data may have changed)
+document.addEventListener('click', function(e) {
+  const trigger = e.target.closest && e.target.closest('[data-tab-target="airdrop-tracker"]');
+  if (trigger) {
+    setTimeout(function() {
+      try { atv2LoadAll(); } catch (err) { console.error('[atv2 refresh]', err); }
+    }, 300);
+  }
+});
+
 })();
 /* END AIRDROP TRACKER TAB SCRIPT */
 
