@@ -10866,7 +10866,30 @@ canvas.mini-chart { width: 100% !important; }
    All scoped to .wallets-view .wlt-* — no leaks
    ─────────────────────────────────────────────────────────────────────────── */
 
+/* CRITICAL OVERRIDES — neutralize legacy .wallets-view base CSS
+   that interferes with new layout (Chunk 8 v3.3 fix) */
+.wallets-view {
+  background: transparent !important;  /* let body bg show */
+  min-height: auto !important;          /* don't force 100vh */
+  overflow-x: visible !important;       /* don't hide grid columns */
+  padding: 0 !important;
+}
+.wallets-view::before {
+  display: none !important;             /* hide fullscreen gradient overlay */
+}
+.wallets-view #grid-bg { display: none !important; }
+.wallets-view .page-wrap {
+  position: static !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* CRITICAL: position/z-index so .wlt-page renders ABOVE legacy
+   .wallets-view::before fullscreen pseudo-element overlay */
 .wallets-view .wlt-page {
+  position: relative;
+  z-index: 1;
   --wl-gold:        #f5c842;
   --wl-gold-bright: #ffe066;
   --wl-gold-dim:    #a8862a;
