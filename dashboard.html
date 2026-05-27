@@ -10858,6 +10858,1246 @@ canvas.mini-chart { width: 100% !important; }
 
 .wallets-view { isolation: isolate; }
 .wallets-view::before, .wallets-view #grid-bg { position: absolute; }
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   v3.3 — WALLETS TAB REDESIGN (Chunk 8)
+   Premium 3-column wallet portfolio (matches approved mockup)
+   All scoped to .wallets-view .wlt-* — no leaks
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.wallets-view .wlt-page {
+  --wl-gold:        #f5c842;
+  --wl-gold-bright: #ffe066;
+  --wl-gold-dim:    #a8862a;
+  --wl-gold-soft:   rgba(245,200,66,0.08);
+  --wl-gold-glow:   rgba(245,200,66,0.25);
+  --wl-cyan:        #4af0ff;
+  --wl-cyan-soft:   rgba(74,240,255,0.08);
+  --wl-cyan-glow:   rgba(74,240,255,0.25);
+  --wl-purple:      #b070ff;
+  --wl-purple-soft: rgba(176,112,255,0.08);
+  --wl-purple-glow: rgba(176,112,255,0.25);
+  --wl-pink:        #ff5e8a;
+  --wl-pink-soft:   rgba(255,94,138,0.08);
+  --wl-orange:      #ff9046;
+  --wl-orange-soft: rgba(255,144,70,0.08);
+  --wl-green:       #00e87a;
+  --wl-green-soft:  rgba(0,232,122,0.08);
+  --wl-green-glow:  rgba(0,232,122,0.25);
+  --wl-red:         #ff4757;
+  --wl-red-soft:    rgba(255,71,87,0.08);
+  --wl-text:        #e8eaf0;
+  --wl-text-dim:    #7a849a;
+  --wl-text-muted:  #4d556b;
+  --wl-bg-card:     rgba(255,255,255,0.025);
+  --wl-bg-card-hi:  rgba(255,255,255,0.04);
+  --wl-bg-card-dk:  rgba(0,0,0,0.25);
+  --wl-border:      rgba(255,255,255,0.06);
+  --wl-border-br:   rgba(245,200,66,0.25);
+
+  font-family: 'Rajdhani', sans-serif;
+  color: var(--wl-text);
+  padding: 4px;
+}
+.wallets-view .wlt-page * { box-sizing: border-box; }
+
+/* ═══ Page Header ═══ */
+.wallets-view .wlt-page-head { margin-bottom: 18px; }
+.wallets-view .wlt-bc {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--wl-cyan);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.wallets-view .wlt-bc-sep { color: var(--wl-gold); }
+.wallets-view .wlt-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  line-height: 1;
+  margin: 0 0 6px 0;
+  color: var(--wl-text);
+}
+.wallets-view .wlt-title span {
+  color: var(--wl-gold);
+  text-shadow: 0 0 18px var(--wl-gold-glow);
+}
+.wallets-view .wlt-sub {
+  font-size: 13.5px;
+  color: var(--wl-text-dim);
+  margin: 0;
+}
+
+/* ═══ KPI Row ═══ */
+.wallets-view .wlt-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.wallets-view .wlt-kpi-card {
+  background: var(--wl-bg-card);
+  border: 1px solid var(--wl-border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  transition: all 0.2s;
+}
+.wallets-view .wlt-kpi-card:hover {
+  border-color: var(--wl-border-br);
+  transform: translateY(-2px);
+}
+.wallets-view .wlt-kpi-head {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 10px;
+}
+.wallets-view .wlt-kpi-icon {
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+}
+.wallets-view .wlt-kpi-icon.gold   { background: var(--wl-gold-soft);   color: var(--wl-gold); }
+.wallets-view .wlt-kpi-icon.green  { background: var(--wl-green-soft);  color: var(--wl-green); }
+.wallets-view .wlt-kpi-icon.cyan   { background: var(--wl-cyan-soft);   color: var(--wl-cyan); }
+.wallets-view .wlt-kpi-icon.purple { background: var(--wl-purple-soft); color: var(--wl-purple); }
+.wallets-view .wlt-kpi-icon.orange { background: var(--wl-orange-soft); color: var(--wl-orange); }
+.wallets-view .wlt-kpi-lbl {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  color: var(--wl-text-dim);
+  letter-spacing: 1.3px;
+  font-weight: 700;
+}
+.wallets-view .wlt-kpi-val {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--wl-text);
+  line-height: 1;
+  margin-bottom: 4px;
+  letter-spacing: 0.3px;
+}
+.wallets-view .wlt-kpi-val.gold   { color: var(--wl-gold); }
+.wallets-view .wlt-kpi-val.green  { color: var(--wl-green); }
+.wallets-view .wlt-kpi-val.cyan   { color: var(--wl-cyan); }
+.wallets-view .wlt-kpi-val.purple { color: var(--wl-purple); }
+.wallets-view .wlt-kpi-val.orange { color: var(--wl-orange); }
+.wallets-view .wlt-kpi-delta {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--wl-green);
+  letter-spacing: 0.4px;
+}
+.wallets-view .wlt-kpi-delta.dim { color: var(--wl-text-dim); }
+
+/* ═══ Filter Tabs ═══ */
+.wallets-view .wlt-tab-strip {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.wallets-view .wlt-filter-tab {
+  background: transparent;
+  border: 1px solid var(--wl-border);
+  color: var(--wl-text-dim);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  padding: 8px 14px;
+  border-radius: 7px;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 7px;
+  transition: all 0.2s;
+}
+.wallets-view .wlt-filter-tab:hover {
+  color: var(--wl-text);
+  border-color: var(--wl-border-br);
+}
+.wallets-view .wlt-filter-tab.active {
+  background: var(--wl-gold-soft);
+  color: var(--wl-gold);
+  border-color: var(--wl-gold);
+}
+.wallets-view .wlt-count {
+  background: rgba(0,0,0,0.3);
+  padding: 1px 6px;
+  border-radius: 6px;
+  font-size: 9.5px;
+}
+.wallets-view .wlt-filter-tab.active .wlt-count {
+  background: var(--wl-gold);
+  color: #0a0e1a;
+}
+.wallets-view .wlt-grow { flex: 1; }
+.wallets-view .wlt-add-btn {
+  background: linear-gradient(135deg, var(--wl-gold-dim), var(--wl-gold));
+  color: #0a0e1a;
+  border: none;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  padding: 8px 14px;
+  border-radius: 7px;
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--wl-gold-glow);
+}
+
+/* ═══ Main 3-column grid ═══ */
+.wallets-view .wlt-main-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr 340px;
+  gap: 16px;
+  align-items: start;
+}
+.wallets-view .wlt-section-title {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10.5px;
+  color: var(--wl-text-dim);
+  letter-spacing: 1.8px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.wallets-view .wlt-no-data {
+  padding: 14px;
+  text-align: center;
+  color: var(--wl-text-dim);
+  font-size: 12px;
+  font-style: italic;
+}
+
+/* ═══ Column 1: Wallet List ═══ */
+.wallets-view .wlt-list-col {
+  background: var(--wl-bg-card);
+  border: 1px solid var(--wl-border);
+  border-radius: 12px;
+  padding: 16px 14px;
+}
+.wallets-view .wlt-search-row { display: flex; gap: 6px; margin-bottom: 12px; }
+.wallets-view .wlt-search {
+  flex: 1;
+  background: var(--wl-bg-card-dk);
+  border: 1px solid var(--wl-border);
+  border-radius: 7px;
+  padding: 7px 11px;
+  color: var(--wl-text);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  outline: none;
+}
+.wallets-view .wlt-search:focus { border-color: var(--wl-cyan); }
+.wallets-view .wlt-filter-icon-btn {
+  background: var(--wl-bg-card-dk);
+  border: 1px solid var(--wl-border);
+  color: var(--wl-text-dim);
+  width: 32px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.wallets-view .wlt-list { display: flex; flex-direction: column; gap: 6px; }
+.wallets-view .wlt-card {
+  background: var(--wl-bg-card-dk);
+  border: 1px solid var(--wl-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  transition: all 0.2s;
+}
+.wallets-view .wlt-card:hover {
+  background: var(--wl-bg-card-hi);
+  border-color: var(--wl-border-br);
+  transform: translateX(2px);
+}
+.wallets-view .wlt-card.active {
+  background: linear-gradient(135deg, var(--wl-purple-soft), transparent);
+  border-color: var(--wl-purple);
+  box-shadow: 0 0 16px var(--wl-purple-glow);
+}
+.wallets-view .wlt-card-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.wallets-view .wlt-card-info { min-width: 0; }
+.wallets-view .wlt-card-name {
+  font-weight: 700;
+  font-size: 12.5px;
+  color: var(--wl-text);
+  margin-bottom: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.wallets-view .wlt-card-name .wlt-role {
+  color: var(--wl-text-dim);
+  font-weight: 500;
+  font-size: 10.5px;
+}
+.wallets-view .wlt-card-addr {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--wl-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.wallets-view .wlt-card-addr .wlt-copy {
+  color: var(--wl-cyan);
+  cursor: pointer;
+  font-size: 11px;
+}
+.wallets-view .wlt-card-score-box { text-align: right; flex-shrink: 0; }
+.wallets-view .wlt-card-score-lbl {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8.5px;
+  color: var(--wl-text-dim);
+  letter-spacing: 0.8px;
+}
+.wallets-view .wlt-card-score {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+}
+.wallets-view .wlt-card-score.high { color: var(--wl-green); }
+.wallets-view .wlt-card-score.mid  { color: var(--wl-gold); }
+.wallets-view .wlt-card-score.low  { color: var(--wl-orange); }
+.wallets-view .wlt-view-all-btn {
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--wl-border);
+  color: var(--wl-cyan);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  padding: 9px;
+  border-radius: 7px;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: all 0.2s;
+}
+.wallets-view .wlt-view-all-btn:hover {
+  background: var(--wl-cyan-soft);
+  border-color: var(--wl-cyan);
+}
+
+/* ═══ Column 2: Detail ═══ */
+.wallets-view .wlt-detail-col {
+  background: var(--wl-bg-card);
+  border: 1px solid var(--wl-border);
+  border-radius: 12px;
+  padding: 18px 22px;
+  min-height: 600px;
+}
+.wallets-view .wlt-detail-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 20px;
+  min-height: 540px;
+}
+.wallets-view .wlt-empty-icon { font-size: 64px; margin-bottom: 14px; opacity: 0.55; }
+.wallets-view .wlt-empty-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--wl-gold);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.wallets-view .wlt-empty-sub {
+  font-size: 13px;
+  color: var(--wl-text-dim);
+  margin-bottom: 20px;
+  max-width: 380px;
+}
+.wallets-view .wlt-empty-cta {
+  background: linear-gradient(135deg, var(--wl-gold-dim), var(--wl-gold));
+  color: #0a0e1a;
+  border: none;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 0 14px var(--wl-gold-glow);
+}
+
+/* Detail header */
+.wallets-view .wlt-detail-head {
+  display: grid;
+  grid-template-columns: 50px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--wl-border);
+  margin-bottom: 14px;
+}
+.wallets-view .wlt-detail-logo {
+  width: 50px; height: 50px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--wl-purple-soft), var(--wl-gold-soft));
+  border: 1px solid var(--wl-purple);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+}
+.wallets-view .wlt-detail-name-block { min-width: 0; }
+.wallets-view .wlt-detail-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--wl-text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+.wallets-view .wlt-detail-name .wlt-name-badge {
+  background: var(--wl-purple-soft);
+  color: var(--wl-purple);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8.5px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  border: 1px solid rgba(176,112,255,0.3);
+}
+.wallets-view .wlt-detail-addr {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--wl-text-dim);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.wallets-view .wlt-detail-addr .wlt-icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--wl-cyan);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 0;
+}
+.wallets-view .wlt-detail-score-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.wallets-view .wlt-detail-score-block { text-align: right; }
+.wallets-view .wlt-detail-score-lbl {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--wl-text-dim);
+  letter-spacing: 1.2px;
+}
+.wallets-view .wlt-detail-score {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--wl-green);
+  line-height: 1;
+  text-shadow: 0 0 10px var(--wl-green-glow);
+}
+.wallets-view .wlt-detail-score-tag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--wl-green);
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+.wallets-view .wlt-detail-hex-icon {
+  width: 54px; height: 54px;
+  background: var(--wl-green-soft);
+  border: 1px solid var(--wl-green);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  color: var(--wl-green);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.wallets-view .wlt-detail-hex-icon:hover {
+  box-shadow: 0 0 14px var(--wl-green-glow);
+  transform: scale(1.05);
+}
+
+/* Detail tabs */
+.wallets-view .wlt-detail-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.wallets-view .wlt-dtab {
+  background: transparent;
+  border: 1px solid var(--wl-border);
+  color: var(--wl-text-dim);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  padding: 7px 13px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.wallets-view .wlt-dtab:hover {
+  color: var(--wl-text);
+  border-color: var(--wl-border-br);
+}
+.wallets-view .wlt-dtab.active {
+  background: var(--wl-cyan-soft);
+  color: var(--wl-cyan);
+  border-color: var(--wl-cyan);
+}
+
+/* Pane placeholders */
+.wallets-view .wlt-pane-placeholder {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--wl-text-dim);
+}
+.wallets-view .wlt-pane-icon { font-size: 48px; margin-bottom: 12px; opacity: 0.5; }
+.wallets-view .wlt-pane-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--wl-text);
+  margin-bottom: 6px;
+}
+.wallets-view .wlt-pane-sub { font-size: 12px; }
+
+/* Two-card grid */
+.wallets-view .wlt-twocard-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.wallets-view .wlt-inner-card {
+  background: var(--wl-bg-card-dk);
+  border: 1px solid var(--wl-border);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.wallets-view .wlt-inner-card-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 14px;
+}
+.wallets-view .wlt-inner-title {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--wl-text);
+  letter-spacing: 1.8px;
+  font-weight: 700;
+}
+.wallets-view .wlt-source-tag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--wl-text-muted);
+  letter-spacing: 1px;
+}
+.wallets-view .wlt-period-tabs { display: flex; gap: 4px; }
+.wallets-view .wlt-period-tab {
+  background: transparent;
+  border: 1px solid var(--wl-border);
+  color: var(--wl-text-dim);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+}
+.wallets-view .wlt-period-tab.active {
+  background: var(--wl-cyan-soft);
+  color: var(--wl-cyan);
+  border-color: var(--wl-cyan);
+}
+
+/* API not-connected overlay */
+.wallets-view .wlt-api-card {
+  text-align: center;
+  padding: 30px 20px;
+  background: linear-gradient(135deg, var(--wl-cyan-soft), var(--wl-purple-soft));
+  border: 1px dashed var(--wl-cyan);
+  border-radius: 10px;
+  position: relative;
+}
+.wallets-view .wlt-api-icon { font-size: 36px; margin-bottom: 10px; }
+.wallets-view .wlt-api-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--wl-cyan);
+  margin-bottom: 6px;
+}
+.wallets-view .wlt-api-sub {
+  font-size: 11.5px;
+  color: var(--wl-text-dim);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.wallets-view .wlt-connect-btn {
+  background: linear-gradient(135deg, var(--wl-cyan-soft), var(--wl-purple-soft));
+  border: 1px solid var(--wl-cyan);
+  color: var(--wl-cyan);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  padding: 8px 16px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.wallets-view .wlt-connect-btn:hover {
+  box-shadow: 0 0 12px var(--wl-cyan-glow);
+}
+.wallets-view .wlt-api-phase {
+  position: absolute;
+  top: 8px; right: 8px;
+  background: var(--wl-purple-soft);
+  color: var(--wl-purple);
+  border: 1px solid rgba(176,112,255,0.3);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8.5px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+/* Real balance components (used Phase 7B+) */
+.wallets-view .wlt-balance-lbl {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  color: var(--wl-text-dim);
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.wallets-view .wlt-balance-amount {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--wl-text);
+  margin-bottom: 2px;
+  letter-spacing: 0.5px;
+}
+.wallets-view .wlt-balance-delta {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--wl-green);
+  margin-bottom: 12px;
+}
+.wallets-view .wlt-balance-chart { height: 90px; margin-bottom: 14px; }
+.wallets-view .wlt-chain-bar-list { display: flex; flex-direction: column; gap: 8px; }
+.wallets-view .wlt-chain-row {
+  display: grid;
+  grid-template-columns: 16px 60px 1fr auto auto;
+  gap: 8px;
+  align-items: center;
+  font-size: 12px;
+}
+.wallets-view .wlt-chain-icon { width: 14px; height: 14px; border-radius: 4px; }
+.wallets-view .wlt-chain-name { color: var(--wl-text); font-weight: 600; font-size: 11.5px; }
+.wallets-view .wlt-chain-bar-bg {
+  background: rgba(255,255,255,0.04);
+  border-radius: 2px;
+  height: 4px;
+  overflow: hidden;
+}
+.wallets-view .wlt-chain-bar-fill { height: 100%; border-radius: 2px; }
+.wallets-view .wlt-chain-val {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--wl-text);
+  min-width: 75px;
+  text-align: right;
+}
+.wallets-view .wlt-chain-pct {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10.5px;
+  color: var(--wl-text-dim);
+  min-width: 38px;
+  text-align: right;
+}
+
+/* Radar */
+.wallets-view .wlt-radar-wrap {
+  height: 195px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  position: relative;
+}
+.wallets-view .wlt-radar-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+.wallets-view .wlt-radar-score {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--wl-cyan);
+  line-height: 1;
+}
+.wallets-view .wlt-radar-tag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--wl-cyan);
+  letter-spacing: 1.2px;
+  margin-top: 2px;
+}
+.wallets-view .wlt-view-details-btn {
+  width: 100%;
+  background: var(--wl-bg-card-dk);
+  border: 1px solid var(--wl-cyan);
+  color: var(--wl-cyan);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  padding: 8px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.wallets-view .wlt-view-details-btn:hover {
+  background: var(--wl-cyan-soft);
+  box-shadow: 0 0 10px var(--wl-cyan-glow);
+}
+
+/* Activity list */
+.wallets-view .wlt-activity-list { display: flex; flex-direction: column; gap: 4px; }
+.wallets-view .wlt-activity-row {
+  display: grid;
+  grid-template-columns: 28px 1fr auto auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(255,255,255,0.04);
+}
+.wallets-view .wlt-activity-row:last-child { border-bottom: none; }
+.wallets-view .wlt-activity-icon {
+  width: 28px; height: 28px;
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+.wallets-view .wlt-activity-icon.mission { background: var(--wl-cyan-soft); color: var(--wl-cyan); }
+.wallets-view .wlt-activity-icon.wallet  { background: var(--wl-purple-soft); color: var(--wl-purple); }
+.wallets-view .wlt-activity-icon.airdrop { background: var(--wl-gold-soft); color: var(--wl-gold); }
+.wallets-view .wlt-activity-icon.reward  { background: var(--wl-green-soft); color: var(--wl-green); }
+.wallets-view .wlt-activity-body { min-width: 0; }
+.wallets-view .wlt-activity-name {
+  font-weight: 700;
+  font-size: 12.5px;
+  color: var(--wl-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.wallets-view .wlt-activity-meta {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--wl-text-dim);
+}
+.wallets-view .wlt-activity-time {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--wl-text-muted);
+  text-align: right;
+  min-width: 55px;
+}
+
+/* ═══ Column 3: Right Sidebar ═══ */
+.wallets-view .wlt-side-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.wallets-view .wlt-side-card {
+  background: var(--wl-bg-card);
+  border: 1px solid var(--wl-border);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.wallets-view .wlt-side-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 14px;
+}
+.wallets-view .wlt-side-title {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 1.8px;
+  font-weight: 700;
+  color: var(--wl-text);
+}
+.wallets-view .wlt-edit-btn {
+  background: transparent;
+  border: 1px solid var(--wl-border);
+  color: var(--wl-text-dim);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  padding: 3px 9px;
+  border-radius: 5px;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+.wallets-view .wlt-edit-btn:hover {
+  color: var(--wl-cyan);
+  border-color: var(--wl-cyan);
+}
+.wallets-view .wlt-admin-badge {
+  background: var(--wl-purple-soft);
+  color: var(--wl-purple);
+  border: 1px solid rgba(176,112,255,0.3);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8.5px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+/* Persona */
+.wallets-view .wlt-persona-lbl {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--wl-text-dim);
+  letter-spacing: 1.3px;
+  margin-bottom: 8px;
+}
+.wallets-view .wlt-persona-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--wl-green-soft);
+  border: 1px solid var(--wl-green);
+  color: var(--wl-green);
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 12.5px;
+  margin-bottom: 10px;
+}
+.wallets-view .wlt-persona-desc {
+  font-size: 11.5px;
+  color: var(--wl-text-dim);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.wallets-view .wlt-stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px dashed rgba(255,255,255,0.04);
+  font-size: 11.5px;
+}
+.wallets-view .wlt-stat-row:last-child { border-bottom: none; }
+.wallets-view .wlt-stat-row .wlt-stat-lbl { color: var(--wl-text-dim); }
+.wallets-view .wlt-stat-row .wlt-stat-val {
+  color: var(--wl-text);
+  font-weight: 600;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+}
+
+/* Sybil */
+.wallets-view .wlt-sybil-row { padding: 8px 0; }
+.wallets-view .wlt-sybil-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.wallets-view .wlt-sybil-lbl {
+  font-size: 12px;
+  color: var(--wl-text);
+  font-weight: 600;
+}
+.wallets-view .wlt-sybil-val {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--wl-green);
+}
+.wallets-view .wlt-sybil-max { color: var(--wl-text-dim); font-size: 11px; }
+.wallets-view .wlt-sybil-bar-bg {
+  height: 4px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+.wallets-view .wlt-sybil-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--wl-green), #00ff90);
+  transition: width 0.4s;
+}
+.wallets-view .wlt-sybil-tag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--wl-green);
+  letter-spacing: 1.2px;
+  text-align: right;
+}
+
+/* Risk */
+.wallets-view .wlt-risk-status {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 6px;
+  font-weight: 700;
+  color: var(--wl-green);
+  font-size: 13.5px;
+}
+.wallets-view .wlt-risk-status-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--wl-green);
+  box-shadow: 0 0 6px var(--wl-green-glow);
+}
+.wallets-view .wlt-risk-sub {
+  font-size: 11px;
+  color: var(--wl-text-dim);
+  margin-bottom: 12px;
+}
+.wallets-view .wlt-risk-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.wallets-view .wlt-risk-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 11.5px;
+  color: var(--wl-text);
+}
+.wallets-view .wlt-risk-check {
+  width: 18px; height: 18px;
+  background: var(--wl-green-soft);
+  color: var(--wl-green);
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+.wallets-view .wlt-risk-check.warn {
+  background: var(--wl-orange-soft);
+  color: var(--wl-orange);
+}
+.wallets-view .wlt-full-report-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--wl-gold-dim), var(--wl-gold));
+  color: #0a0e1a;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  padding: 9px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+/* External tools */
+.wallets-view .wlt-tools-disclaimer {
+  font-size: 11px;
+  color: var(--wl-text-dim);
+  margin-bottom: 10px;
+  font-style: italic;
+  line-height: 1.4;
+}
+.wallets-view .wlt-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+}
+.wallets-view .wlt-action-btn {
+  background: var(--wl-bg-card-dk);
+  border: 1px solid var(--wl-border);
+  color: var(--wl-text);
+  text-decoration: none;
+  padding: 10px 6px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.wallets-view .wlt-action-btn:hover {
+  background: var(--wl-gold-soft);
+  border-color: var(--wl-gold);
+  color: var(--wl-gold);
+  transform: translateY(-1px);
+}
+.wallets-view .wlt-action-icon { font-size: 16px; }
+.wallets-view .wlt-action-lbl {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+/* ═══ MODALS ═══ */
+.wallets-view .wlt-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(6px);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.wallets-view .wlt-modal-overlay.show { display: flex; }
+.wallets-view .wlt-modal {
+  background: #0e1320;
+  border: 1px solid var(--wl-purple);
+  border-radius: 14px;
+  padding: 24px;
+  max-width: 460px;
+  width: 100%;
+  max-height: 86vh;
+  overflow-y: auto;
+  box-shadow: 0 0 32px var(--wl-purple-glow);
+}
+.wallets-view .wlt-modal-lg { max-width: 540px; }
+.wallets-view .wlt-modal-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--wl-border);
+}
+.wallets-view .wlt-modal-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--wl-cyan);
+}
+.wallets-view .wlt-modal-close {
+  background: transparent;
+  border: 1px solid var(--wl-border);
+  color: var(--wl-text-dim);
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Form */
+.wallets-view .wlt-form-group { margin-bottom: 14px; }
+.wallets-view .wlt-form-label {
+  display: block;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--wl-text-dim);
+  letter-spacing: 1.3px;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+.wallets-view .wlt-form-input,
+.wallets-view .wlt-form-textarea {
+  width: 100%;
+  background: var(--wl-bg-card-dk);
+  border: 1px solid var(--wl-border);
+  border-radius: 7px;
+  padding: 9px 12px;
+  color: var(--wl-text);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.wallets-view .wlt-form-input:focus,
+.wallets-view .wlt-form-textarea:focus {
+  border-color: var(--wl-cyan);
+}
+.wallets-view .wlt-form-textarea {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  resize: vertical;
+}
+.wallets-view .wlt-form-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 18px;
+}
+.wallets-view .wlt-form-cancel {
+  flex: 1;
+  background: transparent;
+  border: 1px solid var(--wl-border);
+  color: var(--wl-text-dim);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  padding: 10px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+.wallets-view .wlt-form-submit {
+  flex: 1.4;
+  background: linear-gradient(135deg, var(--wl-gold-dim), var(--wl-gold));
+  color: #0a0e1a;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  padding: 10px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--wl-gold-glow);
+}
+
+/* Health modal */
+.wallets-view .wlt-health-overall {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: var(--wl-bg-card-dk);
+  border-radius: 10px;
+}
+.wallets-view .wlt-health-overall-num {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--wl-cyan);
+  text-shadow: 0 0 18px var(--wl-cyan-glow);
+}
+.wallets-view .wlt-health-overall-tag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--wl-cyan);
+  letter-spacing: 2px;
+  margin-top: 4px;
+}
+.wallets-view .wlt-health-cat {
+  background: var(--wl-bg-card-dk);
+  border: 1px solid var(--wl-border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+.wallets-view .wlt-health-cat-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 8px;
+}
+.wallets-view .wlt-health-cat-name {
+  font-weight: 700;
+  color: var(--wl-text);
+  font-size: 13.5px;
+}
+.wallets-view .wlt-health-cat-val {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--wl-gold);
+}
+.wallets-view .wlt-health-cat-bar-bg {
+  height: 6px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.wallets-view .wlt-health-cat-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--wl-gold-dim), var(--wl-gold));
+  border-radius: 3px;
+}
+.wallets-view .wlt-health-cat-detail {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--wl-text-dim);
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+}
+.wallets-view .wlt-health-cat-detail span { color: var(--wl-cyan); }
+.wallets-view .wlt-health-footer {
+  margin-top: 18px;
+  padding: 12px;
+  background: rgba(74,240,255,0.05);
+  border: 1px dashed rgba(74,240,255,0.25);
+  border-radius: 8px;
+  font-size: 11.5px;
+  color: var(--wl-text-dim);
+  line-height: 1.5;
+}
+.wallets-view .wlt-health-footer b { color: var(--wl-cyan); }
+
+/* ═══ MOBILE RESPONSIVE ═══ */
+@media (max-width: 1180px) {
+  .wallets-view .wlt-main-grid {
+    grid-template-columns: 240px 1fr;
+  }
+  .wallets-view .wlt-side-col {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .wallets-view .wlt-side-card {
+    flex: 1 1 280px;
+    min-width: 280px;
+  }
+  .wallets-view .wlt-kpi-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 800px) {
+  .wallets-view .wlt-main-grid { grid-template-columns: 1fr; }
+  .wallets-view .wlt-side-col { flex-direction: column; }
+  .wallets-view .wlt-side-card { min-width: 0; }
+  .wallets-view .wlt-kpi-row { grid-template-columns: 1fr 1fr; }
+  .wallets-view .wlt-twocard-grid { grid-template-columns: 1fr; }
+  .wallets-view .wlt-detail-head {
+    grid-template-columns: 50px 1fr;
+  }
+  .wallets-view .wlt-detail-score-box {
+    grid-column: 1 / -1;
+    justify-content: center;
+    padding-top: 10px;
+    border-top: 1px dashed var(--wl-border);
+  }
+  .wallets-view .wlt-tab-strip { flex-wrap: wrap; }
+}
+@media (max-width: 540px) {
+  .wallets-view .wlt-title { font-size: 24px; }
+  .wallets-view .wlt-kpi-row { grid-template-columns: 1fr 1fr; }
+  .wallets-view .wlt-detail-col { padding: 14px; }
+  .wallets-view .wlt-detail-tabs { gap: 4px; }
+  .wallets-view .wlt-dtab { padding: 6px 9px; font-size: 10px; }
+}
+
+/* END v3.3 WALLETS REDESIGN */
+
 /* END WALLETS TAB STYLES */
 /* START FARMING ROUTES TAB STYLES */
 .farming-routes-view.tab-panel.active { display: block; }
@@ -20375,349 +21615,367 @@ canvas.mini-chart { width: 100% !important; }
     <!-- END AIRDROP TRACKER TAB CONTENT -->
 
 
+    <!-- ═══════════════════════════════════════════════════════════════════
+         WALLETS TAB — v3.3 REDESIGN (Chunk 8)
+         3-column premium wallet portfolio (matches approved mockup)
+         Scope: .wallets-view .wlt-* (CSS leak protection)
+         Phase 7A: UI shell + manual data + admin-configurable actions
+         ─────────────────────────────────────────────────────────────── -->
     <!-- START WALLETS TAB CONTENT -->
     <section class="tab-panel wallets-view" id="tab-wallets" data-tab-panel="wallets">
-      <!-- BACKGROUND GRID -->
-      <canvas id="grid-bg"></canvas>
 
-      <div class="page-wrap">
+      <div class="wlt-page">
 
-
-        <!-- ═══════════ HERO ═══════════ -->
-        <div class="hero">
-          <div class="hero-top">
-            <div class="hero-title-block">
-              <div class="hero-tag">// WALLETS</div>
-              <div class="hero-title">Your <span>Wallets</span></div>
-              <div class="hero-subtitle">Track your wallets across chains. Read-only. No keys stored.</div>
-            </div>
-            <div class="hero-actions">
-              <button class="btn btn-primary" onclick="walletOpenAddWalletModal()">＋ Add Wallet</button>
-              <button class="btn btn-cyan" onclick="walletSyncWallets()"><span id="sync-icon">⟳</span> Sync Wallets</button>
-              <button class="btn btn-ghost">⬆ Import</button>
-              <button class="btn btn-ghost">⬇ Export Report</button>
-            </div>
-          </div>
-
-          <div class="hero-stats">
-            <div class="stat-widget gold">
-              <div class="stat-label">Total Wallets</div>
-              <div class="stat-value" id="stat-total">0</div>
-              <div class="stat-change">tracked</div>
-            </div>
-            <div class="stat-widget cyan" style="display:none">
-              <div class="stat-label">Active Today</div>
-              <div class="stat-value" style="color:var(--text-muted);font-size:18px;">Phase 4</div>
-              <div class="stat-change">needs on-chain feed</div>
-            </div>
-            <div class="stat-widget green" style="display:none">
-              <div class="stat-label">Total Interactions</div>
-              <div class="stat-value" style="color:var(--text-muted);font-size:18px;">Phase 4</div>
-              <div class="stat-change">needs on-chain feed</div>
-            </div>
-            <div class="stat-widget gold">
-              <div class="stat-label">Avg Health Score</div>
-              <div class="stat-value" id="stat-avg-health">—</div>
-              <div class="stat-change">across checked wallets</div>
-            </div>
-            <div class="stat-widget green">
-              <div class="stat-label">Sybil Safety</div>
-              <div class="stat-value" id="stat-sybil-safety">—</div>
-              <div class="stat-change">from avg health</div>
-            </div>
-            <div class="stat-widget orange" style="display:none">
-              <div class="stat-label">Est. Exposure</div>
-              <div class="stat-value" style="color:var(--text-muted);font-size:18px;">Phase 4</div>
-              <div class="stat-change">needs portfolio data</div>
-            </div>
-          </div>
+        <!-- Page header -->
+        <div class="wlt-page-head">
+          <div class="wlt-bc">✦ DROP ELITE <span class="wlt-bc-sep">/</span> WALLETS</div>
+          <h1 class="wlt-title"><span>Wallets</span></h1>
+          <p class="wlt-sub">Manage, analyze and optimize all your wallets from one place.</p>
         </div>
 
-        <!-- ═══════════ WALLET HEALTH SYSTEM ═══════════ -->
-        <div class="health-system-panel">
-          <div class="section-header">
-            <div class="section-title">Wallet Health System</div>
-            <div class="section-controls">
-              <div class="live-pulse">LIVE SCORING</div>
-              <button class="btn btn-ghost" style="padding:6px 12px;font-size:11px;">Full Report</button>
-            </div>
-          </div>
-
-          <div class="health-wallets-grid" id="health-grid">
-            <!-- Injected by JS -->
-          </div>
+        <!-- KPI Row (5 cards) -->
+        <div class="wlt-kpi-row" id="wltKpiRow">
+          <div class="wlt-no-data" style="grid-column:1/-1;">Loading wallet stats...</div>
         </div>
 
-        <!-- ═══════════ MAIN LAYOUT ═══════════ -->
-        <div class="main-layout">
+        <!-- Filter tabs + actions -->
+        <div class="wlt-tab-strip">
+          <button class="wlt-filter-tab active" data-filter="all" onclick="wltFilterBy('all')">⚡ All Wallets <span class="wlt-count" id="wltCountAll">0</span></button>
+          <button class="wlt-filter-tab" data-filter="primary" onclick="wltFilterBy('primary')">⭐ Primary <span class="wlt-count" id="wltCountPrimary">0</span></button>
+          <button class="wlt-filter-tab" data-filter="farmer" onclick="wltFilterBy('farmer')">🚜 Farmers <span class="wlt-count" id="wltCountFarmer">0</span></button>
+          <button class="wlt-filter-tab" data-filter="defi" onclick="wltFilterBy('defi')">💎 DeFi <span class="wlt-count" id="wltCountDefi">0</span></button>
+          <button class="wlt-filter-tab" data-filter="cold" onclick="wltFilterBy('cold')">🔒 Cold Storage <span class="wlt-count" id="wltCountCold">0</span></button>
+          <div class="wlt-grow"></div>
+          <button class="wlt-add-btn" onclick="wltOpenAddModal()">+ ADD WALLET</button>
+        </div>
 
-          <!-- ═══ LEFT: WALLET TABLE ═══ -->
-          <div class="main-col">
+        <!-- Main 3-column grid -->
+        <div class="wlt-main-grid">
 
-            <!-- Grouping -->
-            <div class="group-tabs" id="group-tabs">
-              <div class="group-tag active" onclick="walletFilterGroup(this,'all')">
-                <span class="group-tag-dot" style="background:var(--gold)"></span> All Wallets
-              </div>
-              <div class="group-tag" onclick="walletFilterGroup(this,'farming')">
-                <span class="group-tag-dot" style="background:var(--gold)"></span> Farming
-              </div>
-              <div class="group-tag" onclick="walletFilterGroup(this,'active')">
-                <span class="group-tag-dot" style="background:var(--cyan)"></span> Active
-              </div>
-              <div class="group-tag" onclick="walletFilterGroup(this,'resting')">
-                <span class="group-tag-dot" style="background:var(--text-muted)"></span> Resting
-              </div>
+          <!-- Column 1: WALLET LIST -->
+          <div class="wlt-list-col">
+            <div class="wlt-section-title">WALLET LIST</div>
+            <div class="wlt-search-row">
+              <input class="wlt-search" id="wltSearch" placeholder="🔍 Search wallets..." oninput="wltApplyFilters()">
+              <button class="wlt-filter-icon-btn" onclick="wltClearSearch()" title="Clear">⚡</button>
+            </div>
+            <div class="wlt-list" id="wltList">
+              <div class="wlt-no-data">Loading...</div>
+            </div>
+            <button class="wlt-view-all-btn" onclick="wltViewAll()">View All Wallets →</button>
+          </div>
+
+          <!-- Column 2: WALLET DETAIL -->
+          <div class="wlt-detail-col">
+
+            <!-- Empty state when nothing selected -->
+            <div class="wlt-detail-empty" id="wltDetailEmpty">
+              <div class="wlt-empty-icon">👛</div>
+              <div class="wlt-empty-title">Select a Wallet</div>
+              <div class="wlt-empty-sub">Click any wallet from the list on the left to view details, balance, and health score.</div>
+              <button class="wlt-empty-cta" onclick="wltOpenAddModal()">+ Add Your First Wallet</button>
             </div>
 
-            <!-- Search + controls -->
-            <div class="wallet-search-bar">
-              <div class="search-input-wrap">
-                <span class="search-icon">⌕</span>
-                <input class="search-input" type="text" placeholder="Search wallets by name, address, chain..." id="wallet-search" oninput="walletFilterWallets()">
+            <!-- Detail body (shown when wallet selected) -->
+            <div class="wlt-detail-body" id="wltDetailBody" style="display:none;">
+
+              <!-- Header -->
+              <div class="wlt-detail-head">
+                <div class="wlt-detail-logo" id="wltDetailLogo">🟣</div>
+                <div class="wlt-detail-name-block">
+                  <div class="wlt-detail-name" id="wltDetailName">Wallet</div>
+                  <div class="wlt-detail-addr" id="wltDetailAddr">—</div>
+                </div>
+                <div class="wlt-detail-score-box">
+                  <div class="wlt-detail-score-block">
+                    <div class="wlt-detail-score-lbl">WALLET SCORE</div>
+                    <div class="wlt-detail-score" id="wltDetailScore">—</div>
+                    <div class="wlt-detail-score-tag" id="wltDetailScoreTag">—</div>
+                  </div>
+                  <div class="wlt-detail-hex-icon" onclick="wltOpenHealthModal()" title="View breakdown">⬢</div>
+                </div>
               </div>
-              <div class="view-toggle">
-                <div class="view-btn active" data-tip="Table view" onclick="walletSetView('table',this)">☰</div>
-                <div class="view-btn" data-tip="Grid view" onclick="walletSetView('grid',this)">⊞</div>
+
+              <!-- Detail Tabs -->
+              <div class="wlt-detail-tabs">
+                <button class="wlt-dtab active" data-dtab="overview" onclick="wltSwitchDetailTab(this, 'overview')">Overview</button>
+                <button class="wlt-dtab" data-dtab="activity" onclick="wltSwitchDetailTab(this, 'activity')">Activity</button>
+                <button class="wlt-dtab" data-dtab="assets" onclick="wltSwitchDetailTab(this, 'assets')">Assets</button>
+                <button class="wlt-dtab" data-dtab="defi" onclick="wltSwitchDetailTab(this, 'defi')">DeFi</button>
+                <button class="wlt-dtab" data-dtab="nfts" onclick="wltSwitchDetailTab(this, 'nfts')">NFTs</button>
+                <button class="wlt-dtab" data-dtab="permissions" onclick="wltSwitchDetailTab(this, 'permissions')">Permissions</button>
+                <button class="wlt-dtab" data-dtab="history" onclick="wltSwitchDetailTab(this, 'history')">History</button>
               </div>
-              <button class="btn btn-ghost" style="padding:8px 14px;font-size:11px;">⬍ Sort</button>
-              <button class="btn btn-ghost" style="padding:8px 14px;font-size:11px;">⊞ Filter</button>
-            </div>
 
-            <!-- Filter tabs -->
-            <div class="wallet-filters">
-              <div class="filter-tab active" onclick="walletFilterStatus(this,'all')">All</div>
-              <div class="filter-tab" onclick="walletFilterStatus(this,'farming')">Farming</div>
-              <div class="filter-tab" onclick="walletFilterStatus(this,'active')">Active</div>
-              <div class="filter-tab" onclick="walletFilterStatus(this,'resting')">Resting</div>
-            </div>
+              <!-- OVERVIEW PANE -->
+              <div class="wlt-pane" id="wltPaneOverview">
 
-            <!-- Table -->
-            <div class="wallet-table-wrap">
-              <table class="wallet-table">
-                <thead>
-                  <tr>
-                    <th>Identity</th>
-                    <th>Status</th>
-                    <th>Label</th>
-                    <th>Chains</th>
-                    <th>Notes</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="wallet-tbody">
-                  <!-- Injected by JS -->
-                </tbody>
-              </table>
-            </div>
+                <!-- Top row: Balance + Health -->
+                <div class="wlt-twocard-grid">
 
-            <div style="padding:10px 0 4px;display:flex;align-items:center;justify-content:space-between;">
-              <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted)">Showing <span id="wallet-count">12</span> wallets · <span style="color:var(--cyan)">Read-only mode</span> · No private keys required</div>
-              <div class="readonly-badge">🔒 NO KEYS STORED</div>
+                  <!-- BALANCE OVERVIEW -->
+                  <div class="wlt-inner-card">
+                    <div class="wlt-inner-card-head">
+                      <div class="wlt-inner-title">BALANCE OVERVIEW</div>
+                      <div class="wlt-period-tabs">
+                        <button class="wlt-period-tab">1D</button>
+                        <button class="wlt-period-tab active">7D</button>
+                        <button class="wlt-period-tab">30D</button>
+                        <button class="wlt-period-tab">90D</button>
+                      </div>
+                    </div>
+
+                    <!-- API-not-connected overlay (default) -->
+                    <div class="wlt-api-card" id="wltBalanceNoApi">
+                      <div class="wlt-api-icon">🔌</div>
+                      <div class="wlt-api-title">Connect Alchemy API</div>
+                      <div class="wlt-api-sub">
+                        Get live balance data across Ethereum, Arbitrum, Optimism &amp; Base.<br>
+                        Free at alchemy.com — 300M units/month.
+                      </div>
+                      <button class="wlt-connect-btn" onclick="wltGotoSettings()">+ Add API Key in Settings</button>
+                      <div class="wlt-api-phase">Phase 7B</div>
+                    </div>
+
+                    <!-- Real balance data (shown when API connected) -->
+                    <div class="wlt-balance-real" id="wltBalanceReal" style="display:none;">
+                      <div class="wlt-balance-lbl">TOTAL BALANCE</div>
+                      <div class="wlt-balance-amount" id="wltBalanceAmount">—</div>
+                      <div class="wlt-balance-delta" id="wltBalanceDelta">—</div>
+                      <div class="wlt-balance-chart" id="wltBalanceChart"></div>
+                      <div class="wlt-chain-bar-list" id="wltChainBars"></div>
+                    </div>
+                  </div>
+
+                  <!-- WALLET HEALTH -->
+                  <div class="wlt-inner-card">
+                    <div class="wlt-inner-card-head">
+                      <div class="wlt-inner-title">WALLET HEALTH</div>
+                    </div>
+                    <div class="wlt-radar-wrap" id="wltRadarWrap">
+                      <!-- Radar SVG injected by JS -->
+                    </div>
+                    <button class="wlt-view-details-btn" onclick="wltOpenHealthModal()">View Details →</button>
+                  </div>
+                </div>
+
+                <!-- Bottom row: Activity + Protocols -->
+                <div class="wlt-twocard-grid">
+
+                  <!-- RECENT ACTIVITY -->
+                  <div class="wlt-inner-card">
+                    <div class="wlt-inner-card-head">
+                      <div class="wlt-inner-title">RECENT ACTIVITY</div>
+                      <div class="wlt-source-tag" id="wltActivitySource">from DropElite</div>
+                    </div>
+                    <div class="wlt-activity-list" id="wltActivityList">
+                      <div class="wlt-no-data">Loading activity...</div>
+                    </div>
+                  </div>
+
+                  <!-- TOP PROTOCOLS -->
+                  <div class="wlt-inner-card">
+                    <div class="wlt-inner-card-head">
+                      <div class="wlt-inner-title">TOP PROTOCOLS</div>
+                      <div class="wlt-source-tag">via Moralis</div>
+                    </div>
+                    <div class="wlt-api-card" id="wltProtocolsNoApi">
+                      <div class="wlt-api-icon">📊</div>
+                      <div class="wlt-api-title">Connect Moralis API</div>
+                      <div class="wlt-api-sub">
+                        See your DeFi positions across Aave, Uniswap, Lido &amp; more.
+                      </div>
+                      <button class="wlt-connect-btn" onclick="wltGotoSettings()">+ Add API Key in Settings</button>
+                      <div class="wlt-api-phase">Phase 7C</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- OTHER PANES (placeholders) -->
+              <div class="wlt-pane" id="wltPaneActivity" style="display:none;">
+                <div class="wlt-pane-placeholder">
+                  <div class="wlt-pane-icon">⚡</div>
+                  <div class="wlt-pane-title">Activity Timeline</div>
+                  <div class="wlt-pane-sub">Full transaction history coming in Phase 7B (Alchemy API integration).</div>
+                </div>
+              </div>
+              <div class="wlt-pane" id="wltPaneAssets" style="display:none;">
+                <div class="wlt-pane-placeholder">
+                  <div class="wlt-pane-icon">💎</div>
+                  <div class="wlt-pane-title">Token Holdings</div>
+                  <div class="wlt-pane-sub">Multi-chain asset breakdown coming in Phase 7B.</div>
+                </div>
+              </div>
+              <div class="wlt-pane" id="wltPaneDefi" style="display:none;">
+                <div class="wlt-pane-placeholder">
+                  <div class="wlt-pane-icon">🏦</div>
+                  <div class="wlt-pane-title">DeFi Positions</div>
+                  <div class="wlt-pane-sub">Active positions across protocols coming in Phase 7C (Moralis).</div>
+                </div>
+              </div>
+              <div class="wlt-pane" id="wltPaneNfts" style="display:none;">
+                <div class="wlt-pane-placeholder">
+                  <div class="wlt-pane-icon">🎨</div>
+                  <div class="wlt-pane-title">NFT Collection</div>
+                  <div class="wlt-pane-sub">Owned NFTs across chains coming in Phase 7B.</div>
+                </div>
+              </div>
+              <div class="wlt-pane" id="wltPanePermissions" style="display:none;">
+                <div class="wlt-pane-placeholder">
+                  <div class="wlt-pane-icon">🔓</div>
+                  <div class="wlt-pane-title">Token Approvals</div>
+                  <div class="wlt-pane-sub">Approval scanner coming in Phase 7D (Security audit).</div>
+                </div>
+              </div>
+              <div class="wlt-pane" id="wltPaneHistory" style="display:none;">
+                <div class="wlt-pane-placeholder">
+                  <div class="wlt-pane-icon">📜</div>
+                  <div class="wlt-pane-title">Full History</div>
+                  <div class="wlt-pane-sub">Lifetime wallet history coming in Phase 7B.</div>
+                </div>
+              </div>
+
             </div>
           </div>
 
-          <!-- ═══ RIGHT: SIDEBAR ═══ -->
-          <div class="sidebar">
+          <!-- Column 3: RIGHT SIDEBAR -->
+          <div class="wlt-side-col" id="wltSidebar">
 
-            <!-- SYBIL PROTECTION -->
-            <div class="panel red-top" style="display:none">
-              <div class="section-header">
-                <div class="section-title" style="color:var(--red)">Sybil Protection</div>
+            <!-- Wallet Identity -->
+            <div class="wlt-side-card" id="wltIdentityCard">
+              <div class="wlt-side-head">
+                <div class="wlt-side-title">WALLET IDENTITY</div>
+                <button class="wlt-edit-btn" onclick="wltEditWallet()">EDIT</button>
+              </div>
+              <div class="wlt-persona-lbl">WALLET PERSONA</div>
+              <div class="wlt-persona-badge" id="wltPersonaBadge">
+                <span>🟢</span> <span id="wltPersonaName">—</span>
+              </div>
+              <div class="wlt-persona-desc" id="wltPersonaDesc">—</div>
+
+              <div class="wlt-sybil-row">
+                <div class="wlt-sybil-head">
+                  <span class="wlt-sybil-lbl">Anti-Sybil Score</span>
+                  <span class="wlt-sybil-val" id="wltSybilScore">— <span class="wlt-sybil-max">/100</span></span>
+                </div>
+                <div class="wlt-sybil-bar-bg"><div class="wlt-sybil-bar-fill" id="wltSybilBar" style="width:0%"></div></div>
+                <div class="wlt-sybil-tag" id="wltSybilTag">—</div>
               </div>
 
-              <div style="padding:20px 12px;text-align:center;">
-                <div style="font-size:26px;margin-bottom:8px;">🛡️</div>
-                <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-primary,#fff);letter-spacing:1px;margin-bottom:8px;">CROSS-WALLET SYBIL SCAN — PHASE 4</div>
-                <div style="font-size:11px;color:var(--text-muted);line-height:1.6;">
-                  Detecting shared funding, timing patterns and wallet
-                  clusters needs cross-wallet analysis across the blockchain.
-                  This unlocks in Phase 4.
-                </div>
-                <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.07);font-size:11px;color:var(--text-muted);line-height:1.6;">
-                  <strong style="color:var(--text-primary,#fff);">Available now:</strong> each wallet's
-                  on-chain <em>Health Score</em> (age, activity, gas, multi-chain)
-                  is in the Wallet Health System above and the Airdrop Tracker.
-                </div>
+              <div class="wlt-stat-row">
+                <span class="wlt-stat-lbl">First Activity</span>
+                <span class="wlt-stat-val" id="wltStatFirstActivity">—</span>
               </div>
-
-              <div class="panel-footer-note">🔒 PRIVACY-FIRST · NO TRACKING · NO KEY STORAGE</div>
-            </div>
-
-            <!-- CHAIN EXPOSURE -->
-            <div class="panel cyan-top" style="display:none">
-              <div class="section-header">
-                <div class="section-title" style="color:var(--cyan)">Multi-Chain Exposure</div>
-                <button class="btn btn-ghost" style="padding:5px 10px;font-size:10px;">Heatmap</button>
+              <div class="wlt-stat-row">
+                <span class="wlt-stat-lbl">Total Transactions</span>
+                <span class="wlt-stat-val" id="wltStatTotalTx">—</span>
               </div>
-
-              <div class="chain-list">
-                <div class="chain-row">
-                  <div class="chain-icon ci-eth">Ξ</div>
-                  <div class="chain-row-info">
-                    <div class="chain-row-name">Ethereum</div>
-                    <div class="chain-row-bar"><div class="chain-row-fill" style="width:72%;background:linear-gradient(90deg,rgba(98,126,234,0.5),#627eea)"></div></div>
-                  </div>
-                  <div class="chain-row-val" style="color:#627eea">18 wallets</div>
-                </div>
-                <div class="chain-row">
-                  <div class="chain-icon ci-arb">A</div>
-                  <div class="chain-row-info">
-                    <div class="chain-row-name">Arbitrum</div>
-                    <div class="chain-row-bar"><div class="chain-row-fill" style="width:88%;background:linear-gradient(90deg,rgba(40,160,240,0.5),#28a0f0)"></div></div>
-                  </div>
-                  <div class="chain-row-val" style="color:#28a0f0">22 wallets</div>
-                </div>
-                <div class="chain-row">
-                  <div class="chain-icon ci-base">B</div>
-                  <div class="chain-row-info">
-                    <div class="chain-row-name">Base</div>
-                    <div class="chain-row-bar"><div class="chain-row-fill" style="width:60%;background:linear-gradient(90deg,rgba(0,82,255,0.5),#0052ff)"></div></div>
-                  </div>
-                  <div class="chain-row-val" style="color:#0052ff">15 wallets</div>
-                </div>
-                <div class="chain-row">
-                  <div class="chain-icon ci-zks">Z</div>
-                  <div class="chain-row-info">
-                    <div class="chain-row-name">zkSync Era</div>
-                    <div class="chain-row-bar"><div class="chain-row-fill" style="width:95%;background:linear-gradient(90deg,rgba(143,97,235,0.5),#8f61eb)"></div></div>
-                  </div>
-                  <div class="chain-row-val" style="color:#8f61eb">24 wallets</div>
-                </div>
-                <div class="chain-row">
-                  <div class="chain-icon ci-sol">◎</div>
-                  <div class="chain-row-info">
-                    <div class="chain-row-name">Solana</div>
-                    <div class="chain-row-bar"><div class="chain-row-fill" style="width:38%;background:linear-gradient(90deg,rgba(20,241,149,0.5),#14f195)"></div></div>
-                  </div>
-                  <div class="chain-row-val" style="color:#14f195">9 wallets</div>
-                </div>
-                <div class="chain-row">
-                  <div class="chain-icon ci-lz">LZ</div>
-                  <div class="chain-row-info">
-                    <div class="chain-row-name">LayerZero</div>
-                    <div class="chain-row-bar"><div class="chain-row-fill" style="width:80%;background:linear-gradient(90deg,rgba(255,200,50,0.5),var(--gold))"></div></div>
-                  </div>
-                  <div class="chain-row-val" style="color:var(--gold)">20 wallets</div>
-                </div>
-              </div>
-
-              <div style="margin-top:14px;">
-                <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-bottom:6px;letter-spacing:1.5px;">ACTIVITY HEATMAP — LAST 12 WEEKS</div>
-                <div class="heatmap" id="heatmap"></div>
+              <div class="wlt-stat-row">
+                <span class="wlt-stat-lbl">Active Ecosystems</span>
+                <span class="wlt-stat-val" id="wltStatEcosystems">—</span>
               </div>
             </div>
 
-            <!-- LIVE ACTIVITY FEED -->
-            <div class="panel green-top" style="display:none">
-              <div class="section-header">
-                <div class="section-title" style="color:var(--green)">Activity Feed</div>
-                <div class="live-pulse">LIVE</div>
+            <!-- Risk Analysis -->
+            <div class="wlt-side-card">
+              <div class="wlt-side-head">
+                <div class="wlt-side-title">🛡 RISK ANALYSIS</div>
               </div>
-
-              <div class="feed-list" id="activity-feed">
-                <!-- Injected by JS -->
+              <div class="wlt-risk-status" id="wltRiskStatus">
+                <div class="wlt-risk-status-dot"></div> <span id="wltRiskLabel">—</span>
               </div>
+              <div class="wlt-risk-sub" id="wltRiskSub">—</div>
+              <div class="wlt-risk-list" id="wltRiskList">
+                <!-- Risk items injected by JS -->
+              </div>
+              <button class="wlt-full-report-btn" onclick="wltViewFullReport()">View Full Report →</button>
             </div>
 
-            <!-- ANALYTICS -->
-            <div class="panel gold-top" style="display:none">
-              <div class="section-header">
-                <div class="section-title">Portfolio Analytics</div>
+            <!-- External Tools (admin-configurable) -->
+            <div class="wlt-side-card">
+              <div class="wlt-side-head">
+                <div class="wlt-side-title">⚡ EXTERNAL TOOLS</div>
+                <span class="wlt-admin-badge" title="Admin can configure these in Phase 2">ADMIN</span>
               </div>
-
-              <div class="analytics-grid">
-                <div class="analytics-widget">
-                  <div class="aw-label">AVG INTERACTIONS</div>
-                  <div class="aw-val" style="color:var(--cyan)">204</div>
-                  <div class="aw-change" style="color:var(--green)">↑ 12% this week</div>
-                </div>
-                <div class="analytics-widget">
-                  <div class="aw-label">ACTIVE DAYS</div>
-                  <div class="aw-val" style="color:var(--gold)">147</div>
-                  <div class="aw-change" style="color:var(--text-muted)">avg per wallet</div>
-                </div>
-                <div class="analytics-widget">
-                  <div class="aw-label">GAS EFFICIENCY</div>
-                  <div class="aw-val" style="color:var(--green)">91%</div>
-                  <div class="aw-change" style="color:var(--green)">↑ Optimized</div>
-                </div>
-                <div class="analytics-widget">
-                  <div class="aw-label">SUCCESS RATE</div>
-                  <div class="aw-val" style="color:var(--purple)">84%</div>
-                  <div class="aw-change" style="color:var(--text-muted)">farming routes</div>
-                </div>
+              <div class="wlt-tools-disclaimer">
+                Links open in external dApps. DropElite never signs transactions.
               </div>
-
-              <div style="margin-top:12px;">
-                <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-bottom:6px;letter-spacing:1.5px;">FARMING EFFICIENCY · 30 DAYS</div>
-                <canvas id="sparkline-chart" height="50" style="width:100%"></canvas>
+              <div class="wlt-actions-grid" id="wltActionsGrid">
+                <!-- 8 buttons injected by JS — admin-configurable in future -->
               </div>
             </div>
-
           </div>
         </div>
       </div>
 
-      <!-- ═══════════════════════════
-           WALLET DETAIL PANEL
-           ═══════════════════════════ -->
-      <div class="detail-overlay" id="detail-panel">
-        <div class="detail-header">
-          <div class="detail-close" onclick="walletCloseDetail()">✕</div>
-          <div class="detail-wallet-id" id="detail-wallet-id">
-            <!-- Injected by JS -->
+      <!-- ─── ADD WALLET MODAL ─── -->
+      <div class="wlt-modal-overlay" id="wltAddModal" onclick="if(event.target===this)wltCloseAddModal()">
+        <div class="wlt-modal">
+          <div class="wlt-modal-head">
+            <div class="wlt-modal-title">+ Add New Wallet</div>
+            <button class="wlt-modal-close" onclick="wltCloseAddModal()">×</button>
           </div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;" id="detail-quick-actions">
-            <button class="btn btn-ghost" style="padding:7px 12px;font-size:11px;" onclick="walletOpenExplorer()">🔗 Explorer</button>
-            <button class="btn btn-ghost" style="padding:7px 12px;font-size:11px;" onclick="walletCopyAddr()">⎘ Copy Address</button>
-            <button class="btn btn-primary" style="padding:7px 12px;font-size:11px;">▶ Start Route</button>
-            <button class="btn btn-cyan" style="padding:7px 12px;font-size:11px;">⏸ Pause</button>
-          </div>
+
+          <form id="wltAddForm" onsubmit="event.preventDefault(); wltSaveNewWallet();">
+            <div class="wlt-form-group">
+              <label class="wlt-form-label">Wallet Name</label>
+              <input class="wlt-form-input" id="wltFormName" placeholder="e.g. Primary Farming" required>
+            </div>
+            <div class="wlt-form-group">
+              <label class="wlt-form-label">Address</label>
+              <input class="wlt-form-input" id="wltFormAddr" placeholder="0x...">
+            </div>
+            <div class="wlt-form-group">
+              <label class="wlt-form-label">Chains</label>
+              <input class="wlt-form-input" id="wltFormChains" placeholder="Ethereum, Arbitrum, Base">
+            </div>
+            <div class="wlt-form-group">
+              <label class="wlt-form-label">Label / Type</label>
+              <select class="wlt-form-input" id="wltFormLabel">
+                <option value="primary">Primary</option>
+                <option value="farmer" selected>Farmer</option>
+                <option value="defi">DeFi</option>
+                <option value="cold">Cold Storage</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="wlt-form-group">
+              <label class="wlt-form-label">Notes (Optional)</label>
+              <textarea class="wlt-form-textarea" id="wltFormNotes" rows="3" placeholder="Research notes, which projects this wallet farms..."></textarea>
+            </div>
+            <div class="wlt-form-actions">
+              <button type="button" class="wlt-form-cancel" onclick="wltCloseAddModal()">Cancel</button>
+              <button type="submit" class="wlt-form-submit">+ Add Wallet</button>
+            </div>
+          </form>
         </div>
-
-        <div class="detail-body">
-
-          <!-- Stats -->
-          <div class="detail-section">
-            <div class="detail-section-title">Wallet Overview</div>
-            <div class="detail-grid" id="detail-stats-grid">
-              <!-- Injected by JS -->
-            </div>
-          </div>
-
-          <!-- Health Breakdown -->
-          <div class="detail-section">
-            <div class="detail-section-title">Health Breakdown</div>
-            <div id="detail-health-bars">
-              <!-- Injected by JS -->
-            </div>
-          </div>
-
-          <!-- Protocols -->
-          <div class="detail-section">
-            <div class="detail-section-title">Top Protocols</div>
-            <div class="protocol-list" id="detail-protocols">
-              <!-- Injected by JS -->
-            </div>
-          </div>
-
-          <!-- Activity -->
-          <div class="detail-section">
-            <div class="detail-section-title">Recent Activity</div>
-            <div class="activity-list" id="detail-activity">
-              <!-- Injected by JS -->
-            </div>
-          </div>
-
-          <div style="padding:14px;background:rgba(0,229,255,0.05);border:1px solid rgba(0,229,255,0.15);border-radius:var(--r-md);margin-top:4px;">
-            <div style="font-family:var(--font-mono);font-size:9px;color:var(--cyan);letter-spacing:1.5px;margin-bottom:5px;">🔒 SECURITY NOTICE</div>
-            <div style="font-family:var(--font-ui);font-size:11px;color:var(--text-muted);line-height:1.5;">DropElite operates in read-only mode. Your private keys and seed phrases are NEVER requested or stored. All wallet connections use public address monitoring only.</div>
-          </div>
-        </div>
-
-        <!-- ADD / EDIT WALLET MODAL -->
       </div>
+
+      <!-- ─── HEALTH SCORE BREAKDOWN MODAL ─── -->
+      <div class="wlt-modal-overlay" id="wltHealthModal" onclick="if(event.target===this)wltCloseHealthModal()">
+        <div class="wlt-modal wlt-modal-lg">
+          <div class="wlt-modal-head">
+            <div class="wlt-modal-title">🏆 Wallet Health Score</div>
+            <button class="wlt-modal-close" onclick="wltCloseHealthModal()">×</button>
+          </div>
+
+          <div class="wlt-health-overall" id="wltHealthOverall">
+            <div class="wlt-health-overall-num">—</div>
+            <div class="wlt-health-overall-tag">—</div>
+          </div>
+
+          <div id="wltHealthCategories">
+            <!-- 4 categories injected by JS -->
+          </div>
+
+          <div class="wlt-health-footer">
+            💡 <b>How is this computed?</b><br>
+            Phase 7A uses simplified scoring (wallet age + manual admin rating). Once Alchemy + Moralis APIs are connected (Phase 7B/C), scores update from real on-chain data. <b>Sybil Risk Analysis</b> is conservative — never makes 100% claims about real users.
+          </div>
+        </div>
+      </div>
+
     </section>
     <!-- END WALLETS TAB CONTENT -->
 
@@ -28854,1274 +30112,955 @@ document.addEventListener('click', function(e) {
 })();
 /* END AIRDROP TRACKER TAB SCRIPT */
 
-/* START WALLETS TAB SCRIPT */
+/* START WALLETS TAB SCRIPT — v3.3 (Chunk 8) */
+/* Phase 7A: UI shell with real DB data + manual scoring + admin-configurable actions */
 (function() {
 
-/* ════════════════════════════════
-   DATA
-   ════════════════════════════════ */
-// REAL — loaded from Supabase
-let walletData = [];
-let walletEditingId = null;
+// ─── STATE ───
+let wltAllWallets    = [];     // all user's wallets from DB
+let wltFilterTag     = 'all';  // current filter (all/primary/farmer/defi/cold)
+let wltSearchQuery   = '';
+let wltSelectedId    = null;   // currently selected wallet
+let wltCurrentTab    = 'overview';
+let wltActivityCache = [];     // cached activity for selected wallet
+let wltApiConnected  = false;  // future: detect Alchemy API key in user profile
 
-// Load the current user's wallets from Supabase
-async function walletLoadFromSupabase() {
+// Defensive: get element OR return null
+function wlt(id) { return document.getElementById(id); }
+
+// HTML escape
+function wltEsc(str) {
+  if (str == null) return '';
+  return String(str)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// Format wallet address (0x1234...abcd)
+function wltFmtAddr(addr) {
+  if (!addr || typeof addr !== 'string') return '—';
+  if (addr.length <= 12) return addr;
+  return addr.slice(0, 6) + '...' + addr.slice(-4);
+}
+
+function wltTimeAgo(ts) {
+  if (!ts) return 'never';
+  const ms = Date.now() - new Date(ts).getTime();
+  if (ms < 0) return 'just now';
+  const mins = Math.floor(ms / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return mins + 'm ago';
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return hours + 'h ago';
+  const days = Math.floor(hours / 24);
+  if (days < 30) return days + 'd ago';
+  const months = Math.floor(days / 30);
+  return months + 'mo ago';
+}
+
+function wltDaysSince(ts) {
+  if (!ts) return 0;
+  return Math.floor((Date.now() - new Date(ts).getTime()) / 86400000);
+}
+
+// ─── MAIN LOAD ───
+async function wltLoadAll() {
   try {
-    if (!window.API || !window.API.isLive()) {
-      const tbody = document.getElementById('wallet-tbody');
-      if (tbody) tbody.innerHTML = '<tr><td colspan="6" style="padding:30px;text-align:center;color:var(--text-muted);font-size:12px;">Supabase not connected. Check api.js keys.</td></tr>';
+    if (!window.API || !window.API.isLive || !window.API.isLive()) {
+      const list = wlt('wltList');
+      if (list) list.innerHTML = '<div class="wlt-no-data">Supabase not connected. Check api.js.</div>';
       return;
     }
-    walletData = await window.API.getWallets();
 
-    // Load the on-chain Health Score cache (from the sybil system)
-    if (window.API.getWalletChainData) {
-      walletChainCache = await window.API.getWalletChainData();
-    }
+    const wallets = window.API.getWallets ? await window.API.getWallets() : [];
+    wltAllWallets = wallets || [];
 
-    walletApplyFilters();
-    walletRenderHealthGrid();
-    walletRenderHeroStats();
-  } catch (e) {
-    console.error('walletLoadFromSupabase:', e);
-  }
-}
-
-/* ════════════════════════════════
-   AIRDROP TRACKER — Section 5
-   Wallet Participation cards · LIVE (Supabase)
-   Real: name, address, chains, status, label.
-   Score / Sybil Risk / TX Count need blockchain
-   data → shown as "Phase 4", never faked.
-   ════════════════════════════════ */
-function atwEscape(s) {
-  if (s == null) return '';
-  return String(s)
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-
-function atwShortAddr(addr) {
-  if (!addr) return 'No address';
-  var a = String(addr).trim();
-  if (a.length <= 14) return a;
-  return a.slice(0, 6) + '…' + a.slice(-4);
-}
-
-// a small palette so cards aren't all the same accent colour
-var ATW_ACCENTS = ['#00d4ff', '#f0b429', '#00e676', '#a78bfa', '#ff6b9d', '#4af0ff'];
-
-// Holds the on-chain cache map { wallet_id: row } for the current render
-var atwChainCache = {};
-
-// risk → colour
-function atwRiskColor(risk) {
-  var r = String(risk || '').toLowerCase();
-  if (r === 'low')    return 'var(--green, #00e676)';
-  if (r === 'medium') return 'var(--gold, #f0b429)';
-  if (r === 'high')   return 'var(--red-alert, #ff3b6b)';
-  return 'var(--text-muted)';
-}
-function atwRiskLabel(risk) {
-  var r = String(risk || '').toLowerCase();
-  if (r === 'low')    return 'LOW';
-  if (r === 'medium') return 'MEDIUM';
-  if (r === 'high')   return 'HIGH';
-  return '—';
-}
-
-function atwRenderWallets(wallets) {
-  var grid  = document.getElementById('atw-grid');
-  var count = document.getElementById('atw-count');
-  if (!grid) return;
-
-  if (count) {
-    count.textContent = wallets.length +
-      (wallets.length === 1 ? ' WALLET' : ' WALLETS');
-  }
-
-  if (!wallets.length) {
-    grid.innerHTML = '<div style="grid-column:1/-1;padding:28px;text-align:center;' +
-      'color:var(--text-muted);font-size:12px;font-family:\'Share Tech Mono\',monospace;' +
-      'line-height:1.6;">No wallets yet.<br>Add wallets from the Wallets tab — ' +
-      'they\'ll appear here.</div>';
-    return;
-  }
-
-  grid.innerHTML = wallets.map(function(w, i) {
-    var accent = ATW_ACCENTS[i % ATW_ACCENTS.length];
-    var chains = w.chains ? atwEscape(w.chains) : '—';
-    var status = w.status ? atwEscape(w.status) : 'active';
-    var addr = w.address ? atwEscape(String(w.address).trim()) : '';
-
-    // Cached on-chain data for this wallet (if any)
-    var cd = atwChainCache[w.id];
-    var scoreCell, riskCell;
-    if (cd && cd.last_checked) {
-      scoreCell = '<span class="wallet-stat-val" style="color:var(--text-primary,#fff)">' +
-                  (cd.health_score || 0) + '/100</span>';
-      riskCell  = '<span class="wallet-stat-val" style="color:' + atwRiskColor(cd.activity_risk) +
-                  ';font-weight:700;">' + atwRiskLabel(cd.activity_risk) + '</span>';
-    } else {
-      scoreCell = '<span class="wallet-stat-val" style="color:var(--text-muted);font-size:10px;">tap check ↓</span>';
-      riskCell  = '<span class="wallet-stat-val" style="color:var(--text-muted);font-size:10px;">tap check ↓</span>';
-    }
-
-    // Button label depends on whether cached data exists + how old it is
-    var btnLabel = '⛓ Check On-Chain (ETH)';
-    var cacheNote = '';
-    if (cd && cd.last_checked) {
-      var ageMs = Date.now() - new Date(cd.last_checked).getTime();
-      var hrs = Math.floor(ageMs / 3600000);
-      btnLabel = '⟳ Re-check On-Chain (ETH)';
-      cacheNote = '<div style="font-size:9px;color:var(--text-muted);font-family:\'Share Tech Mono\',monospace;margin-top:5px;">' +
-        'Last checked ' + (hrs < 1 ? 'under 1h' : hrs + 'h') + ' ago · auto-refreshes after 24h</div>';
-    }
-
-    return '' +
-      '<div class="wallet-card" style="--accent:' + accent + '">' +
-        '<div class="wallet-addr">' + atwShortAddr(w.address) + '</div>' +
-        '<div class="wallet-name">' + atwEscape(w.name || 'Unnamed Wallet') + '</div>' +
-        '<div class="wallet-stats">' +
-          '<div class="wallet-stat-row">' +
-            '<span class="wallet-stat-label">CHAINS</span>' +
-            '<span class="wallet-stat-val text-gold">' + chains + '</span>' +
-          '</div>' +
-          '<div class="wallet-stat-row">' +
-            '<span class="wallet-stat-label">STATUS</span>' +
-            '<span class="wallet-stat-val">' + status + '</span>' +
-          '</div>' +
-          '<div class="wallet-stat-row">' +
-            '<span class="wallet-stat-label">HEALTH SCORE</span>' + scoreCell +
-          '</div>' +
-          '<div class="wallet-stat-row">' +
-            '<span class="wallet-stat-label">ACTIVITY RISK</span>' + riskCell +
-          '</div>' +
-        '</div>' +
-        (w.label
-          ? '<div style="font-size:10px;color:var(--text-muted);font-family:\'Share Tech Mono\',monospace;margin-top:8px;">🏷 ' + atwEscape(w.label) + '</div>'
-          : '') +
-        // ── Stage 2: on-chain check (Etherscan, 24h-cached) ──
-        (addr
-          ? '<button class="btn btn-ghost" style="width:100%;margin-top:10px;font-size:11px;padding:7px;" ' +
-            'data-onchain-addr="' + addr + '" data-wallet-id="' + w.id + '">' + btnLabel + '</button>' +
-            cacheNote +
-            '<div class="onchain-result" data-onchain-for="' + addr + '" ' +
-            'style="margin-top:8px;font-family:\'Share Tech Mono\',monospace;font-size:10px;color:var(--text-muted);"></div>'
-          : '') +
-      '</div>';
-  }).join('');
-}
-
-/* ════════════════════════════════
-   SYBIL SYSTEM — STAGE 2
-   On-chain check via Etherscan (Ethereum mainnet), 24h-cached.
-   Computes a Health Score (0-100) + Activity Risk from real data.
-
-   Scoring (your chosen formula):
-     wallet age  → 40%   (365+ days = full)
-     tx count    → 35%   (100+ txs  = full)
-     gas spent   → 25%   (0.05+ ETH = full)
-   Activity Risk:  70+ = LOW · 40-69 = MEDIUM · under 40 = HIGH
-
-   NOTE: this is a wallet HEALTH score from on-chain activity —
-   not full sybil-cluster detection (that needs Phase 4+).
-
-   ⚠️ PASTE YOUR ETHERSCAN API KEY ON THE NEXT LINE.
-   (Same key as the gas widget — must be here too.)
-   ════════════════════════════════ */
-var OC_ETHERSCAN_KEY = 'TI6HDBV645C2XAKH36I21K9VFGU5459YI3';
-
-var OC_CACHE_HOURS = 24;   // re-check a wallet at most once per 24h
-
-// ── Multi-chain config ──
-// Chains we check via Etherscan V2 (one key covers all). chainid : label.
-var OC_CHAINS = [
-  { id: 1,     name: 'Ethereum' },
-  { id: 42161, name: 'Arbitrum' },
-  { id: 8453,  name: 'Base'     },
-  { id: 10,    name: 'Optimism' },
-  { id: 137,   name: 'Polygon'  }
-];
-
-// ── Scoring formula (multi-chain) ──
-// age 40% · tx 35% · gas 25%, fed multi-chain TOTALS.
-// Small bonus for being active on multiple chains (anti-sybil signal).
-function ocComputeScore(ageDays, txCount, gasEth, chainsActive) {
-  var ageScore = Math.min(ageDays / 365, 1);
-  var txScore  = Math.min(txCount / 100, 1);
-  var gasScore = Math.min(gasEth  / 0.05, 1);
-
-  var score = (ageScore * 40) + (txScore * 35) + (gasScore * 25);
-
-  // multi-chain bonus: up to +8 for being active on 4+ chains
-  // (bots/sybils usually touch only one chain)
-  var chainBonus = Math.min((chainsActive || 1) - 1, 4) * 2;
-  score = Math.round(score + chainBonus);
-
-  if (score > 100) score = 100;
-  if (score < 0)   score = 0;
-
-  var risk = score >= 70 ? 'low' : (score >= 40 ? 'medium' : 'high');
-  return { score: score, risk: risk };
-}
-
-// ── Fetch one chain's tx data for a wallet. Returns {ageDays, txCount, gasEth, active} ──
-async function ocFetchChain(chainId, addr, key) {
-  var url = 'https://api.etherscan.io/v2/api?chainid=' + chainId +
-            '&apikey=' + key +
-            '&module=account&action=txlist&address=' + addr +
-            '&startblock=0&endblock=99999999&page=1&offset=1000&sort=desc';
-  try {
-    var res  = await fetch(url);
-    var data = await res.json();
-    var txs  = (data && Array.isArray(data.result)) ? data.result : [];
-    if (!txs.length) return { ageDays: 0, txCount: 0, gasEth: 0, active: false };
-
-    var oldest  = txs[txs.length - 1];
-    var firstTs = parseInt(oldest.timeStamp, 10) * 1000;
-    var ageDays = Math.floor((Date.now() - firstTs) / 86400000);
-    var gasWei  = txs.reduce(function(s, t) {
-      return s + (parseFloat(t.gasUsed) || 0) * (parseFloat(t.gasPrice) || 0);
-    }, 0);
-    return { ageDays: ageDays, txCount: txs.length, gasEth: gasWei / 1e18, active: true };
-  } catch (e) {
-    console.error('ocFetchChain ' + chainId + ':', e);
-    return { ageDays: 0, txCount: 0, gasEth: 0, active: false, failed: true };
-  }
-}
-
-// ── Fetch + score one wallet across ALL chains (called by the on-chain button) ──
-async function ocCheckWallet(addr, walletId, btn, resultEl) {
-  if (!addr) return;
-
-  var key = OC_ETHERSCAN_KEY;
-  if (!key || key.indexOf('PASTE_') === 0) {
-    resultEl.innerHTML = '<span style="color:var(--orange)">⚠ Add Etherscan API key in dashboard.html</span>';
-    return;
-  }
-
-  btn.disabled = true;
-  var oldLabel = btn.textContent;
-  btn.textContent = 'Checking…';
-
-  try {
-    // check each chain in turn (small gap between calls = rate-limit safe)
-    var perChain = [];
-    for (var i = 0; i < OC_CHAINS.length; i++) {
-      resultEl.innerHTML = 'Reading ' + OC_CHAINS[i].name + '… (' +
-        (i + 1) + '/' + OC_CHAINS.length + ')';
-      var r = await ocFetchChain(OC_CHAINS[i].id, addr, key);
-      r.name = OC_CHAINS[i].name;
-      perChain.push(r);
-      await new Promise(function(res) { setTimeout(res, 250); });
-    }
-
-    // ── combine into multi-chain totals ──
-    var ageDays = 0, txCount = 0, gasEth = 0, chainsActive = 0;
-    perChain.forEach(function(c) {
-      if (c.ageDays > ageDays) ageDays = c.ageDays;   // oldest first-tx wins
-      txCount += c.txCount;
-      gasEth  += c.gasEth;
-      if (c.active) chainsActive += 1;
+    // Compute scores for each wallet using our heuristic
+    wltAllWallets.forEach(function(w) {
+      const computed = wltComputeHealthScore(w);
+      w._score      = computed.total;
+      w._scoreCat   = computed.categories;
+      w._persona    = wltDeterminePersona(w);
+      w._sybilScore = computed.sybil;
+      w._riskItems  = wltAnalyzeRisks(w);
     });
 
-    if (chainsActive === 0) {
-      resultEl.innerHTML = 'No transactions found on any supported chain.';
-      btn.disabled = false; btn.textContent = oldLabel;
-      return;
-    }
+    wltRenderKpis();
+    wltRenderFilterCounts();
+    wltRenderList();
 
-    // score it
-    var result = ocComputeScore(ageDays, txCount, gasEth, chainsActive);
-
-    // save to the 24h cache
-    if (window.API && window.API.saveWalletChainData) {
-      await window.API.saveWalletChainData({
-        wallet_id:     walletId,
-        address:       addr,
-        age_days:      ageDays,
-        tx_count:      txCount,
-        gas_eth:       gasEth,
-        chains_active: chainsActive,
-        health_score:  result.score,
-        activity_risk: result.risk
-      });
-      atwChainCache[walletId] = {
-        wallet_id: walletId, age_days: ageDays, tx_count: txCount,
-        gas_eth: gasEth, chains_active: chainsActive,
-        health_score: result.score, activity_risk: result.risk,
-        last_checked: new Date().toISOString()
-      };
-    }
-
-    // ── show the breakdown ──
-    var txText = txCount >= 5000 ? '5,000+' : txCount.toLocaleString();
-    var riskColor = atwRiskColor(result.risk);
-    // per-chain mini line: chains the wallet is active on
-    var activeNames = perChain.filter(function(c){ return c.active; })
-                              .map(function(c){ return c.name; }).join(', ');
-    resultEl.innerHTML =
-      '<div style="display:flex;justify-content:space-between;margin-bottom:3px;">' +
-        '<span>WALLET AGE</span><span style="color:var(--text-primary,#fff)">' +
-        ageDays.toLocaleString() + ' days</span></div>' +
-      '<div style="display:flex;justify-content:space-between;margin-bottom:3px;">' +
-        '<span>TX COUNT (all chains)</span><span style="color:var(--text-primary,#fff)">' +
-        txText + '</span></div>' +
-      '<div style="display:flex;justify-content:space-between;margin-bottom:3px;">' +
-        '<span>GAS SPENT</span><span style="color:var(--text-primary,#fff)">' +
-        gasEth.toFixed(4) + '</span></div>' +
-      '<div style="display:flex;justify-content:space-between;margin-bottom:5px;">' +
-        '<span>CHAINS ACTIVE</span><span style="color:var(--text-primary,#fff)">' +
-        chainsActive + ' · ' + atwEscape(activeNames) + '</span></div>' +
-      '<div style="display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.08);padding-top:5px;">' +
-        '<span>HEALTH SCORE</span><span style="color:' + riskColor + ';font-weight:700;">' +
-        result.score + '/100 · ' + atwRiskLabel(result.risk) + '</span></div>';
-
-    // re-render cards so the HEALTH SCORE / ACTIVITY RISK rows update
-    if (typeof atwCurrentWallets !== 'undefined' && atwCurrentWallets) {
-      atwRenderWallets(atwCurrentWallets);
+    // Auto-select first wallet if nothing selected
+    if (!wltSelectedId && wltAllWallets.length > 0) {
+      wltSelectWallet(wltAllWallets[0].id);
+    } else if (wltSelectedId) {
+      // Re-render selection in case data changed
+      const exists = wltAllWallets.find(function(w) { return String(w.id) === String(wltSelectedId); });
+      if (exists) wltSelectWallet(wltSelectedId);
+      else wltShowEmptyDetail();
+    } else {
+      wltShowEmptyDetail();
     }
   } catch (e) {
-    console.error('ocCheckWallet:', e);
-    resultEl.innerHTML = '<span style="color:var(--orange)">⚠ Could not complete the on-chain check</span>';
-    btn.disabled = false;
-    btn.textContent = oldLabel;
+    console.error('[wltLoadAll]', e);
   }
 }
 
-// Click delegation for the on-chain buttons
-document.addEventListener('click', function(e) {
-  var btn = e.target.closest('[data-onchain-addr]');
-  if (!btn) return;
-  var addr = btn.getAttribute('data-onchain-addr');
-  var walletId = parseInt(btn.getAttribute('data-wallet-id'), 10);
-  var resultEl = document.querySelector('[data-onchain-for="' + addr + '"]');
-  if (resultEl) ocCheckWallet(addr, walletId, btn, resultEl);
-});
+// ─── HEALTH SCORE COMPUTATION (Phase 7A heuristic) ───
+// Real on-chain version goes in Phase 7D.
+// For now: based on wallet age + manual label + chain count + notes presence
+function wltComputeHealthScore(w) {
+  const ageDays = wltDaysSince(w.created_at);
+  const chains = (w.chains || '').split(',').filter(Boolean).length;
+  const hasNotes = !!(w.notes && w.notes.length > 10);
+  const hasAddr = !!(w.address && w.address.length > 20);
+  const label = (w.label || '').toLowerCase();
 
-// remembers the last wallet list, so a single re-check can re-render all cards
-var atwCurrentWallets = null;
+  // Activity Score (out of 25) — age + completeness
+  let activity = 0;
+  if (ageDays >= 365) activity += 10;
+  else if (ageDays >= 180) activity += 8;
+  else if (ageDays >= 90) activity += 6;
+  else if (ageDays >= 30) activity += 4;
+  else if (ageDays >= 7) activity += 2;
+  if (hasAddr) activity += 8;
+  if (hasNotes) activity += 4;
+  activity += 3; // baseline
+  activity = Math.min(25, activity);
 
-async function atwLoadWallets() {
-  var grid = document.getElementById('atw-grid');
-  if (!window.API || !window.API.isLive || !window.API.isLive()) {
-    if (grid) grid.innerHTML = '<div style="grid-column:1/-1;padding:28px;text-align:center;' +
-      'color:var(--text-muted);font-size:12px;font-family:\'Share Tech Mono\',monospace;">' +
-      'Supabase not connected. Check api.js keys.</div>';
-    return;
-  }
-  try {
-    var wallets = await window.API.getWallets();
-    atwCurrentWallets = wallets;
+  // Diversification (out of 25) — chains + label richness
+  let diversity = 0;
+  if (chains >= 6) diversity += 12;
+  else if (chains >= 4) diversity += 10;
+  else if (chains >= 2) diversity += 7;
+  else if (chains >= 1) diversity += 4;
+  if (label === 'farmer' || label === 'defi') diversity += 8;
+  else if (label === 'primary') diversity += 6;
+  else diversity += 4;
+  if (hasNotes) diversity += 5;
+  diversity = Math.min(25, diversity);
 
-    // Load the 24h on-chain cache
-    if (window.API.getWalletChainData) {
-      atwChainCache = await window.API.getWalletChainData();
+  // Sybil resistance (out of 25) — older + complete = lower risk
+  let sybilDeduct = 0;
+  if (ageDays < 7) sybilDeduct += 20;
+  else if (ageDays < 30) sybilDeduct += 10;
+  if (chains <= 1) sybilDeduct += 8;
+  if (!hasNotes && !hasAddr) sybilDeduct += 10;
+  const sybilOutOf100 = Math.max(0, 100 - sybilDeduct);
+  const sybil = Math.round((sybilOutOf100 / 100) * 25); // scale to 25
+
+  // Security (out of 25) — baseline + age bonus + label
+  let security = 12;
+  if (ageDays >= 90) security += 8;
+  else if (ageDays >= 30) security += 5;
+  if (label === 'cold') security += 5;
+  else if (label === 'primary') security += 3;
+  security = Math.min(25, security);
+
+  const totalRaw = activity + diversity + sybil + security; // 0-100
+  const total = Math.round(totalRaw / 10 * 10) / 10; // out of 100, 1 decimal
+  const totalOutOf10 = Math.round(totalRaw / 10 * 10) / 100; // out of 10, 2 decimals
+  const totalDisplay = (totalRaw / 10).toFixed(1); // e.g. "8.6"
+
+  return {
+    total:     parseFloat(totalDisplay),
+    sybil:     sybilOutOf100,
+    categories: {
+      activity:     activity,
+      diversity:    diversity,
+      sybil:        sybil,
+      security:     security
     }
-    atwRenderWallets(wallets);
+  };
+}
 
-    // Auto-refresh any wallet whose cache is missing or older than 24h.
-    // Cached wallets cost ZERO API calls — this is the cost-saver.
-    ocAutoRefreshStale(wallets);
-  } catch (e) {
-    console.error('atwLoadWallets:', e);
+function wltDeterminePersona(w) {
+  const label = (w.label || '').toLowerCase();
+  const ageDays = wltDaysSince(w.created_at);
+
+  if (label === 'cold') return { icon: '🔒', name: 'Cold Storage', desc: 'Long-term holdings, minimal activity. Safest tier.' };
+  if (label === 'primary') return { icon: '⭐', name: 'Primary Wallet', desc: 'Main account for high-value operations.' };
+  if (label === 'defi') return { icon: '💎', name: 'DeFi Native', desc: 'Active in lending, LP, and yield strategies.' };
+  if (label === 'farmer') {
+    if (ageDays >= 90) return { icon: '🟢', name: 'Active Farmer', desc: 'Balanced farming with good diversification across ecosystems.' };
+    return { icon: '🌱', name: 'New Farmer', desc: 'Recently started farming. Build history for higher score.' };
   }
+  return { icon: '👛', name: 'General Wallet', desc: 'Multi-purpose wallet with mixed activity.' };
 }
 
-// For each wallet: if no cache row, or it's older than OC_CACHE_HOURS,
-// fetch fresh data once. Wallets checked within 24h are skipped (0 calls).
-async function ocAutoRefreshStale(wallets) {
-  var key = OC_ETHERSCAN_KEY;
-  if (!key || key.indexOf('PASTE_') === 0) return;   // no key → skip silently
+function wltAnalyzeRisks(w) {
+  const ageDays = wltDaysSince(w.created_at);
+  const hasAddr = !!(w.address && w.address.length > 20);
+  const items = [];
 
-  var now = Date.now();
-  for (var i = 0; i < wallets.length; i++) {
-    var w = wallets[i];
-    if (!w.address) continue;
-    var cd = atwChainCache[w.id];
-    var stale = !cd || !cd.last_checked ||
-      (now - new Date(cd.last_checked).getTime()) > OC_CACHE_HOURS * 3600000;
-    if (!stale) continue;   // fresh enough — skip, no API call
-
-    // find this card's button + result area and run a check
-    var btn = document.querySelector('[data-wallet-id="' + w.id + '"]');
-    var resultEl = document.querySelector('[data-onchain-for="' +
-      atwEscape(String(w.address).trim()) + '"]');
-    if (btn && resultEl) {
-      await ocCheckWallet(String(w.address).trim(), w.id, btn, resultEl);
-      // small gap so we never hit Etherscan's rate limit
-      await new Promise(function(r) { setTimeout(r, 400); });
-    }
+  // All "low risk" items for now (Phase 7A is conservative)
+  if (ageDays >= 30) {
+    items.push({ ok: true, text: 'Wallet age over 30 days' });
+  } else {
+    items.push({ ok: false, text: 'New wallet (< 30 days) — build history' });
   }
-}
-
-// Load on first open + whenever the user returns to the Airdrop Tracker tab
-document.addEventListener('dropelite:tabchange', function(e) {
-  if (e.detail && e.detail.tabName === 'airdrop-tracker') {
-    atwLoadWallets();
-    atIntelLoadAll();
+  if (hasAddr) {
+    items.push({ ok: true, text: 'Address verified' });
+  } else {
+    items.push({ ok: false, text: 'No address on file — add for tracking' });
   }
-});
-document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(function() {
-    atwLoadWallets();
-    atIntelLoadAll();
-  }, 750);
-});
+  items.push({ ok: true, text: 'No suspicious activity detected' });
+  items.push({ ok: true, text: 'Read-only — no transactions signed by DropElite' });
 
-/* ════════════════════════════════
-   AIRDROP TRACKER — Sections 2, 3, 4
-   High Priority Targets · Deadline Center · Alpha Intelligence
-   All LIVE from the admin-published intel_* tables.
-   ════════════════════════════════ */
-function atIntelEscape(s) {
-  if (s == null) return '';
-  return String(s)
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  return items;
 }
 
-// countdown: ms → "3d 02h 14m" (or "2h 30m" when under a day)
-function atIntelCountdown(ms) {
-  if (ms <= 0) return 'Expired';
-  var d = Math.floor(ms / 86400000);
-  var h = Math.floor((ms % 86400000) / 3600000);
-  var m = Math.floor((ms % 3600000) / 60000);
-  var pad = function(n) { return String(n).padStart(2, '0'); };
-  if (d > 0) return d + 'd ' + pad(h) + 'h ' + pad(m) + 'm';
-  return pad(h) + 'h ' + pad(m) + 'm';
+// ─── KPI RENDER ───
+function wltRenderKpis() {
+  const row = wlt('wltKpiRow');
+  if (!row) return;
+
+  const total = wltAllWallets.length;
+  const activeRecent = wltAllWallets.filter(function(w) {
+    return wltDaysSince(w.updated_at || w.created_at) < 30;
+  }).length;
+  const avgScore = total > 0
+    ? (wltAllWallets.reduce(function(a, w) { return a + (w._score || 0); }, 0) / total).toFixed(1)
+    : '0.0';
+
+  row.innerHTML = [
+    '<div class="wlt-kpi-card">',
+      '<div class="wlt-kpi-head"><div class="wlt-kpi-icon purple">👛</div><div class="wlt-kpi-lbl">TOTAL WALLETS</div></div>',
+      '<div class="wlt-kpi-val purple">' + total + '</div>',
+      '<div class="wlt-kpi-delta">' + (total > 0 ? 'tracked' : 'none yet') + '</div>',
+    '</div>',
+    '<div class="wlt-kpi-card">',
+      '<div class="wlt-kpi-head"><div class="wlt-kpi-icon green">⚡</div><div class="wlt-kpi-lbl">ACTIVE (30d)</div></div>',
+      '<div class="wlt-kpi-val green">' + activeRecent + '</div>',
+      '<div class="wlt-kpi-delta">' + (total > 0 ? Math.round(activeRecent / total * 100) + '%' : '—') + ' active</div>',
+    '</div>',
+    '<div class="wlt-kpi-card">',
+      '<div class="wlt-kpi-head"><div class="wlt-kpi-icon cyan">💰</div><div class="wlt-kpi-lbl">TOTAL BALANCE</div></div>',
+      '<div class="wlt-kpi-val cyan">—</div>',
+      '<div class="wlt-kpi-delta dim">Connect Alchemy</div>',
+    '</div>',
+    '<div class="wlt-kpi-card">',
+      '<div class="wlt-kpi-head"><div class="wlt-kpi-icon orange">📊</div><div class="wlt-kpi-lbl">TOTAL VALUE</div></div>',
+      '<div class="wlt-kpi-val orange">—</div>',
+      '<div class="wlt-kpi-delta dim">Connect APIs</div>',
+    '</div>',
+    '<div class="wlt-kpi-card">',
+      '<div class="wlt-kpi-head"><div class="wlt-kpi-icon gold">🏆</div><div class="wlt-kpi-lbl">AVG. WALLET SCORE</div></div>',
+      '<div class="wlt-kpi-val gold">' + avgScore + ' /10</div>',
+      '<div class="wlt-kpi-delta">' + (parseFloat(avgScore) >= 7 ? 'Good' : parseFloat(avgScore) >= 5 ? 'Fair' : 'Building') + '</div>',
+    '</div>'
+  ].join('');
 }
 
-// ── SECTION 2: High Priority Targets (intel_opportunities) ──
-async function atIntelLoadOpportunities() {
-  var grid  = document.getElementById('hpt-grid');
-  var count = document.getElementById('hpt-count');
-  if (!grid) return;
+// ─── FILTER COUNTS ───
+function wltRenderFilterCounts() {
+  const counts = { all: wltAllWallets.length, primary: 0, farmer: 0, defi: 0, cold: 0 };
+  wltAllWallets.forEach(function(w) {
+    const label = (w.label || '').toLowerCase();
+    if (label === 'primary') counts.primary++;
+    else if (label === 'farmer') counts.farmer++;
+    else if (label === 'defi') counts.defi++;
+    else if (label === 'cold') counts.cold++;
+  });
+  const setText = function(id, v) { const el = wlt(id); if (el) el.textContent = v; };
+  setText('wltCountAll', counts.all);
+  setText('wltCountPrimary', counts.primary);
+  setText('wltCountFarmer', counts.farmer);
+  setText('wltCountDefi', counts.defi);
+  setText('wltCountCold', counts.cold);
+}
 
-  try {
-    var opps = await window.API.getOpportunities();
-
-    // "urgent" count = opportunities flagged urgent
-    var urgent = opps.filter(function(o) { return o.urgency; }).length;
-    if (count) count.textContent = urgent + (urgent === 1 ? ' URGENT' : ' URGENT');
-
-    if (!opps.length) {
-      grid.innerHTML = '<div style="grid-column:1/-1;padding:28px;text-align:center;' +
-        'color:var(--text-muted);font-size:12px;font-family:\'Share Tech Mono\',monospace;">' +
-        'No priority targets published yet.</div>';
-      return;
-    }
-
-    // show the top 3 (featured first, then by display_order)
-    var top = opps.slice().sort(function(a, b) {
-      if (!!b.featured !== !!a.featured) return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
-      return (a.display_order || 0) - (b.display_order || 0);
-    }).slice(0, 3);
-
-    var now = Date.now();
-    grid.innerHTML = top.map(function(o) {
-      // badge — use the first admin badge, or a default
-      var badge = (Array.isArray(o.badges) && o.badges[0] && o.badges[0].t)
-        ? '<div class="priority-badge badge-hot">' + atIntelEscape(o.badges[0].t) + '</div>'
-        : (o.featured ? '<div class="priority-badge badge-hot">🔥 FEATURED</div>' : '');
-
-      // countdown from the real deadline
-      var cdHtml = '';
-      if (o.deadline) {
-        var ms = new Date(o.deadline).getTime() - now;
-        var col = ms < 3 * 86400000 ? 'var(--red-alert)'
-                : (ms < 14 * 86400000 ? 'var(--orange)' : 'var(--gold)');
-        cdHtml = '<div class="countdown-block">' +
-          '<div class="countdown-value" style="color:' + col + '">' + atIntelCountdown(ms) + '</div>' +
-          '<div class="countdown-label">DEADLINE</div></div>';
-      }
-
-      // completion bar (real admin value)
-      var pct = Math.max(0, Math.min(100, o.completion_pct || 0));
-      var progHtml = '<div class="priority-progress">' +
-        '<div class="progress-pct"><span>Completion</span><span>' + pct + '%</span></div>' +
-        '<div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + pct + '%"></div></div>' +
-        '</div>';
-
-      return '<div class="priority-card">' +
-        badge +
-        '<div class="priority-name">' + atIntelEscape(o.name || '') + '</div>' +
-        '<div class="priority-chain">' + atIntelEscape(o.chain || '—') + '</div>' +
-        '<div class="priority-meta">' +
-          '<div><div class="priority-reward-label">EST. REWARD</div>' +
-          '<div class="priority-reward">' + atIntelEscape(o.reward || '—') + '</div></div>' +
-          cdHtml +
-        '</div>' +
-        progHtml +
-      '</div>';
-    }).join('');
-  } catch (e) {
-    console.error('atIntelLoadOpportunities:', e);
+// ─── LIST RENDER ───
+function wltGetFilteredList() {
+  let list = wltAllWallets.slice();
+  if (wltFilterTag !== 'all') {
+    list = list.filter(function(w) { return (w.label || '').toLowerCase() === wltFilterTag; });
   }
+  if (wltSearchQuery) {
+    const q = wltSearchQuery.toLowerCase();
+    list = list.filter(function(w) {
+      return ((w.name || '') + ' ' + (w.address || '') + ' ' + (w.label || '') + ' ' + (w.chains || ''))
+        .toLowerCase().indexOf(q) >= 0;
+    });
+  }
+  return list;
 }
 
-// ── SECTION 3: Deadline & Snapshot Center (intel_alerts) ──
-async function atIntelLoadDeadlines() {
-  var list = document.getElementById('deadline-list');
+function wltRenderList() {
+  const list = wlt('wltList');
   if (!list) return;
 
+  const filtered = wltGetFilteredList();
+  if (filtered.length === 0) {
+    list.innerHTML = '<div class="wlt-no-data">' + (wltAllWallets.length === 0 ? 'No wallets yet. Click <b>+ Add Wallet</b> to start.' : 'No wallets match filter.') + '</div>';
+    return;
+  }
+
+  list.innerHTML = filtered.map(function(w) { return wltBuildCard(w); }).join('');
+}
+
+function wltBuildCard(w) {
+  const isActive = String(wltSelectedId) === String(w.id);
+  const score = w._score || 0;
+  const scoreClass = score >= 7 ? 'high' : score >= 5 ? 'mid' : 'low';
+  const iconChar = wltIconForWallet(w);
+  const iconCls = wltIconClassForWallet(w);
+  const label = w.label || '';
+  const labelText = label ? '<span class="wlt-role">(' + wltEsc(label.charAt(0).toUpperCase() + label.slice(1)) + ')</span>' : '';
+
+  return [
+    '<div class="wlt-card ' + (isActive ? 'active' : '') + '" onclick="wltSelectWallet(\'' + wltEsc(w.id) + '\')">',
+      '<div class="wlt-card-icon ' + iconCls + '">' + iconChar + '</div>',
+      '<div class="wlt-card-info">',
+        '<div class="wlt-card-name">' + wltEsc(w.name || 'Unnamed') + ' ' + labelText + '</div>',
+        '<div class="wlt-card-addr">' + wltEsc(wltFmtAddr(w.address)) + ' <span class="wlt-copy" onclick="event.stopPropagation();wltCopyAddr(\'' + wltEsc(w.address || '') + '\')">📋</span></div>',
+      '</div>',
+      '<div class="wlt-card-score-box">',
+        '<div class="wlt-card-score-lbl">Score</div>',
+        '<div class="wlt-card-score ' + scoreClass + '">' + score.toFixed(1) + '</div>',
+      '</div>',
+    '</div>'
+  ].join('');
+}
+
+function wltIconForWallet(w) {
+  const label = (w.label || '').toLowerCase();
+  if (label === 'primary') return '⭐';
+  if (label === 'farmer') return '🚜';
+  if (label === 'defi') return '💎';
+  if (label === 'cold') return '🔒';
+  return '👛';
+}
+function wltIconClassForWallet(w) {
+  const label = (w.label || '').toLowerCase();
+  if (label === 'primary') return 'gold';
+  if (label === 'farmer') return 'purple';
+  if (label === 'defi') return 'cyan';
+  if (label === 'cold') return 'arb';
+  return 'purple';
+}
+
+// ─── FILTER ───
+window.wltFilterBy = function(tag) {
+  wltFilterTag = tag;
+  document.querySelectorAll('.wallets-view .wlt-filter-tab').forEach(function(t) {
+    t.classList.toggle('active', t.dataset.filter === tag);
+  });
+  wltRenderList();
+};
+
+window.wltApplyFilters = function() {
+  const s = wlt('wltSearch');
+  wltSearchQuery = s ? s.value.trim() : '';
+  wltRenderList();
+};
+
+window.wltClearSearch = function() {
+  const s = wlt('wltSearch');
+  if (s) { s.value = ''; wltSearchQuery = ''; wltRenderList(); }
+};
+
+window.wltViewAll = function() {
+  wltFilterBy('all');
+  wltClearSearch();
+};
+
+// ─── COPY ───
+window.wltCopyAddr = function(addr) {
+  if (!addr) return;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(addr).then(function() {
+      wltToast('📋', 'Copied', addr);
+    }).catch(function() {
+      wltToast('⚠️', 'Copy failed', 'Try selecting manually.');
+    });
+  } else {
+    wltToast('📋', 'Address', addr);
+  }
+};
+
+// ─── SELECT WALLET ───
+window.wltSelectWallet = function(id) {
+  const w = wltAllWallets.find(function(x) { return String(x.id) === String(id); });
+  if (!w) return;
+  wltSelectedId = id;
+
+  // Re-render list to update active state
+  wltRenderList();
+
+  // Show detail body, hide empty
+  const empty = wlt('wltDetailEmpty');
+  const body  = wlt('wltDetailBody');
+  if (empty) empty.style.display = 'none';
+  if (body)  body.style.display  = '';
+
+  // Detail header
+  const logoEl = wlt('wltDetailLogo');
+  if (logoEl) logoEl.textContent = wltIconForWallet(w);
+
+  const label = w.label || '';
+  const labelText = label ? '<span style="color:var(--wl-text-dim);font-weight:500;font-size:13px;margin-left:4px;">(' + wltEsc(label.charAt(0).toUpperCase() + label.slice(1)) + ')</span>' : '';
+  const labelBadge = label ? '<span class="wlt-name-badge">' + wltEsc(label.toUpperCase()) + '</span>' : '';
+  const nameEl = wlt('wltDetailName');
+  if (nameEl) nameEl.innerHTML = wltEsc(w.name || 'Unnamed') + ' ' + labelText + ' ' + labelBadge;
+
+  const addrEl = wlt('wltDetailAddr');
+  if (addrEl) {
+    addrEl.innerHTML = wltEsc(wltFmtAddr(w.address)) +
+      ' <button class="wlt-icon-btn" onclick="wltCopyAddr(\'' + wltEsc(w.address || '') + '\')" title="Copy">📋</button>' +
+      ' <button class="wlt-icon-btn" onclick="wltEditWallet()" title="Edit">✏️</button>';
+  }
+
+  const score = w._score || 0;
+  const scoreEl = wlt('wltDetailScore');
+  if (scoreEl) scoreEl.textContent = score.toFixed(1);
+  const tagEl = wlt('wltDetailScoreTag');
+  if (tagEl) {
+    const tag = score >= 8 ? 'EXCELLENT' : score >= 6.5 ? 'GOOD' : score >= 5 ? 'FAIR' : 'BUILDING';
+    tagEl.textContent = tag;
+    // Color by tier
+    const color = score >= 8 ? 'var(--wl-green)' : score >= 6.5 ? 'var(--wl-gold)' : score >= 5 ? 'var(--wl-orange)' : 'var(--wl-red)';
+    if (scoreEl) scoreEl.style.color = color;
+    tagEl.style.color = color;
+  }
+
+  // Render radar chart
+  wltRenderRadar(w);
+
+  // Render right sidebar
+  wltRenderIdentitySidebar(w);
+  wltRenderRiskSidebar(w);
+  wltRenderActionsGrid(w);
+
+  // Render activity feed (from DropElite activity_log)
+  wltRenderActivity(w);
+
+  // Switch to overview pane
+  wltSwitchDetailTabById('overview');
+};
+
+window.wltShowEmptyDetail = function() {
+  wltSelectedId = null;
+  const empty = wlt('wltDetailEmpty');
+  const body  = wlt('wltDetailBody');
+  if (empty) empty.style.display = '';
+  if (body)  body.style.display  = 'none';
+};
+
+// ─── DETAIL TAB SWITCH ───
+window.wltSwitchDetailTab = function(btn, tab) {
+  document.querySelectorAll('.wallets-view .wlt-dtab').forEach(function(t) { t.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  wltSwitchDetailTabById(tab);
+};
+
+function wltSwitchDetailTabById(tab) {
+  wltCurrentTab = tab;
+  ['Overview','Activity','Assets','Defi','Nfts','Permissions','History'].forEach(function(p) {
+    const pane = wlt('wltPane' + p);
+    if (pane) pane.style.display = (p.toLowerCase() === tab.toLowerCase()) ? '' : 'none';
+  });
+  // Also sync the visible tab button
+  document.querySelectorAll('.wallets-view .wlt-dtab').forEach(function(t) {
+    t.classList.toggle('active', t.dataset.dtab === tab);
+  });
+}
+
+// ─── RADAR CHART ───
+function wltRenderRadar(w) {
+  const wrap = wlt('wltRadarWrap');
+  if (!wrap) return;
+  const cat = w._scoreCat || { activity: 0, diversity: 0, sybil: 0, security: 0 };
+  // Convert each /25 → /10 for display
+  const aV = (cat.activity / 25 * 10).toFixed(1);
+  const dV = (cat.diversity / 25 * 10).toFixed(1);
+  const sV = (cat.sybil / 25 * 10).toFixed(1);
+  const secV = (cat.security / 25 * 10).toFixed(1);
+  // For the 5th axis "DeFi exposure" we'll show a derived value (use diversification * 0.9)
+  const defiV = (cat.diversity / 25 * 9).toFixed(1);
+  const overallScore = w._score || 0;
+  const overallTag = overallScore >= 8 ? 'EXCELLENT' : overallScore >= 6.5 ? 'GOOD' : overallScore >= 5 ? 'FAIR' : 'BUILDING';
+
+  // Convert /10 to radar coordinates on a pentagon
+  // 5 points around circle: top, top-right, bottom-right, bottom-left, top-left
+  // Center at (97.5, 97.5), radius scaled by value/10 * 80
+  function pt(angle, val) {
+    const r = (val / 10) * 80;
+    const cx = 97.5, cy = 97.5;
+    return [cx + r * Math.sin(angle), cy - r * Math.cos(angle)].map(function(n) { return n.toFixed(1); }).join(',');
+  }
+  const angles = [0, 2*Math.PI/5, 4*Math.PI/5, 6*Math.PI/5, 8*Math.PI/5];
+  const vals = [parseFloat(aV), parseFloat(dV), parseFloat(defiV), parseFloat(secV), parseFloat(sV)];
+  const polyPoints = angles.map(function(a, i) { return pt(a, vals[i]); }).join(' ');
+
+  // Grid pentagons (full radius)
+  function gridPoly(scale) {
+    return angles.map(function(a) {
+      const r = scale * 80;
+      const cx = 97.5, cy = 97.5;
+      return [cx + r * Math.sin(a), cy - r * Math.cos(a)].map(function(n) { return n.toFixed(1); }).join(',');
+    }).join(' ');
+  }
+
+  wrap.innerHTML = [
+    '<svg width="195" height="195" viewBox="0 0 195 195">',
+      // Grid
+      '<polygon points="' + gridPoly(1) + '" stroke="rgba(255,255,255,0.06)" stroke-width="1" fill="none"/>',
+      '<polygon points="' + gridPoly(0.75) + '" stroke="rgba(255,255,255,0.05)" stroke-width="1" fill="none"/>',
+      '<polygon points="' + gridPoly(0.5) + '" stroke="rgba(255,255,255,0.04)" stroke-width="1" fill="none"/>',
+      '<polygon points="' + gridPoly(0.25) + '" stroke="rgba(255,255,255,0.04)" stroke-width="1" fill="none"/>',
+      // Data shape
+      '<polygon points="' + polyPoints + '" fill="rgba(74,240,255,0.25)" stroke="#4af0ff" stroke-width="2"/>',
+      // Data points
+      angles.map(function(a, i) {
+        const p = pt(a, vals[i]).split(',');
+        return '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="3.5" fill="#4af0ff"/>';
+      }).join(''),
+      // Axis labels
+      '<text x="97.5" y="9" text-anchor="middle" fill="#e8eaf0" font-size="9" font-family="Share Tech Mono" letter-spacing="1">ACTIVITY</text>',
+      '<text x="97.5" y="-2" text-anchor="middle" fill="#4af0ff" font-size="10" font-family="Orbitron" font-weight="700">' + aV + '</text>',
+      '<text x="180" y="62" text-anchor="start" fill="#e8eaf0" font-size="9" font-family="Share Tech Mono" letter-spacing="1">DIVERSITY</text>',
+      '<text x="180" y="72" text-anchor="start" fill="#4af0ff" font-size="10" font-family="Orbitron" font-weight="700">' + dV + '</text>',
+      '<text x="155" y="180" text-anchor="middle" fill="#e8eaf0" font-size="9" font-family="Share Tech Mono" letter-spacing="1">DEFI</text>',
+      '<text x="155" y="190" text-anchor="middle" fill="#4af0ff" font-size="10" font-family="Orbitron" font-weight="700">' + defiV + '</text>',
+      '<text x="40" y="180" text-anchor="middle" fill="#e8eaf0" font-size="9" font-family="Share Tech Mono" letter-spacing="1">SECURITY</text>',
+      '<text x="40" y="190" text-anchor="middle" fill="#4af0ff" font-size="10" font-family="Orbitron" font-weight="700">' + secV + '</text>',
+      '<text x="15" y="62" text-anchor="end" fill="#e8eaf0" font-size="9" font-family="Share Tech Mono" letter-spacing="1">SYBIL</text>',
+      '<text x="15" y="72" text-anchor="end" fill="#4af0ff" font-size="10" font-family="Orbitron" font-weight="700">' + sV + '</text>',
+    '</svg>',
+    '<div class="wlt-radar-center">',
+      '<div class="wlt-radar-score">' + overallScore.toFixed(1) + '</div>',
+      '<div class="wlt-radar-tag">' + overallTag + '</div>',
+    '</div>'
+  ].join('');
+}
+
+// ─── IDENTITY SIDEBAR ───
+function wltRenderIdentitySidebar(w) {
+  const setText = function(id, v) { const el = wlt(id); if (el) el.textContent = v; };
+  const persona = w._persona || { icon: '👛', name: 'Wallet', desc: '—' };
+
+  const personaBadge = wlt('wltPersonaBadge');
+  if (personaBadge) {
+    personaBadge.innerHTML = '<span>' + persona.icon + '</span> <span id="wltPersonaName">' + wltEsc(persona.name) + '</span>';
+    // Color by persona
+    const isPrimary = (w.label || '').toLowerCase() === 'primary';
+    const isCold = (w.label || '').toLowerCase() === 'cold';
+    if (isCold) {
+      personaBadge.style.background = 'var(--wl-cyan-soft)';
+      personaBadge.style.borderColor = 'var(--wl-cyan)';
+      personaBadge.style.color = 'var(--wl-cyan)';
+    } else if (isPrimary) {
+      personaBadge.style.background = 'var(--wl-gold-soft)';
+      personaBadge.style.borderColor = 'var(--wl-gold)';
+      personaBadge.style.color = 'var(--wl-gold)';
+    } else {
+      personaBadge.style.background = 'var(--wl-green-soft)';
+      personaBadge.style.borderColor = 'var(--wl-green)';
+      personaBadge.style.color = 'var(--wl-green)';
+    }
+  }
+
+  setText('wltPersonaDesc', persona.desc);
+
+  const sybil = w._sybilScore || 0;
+  setText('wltSybilScore', sybil + '');
+  const sybilBar = wlt('wltSybilBar');
+  if (sybilBar) sybilBar.style.width = sybil + '%';
+  const sybilTag = wlt('wltSybilTag');
+  if (sybilTag) {
+    let tag = 'VERY SUSPICIOUS';
+    let color = 'var(--wl-red)';
+    if (sybil >= 90) { tag = 'VERY ORGANIC'; color = 'var(--wl-green)'; }
+    else if (sybil >= 75) { tag = 'HEALTHY'; color = 'var(--wl-green)'; }
+    else if (sybil >= 50) { tag = 'MEDIUM RISK'; color = 'var(--wl-orange)'; }
+    else if (sybil >= 25) { tag = 'HIGH RISK'; color = 'var(--wl-red)'; }
+    sybilTag.textContent = tag;
+    sybilTag.style.color = color;
+  }
+
+  // Stats
+  const firstActivity = w.created_at
+    ? new Date(w.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    : '—';
+  setText('wltStatFirstActivity', firstActivity);
+  setText('wltStatTotalTx', 'Connect API'); // Phase 7B will fill real
+  const chainCount = (w.chains || '').split(',').filter(Boolean).length;
+  setText('wltStatEcosystems', chainCount > 0 ? chainCount + '' : '—');
+}
+
+// ─── RISK SIDEBAR ───
+function wltRenderRiskSidebar(w) {
+  const items = w._riskItems || [];
+  const okCount = items.filter(function(i) { return i.ok; }).length;
+  const totalCount = items.length;
+
+  const labelEl = wlt('wltRiskLabel');
+  const subEl   = wlt('wltRiskSub');
+  if (labelEl && subEl) {
+    if (okCount === totalCount) {
+      labelEl.textContent = 'Low Risk';
+      subEl.textContent = 'No critical issues found.';
+    } else if (okCount >= totalCount - 1) {
+      labelEl.textContent = 'Medium Risk';
+      subEl.textContent = 'Minor issues to address.';
+    } else {
+      labelEl.textContent = 'High Risk';
+      subEl.textContent = 'Multiple issues need attention.';
+    }
+  }
+
+  const list = wlt('wltRiskList');
+  if (list) {
+    list.innerHTML = items.map(function(item) {
+      return '<div class="wlt-risk-row">' +
+        '<div class="wlt-risk-check ' + (item.ok ? '' : 'warn') + '">' + (item.ok ? '✓' : '!') + '</div>' +
+        wltEsc(item.text) +
+        '</div>';
+    }).join('');
+  }
+}
+
+// ─── ACTIONS GRID (admin configurable in future) ───
+const wltDefaultActions = [
+  { icon: '🔍', label: 'Explorer', url: 'https://etherscan.io/address/{addr}', title: 'View on Etherscan' },
+  { icon: '🌉', label: 'Bridge',   url: 'https://stargate.finance',            title: 'Bridge on Stargate' },
+  { icon: '🔄', label: 'Swap',     url: 'https://app.uniswap.org',             title: 'Swap on Uniswap' },
+  { icon: '📊', label: 'DeBank',   url: 'https://debank.com/profile/{addr}',   title: 'DeBank profile' },
+  { icon: '💰', label: 'Lend',     url: 'https://app.aave.com',                title: 'Lend on Aave' },
+  { icon: '💧', label: 'Faucet',   url: 'https://faucetlink.to',               title: 'Testnet faucets' },
+  { icon: '📥', label: 'Export',   url: '#export',                              title: 'Export wallet data' },
+  { icon: '📝', label: 'Note',     url: '#note',                                title: 'Add custom note' }
+];
+
+function wltRenderActionsGrid(w) {
+  const grid = wlt('wltActionsGrid');
+  if (!grid) return;
+  const addr = encodeURIComponent(w.address || '');
+  grid.innerHTML = wltDefaultActions.map(function(a) {
+    const url = a.url.replace('{addr}', addr);
+    const isInternal = url.indexOf('#') === 0;
+    if (isInternal) {
+      return '<a class="wlt-action-btn" onclick="wltHandleInternalAction(\'' + a.url.slice(1) + '\')" title="' + wltEsc(a.title) + '">' +
+        '<span class="wlt-action-icon">' + a.icon + '</span>' +
+        '<span class="wlt-action-lbl">' + wltEsc(a.label) + '</span>' +
+        '</a>';
+    }
+    return '<a class="wlt-action-btn" href="' + wltEsc(url) + '" target="_blank" rel="noopener" title="' + wltEsc(a.title) + '">' +
+      '<span class="wlt-action-icon">' + a.icon + '</span>' +
+      '<span class="wlt-action-lbl">' + wltEsc(a.label) + '</span>' +
+      '</a>';
+  }).join('');
+}
+
+window.wltHandleInternalAction = function(action) {
+  if (action === 'export') {
+    wltExportSelected();
+  } else if (action === 'note') {
+    wltEditWallet();
+  }
+};
+
+function wltExportSelected() {
+  const w = wltAllWallets.find(function(x) { return String(x.id) === String(wltSelectedId); });
+  if (!w) return;
+  const data = JSON.stringify(w, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'wallet-' + (w.name || 'export').replace(/\s+/g, '-').toLowerCase() + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  wltToast('📥', 'Exported', 'Wallet data downloaded.');
+}
+
+// ─── ACTIVITY FEED (from DropElite activity_log) ───
+async function wltRenderActivity(w) {
+  const list = wlt('wltActivityList');
+  if (!list) return;
+  if (!window.API || !window.API.getActivityFeed) {
+    list.innerHTML = '<div class="wlt-no-data">Activity unavailable.</div>';
+    return;
+  }
   try {
-    var alerts = await window.API.getAlerts();
-    var now = Date.now();
-
-    // keep only alerts with a future deadline, soonest first
-    var rows = alerts
-      .filter(function(a) {
-        if (!a.deadline) return false;
-        return new Date(a.deadline).getTime() > now;
-      })
-      .sort(function(a, b) {
-        return new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
-      });
-
-    if (!rows.length) {
-      list.innerHTML = '<div style="padding:24px;text-align:center;color:var(--text-muted);' +
-        'font-size:12px;font-family:\'Share Tech Mono\',monospace;line-height:1.6;">' +
-        'No upcoming deadlines published.<br>You\'re all clear. ✓</div>';
+    const feed = await window.API.getActivityFeed(8);
+    if (!feed || feed.length === 0) {
+      list.innerHTML = '<div class="wlt-no-data">No activity yet. Complete missions to populate.</div>';
       return;
     }
-
-    list.innerHTML = rows.map(function(a) {
-      var ms = new Date(a.deadline).getTime() - now;
-      // colour by urgency
-      var dc, timeCol, urgentCls;
-      if (ms < 3 * 86400000)      { dc = 'dc-red';  timeCol = 'red';   urgentCls = ' urgent'; }
-      else if (ms < 14 * 86400000){ dc = 'dc-gold'; timeCol = 'gold';  urgentCls = ''; }
-      else if (ms < 25 * 86400000){ dc = 'dc-cyan'; timeCol = '';      urgentCls = ''; }
-      else                        { dc = 'dc-green';timeCol = 'green'; urgentCls = ''; }
-
-      var timeStyle = timeCol === '' ? ' style="color:var(--cyan)"' : '';
-      var timeClass = timeCol === '' ? 'deadline-time' : 'deadline-time ' + timeCol;
-      var typeText = (a.priority ? a.priority + ' PRIORITY' : 'DEADLINE') +
-                     (a.description ? ' • ' + a.description : '');
-
-      return '<div class="deadline-item' + urgentCls + '">' +
-        '<div class="deadline-color ' + dc + '"></div>' +
-        '<div class="deadline-info">' +
-          '<div class="deadline-name">' + atIntelEscape(a.name || 'Event') + '</div>' +
-          '<div class="deadline-type">' + atIntelEscape(typeText) + '</div>' +
+    list.innerHTML = feed.map(function(a) {
+      const iconMap = { mission: '✓', airdrop: '↗', reward: '🎁', wallet: '👛' };
+      const cls = a.kind || 'mission';
+      return '<div class="wlt-activity-row">' +
+        '<div class="wlt-activity-icon ' + cls + '">' + (iconMap[a.kind] || '⚡') + '</div>' +
+        '<div class="wlt-activity-body">' +
+          '<div class="wlt-activity-name">' + wltEsc(a.title || 'Activity') + '</div>' +
+          '<div class="wlt-activity-meta">' + wltEsc(a.detail || a.kind || '') + '</div>' +
         '</div>' +
-        '<div>' +
-          '<div class="' + timeClass + '"' + timeStyle + '>' + atIntelCountdown(ms) + '</div>' +
-          '<div class="deadline-time-label">REMAINING</div>' +
-        '</div>' +
-      '</div>';
+        '<div class="wlt-activity-time">' + wltTimeAgo(a.created_at) + '</div>' +
+        '</div>';
     }).join('');
   } catch (e) {
-    console.error('atIntelLoadDeadlines:', e);
+    console.error('[wltRenderActivity]', e);
+    list.innerHTML = '<div class="wlt-no-data">Could not load activity.</div>';
   }
 }
 
-// ── SECTION 4: Alpha Intelligence (intel_ecosystems + intel_funding) ──
-async function atIntelLoadAlpha() {
-  var ecoBox  = document.getElementById('intel-ecosystems');
-  var fundBox = document.getElementById('intel-funding');
+// ─── ADD WALLET MODAL ───
+window.wltOpenAddModal = function() {
+  const form = wlt('wltAddForm');
+  if (form) form.reset();
+  const modal = wlt('wltAddModal');
+  if (modal) modal.classList.add('show');
+};
 
-  // Trending ecosystems
-  if (ecoBox) {
-    try {
-      var ecos = await window.API.getEcosystems();
-      if (!ecos.length) {
-        ecoBox.innerHTML = '<div style="padding:14px;text-align:center;color:var(--text-muted);' +
-          'font-size:11px;font-family:\'Share Tech Mono\',monospace;">None published yet.</div>';
-      } else {
-        ecoBox.innerHTML = ecos.slice(0, 6).map(function(e) {
-          var color = e.accent_color || '#00d4ff';
-          var meta = (e.subtitle || '') +
-            (e.protocols ? ' • ' + e.protocols + ' protocols' : '');
-          var val = e.momentum || e.growth || 'TRENDING';
-          return '<div class="intel-item">' +
-            '<div class="intel-dot" style="background:' + color + ';box-shadow:0 0 8px ' + color + '"></div>' +
-            '<div><div class="intel-item-name">' + atIntelEscape(e.name || '') + '</div>' +
-            '<div class="intel-item-meta">' + atIntelEscape(meta || '—') + '</div></div>' +
-            '<div class="intel-item-value">' + atIntelEscape(val) + '</div>' +
-          '</div>';
-        }).join('');
-      }
-    } catch (e) { console.error('atIntelLoadAlpha — ecosystems:', e); }
-  }
+window.wltCloseAddModal = function() {
+  const modal = wlt('wltAddModal');
+  if (modal) modal.classList.remove('show');
+};
 
-  // Recent funding rounds
-  if (fundBox) {
-    try {
-      var funds = (window.API.getFundingRounds)
-        ? await window.API.getFundingRounds() : [];
-      if (!funds.length) {
-        fundBox.innerHTML = '<div style="padding:14px;text-align:center;color:var(--text-muted);' +
-          'font-size:11px;font-family:\'Share Tech Mono\',monospace;">None published yet.</div>';
-      } else {
-        fundBox.innerHTML = funds.slice(0, 8).map(function(f) {
-          var color = f.accent_color || '#a78bfa';
-          return '<div class="intel-item">' +
-            '<div class="intel-dot" style="background:' + color + ';box-shadow:0 0 8px ' + color + '"></div>' +
-            '<div><div class="intel-item-name">' + atIntelEscape(f.name || '') + '</div>' +
-            '<div class="intel-item-meta">' + atIntelEscape(f.subtitle || '—') + '</div></div>' +
-            '<div class="intel-item-value">' + atIntelEscape(f.amount || '') + '</div>' +
-          '</div>';
-        }).join('');
-      }
-    } catch (e) { console.error('atIntelLoadAlpha — funding:', e); }
-  }
-}
-
-// master loader for Sections 2, 3, 4
-async function atIntelLoadAll() {
-  if (!window.API || !window.API.isLive || !window.API.isLive()) return;
-  atIntelLoadOpportunities();
-  atIntelLoadDeadlines();
-  atIntelLoadAlpha();
-}
-
-
-// DEMO — these stay as demo data for now (need blockchain APIs / Phase 3 backend)
-const walletHealthData = [
-  { name:'Alpha-Prime', score:94, color:'var(--gold)', bars:[{l:'Activity',v:97,c:'hb-gold'},{l:'Diversity',v:91,c:'hb-cyan'},{l:'Uniqueness',v:96,c:'hb-green'},{l:'Maturity',v:88,c:'hb-purple'},{l:'Sybil Safe',v:95,c:'hb-gold'}] },
-  { name:'NightOwl', score:91, color:'var(--purple)', bars:[{l:'Activity',v:94,c:'hb-gold'},{l:'Diversity',v:98,c:'hb-cyan'},{l:'Uniqueness',v:89,c:'hb-green'},{l:'Maturity',v:93,c:'hb-purple'},{l:'Sybil Safe',v:90,c:'hb-gold'}] },
-  { name:'CryptoSage', score:96, color:'var(--green)', bars:[{l:'Activity',v:99,c:'hb-gold'},{l:'Diversity',v:97,c:'hb-cyan'},{l:'Uniqueness',v:94,c:'hb-green'},{l:'Maturity',v:98,c:'hb-purple'},{l:'Sybil Safe',v:97,c:'hb-gold'}] },
-  { name:'HexVault', score:38, color:'var(--red)', bars:[{l:'Activity',v:22,c:'hb-red'},{l:'Diversity',v:18,c:'hb-red'},{l:'Uniqueness',v:31,c:'hb-red'},{l:'Maturity',v:15,c:'hb-red'},{l:'Sybil Safe',v:12,c:'hb-red'}] },
-];
-
-const walletFeedEvents = [
-  { color:'var(--gold)', action:'NightOwl completed farming route', detail:'Arbitrum One → LayerZero Bridge · +120 XP', time:'2m' },
-  { color:'var(--green)', action:'CryptoSage: New eligibility detected', detail:'zkSync Era Airdrop · Est. $2,100 exposure', time:'8m' },
-  { color:'var(--cyan)', action:'Stealth-9 interacted with Uniswap v4', detail:'Base Network · Gas: 0.003 ETH', time:'15m' },
-  { color:'var(--purple)', action:'Alpha-Prime crossed 900 interactions', detail:'Milestone achieved · Health +2 pts', time:'28m' },
-  { color:'var(--orange)', action:'Warning: HexVault sybil pattern', detail:'Similar route timing to Alpha-01', time:'1h' },
-  { color:'var(--gold)', action:'PulseNode: Farming route 72% complete', detail:'Arbitrum → Base → ETH mainnet', time:'2h' },
-];
-
-const walletProtocols = [
-  { name:'Uniswap v3', chain:'Ethereum', txs:89 },
-  { name:'zkSync native DEX', chain:'zkSync Era', txs:64 },
-  { name:'Stargate Finance', chain:'LayerZero', txs:52 },
-  { name:'Velodrome', chain:'Optimism', txs:38 },
-  { name:'Camelot DEX', chain:'Arbitrum', txs:29 },
-];
-
-/* ════════════════════════════════
-   RENDER: ANIMATED GRID BACKGROUND
-   ════════════════════════════════ */
-function walletDrawGrid() {
-  const c = document.getElementById('grid-bg');
-  const ctx = c.getContext('2d');
-  c.width = window.innerWidth;
-  c.height = window.innerHeight;
-  ctx.clearRect(0, 0, c.width, c.height);
-  ctx.strokeStyle = 'rgba(255,200,50,0.035)';
-  ctx.lineWidth = 0.5;
-  const step = 44;
-  for (let x = 0; x < c.width; x += step) {
-    ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,c.height); ctx.stroke();
-  }
-  for (let y = 0; y < c.height; y += step) {
-    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(c.width,y); ctx.stroke();
-  }
-}
-walletDrawGrid();
-window.addEventListener('resize', walletDrawGrid);
-
-/* ════════════════════════════════
-   RENDER: HEALTH SYSTEM  ·  LIVE
-   Uses real wallets + wallet_chain_data Health Scores (Stages 1-3).
-   ════════════════════════════════ */
-var walletChainCache = {};   // { wallet_id: chain_data_row }
-
-function walletRenderHealthGrid() {
-  const g = document.getElementById('health-grid');
-  if (!g) return;
-
-  if (!walletData.length) {
-    g.innerHTML = '<div style="grid-column:1/-1;padding:24px;text-align:center;' +
-      'color:var(--text-muted);font-size:12px;font-family:var(--font-mono);">' +
-      'No wallets yet. Add a wallet to see its health score.</div>';
+window.wltSaveNewWallet = async function() {
+  if (!window.API || !window.API.addWallet) {
+    wltToast('⚠️', 'Error', 'API not available.');
     return;
   }
-
-  g.innerHTML = walletData.map(function(w) {
-    var cd = walletChainCache[w.id];
-    var circumference = 2 * Math.PI * 22;
-
-    // Not yet checked on-chain → prompt the user, no fake score
-    if (!cd || !cd.last_checked) {
-      return '<div class="health-wallet-card">' +
-        '<div class="hwc-header">' +
-          '<div class="hwc-name">' + walletEscapeHtml(w.name || 'Wallet') + '</div>' +
-          '<span class="status-badge sb-resting" style="font-size:9px;padding:3px 8px">NOT CHECKED</span>' +
-        '</div>' +
-        '<div style="padding:20px 6px;text-align:center;color:var(--text-muted);' +
-          'font-size:11px;font-family:var(--font-mono);line-height:1.6;">' +
-          'No on-chain data yet.<br>Open the Airdrop Tracker and tap ' +
-          '"Check On-Chain" for this wallet.</div>' +
-      '</div>';
-    }
-
-    var score = cd.health_score || 0;
-    var color = score >= 70 ? 'var(--green)' : (score >= 40 ? 'var(--gold)' : 'var(--red)');
-    var badge = score >= 70 ? 'HEALTHY' : (score >= 40 ? 'FAIR' : 'AT RISK');
-    var badgeCls = score >= 70 ? 'sb-elite' : (score >= 40 ? 'sb-farming' : 'sb-highrisk');
-    var offset = circumference - (score / 100) * circumference;
-
-    // Real signal bars from the on-chain data (scaled to 0-100)
-    var ageBar    = Math.min(Math.round((cd.age_days   || 0) / 365 * 100), 100);
-    var txBar     = Math.min(Math.round((cd.tx_count   || 0) / 100 * 100), 100);
-    var gasBar    = Math.min(Math.round((cd.gas_eth    || 0) / 0.05 * 100), 100);
-    var chainsBar = Math.min(Math.round((cd.chains_active || 0) / 5  * 100), 100);
-
-    var bars = [
-      { l: 'Wallet Age', v: ageBar,    c: 'hb-purple' },
-      { l: 'Activity',   v: txBar,     c: 'hb-gold'   },
-      { l: 'Gas Spent',  v: gasBar,    c: 'hb-cyan'   },
-      { l: 'Multi-Chain',v: chainsBar, c: 'hb-green'  }
-    ];
-    var barsHtml = bars.map(function(b) {
-      return '<div class="hwc-bar-row">' +
-        '<div class="hwc-bar-label">' + b.l + '</div>' +
-        '<div class="hwc-bar-track"><div class="hwc-bar-fill ' + b.c +
-        '" style="width:' + b.v + '%"></div></div></div>';
-    }).join('');
-
-    return '<div class="health-wallet-card">' +
-      '<div class="hwc-header">' +
-        '<div class="hwc-name">' + walletEscapeHtml(w.name || 'Wallet') + '</div>' +
-        '<span class="status-badge ' + badgeCls + '" style="font-size:9px;padding:3px 8px">' + badge + '</span>' +
-      '</div>' +
-      '<div class="hwc-score-ring">' +
-        '<svg width="56" height="56" viewBox="0 0 56 56">' +
-          '<circle cx="28" cy="28" r="22" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="5"/>' +
-          '<circle cx="28" cy="28" r="22" fill="none" stroke="' + color + '" stroke-width="5" ' +
-            'stroke-dasharray="' + circumference + '" stroke-dashoffset="' + offset + '" ' +
-            'stroke-linecap="round" style="filter:drop-shadow(0 0 5px ' + color + ')"/>' +
-        '</svg>' +
-        '<div class="hwc-score-val">' +
-          '<div class="hwc-score-num" style="color:' + color + '">' + score + '</div>' +
-          '<div class="hwc-score-label">SCORE</div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="hwc-bars">' + barsHtml + '</div>' +
-    '</div>';
-  }).join('');
-}
-
-// safe HTML escape for wallet text
-function walletEscapeHtml(s) {
-  if (s == null) return '';
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-// Wire the real hero stats from wallets + chain-data
-function walletRenderHeroStats() {
-  var setText = function(id, val) {
-    var el = document.getElementById(id);
-    if (el) el.textContent = val;
-  };
-
-  // Total Wallets — real count
-  setText('stat-total', walletData.length);
-
-  // Avg Health Score — average of checked wallets only
-  var checked = walletData
-    .map(function(w) { return walletChainCache[w.id]; })
-    .filter(function(cd) { return cd && cd.last_checked; });
-
-  var avgEl = document.getElementById('stat-avg-health');
-  var safetyEl = document.getElementById('stat-sybil-safety');
-  if (checked.length) {
-    var avg = Math.round(checked.reduce(function(s, cd) {
-      return s + (cd.health_score || 0);
-    }, 0) / checked.length);
-    if (avgEl) avgEl.innerHTML = avg + '<span style="font-size:14px;color:var(--text-muted)">/100</span>';
-
-    // Sybil Safety derived from average score
-    if (safetyEl) {
-      if (avg >= 70)      safetyEl.textContent = 'SAFE';
-      else if (avg >= 40) safetyEl.textContent = 'FAIR';
-      else                safetyEl.textContent = 'AT RISK';
-    }
-  } else {
-    if (avgEl) avgEl.innerHTML = '—';
-    if (safetyEl) safetyEl.textContent = '—';
-  }
-}
-
-/* ════════════════════════════════
-   RENDER: WALLET TABLE
-   ════════════════════════════════ */
-function walletStatusClass(s) {
-  return {elite:'sb-elite',farming:'sb-farming',active:'sb-active',resting:'sb-resting',highrisk:'sb-highrisk',archived:'sb-archived'}[s]||'sb-resting';
-}
-
-function walletHealthColor(h) {
-  if (h >= 80) return 'var(--green)';
-  if (h >= 60) return 'var(--gold)';
-  return 'var(--red)';
-}
-
-function walletRiskHTML(risk) {
-  const levels = {low:[true,false,false],medium:[true,true,false],high:[true,true,true]};
-  const colors = {low:'filled-low',medium:'filled-med',high:'filled-high'};
-  const cls = colors[risk];
-  return `<div class="risk-dots">
-    ${levels[risk].map(f=>`<div class="risk-dot ${f?cls:''}"></div>`).join('')}
-  </div><span class="risk-label" style="color:${risk==='low'?'var(--green)':risk==='medium'?'var(--orange)':'var(--red)'}">${risk.toUpperCase()}</span>`;
-}
-
-function walletRenderWallets(list) {
-  const tbody = document.getElementById('wallet-tbody');
-  const countEl = document.getElementById('wallet-count');
-  if (countEl) countEl.textContent = list.length;
-
-  if (!list.length) {
-    tbody.innerHTML = '<tr><td colspan="6" style="padding:36px;text-align:center;color:var(--text-muted);font-size:13px;">No wallets yet. Click <strong style="color:var(--gold)">＋ Add Wallet</strong> to add your first one.</td></tr>';
+  const name = (wlt('wltFormName') && wlt('wltFormName').value || '').trim();
+  if (!name) {
+    wltToast('⚠️', 'Required', 'Please enter a wallet name.');
     return;
   }
-
-  const chainTagMap = {ETH:'ct-eth',ARB:'ct-arb',BASE:'ct-base',ZKS:'ct-zks',SOL:'ct-sol',OP:'ct-op'};
-  tbody.innerHTML = list.map(w => {
-    const chainsStr = (w.chains || '').trim();
-    const chains = chainsStr
-      ? chainsStr.split(',').map(c => c.trim().toUpperCase())
-          .filter(Boolean)
-          .map(c => `<span class="chain-tag ${chainTagMap[c] || ''}">${walletEsc(c)}</span>`).join('')
-      : '<span style="color:var(--text-muted);font-size:11px;">—</span>';
-    const addr = w.address || '—';
-    const shortAddr = addr.length > 14 ? (addr.slice(0,6) + '...' + addr.slice(-4)) : addr;
-    return `<tr>
-      <td>
-        <div class="wallet-identity">
-          <div class="wallet-avatar wa-1">${(w.name||'?').charAt(0).toUpperCase()}</div>
-          <div>
-            <div class="wallet-name">${walletEsc(w.name)}</div>
-            <div class="wallet-addr" onclick="walletCopyText('${walletEsc(addr)}')" data-tip="Click to copy">${walletEsc(shortAddr)}</div>
-          </div>
-        </div>
-      </td>
-      <td><span class="status-badge ${walletStatusClass(w.status)}">${(w.status||'active').toUpperCase()}</span></td>
-      <td><span style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">${walletEsc(w.label || '—')}</span></td>
-      <td><div class="chain-tags">${chains}</div></td>
-      <td><span style="font-size:11px;color:var(--text-muted);">${walletEsc((w.notes || '').slice(0, 60))}${(w.notes||'').length > 60 ? '…' : ''}</span></td>
-      <td>
-        <div class="quick-actions" onclick="event.stopPropagation()">
-          <div class="qa-btn" data-tip="Edit" onclick="walletOpenEditModal(${w.id})">✎</div>
-          <div class="qa-btn" data-tip="Copy address" onclick="walletCopyText('${walletEsc(addr)}')">⎘</div>
-          <div class="qa-btn" data-tip="Delete" onclick="walletDelete(${w.id})">✕</div>
-        </div>
-      </td>
-    </tr>`;
-  }).join('');
-}
-
-function walletEsc(str) {
-  if (str == null) return '';
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-}
-
-/* ════════════════════════════════
-   RENDER: ACTIVITY FEED
-   ════════════════════════════════ */
-function walletRenderFeed() {
-  const el = document.getElementById('activity-feed');
-  el.innerHTML = walletFeedEvents.map(e => `
-    <div class="feed-item">
-      <div class="feed-dot" style="color:${e.color};background:${e.color}"></div>
-      <div class="feed-content">
-        <div class="feed-action">${e.action}</div>
-        <div class="feed-detail">${e.detail}</div>
-      </div>
-      <div class="feed-time">${e.time} ago</div>
-    </div>`).join('');
-}
-
-/* ════════════════════════════════
-   RENDER: HEATMAP
-   ════════════════════════════════ */
-function walletRenderHeatmap() {
-  const levels = ['','l1','l2','l3','l4'];
-  const el = document.getElementById('heatmap');
-  let html = '';
-  for (let i = 0; i < 84; i++) {
-    const l = levels[Math.floor(Math.random()*5)];
-    html += `<div class="hm-cell ${l}" data-tip="${Math.floor(Math.random()*20)} txs"></div>`;
-  }
-  el.innerHTML = html;
-}
-
-/* ════════════════════════════════
-   RENDER: SPARKLINE
-   ════════════════════════════════ */
-function walletRenderSparkline() {
-  const canvas = document.getElementById('sparkline-chart');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  canvas.width = canvas.offsetWidth * window.devicePixelRatio || 280;
-  canvas.height = 50 * window.devicePixelRatio;
-  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-  const w = canvas.width / window.devicePixelRatio;
-  const h = 50;
-  const data = [42,55,48,72,68,85,79,91,88,94,89,97,82,95,88,92,98,94,91,96,88,94,97,91,95,92,98,96,94,97];
-  const max = Math.max(...data), min = Math.min(...data);
-  const pts = data.map((v,i) => ({ x: (i/(data.length-1))*w, y: h - ((v-min)/(max-min))*(h-10)-5 }));
-
-  // Gradient fill
-  const grad = ctx.createLinearGradient(0,0,0,h);
-  grad.addColorStop(0,'rgba(255,200,50,0.3)');
-  grad.addColorStop(1,'rgba(255,200,50,0)');
-  ctx.beginPath();
-  ctx.moveTo(pts[0].x, h);
-  pts.forEach(p => ctx.lineTo(p.x, p.y));
-  ctx.lineTo(pts[pts.length-1].x, h);
-  ctx.closePath();
-  ctx.fillStyle = grad;
-  ctx.fill();
-
-  // Line
-  ctx.beginPath();
-  pts.forEach((p,i) => i===0 ? ctx.moveTo(p.x,p.y) : ctx.lineTo(p.x,p.y));
-  ctx.strokeStyle = 'rgba(255,200,50,0.8)';
-  ctx.lineWidth = 1.5;
-  ctx.stroke();
-}
-
-/* ════════════════════════════════
-   WALLET DETAIL PANEL
-   ════════════════════════════════ */
-function walletOpenDetail(id) {
-  const w = walletData.find(x=>x.id===id);
-  if (!w) return;
-  const hc = walletHealthColor(w.health);
-
-  document.getElementById('detail-wallet-id').innerHTML = `
-    <div class="detail-avatar ${w.cls}" style="border-color:${hc}">${w.emoji}</div>
-    <div>
-      <div class="detail-name">${w.name}</div>
-      <div class="detail-addr" onclick="walletCopyText('${w.addr}')">${w.addr.replace('...',' ··· ')} <span style="color:var(--text-muted)">(click to copy)</span></div>
-      <div class="detail-status"><span class="status-badge ${walletStatusClass(w.status)}">${w.statusLabel}</span> <span class="readonly-badge" style="margin-left:6px">🔒 READ-ONLY</span></div>
-    </div>`;
-
-  document.getElementById('detail-stats-grid').innerHTML = [
-    {l:'Health Score',v:`${w.health}/100`,s:'Overall quality',col:hc},
-    {l:'Est. Exposure',v:w.exposure,s:'Reward estimate',col:'var(--gold)'},
-    {l:'Protocols',v:w.protocols,s:'Unique interactions',col:'var(--cyan)'},
-    {l:'Wallet Age',v:w.age,s:'Since first tx',col:'var(--text)'},
-    {l:'Active Days',v:w.activeDays,s:'Days with activity',col:'var(--green)'},
-    {l:'Interactions',v:w.interactions,s:'Total transactions',col:'var(--cyan)'},
-    {l:'Gas Used',v:w.gasUsed,s:'All-time',col:'var(--orange)'},
-    {l:'Current Focus',v:w.focus,s:'Farming strategy',col:'var(--text)',small:true},
-  ].map(s=>`<div class="detail-stat">
-    <div class="detail-stat-label">${s.l}</div>
-    <div class="detail-stat-val" style="color:${s.col};${s.small?'font-size:13px':''}">${s.v}</div>
-    <div class="detail-stat-sub">${s.s}</div>
-  </div>`).join('');
-
-  document.getElementById('detail-health-bars').innerHTML = [
-    {l:'Activity Consistency', v:w.health-2, c:'hb-gold'},
-    {l:'Ecosystem Diversity', v:Math.min(100,w.health+4), c:'hb-cyan'},
-    {l:'Interaction Quality', v:Math.min(100,w.health-6), c:'hb-green'},
-    {l:'Wallet Uniqueness', v:w.risk==='high'?25:w.health, c:w.risk==='high'?'hb-red':'hb-purple'},
-    {l:'Farming Maturity', v:Math.min(100,w.health+2), c:'hb-gold'},
-    {l:'Sybil Probability', v:w.risk==='high'?82:w.risk==='medium'?35:12, c:w.risk==='high'?'hb-red':'hb-green',invert:true},
-    {l:'Gas Behavior', v:Math.min(100,w.health-4), c:'hb-cyan'},
-  ].map(b=>`<div class="health-bar-row">
-    <div class="health-bar-label">${b.l}</div>
-    <div class="health-bar-track"><div class="health-bar-fill ${b.c}" style="width:${b.v}%"></div></div>
-    <div class="health-bar-pct">${b.v}%</div>
-  </div>`).join('');
-
-  document.getElementById('detail-protocols').innerHTML = walletProtocols.map(p=>`
-    <div class="protocol-item">
-      <div><div class="protocol-name">${p.name}</div><div class="protocol-chain">${p.chain}</div></div>
-      <div class="protocol-txs">${Math.floor(p.txs * (w.interactions/700))} txs</div>
-    </div>`).join('');
-
-  document.getElementById('detail-activity').innerHTML = walletFeedEvents.slice(0,4).map(e=>`
-    <div class="activity-item">
-      <div class="activity-dot" style="background:${e.color}"></div>
-      <div class="activity-text">${e.action}</div>
-      <div class="activity-time">${e.time} ago</div>
-    </div>`).join('');
-
-  document.getElementById('detail-panel').classList.add('open');
-}
-
-function walletCloseDetail() {
-  document.getElementById('detail-panel').classList.remove('open');
-}
-
-/* ════════════════════════════════
-   FILTER LOGIC
-   ════════════════════════════════ */
-let walletActiveStatusFilter = 'all';
-let walletActiveSearchQuery = '';
-
-function walletFilterWallets() {
-  walletActiveSearchQuery = document.getElementById('wallet-search').value.toLowerCase();
-  walletApplyFilters();
-}
-
-function walletFilterStatus(el, status) {
-  walletActiveStatusFilter = status;
-  document.querySelectorAll('#tab-wallets .filter-tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  walletApplyFilters();
-}
-
-function walletFilterGroup(el, group) {
-  document.querySelectorAll('#tab-wallets .group-tag').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  let list = walletData;
-  if (group !== 'all') {
-    // Filter by status as a rough proxy for group tags
-    list = walletData.filter(w => w.status === group || w.label === group);
-  }
-  walletRenderWallets(list);
-}
-
-function walletApplyFilters() {
-  let list = walletData;
-  if (walletActiveStatusFilter && walletActiveStatusFilter !== 'all') {
-    list = list.filter(w => w.status === walletActiveStatusFilter);
-  }
-  if (walletActiveSearchQuery) {
-    const q = walletActiveSearchQuery;
-    list = list.filter(w =>
-      (w.name || '').toLowerCase().includes(q) ||
-      (w.address || '').toLowerCase().includes(q) ||
-      (w.chains || '').toLowerCase().includes(q) ||
-      (w.label || '').toLowerCase().includes(q)
-    );
-  }
-  walletRenderWallets(list);
-}
-
-/* ════════════════════════════════
-   VIEW TOGGLE
-   ════════════════════════════════ */
-function walletSetView(view, btn) {
-  document.querySelectorAll('#tab-wallets .view-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-}
-
-/* ════════════════════════════════
-   SYNC ANIMATION
-   ════════════════════════════════ */
-function walletSyncWallets() {
-  const icon = document.getElementById('sync-icon');
-  let angle = 0;
-  const interval = setInterval(() => {
-    angle += 30;
-    icon.style.transform = `rotate(${angle}deg)`;
-    icon.style.display = 'inline-block';
-  }, 50);
-  setTimeout(() => {
-    clearInterval(interval);
-    icon.style.transform = '';
-    // Actually reload real wallet data from Supabase
-    if (typeof walletLoadFromSupabase === 'function') {
-      walletLoadFromSupabase();
-    }
-    walletShowToast('Wallets refreshed', 'green');
-  }, 2000);
-}
-
-function walletOpenAddWalletModal() {
-  walletEditingId = null;
-  document.getElementById('walletModalTitle').textContent = '// ADD NEW WALLET';
-  document.getElementById('walletSaveBtn').textContent = 'Add Wallet →';
-  document.getElementById('wName').value = '';
-  document.getElementById('wAddress').value = '';
-  document.getElementById('wChains').value = '';
-  document.getElementById('wStatus').value = 'active';
-  document.getElementById('wLabel').value = '';
-  document.getElementById('wNotes').value = '';
-  document.getElementById('walletModal').style.display = 'flex';
-}
-
-function walletOpenEditModal(id) {
-  const w = walletData.find(x => x.id === id);
-  if (!w) return;
-  walletEditingId = id;
-  document.getElementById('walletModalTitle').textContent = '// EDIT WALLET';
-  document.getElementById('walletSaveBtn').textContent = 'Save Changes →';
-  document.getElementById('wName').value = w.name || '';
-  document.getElementById('wAddress').value = w.address || '';
-  document.getElementById('wChains').value = w.chains || '';
-  document.getElementById('wStatus').value = w.status || 'active';
-  document.getElementById('wLabel').value = w.label || '';
-  document.getElementById('wNotes').value = w.notes || '';
-  document.getElementById('walletModal').style.display = 'flex';
-}
-
-function walletCloseModal() {
-  document.getElementById('walletModal').style.display = 'none';
-}
-
-async function walletSaveFromModal() {
-  const name = document.getElementById('wName').value.trim();
-  if (!name) { walletShowToast('Wallet name is required', 'red'); return; }
-
-  const payload = {
+  const wallet = {
     name:    name,
-    address: document.getElementById('wAddress').value.trim(),
-    chains:  document.getElementById('wChains').value.trim(),
-    status:  document.getElementById('wStatus').value,
-    label:   document.getElementById('wLabel').value.trim(),
-    notes:   document.getElementById('wNotes').value.trim()
+    address: (wlt('wltFormAddr')   && wlt('wltFormAddr').value   || '').trim(),
+    chains:  (wlt('wltFormChains') && wlt('wltFormChains').value || '').trim(),
+    label:   (wlt('wltFormLabel')  && wlt('wltFormLabel').value  || 'farmer'),
+    notes:   (wlt('wltFormNotes')  && wlt('wltFormNotes').value  || '').trim(),
+    status:  'active'
   };
-
-  const btn = document.getElementById('walletSaveBtn');
-  btn.disabled = true;
-  btn.textContent = 'Saving…';
-
-  let result;
-  if (walletEditingId) {
-    result = await window.API.updateWallet(walletEditingId, payload);
-  } else {
-    result = await window.API.addWallet(payload);
+  try {
+    const result = await window.API.addWallet(wallet);
+    if (result && result.ok) {
+      wltCloseAddModal();
+      wltToast('✅', 'Wallet Added', name);
+      await wltLoadAll();
+      if (result.wallet && result.wallet.id) wltSelectWallet(result.wallet.id);
+    } else {
+      wltToast('⚠️', 'Failed', (result && result.error) || 'Could not add wallet.');
+    }
+  } catch (e) {
+    console.error('[wltSaveNewWallet]', e);
+    wltToast('⚠️', 'Error', e.message || 'Save failed.');
   }
+};
 
-  btn.disabled = false;
-  btn.textContent = walletEditingId ? 'Save Changes →' : 'Add Wallet →';
-
-  if (!result.ok) {
-    walletShowToast('Save failed: ' + (result.error || 'unknown error'), 'red');
-    return;
-  }
-
-  walletCloseModal();
-  walletShowToast(walletEditingId ? 'Wallet updated' : 'Wallet added', 'green');
-  await walletLoadFromSupabase();
-}
-
-async function walletDelete(id) {
-  const w = walletData.find(x => x.id === id);
+// ─── EDIT WALLET (opens add modal pre-filled — simple inline edit) ───
+window.wltEditWallet = function() {
+  const w = wltAllWallets.find(function(x) { return String(x.id) === String(wltSelectedId); });
   if (!w) return;
-  if (!confirm('Delete "' + w.name + '"? This cannot be undone.')) return;
-  const result = await window.API.deleteWallet(id);
-  if (!result.ok) {
-    walletShowToast('Delete failed: ' + (result.error || ''), 'red');
+  // For Phase 7A, simple edit via modal pre-fill (treats as overwrite via updateWallet)
+  // Open modal pre-filled
+  const open = wlt('wltAddModal');
+  if (!open) return;
+  if (wlt('wltFormName')) wlt('wltFormName').value = w.name || '';
+  if (wlt('wltFormAddr')) wlt('wltFormAddr').value = w.address || '';
+  if (wlt('wltFormChains')) wlt('wltFormChains').value = w.chains || '';
+  if (wlt('wltFormLabel')) wlt('wltFormLabel').value = w.label || 'farmer';
+  if (wlt('wltFormNotes')) wlt('wltFormNotes').value = w.notes || '';
+  // Change modal title + submit handler
+  const title = document.querySelector('.wallets-view #wltAddModal .wlt-modal-title');
+  if (title) title.textContent = '✏️ Edit Wallet';
+  const submit = document.querySelector('.wallets-view #wltAddModal .wlt-form-submit');
+  if (submit) submit.textContent = '✓ Update Wallet';
+  // Hack: replace submit handler temporarily
+  const form = wlt('wltAddForm');
+  if (form) {
+    form.onsubmit = function(e) {
+      e.preventDefault();
+      wltUpdateSelectedWallet();
+    };
+  }
+  open.classList.add('show');
+};
+
+window.wltUpdateSelectedWallet = async function() {
+  if (!window.API || !window.API.updateWallet) {
+    wltToast('⚠️', 'Error', 'API not available.');
     return;
   }
-  walletShowToast('Wallet deleted', 'green');
-  await walletLoadFromSupabase();
-}
+  const patch = {
+    name:    (wlt('wltFormName') && wlt('wltFormName').value || '').trim(),
+    address: (wlt('wltFormAddr')   && wlt('wltFormAddr').value   || '').trim(),
+    chains:  (wlt('wltFormChains') && wlt('wltFormChains').value || '').trim(),
+    label:   (wlt('wltFormLabel')  && wlt('wltFormLabel').value  || 'farmer'),
+    notes:   (wlt('wltFormNotes')  && wlt('wltFormNotes').value  || '').trim()
+  };
+  try {
+    const result = await window.API.updateWallet(wltSelectedId, patch);
+    if (result && result.ok) {
+      wltCloseAddModal();
+      wltToast('✅', 'Updated', patch.name);
+      // Reset modal back to "add" mode
+      const title = document.querySelector('.wallets-view #wltAddModal .wlt-modal-title');
+      if (title) title.textContent = '+ Add New Wallet';
+      const submit = document.querySelector('.wallets-view #wltAddModal .wlt-form-submit');
+      if (submit) submit.textContent = '+ Add Wallet';
+      const form = wlt('wltAddForm');
+      if (form) {
+        form.onsubmit = function(e) {
+          e.preventDefault();
+          wltSaveNewWallet();
+        };
+      }
+      await wltLoadAll();
+    } else {
+      wltToast('⚠️', 'Failed', (result && result.error) || 'Could not update.');
+    }
+  } catch (e) {
+    console.error('[wltUpdateSelectedWallet]', e);
+    wltToast('⚠️', 'Error', e.message || 'Update failed.');
+  }
+};
 
-function walletOpenExplorer() {
-  walletShowToast('Opening blockchain explorer...', 'cyan');
-}
+// ─── HEALTH MODAL ───
+window.wltOpenHealthModal = function() {
+  const w = wltAllWallets.find(function(x) { return String(x.id) === String(wltSelectedId); });
+  if (!w) {
+    wltToast('ℹ️', 'No selection', 'Click a wallet first.');
+    return;
+  }
+  const modal = wlt('wltHealthModal');
+  if (!modal) return;
 
-function walletCopyAddr() {
-  walletShowToast('Address copied to clipboard!', 'green');
-}
+  // Render overall
+  const overall = wlt('wltHealthOverall');
+  if (overall) {
+    const tag = w._score >= 8 ? 'EXCELLENT' : w._score >= 6.5 ? 'GOOD' : w._score >= 5 ? 'FAIR' : 'BUILDING';
+    overall.innerHTML = '<div class="wlt-health-overall-num">' + w._score.toFixed(1) + ' / 10</div>' +
+                       '<div class="wlt-health-overall-tag">' + tag + '</div>';
+  }
 
-function walletCopyText(text) {
-  walletShowToast('Copied: ' + text, 'green');
-}
+  // Render 4 categories
+  const cats = w._scoreCat;
+  const sybilOutOf100 = w._sybilScore;
+  let sybilLabel = 'VERY ORGANIC';
+  if (sybilOutOf100 < 25) sybilLabel = 'VERY SUSPICIOUS';
+  else if (sybilOutOf100 < 50) sybilLabel = 'HIGH RISK';
+  else if (sybilOutOf100 < 75) sybilLabel = 'MEDIUM RISK';
+  else if (sybilOutOf100 < 90) sybilLabel = 'HEALTHY';
 
-/* ════════════════════════════════
-   TOAST NOTIFICATION
-   ════════════════════════════════ */
-function walletShowToast(msg, type='gold') {
-  const colors = {gold:'var(--gold)',green:'var(--green)',cyan:'var(--cyan)',red:'var(--red)'};
+  const wrap = wlt('wltHealthCategories');
+  if (wrap) {
+    wrap.innerHTML = [
+      '<div class="wlt-health-cat">',
+        '<div class="wlt-health-cat-head"><div class="wlt-health-cat-name">⚡ Activity Score</div><div class="wlt-health-cat-val">' + cats.activity.toFixed(1) + ' / 25</div></div>',
+        '<div class="wlt-health-cat-bar-bg"><div class="wlt-health-cat-bar-fill" style="width:' + (cats.activity / 25 * 100) + '%"></div></div>',
+        '<div class="wlt-health-cat-detail">',
+          '• Wallet age: <span>' + Math.min(wltDaysSince(w.created_at), 365) + ' days</span><br>',
+          '• Address verified: <span>' + (w.address ? 'Yes' : 'No') + '</span><br>',
+          '• Notes filled: <span>' + (w.notes ? 'Yes' : 'No') + '</span>',
+        '</div>',
+      '</div>',
+      '<div class="wlt-health-cat">',
+        '<div class="wlt-health-cat-head"><div class="wlt-health-cat-name">🌐 Diversification Score</div><div class="wlt-health-cat-val">' + cats.diversity.toFixed(1) + ' / 25</div></div>',
+        '<div class="wlt-health-cat-bar-bg"><div class="wlt-health-cat-bar-fill" style="width:' + (cats.diversity / 25 * 100) + '%"></div></div>',
+        '<div class="wlt-health-cat-detail">',
+          '• Chains tracked: <span>' + ((w.chains || '').split(',').filter(Boolean).length) + '</span><br>',
+          '• Wallet type: <span>' + (w.label || 'unspecified') + '</span><br>',
+          '• Multi-chain activity: <span>' + ((w.chains || '').split(',').length > 1 ? 'Yes' : 'No') + '</span>',
+        '</div>',
+      '</div>',
+      '<div class="wlt-health-cat">',
+        '<div class="wlt-health-cat-head"><div class="wlt-health-cat-name">🛡 Sybil Resistance</div><div class="wlt-health-cat-val">' + cats.sybil.toFixed(1) + ' / 25</div></div>',
+        '<div class="wlt-health-cat-bar-bg"><div class="wlt-health-cat-bar-fill" style="width:' + (cats.sybil / 25 * 100) + '%"></div></div>',
+        '<div class="wlt-health-cat-detail">',
+          'Starting from 100, deductions:<br>',
+          '• Wallet age: <span>' + (wltDaysSince(w.created_at) < 7 ? '-20' : wltDaysSince(w.created_at) < 30 ? '-10' : '0') + '</span><br>',
+          '• Low chain diversity: <span>' + (((w.chains || '').split(',').filter(Boolean).length) <= 1 ? '-8' : '0') + '</span><br>',
+          'Net: <span>' + sybilOutOf100 + '/100 → ' + sybilLabel + '</span>',
+        '</div>',
+      '</div>',
+      '<div class="wlt-health-cat">',
+        '<div class="wlt-health-cat-head"><div class="wlt-health-cat-name">🔒 Security Score</div><div class="wlt-health-cat-val">' + cats.security.toFixed(1) + ' / 25</div></div>',
+        '<div class="wlt-health-cat-bar-bg"><div class="wlt-health-cat-bar-fill" style="width:' + (cats.security / 25 * 100) + '%"></div></div>',
+        '<div class="wlt-health-cat-detail">',
+          '• Baseline (no API yet): <span>+12</span><br>',
+          '• Age bonus: <span>+' + (wltDaysSince(w.created_at) >= 90 ? '8' : wltDaysSince(w.created_at) >= 30 ? '5' : '0') + '</span><br>',
+          '• Label bonus: <span>+' + ((w.label || '') === 'cold' ? '5' : (w.label || '') === 'primary' ? '3' : '0') + '</span>',
+        '</div>',
+      '</div>'
+    ].join('');
+  }
+  modal.classList.add('show');
+};
+
+window.wltCloseHealthModal = function() {
+  const modal = wlt('wltHealthModal');
+  if (modal) modal.classList.remove('show');
+};
+
+// ─── MISC ───
+window.wltGotoSettings = function() {
+  // Try to switch to Settings tab
+  const btn = document.querySelector('[data-tab-target="settings"]');
+  if (btn) btn.click();
+  else wltToast('⚙', 'Settings', 'Go to Settings to add your API keys (Phase 7B).');
+};
+
+window.wltViewFullReport = function() {
+  if (!wltSelectedId) {
+    wltToast('ℹ️', 'No selection', 'Click a wallet first.');
+    return;
+  }
+  wltOpenHealthModal();
+};
+
+// ─── TOAST ───
+function wltToast(icon, title, body) {
+  let container = document.getElementById('toastContainer');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'toastContainer';
+    container.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;';
+    document.body.appendChild(container);
+  }
   const toast = document.createElement('div');
-  toast.style.cssText = `
-    position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);
-    background:rgba(8,12,24,0.97);border:1px solid ${colors[type]};color:${colors[type]};
-    padding:12px 24px;border-radius:8px;font-family:var(--font-ui);font-size:13px;font-weight:600;
-    z-index:9999;opacity:0;transition:all 0.3s;letter-spacing:.5px;white-space:nowrap;
-    box-shadow:0 0 30px ${colors[type]}22;backdrop-filter:blur(20px);
-  `;
-  toast.textContent = msg;
-  (document.getElementById('tab-wallets') || document.body).appendChild(toast);
-  requestAnimationFrame(() => {
+  toast.style.cssText = 'background:rgba(8,13,26,0.95);border:1px solid #4af0ff;color:#e8eaf0;padding:14px 18px;border-radius:10px;box-shadow:0 8px 32px rgba(74,240,255,0.25);font-size:12.5px;display:flex;align-items:center;gap:10px;max-width:360px;backdrop-filter:blur(8px);opacity:0;transform:translateY(20px);transition:all 0.3s;';
+  toast.innerHTML = '<span style="font-size:18px;">' + icon + '</span>' +
+    '<div>' +
+      '<div style="font-weight:700;color:#4af0ff;margin-bottom:2px;">' + wltEsc(title) + '</div>' +
+      '<div style="color:#7a849a;font-size:11.5px;">' + wltEsc(body) + '</div>' +
+    '</div>';
+  container.appendChild(toast);
+  requestAnimationFrame(function() {
     toast.style.opacity = '1';
-    toast.style.transform = 'translateX(-50%) translateY(0)';
+    toast.style.transform = 'translateY(0)';
   });
-  setTimeout(() => {
+  setTimeout(function() {
     toast.style.opacity = '0';
-    toast.style.transform = 'translateX(-50%) translateY(20px)';
-    setTimeout(() => toast.remove(), 300);
-  }, 2800);
+    toast.style.transform = 'translateY(20px)';
+    setTimeout(function() { toast.remove(); }, 400);
+  }, 3500);
 }
 
-Object.assign(window, {
-  walletOpenAddWalletModal, walletOpenEditModal, walletCloseModal,
-  walletSaveFromModal, walletDelete,
-  walletSyncWallets, walletFilterGroup,
-  walletFilterWallets, walletSetView, walletFilterStatus,
-  walletCloseDetail, walletOpenExplorer, walletCopyAddr,
-  walletCopyText, walletOpenDetail, walletDrawGrid, walletRenderSparkline
+// ─── INIT ───
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    try { wltLoadAll(); } catch (e) { console.error('[wlt init]', e); }
+  }, 700);
 });
 
-document.addEventListener('dropelite:tabchange', (event) => {
-  if (event.detail && event.detail.tabName === 'wallets') {
-    requestAnimationFrame(() => {
-      walletDrawGrid();
-      walletRenderSparkline();
-    });
+// Refresh when user switches to Wallets tab
+document.addEventListener('click', function(e) {
+  const trigger = e.target.closest && e.target.closest('[data-tab-target="wallets"]');
+  if (trigger) {
+    setTimeout(function() {
+      try { wltLoadAll(); } catch (err) { console.error('[wlt refresh]', err); }
+    }, 300);
   }
 });
 
-/* ════════════════════════════════
-   LIVE FEED SIMULATION
-   ════════════════════════════════ */
-const walletNewEvents = [
-  { color:'var(--green)', action:'NexusBot: Swap completed on Base', detail:'USDC → ETH · $240 · 0.001 gas', time:'just now' },
-  { color:'var(--gold)', action:'Alpha-Prime eligibility updated', detail:'New snapshot detected · LayerZero', time:'just now' },
-  { color:'var(--purple)', action:'CryptoSage: Milestone +1000 txs!', detail:'Elite farming threshold crossed', time:'just now' },
-];
-
-let walletFeedIndex = 0;
-setInterval(() => {
-  const newEvent = { ...walletNewEvents[walletFeedIndex % walletNewEvents.length] };
-  walletFeedEvents.unshift(newEvent);
-  walletFeedEvents.pop();
-  walletRenderFeed();
-  walletFeedIndex++;
-}, 7000);
-
-/* ════════════════════════════════
-   INIT
-   ════════════════════════════════ */
-walletRenderHealthGrid();        // demo (kept until Phase 3 backend)
-walletRenderFeed();              // demo
-walletRenderHeatmap();           // demo
-setTimeout(walletRenderSparkline, 100);
-
-// Load REAL wallets from Supabase
-setTimeout(walletLoadFromSupabase, 600);
-
-// Staggered row entrance animation
-setTimeout(() => {
-  const rows = document.querySelectorAll('#tab-wallets .wallet-table tbody tr');
-  rows.forEach((r, i) => {
-    r.style.opacity = '0';
-    r.style.transform = 'translateX(-8px)';
-    r.style.transition = `opacity 0.4s ${i*0.05}s ease, transform 0.4s ${i*0.05}s ease`;
-    requestAnimationFrame(() => {
-      r.style.opacity = '1';
-      r.style.transform = 'translateX(0)';
-    });
-  });
-}, 100);
-
-// Animate health bars
-setTimeout(() => {
-  document.querySelectorAll('#tab-wallets .health-bar-fill, #tab-wallets .hwc-bar-fill, #tab-wallets .chain-row-fill').forEach(el => {
-    const target = el.style.width;
-    el.style.width = '0%';
-    el.style.transition = 'width 1.2s cubic-bezier(0.4,0,0.2,1)';
-    requestAnimationFrame(() => setTimeout(() => { el.style.width = target; }, 50));
-  });
-}, 300);
-
-// Close detail on overlay click
-document.addEventListener('keydown', e => { if (e.key === 'Escape') walletCloseDetail(); });
 })();
 /* END WALLETS TAB SCRIPT */
 
