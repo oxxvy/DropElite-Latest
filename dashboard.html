@@ -13385,6 +13385,217 @@ canvas.mini-chart { width: 100% !important; }
 }
 
 /* END v3.4 EXPLORER TAB STYLES */
+
+/* ═══════════════════════════════════════════════════════════════════
+   v3.5 — ADMIN EDITORS + SKELETON LOADERS (Chunk 10)
+   ─────────────────────────────────────────────────────────────────── */
+
+/* Head-right grouping */
+.explorer-view .exp-head-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.explorer-view .exp-admin-slot { display: inline-flex; align-items: center; }
+
+/* Admin edit buttons */
+.explorer-view .exp-admin-btn {
+  background: linear-gradient(135deg, rgba(245,200,66,0.15), rgba(245,200,66,0.05));
+  border: 1px solid var(--exp-gold);
+  color: var(--exp-gold);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.explorer-view .exp-admin-btn:hover {
+  background: var(--exp-gold);
+  color: #0a0e1a;
+}
+.explorer-view .exp-admin-btn.sm {
+  padding: 3px 7px;
+  font-size: 11px;
+}
+
+/* ─── MODAL ─── */
+.exp-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 6, 14, 0.85);
+  backdrop-filter: blur(6px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.exp-modal-overlay.visible { opacity: 1; }
+.exp-modal {
+  background: linear-gradient(160deg, #0a0e1a, #070a14);
+  border: 1px solid var(--exp-gold, #f5c842);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 640px;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 30px rgba(245,200,66,0.1);
+  transform: translateY(20px) scale(0.98);
+  transition: transform 0.25s;
+  font-family: 'Rajdhani', sans-serif;
+}
+.exp-modal-overlay.visible .exp-modal { transform: translateY(0) scale(1); }
+.exp-modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 22px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.exp-modal-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #f5c842;
+}
+.exp-modal-close {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #e8eaf0;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+.exp-modal-close:hover { background: rgba(255,71,87,0.2); border-color: #ff4757; color: #ff4757; }
+.exp-modal-body {
+  padding: 20px 22px;
+  overflow-y: auto;
+  flex: 1;
+}
+.exp-modal-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 22px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.exp-modal-btn {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 9px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid;
+}
+.exp-modal-btn.cancel {
+  background: transparent;
+  border-color: rgba(255,255,255,0.15);
+  color: #7a849a;
+}
+.exp-modal-btn.cancel:hover { color: #e8eaf0; border-color: #e8eaf0; }
+.exp-modal-btn.save {
+  background: linear-gradient(135deg, #a8862a, #f5c842);
+  border-color: #f5c842;
+  color: #0a0e1a;
+}
+.exp-modal-btn.save:hover { box-shadow: 0 0 16px rgba(245,200,66,0.4); }
+.exp-modal-btn.save:disabled { opacity: 0.6; cursor: wait; }
+.exp-modal-section-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: #4af0ff;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  margin: 18px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(74,240,255,0.2);
+}
+.exp-modal-delete {
+  width: 100%;
+  margin-top: 16px;
+  background: rgba(255,71,87,0.1);
+  border: 1px solid #ff4757;
+  color: #ff4757;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.exp-modal-delete:hover { background: #ff4757; color: #fff; }
+
+/* Form fields */
+.exp-field { margin-bottom: 14px; flex: 1; }
+.exp-field-row { display: flex; gap: 12px; }
+.exp-field-label {
+  display: block;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  color: #7a849a;
+  letter-spacing: 1px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+.exp-field-input {
+  width: 100%;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 7px;
+  padding: 9px 12px;
+  color: #e8eaf0;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  transition: border-color 0.2s;
+}
+.exp-field-input:focus {
+  outline: none;
+  border-color: #f5c842;
+  box-shadow: 0 0 0 2px rgba(245,200,66,0.1);
+}
+.exp-field-textarea { resize: vertical; min-height: 60px; line-height: 1.4; }
+select.exp-field-input { cursor: pointer; }
+select.exp-field-input option { background: #0a0e1a; color: #e8eaf0; }
+
+/* ─── SKELETON LOADERS ─── */
+.explorer-view .exp-skel {
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0.03) 25%,
+    rgba(255,255,255,0.07) 50%,
+    rgba(255,255,255,0.03) 75%);
+  background-size: 200% 100%;
+  animation: expShimmer 1.4s infinite;
+  border-radius: 8px;
+}
+@keyframes expShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.explorer-view .exp-skel-bullet { height: 56px; }
+.explorer-view .exp-skel-protocol { height: 50px; }
+.explorer-view .exp-skel-step { height: 42px; margin-bottom: 6px; }
+.explorer-view .exp-skel-smart { height: 64px; margin-bottom: 10px; }
+.explorer-view .exp-skel-cat { height: 160px; }
+.explorer-view .exp-skel-row { height: 40px; margin-bottom: 10px; }
+
+/* END v3.5 ADMIN + SKELETON STYLES */
+
 /* END EXPLORER TAB STYLES */
 /* START REWARDS TAB STYLES */
 .rewards-view.tab-panel.active { display: block; }
@@ -21725,6 +21936,7 @@ canvas.mini-chart { width: 100% !important; }
               <div class="exp-chain-tags" id="expChainTags"></div>
             </div>
             <div class="exp-chain-hero-actions" id="expChainActions">
+              <span class="exp-admin-slot" id="expChainAdminSlot"></span>
               <button class="exp-external-btn" onclick="expGoExternal('official')">🔗 OFFICIAL SITE</button>
               <button class="exp-external-btn" onclick="expGoExternal('docs')">📖 DOCS</button>
               <button class="exp-external-btn" onclick="expGoExternal('discord')">💬 DISCORD</button>
@@ -21761,6 +21973,7 @@ canvas.mini-chart { width: 100% !important; }
               <div class="exp-thesis-eyebrow" id="expThesisEyebrow">⚡ FARMING THESIS</div>
               <h2 class="exp-thesis-title">Why farmers are watching <span id="expThesisChain">—</span> right now</h2>
               <div class="exp-thesis-meta" id="expThesisMeta">Curated by DropElite research</div>
+              <span class="exp-admin-slot" id="expThesisAdminSlot" style="margin-top:8px;display:inline-block;"></span>
             </div>
             <div class="exp-thesis-score-block">
               <div class="exp-thesis-score-lbl">THESIS SCORE</div>
@@ -21863,7 +22076,10 @@ canvas.mini-chart { width: 100% !important; }
         <div class="exp-hidden-card">
           <div class="exp-card-head">
             <div class="exp-card-title purple">💎 HIDDEN OPPORTUNITIES — UNDERFARMED ALPHA</div>
-            <span class="exp-sec-tag new">VIP</span>
+            <div class="exp-head-right">
+              <span class="exp-admin-slot" id="expHiddenAdminSlot"></span>
+              <span class="exp-sec-tag new">VIP</span>
+            </div>
           </div>
           <div class="exp-hidden-warning">
             ⚠️ <b>RESEARCH ONLY — DO YOUR OWN DUE DILIGENCE.</b> Lower farmer count = potentially better allocation BUT also less certainty. Read each "Why Early" carefully.
@@ -21890,7 +22106,10 @@ canvas.mini-chart { width: 100% !important; }
         <div class="exp-smart-card">
           <div class="exp-card-head">
             <div class="exp-card-title green">🐋 SMART MONEY ACTIVITY</div>
-            <span class="exp-sec-tag new">CURATED</span>
+            <div class="exp-head-right">
+              <span class="exp-admin-slot" id="expSmartAdminSlot"></span>
+              <span class="exp-sec-tag new">CURATED</span>
+            </div>
           </div>
           <div class="exp-smart-disclaimer">
             📌 <b>Manually curated by DropElite</b> — notable on-chain activity from tracked wallets. Each item links to verification source. Updated 2-3x per week. <b style="color:var(--exp-orange)">Not financial advice.</b>
@@ -24431,6 +24650,9 @@ canvas.mini-chart { width: 100% !important; }
           <div class="nav-item" onclick="profileSwitchTab('preferences', this)">
             <span class="nav-icon">⚙</span> Preferences
           </div>
+          <div class="nav-item" onclick="profileSwitchTab('apikeys', this)">
+            <span class="nav-icon">🔑</span> API Keys
+          </div>
 
           <div class="sidebar-divider"></div>
 
@@ -25287,6 +25509,59 @@ canvas.mini-chart { width: 100% !important; }
               <div class="card-footer">
                 <button class="btn btn-ghost" onclick="profileExportData()">📤 Export Now</button>
                 <button class="btn btn-gold" onclick="profileSaveChanges()">💾 Save Preferences</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── API KEYS TAB ── -->
+          <div id="profileSettingsTabApikeys" class="tab-content">
+            <div class="section-header">
+              <div>
+                <div class="section-title">API <span>Keys</span></div>
+                <div class="section-sub">Connect on-chain data providers for wallet reputation (Phase 7B)</div>
+              </div>
+              <div class="tag tag-gold">Phase 7B</div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title"><span class="card-icon">🔑</span> On-Chain Data Providers</div>
+                <span class="text-muted" id="apikeyStatus">Not connected</span>
+              </div>
+              <div class="card-body">
+                <div style="font-size:13px;color:#7a849a;line-height:1.6;margin-bottom:18px;padding:12px 14px;background:rgba(74,240,255,0.05);border:1px solid rgba(74,240,255,0.2);border-radius:8px;">
+                  🔒 <b style="color:#e8eaf0;">Your keys are private.</b> Stored encrypted in your account (row-level security), only YOU can read them. DropElite never signs transactions — keys are read-only for fetching wallet activity. Once added, your <b style="color:#4af0ff;">Reputation Score</b> and <b style="color:#b070ff;">Sybil Analysis</b> in the Explorer tab will populate from real on-chain data.
+                </div>
+
+                <!-- Alchemy -->
+                <div style="margin-bottom:20px;">
+                  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                    <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#0052ff,#4af0ff);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-family:'Orbitron',sans-serif;font-size:13px;">A</div>
+                    <div>
+                      <div style="font-weight:700;color:#e8eaf0;font-size:14px;">Alchemy</div>
+                      <div style="font-size:11px;color:#7a849a;">EVM chains · Free 300M units/month</div>
+                    </div>
+                    <a href="https://alchemy.com" target="_blank" rel="noopener" style="margin-left:auto;font-size:11px;color:#4af0ff;text-decoration:none;font-family:'Share Tech Mono',monospace;">Get key ↗</a>
+                  </div>
+                  <input type="password" id="apikeyAlchemy" class="exp-field-input" placeholder="Paste your Alchemy API key" style="font-family:'Share Tech Mono',monospace;font-size:12px;" autocomplete="off">
+                </div>
+
+                <!-- Moralis -->
+                <div style="margin-bottom:20px;">
+                  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                    <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#b070ff,#ff5e8a);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-family:'Orbitron',sans-serif;font-size:13px;">M</div>
+                    <div>
+                      <div style="font-weight:700;color:#e8eaf0;font-size:14px;">Moralis</div>
+                      <div style="font-size:11px;color:#7a849a;">Multi-chain · Free 40K requests/day</div>
+                    </div>
+                    <a href="https://moralis.io" target="_blank" rel="noopener" style="margin-left:auto;font-size:11px;color:#4af0ff;text-decoration:none;font-family:'Share Tech Mono',monospace;">Get key ↗</a>
+                  </div>
+                  <input type="password" id="apikeyMoralis" class="exp-field-input" placeholder="Paste your Moralis API key" style="font-family:'Share Tech Mono',monospace;font-size:12px;" autocomplete="off">
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="btn btn-ghost" onclick="apikeyToggleVisibility()">👁 Show/Hide</button>
+                <button class="btn btn-gold" onclick="apikeySave()">💾 Save API Keys</button>
               </div>
             </div>
           </div>
@@ -30754,6 +31029,7 @@ window.expSelectChain = async function(chainId) {
 
   expRenderChainPills();
   expRenderHero();
+  expShowSkeletons();
 
   // Load all chain-specific data in parallel
   await Promise.all([
@@ -30765,6 +31041,28 @@ window.expSelectChain = async function(chainId) {
     expLoadChecklist(chainId)
   ]);
 };
+
+// Skeleton shimmer loaders
+function expSkelRows(n, cls) {
+  let out = '';
+  for (let i = 0; i < n; i++) out += '<div class="exp-skel ' + (cls || '') + '"></div>';
+  return out;
+}
+
+function expShowSkeletons() {
+  const thesisB = exp('expThesisBullets');
+  if (thesisB) thesisB.innerHTML = expSkelRows(6, 'exp-skel-bullet');
+  const protoG = exp('expProtocolGrid');
+  if (protoG) protoG.innerHTML = expSkelRows(8, 'exp-skel-protocol');
+  const playB = exp('expPlaybookSteps');
+  if (playB) playB.innerHTML = expSkelRows(7, 'exp-skel-step');
+  const hiddenB = exp('expHiddenBody');
+  if (hiddenB) hiddenB.innerHTML = '<tr><td colspan="6"><div class="exp-skel exp-skel-row"></div><div class="exp-skel exp-skel-row"></div><div class="exp-skel exp-skel-row"></div></td></tr>';
+  const smartF = exp('expSmartFeed');
+  if (smartF) smartF.innerHTML = expSkelRows(4, 'exp-skel-smart');
+  const checkC = exp('expChecklistCategories');
+  if (checkC) checkC.innerHTML = expSkelRows(4, 'exp-skel-cat');
+}
 
 function expRenderHero() {
   const c = expCurrentChain;
@@ -30818,6 +31116,10 @@ function expRenderHero() {
   colorDelta('expStatTvlDelta', c.tvl_delta);
   colorDelta('expStatUsersDelta', c.daily_users_delta);
   colorDelta('expStatVolumeDelta', c.volume_24h_delta);
+
+  // Admin edit button
+  const adminSlot = exp('expChainAdminSlot');
+  if (adminSlot) adminSlot.innerHTML = expAdminBtn('expEditChain()', 'EDIT CHAIN');
 }
 
 // ─── THESIS ───
@@ -30846,15 +31148,20 @@ function expRenderThesis() {
 
   if (!expThesis) {
     const bulletsEl = exp('expThesisBullets');
-    if (bulletsEl) bulletsEl.innerHTML = '<div class="exp-no-data" style="grid-column:1/-1;">No thesis yet for this chain. Admins can add via Admin Panel.</div>';
+    if (bulletsEl) bulletsEl.innerHTML = '<div class="exp-no-data" style="grid-column:1/-1;">No thesis yet for this chain.' + (expIsAdmin ? ' Click "Add Thesis" above.' : ' Admins can add via the edit button.') + '</div>';
     const setText = function(id, v) { const el = exp(id); if (el) el.textContent = v; };
     setText('expThesisScore', '—');
     setText('expThesisConviction', '—');
     setText('expThesisUpdated', '—');
     setText('expThesisChain', expCurrentChain ? expCurrentChain.display_name : '—');
     setText('expThesisEyebrow', '⚡ FARMING THESIS');
+    const adminSlot = exp('expThesisAdminSlot');
+    if (adminSlot) adminSlot.innerHTML = expAdminBtn('expEditThesis()', '+ ADD THESIS');
     return;
   }
+
+  const adminSlotT = exp('expThesisAdminSlot');
+  if (adminSlotT) adminSlotT.innerHTML = expAdminBtn('expEditThesis()', 'EDIT THESIS');
 
   const setText = function(id, v) { const el = exp(id); if (el) el.textContent = v; };
   setText('expThesisChain', expCurrentChain ? expCurrentChain.display_name : '—');
@@ -30909,8 +31216,13 @@ async function expLoadHiddenOpps(chainId) {
 function expRenderHiddenOpps() {
   const body = exp('expHiddenBody');
   if (!body) return;
+
+  // Admin add button
+  const adminSlot = exp('expHiddenAdminSlot');
+  if (adminSlot) adminSlot.innerHTML = expAdminBtn('expEditHiddenOpp()', '+ ADD');
+
   if (expHiddenOpps.length === 0) {
-    body.innerHTML = '<tr><td colspan="5" class="exp-no-data">No hidden opportunities yet for this chain. Admins can add via Admin Panel.</td></tr>';
+    body.innerHTML = '<tr><td colspan="' + (expIsAdmin ? '6' : '5') + '" class="exp-no-data">No hidden opportunities yet for this chain.' + (expIsAdmin ? ' Click "+ ADD" above.' : '') + '</td></tr>';
     return;
   }
   body.innerHTML = expHiddenOpps.map(function(o) {
@@ -30934,6 +31246,7 @@ function expRenderHiddenOpps() {
         ? '<a class="exp-hidden-action" href="' + expEsc(o.explore_url) + '" target="_blank" rel="noopener">EXPLORE →</a>'
         : '<button class="exp-hidden-action" onclick="expToast(\'🔗\',\'No URL\',\'Admin can add link\')">EXPLORE →</button>') +
       '</td>' +
+      (expIsAdmin ? '<td><button class="exp-admin-btn sm" onclick="expEditHiddenOpp(\'' + o.id + '\')">✎</button></td>' : '') +
       '</tr>';
   }).join('');
 }
@@ -30962,8 +31275,13 @@ async function expLoadSmartMoney(chainId) {
 function expRenderSmartMoney() {
   const feed = exp('expSmartFeed');
   if (!feed) return;
+
+  // Admin add button
+  const adminSlot = exp('expSmartAdminSlot');
+  if (adminSlot) adminSlot.innerHTML = expAdminBtn('expEditSmartMoney()', '+ ADD');
+
   if (expSmartMoney.length === 0) {
-    feed.innerHTML = '<div class="exp-no-data">No smart money events yet for this chain. Admins can add via Admin Panel.</div>';
+    feed.innerHTML = '<div class="exp-no-data">No smart money events yet for this chain.' + (expIsAdmin ? ' Click "+ ADD" above.' : '') + '</div>';
     return;
   }
   feed.innerHTML = expSmartMoney.map(function(e) {
@@ -30984,6 +31302,7 @@ function expRenderSmartMoney() {
       '<div class="exp-smart-item-meta">' +
         '<div class="exp-smart-item-time">' + expTimeAgo(e.created_at) + '</div>' +
         '<span class="exp-smart-item-impact ' + impactClass + '">' + impact + '</span>' +
+        (expIsAdmin ? '<button class="exp-admin-btn sm" style="margin-top:6px;" onclick="expEditSmartMoney(\'' + e.id + '\')">✎</button>' : '') +
       '</div>' +
       '</div>';
   }).join('');
@@ -31347,10 +31666,379 @@ function expToast(icon, title, body) {
   }, 3500);
 }
 
+// ════════════════════════════════════════════════════════════════════
+// ADMIN MODE — detect admin role, show inline edit buttons
+// ════════════════════════════════════════════════════════════════════
+let expIsAdmin = false;
+
+async function expCheckAdmin() {
+  try {
+    if (!window.API || !window.API.getProfile) { expIsAdmin = false; return; }
+    const profile = await window.API.getProfile();
+    expIsAdmin = !!(profile && profile.role === 'admin');
+    document.body.classList.toggle('exp-admin-mode', expIsAdmin);
+  } catch (e) {
+    console.error('[expCheckAdmin]', e);
+    expIsAdmin = false;
+  }
+}
+
+// Admin edit button helper (returns HTML string)
+function expAdminBtn(onclick, label) {
+  if (!expIsAdmin) return '';
+  return '<button class="exp-admin-btn" onclick="' + onclick + '">✎ ' + expEsc(label || 'EDIT') + '</button>';
+}
+
+// ════════════════════════════════════════════════════════════════════
+// ADMIN EDITORS — modal-based forms for all Explorer content
+// ════════════════════════════════════════════════════════════════════
+
+// Generic modal builder
+function expModal(title, bodyHtml, onSave, saveLabel) {
+  // Remove existing
+  const existing = document.getElementById('expModalOverlay');
+  if (existing) existing.remove();
+
+  const overlay = document.createElement('div');
+  overlay.id = 'expModalOverlay';
+  overlay.className = 'exp-modal-overlay';
+  overlay.innerHTML =
+    '<div class="exp-modal">' +
+      '<div class="exp-modal-head">' +
+        '<div class="exp-modal-title">' + expEsc(title) + '</div>' +
+        '<button class="exp-modal-close" onclick="expCloseModal()">✕</button>' +
+      '</div>' +
+      '<div class="exp-modal-body">' + bodyHtml + '</div>' +
+      '<div class="exp-modal-foot">' +
+        '<button class="exp-modal-btn cancel" onclick="expCloseModal()">Cancel</button>' +
+        '<button class="exp-modal-btn save" id="expModalSaveBtn">' + expEsc(saveLabel || 'Save') + '</button>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+
+  const saveBtn = document.getElementById('expModalSaveBtn');
+  if (saveBtn && onSave) {
+    saveBtn.onclick = async function() {
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Saving...';
+      try {
+        await onSave();
+      } catch (e) {
+        console.error('[expModal save]', e);
+        expToast('⚠️', 'Save failed', e.message || 'Error saving');
+        saveBtn.disabled = false;
+        saveBtn.textContent = saveLabel || 'Save';
+      }
+    };
+  }
+
+  // Close on overlay click
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) expCloseModal();
+  });
+  requestAnimationFrame(function() { overlay.classList.add('visible'); });
+}
+
+window.expCloseModal = function() {
+  const overlay = document.getElementById('expModalOverlay');
+  if (overlay) {
+    overlay.classList.remove('visible');
+    setTimeout(function() { overlay.remove(); }, 250);
+  }
+};
+
+function expField(label, id, value, placeholder, type) {
+  return '<div class="exp-field">' +
+    '<label class="exp-field-label">' + expEsc(label) + '</label>' +
+    '<input class="exp-field-input" id="' + id + '" type="' + (type || 'text') + '" ' +
+      'value="' + expEsc(value || '') + '" placeholder="' + expEsc(placeholder || '') + '">' +
+    '</div>';
+}
+
+function expTextarea(label, id, value, placeholder, rows) {
+  return '<div class="exp-field">' +
+    '<label class="exp-field-label">' + expEsc(label) + '</label>' +
+    '<textarea class="exp-field-input exp-field-textarea" id="' + id + '" rows="' + (rows || 3) + '" ' +
+      'placeholder="' + expEsc(placeholder || '') + '">' + expEsc(value || '') + '</textarea>' +
+    '</div>';
+}
+
+function expSelect(label, id, value, options) {
+  return '<div class="exp-field">' +
+    '<label class="exp-field-label">' + expEsc(label) + '</label>' +
+    '<select class="exp-field-input" id="' + id + '">' +
+      options.map(function(o) {
+        const val = typeof o === 'object' ? o.value : o;
+        const lbl = typeof o === 'object' ? o.label : o;
+        return '<option value="' + expEsc(val) + '" ' + (String(val) === String(value) ? 'selected' : '') + '>' + expEsc(lbl) + '</option>';
+      }).join('') +
+    '</select>' +
+    '</div>';
+}
+
+function expGetVal(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+// ─── EDIT CHAIN HERO ───
+window.expEditChain = function() {
+  if (!expIsAdmin || !expCurrentChain) return;
+  const c = expCurrentChain;
+  let tags = '';
+  try {
+    const t = Array.isArray(c.tags) ? c.tags : JSON.parse(c.tags || '[]');
+    tags = t.join(', ');
+  } catch(e) { tags = ''; }
+
+  const body =
+    expField('Display Name', 'edChainName', c.display_name, 'Base') +
+    expField('Description', 'edChainDesc', c.description, 'Coinbase L2...') +
+    expField('Tags (comma-separated)', 'edChainTags', tags, 'ETHEREUM L2, VERY HOT, TIER 1') +
+    '<div class="exp-field-row">' +
+      expField('TVL', 'edChainTvl', c.tvl, '$4.21B') +
+      expField('TVL Delta', 'edChainTvlDelta', c.tvl_delta, '+ 12.4% (7d)') +
+    '</div>' +
+    '<div class="exp-field-row">' +
+      expField('Daily Users', 'edChainUsers', c.daily_users, '1.8M') +
+      expField('Users Delta', 'edChainUsersDelta', c.daily_users_delta, '+ 4.2%') +
+    '</div>' +
+    '<div class="exp-field-row">' +
+      expField('24h Volume', 'edChainVol', c.volume_24h, '$642M') +
+      expField('Volume Delta', 'edChainVolDelta', c.volume_24h_delta, '- 3.1%') +
+    '</div>' +
+    '<div class="exp-field-row">' +
+      expField('Protocols Count', 'edChainProtocols', c.protocols_count, '186', 'number') +
+      expField('Categories', 'edChainCategories', c.protocols_categories, '12', 'number') +
+    '</div>' +
+    '<div class="exp-field-row">' +
+      expField('Official URL', 'edChainOfficial', c.official_url, 'https://base.org') +
+      expField('Docs URL', 'edChainDocs', c.docs_url, 'https://docs.base.org') +
+    '</div>' +
+    expField('Discord URL', 'edChainDiscord', c.discord_url, 'https://base.org/discord');
+
+  expModal('Edit Chain: ' + c.display_name, body, async function() {
+    let tagsArr = [];
+    const tagsRaw = expGetVal('edChainTags');
+    if (tagsRaw) tagsArr = tagsRaw.split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+
+    const { error } = await expSb()
+      .from('chains')
+      .update({
+        display_name: expGetVal('edChainName'),
+        description: expGetVal('edChainDesc'),
+        tags: tagsArr,
+        tvl: expGetVal('edChainTvl'),
+        tvl_delta: expGetVal('edChainTvlDelta'),
+        daily_users: expGetVal('edChainUsers'),
+        daily_users_delta: expGetVal('edChainUsersDelta'),
+        volume_24h: expGetVal('edChainVol'),
+        volume_24h_delta: expGetVal('edChainVolDelta'),
+        protocols_count: parseInt(expGetVal('edChainProtocols'), 10) || 0,
+        protocols_categories: parseInt(expGetVal('edChainCategories'), 10) || 0,
+        official_url: expGetVal('edChainOfficial'),
+        docs_url: expGetVal('edChainDocs'),
+        discord_url: expGetVal('edChainDiscord'),
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', c.id);
+    if (error) throw error;
+    expCloseModal();
+    expToast('✅', 'Chain updated', c.display_name + ' saved');
+    // Reload chains to refresh
+    await expLoadChains();
+    await expSelectChain(c.id);
+  }, 'Save Chain');
+};
+
+// ─── EDIT THESIS ───
+window.expEditThesis = function() {
+  if (!expIsAdmin || !expCurrentChain) return;
+  const t = expThesis || {};
+  let bullets = [];
+  try {
+    bullets = Array.isArray(t.bullets) ? t.bullets : JSON.parse(t.bullets || '[]');
+  } catch(e) { bullets = []; }
+  // Pad to 6 bullets
+  while (bullets.length < 6) bullets.push({ icon: '', text: '' });
+
+  const bulletFields = bullets.slice(0, 6).map(function(b, i) {
+    return '<div class="exp-field-row">' +
+      '<div class="exp-field" style="flex:0 0 70px;">' +
+        '<label class="exp-field-label">Icon</label>' +
+        '<input class="exp-field-input" id="edThB' + i + 'Icon" value="' + expEsc(b.icon || '') + '" placeholder="📈">' +
+      '</div>' +
+      '<div class="exp-field" style="flex:1;">' +
+        '<label class="exp-field-label">Bullet ' + (i+1) + ' (use **bold**)</label>' +
+        '<input class="exp-field-input" id="edThB' + i + 'Text" value="' + expEsc(b.text || '') + '" placeholder="**Coinbase ecosystem** expanding...">' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  const body =
+    '<div class="exp-field-row">' +
+      expField('Thesis Score (0-10)', 'edThScore', t.thesis_score != null ? t.thesis_score : '8.0', '9.2', 'number') +
+      expField('Week Number', 'edThWeek', t.week_number || '1', '47', 'number') +
+    '</div>' +
+    expSelect('Conviction Tag', 'edThConviction', t.conviction_tag || 'HIGH CONVICTION', [
+      'VERY HIGH CONVICTION', 'HIGH CONVICTION', 'MODERATE CONVICTION', 'LOW CONVICTION'
+    ]) +
+    '<div class="exp-modal-section-label">Thesis Bullets (icon + text)</div>' +
+    bulletFields;
+
+  expModal('Edit Thesis: ' + expCurrentChain.display_name, body, async function() {
+    const newBullets = [];
+    for (let i = 0; i < 6; i++) {
+      const icon = expGetVal('edThB' + i + 'Icon');
+      const text = expGetVal('edThB' + i + 'Text');
+      if (text) newBullets.push({ icon: icon || '⚡', text: text });
+    }
+    const payload = {
+      chain_id: expCurrentChain.id,
+      thesis_score: parseFloat(expGetVal('edThScore')) || 0,
+      week_number: parseInt(expGetVal('edThWeek'), 10) || 1,
+      conviction_tag: expGetVal('edThConviction'),
+      bullets: newBullets,
+      updated_at: new Date().toISOString()
+    };
+    const { error } = await expSb()
+      .from('chain_thesis')
+      .upsert(payload, { onConflict: 'chain_id' });
+    if (error) throw error;
+    expCloseModal();
+    expToast('✅', 'Thesis saved', expCurrentChain.display_name);
+    await expLoadThesis(expCurrentChain.id);
+  }, 'Save Thesis');
+};
+
+// ─── ADD/EDIT HIDDEN OPPORTUNITY ───
+window.expEditHiddenOpp = function(oppId) {
+  if (!expIsAdmin || !expCurrentChain) return;
+  const o = oppId ? expHiddenOpps.find(function(x){ return x.id === oppId; }) : {};
+  const isNew = !oppId;
+
+  const body =
+    '<div class="exp-field-row">' +
+      expField('Protocol Name', 'edHoName', o.protocol_name, 'Seamless Protocol') +
+      expField('Code (2 letters)', 'edHoCode', o.protocol_code, 'SE') +
+    '</div>' +
+    '<div class="exp-field-row">' +
+      expSelect('Color', 'edHoColor', o.protocol_color || 'cyan', ['cyan','purple','gold','pink','green','orange']) +
+      expField('Category', 'edHoCat', o.category, 'LENDING · BASE') +
+    '</div>' +
+    expTextarea('Why Early (use **bold**)', 'edHoWhy', o.why_early, 'Fork of Aave on Base...', 3) +
+    '<div class="exp-field-row">' +
+      expField('Farmers Count', 'edHoFarmers', o.farmers_count, '2.1K') +
+      expSelect('Risk Tier', 'edHoRisk', o.risk_tier || 'med', [
+        {value:'low',label:'LOW'},{value:'med',label:'MED'},{value:'high',label:'HIGH'}
+      ]) +
+    '</div>' +
+    expField('Explore URL', 'edHoUrl', o.explore_url, 'https://...') +
+    expField('Display Order', 'edHoOrder', o.display_order || '100', '100', 'number') +
+    (isNew ? '' : '<button class="exp-modal-delete" onclick="expDeleteHiddenOpp(\'' + o.id + '\')">🗑 Delete this opportunity</button>');
+
+  expModal((isNew ? 'Add' : 'Edit') + ' Hidden Opportunity', body, async function() {
+    const payload = {
+      chain_id: expCurrentChain.id,
+      protocol_name: expGetVal('edHoName'),
+      protocol_code: expGetVal('edHoCode'),
+      protocol_color: expGetVal('edHoColor'),
+      category: expGetVal('edHoCat'),
+      why_early: expGetVal('edHoWhy'),
+      farmers_count: expGetVal('edHoFarmers'),
+      risk_tier: expGetVal('edHoRisk'),
+      explore_url: expGetVal('edHoUrl'),
+      display_order: parseInt(expGetVal('edHoOrder'), 10) || 100,
+      status: 'active',
+      updated_at: new Date().toISOString()
+    };
+    if (isNew) {
+      const { error } = await expSb().from('hidden_opportunities').insert(payload);
+      if (error) throw error;
+    } else {
+      const { error } = await expSb().from('hidden_opportunities').update(payload).eq('id', o.id);
+      if (error) throw error;
+    }
+    expCloseModal();
+    expToast('✅', 'Saved', payload.protocol_name);
+    await expLoadHiddenOpps(expCurrentChain.id);
+  }, isNew ? 'Add Opportunity' : 'Save');
+};
+
+window.expDeleteHiddenOpp = async function(id) {
+  if (!confirm('Delete this hidden opportunity? This cannot be undone.')) return;
+  const { error } = await expSb().from('hidden_opportunities').delete().eq('id', id);
+  if (error) { expToast('⚠️', 'Delete failed', error.message); return; }
+  expCloseModal();
+  expToast('🗑', 'Deleted', 'Opportunity removed');
+  await expLoadHiddenOpps(expCurrentChain.id);
+};
+
+// ─── ADD/EDIT SMART MONEY EVENT ───
+window.expEditSmartMoney = function(eventId) {
+  if (!expIsAdmin || !expCurrentChain) return;
+  const e = eventId ? expSmartMoney.find(function(x){ return x.id === eventId; }) : {};
+  const isNew = !eventId;
+
+  const body =
+    '<div class="exp-field-row">' +
+      '<div class="exp-field" style="flex:0 0 70px;">' +
+        '<label class="exp-field-label">Icon</label>' +
+        '<input class="exp-field-input" id="edSmIcon" value="' + expEsc(e.icon || '🐋') + '" placeholder="🐋">' +
+      '</div>' +
+      expSelect('Icon Color', 'edSmColor', e.icon_color || 'cyan', ['cyan','purple','green','gold','orange']) +
+    '</div>' +
+    expField('Title', 'edSmTitle', e.title, 'Known farmer entered Aerodrome...') +
+    expTextarea('Description (use **bold**)', 'edSmDesc', e.description, 'Wallet 0xab12...9c4f deposited...', 3) +
+    '<div class="exp-field-row">' +
+      expField('Verification URL', 'edSmUrl', e.etherscan_url, 'https://basescan.org/tx/...') +
+      expSelect('Impact', 'edSmImpact', e.impact_tag || 'WATCH', ['BULLISH','WATCH','CAUTION']) +
+    '</div>' +
+    expField('Display Order', 'edSmOrder', e.display_order || '100', '100', 'number') +
+    (isNew ? '' : '<button class="exp-modal-delete" onclick="expDeleteSmartMoney(\'' + e.id + '\')">🗑 Delete this event</button>');
+
+  expModal((isNew ? 'Add' : 'Edit') + ' Smart Money Event', body, async function() {
+    const payload = {
+      chain_id: expCurrentChain.id,
+      icon: expGetVal('edSmIcon') || '🐋',
+      icon_color: expGetVal('edSmColor'),
+      title: expGetVal('edSmTitle'),
+      description: expGetVal('edSmDesc'),
+      etherscan_url: expGetVal('edSmUrl'),
+      impact_tag: expGetVal('edSmImpact'),
+      display_order: parseInt(expGetVal('edSmOrder'), 10) || 100,
+      status: 'active',
+      updated_at: new Date().toISOString()
+    };
+    if (isNew) {
+      const { error } = await expSb().from('smart_money_events').insert(payload);
+      if (error) throw error;
+    } else {
+      const { error } = await expSb().from('smart_money_events').update(payload).eq('id', e.id);
+      if (error) throw error;
+    }
+    expCloseModal();
+    expToast('✅', 'Saved', payload.title.slice(0, 30));
+    await expLoadSmartMoney(expCurrentChain.id);
+  }, isNew ? 'Add Event' : 'Save');
+};
+
+window.expDeleteSmartMoney = async function(id) {
+  if (!confirm('Delete this smart money event? This cannot be undone.')) return;
+  const { error } = await expSb().from('smart_money_events').delete().eq('id', id);
+  if (error) { expToast('⚠️', 'Delete failed', error.message); return; }
+  expCloseModal();
+  expToast('🗑', 'Deleted', 'Event removed');
+  await expLoadSmartMoney(expCurrentChain.id);
+};
+
 // ─── INIT ───
 document.addEventListener('DOMContentLoaded', function() {
   setTimeout(function() {
-    try { expLoadChains(); } catch (e) { console.error('[exp init]', e); }
+    try {
+      expCheckAdmin();
+      expLoadChains();
+    } catch (e) { console.error('[exp init]', e); }
   }, 800);
 });
 
@@ -33587,7 +34275,82 @@ function profileSwitchTab(tab, el) {
       }
     });
   }
+  if (tab === 'apikeys') { try { apikeyLoad(); } catch(e) { console.error('[apikeyLoad]', e); } }
 }
+
+/* ── API KEYS (Phase 7B) ── */
+function _apikeySb() {
+  if (window.API && typeof window.API._supa === 'function') return window.API._supa();
+  return null;
+}
+
+async function apikeyLoad() {
+  const sb = _apikeySb();
+  const statusEl = document.getElementById('apikeyStatus');
+  if (!sb) { if (statusEl) statusEl.textContent = 'Supabase not connected'; return; }
+  try {
+    const user = await window.API.getUser();
+    if (!user || !user.id) { if (statusEl) statusEl.textContent = 'Sign in to manage keys'; return; }
+    const { data, error } = await sb
+      .from('user_api_keys')
+      .select('*')
+      .eq('user_id', user.id)
+      .maybeSingle();
+    if (error) { console.error('[apikeyLoad]', error); if (statusEl) statusEl.textContent = 'Run CHUNK-10 migration'; return; }
+    const a = document.getElementById('apikeyAlchemy');
+    const m = document.getElementById('apikeyMoralis');
+    if (data) {
+      if (a) a.value = data.alchemy_key || '';
+      if (m) m.value = data.moralis_key || '';
+      const hasKeys = (data.alchemy_key || data.moralis_key);
+      if (statusEl) statusEl.textContent = hasKeys ? '✓ Connected' : 'Not connected';
+      if (statusEl) statusEl.style.color = hasKeys ? '#00e87a' : '#7a849a';
+    } else {
+      if (statusEl) statusEl.textContent = 'Not connected';
+    }
+  } catch (e) {
+    console.error('[apikeyLoad]', e);
+    if (statusEl) statusEl.textContent = 'Error loading';
+  }
+}
+
+async function apikeySave() {
+  const sb = _apikeySb();
+  if (!sb) { profileShowToast('Supabase not connected', '⚠️'); return; }
+  try {
+    const user = await window.API.getUser();
+    if (!user || !user.id) { profileShowToast('Please sign in first', '⚠️'); return; }
+    const alchemy = (document.getElementById('apikeyAlchemy') || {}).value || '';
+    const moralis = (document.getElementById('apikeyMoralis') || {}).value || '';
+    const { error } = await sb
+      .from('user_api_keys')
+      .upsert({
+        user_id: user.id,
+        alchemy_key: alchemy.trim(),
+        moralis_key: moralis.trim(),
+        updated_at: new Date().toISOString()
+      }, { onConflict: 'user_id' });
+    if (error) { console.error('[apikeySave]', error); profileShowToast('Save failed: ' + error.message, '⚠️'); return; }
+    profileShowToast('API keys saved securely!', '🔑');
+    const statusEl = document.getElementById('apikeyStatus');
+    const hasKeys = (alchemy.trim() || moralis.trim());
+    if (statusEl) { statusEl.textContent = hasKeys ? '✓ Connected' : 'Not connected'; statusEl.style.color = hasKeys ? '#00e87a' : '#7a849a'; }
+  } catch (e) {
+    console.error('[apikeySave]', e);
+    profileShowToast('Error saving keys', '⚠️');
+  }
+}
+
+function apikeyToggleVisibility() {
+  ['apikeyAlchemy', 'apikeyMoralis'].forEach(function(id) {
+    const el = document.getElementById(id);
+    if (el) el.type = el.type === 'password' ? 'text' : 'password';
+  });
+}
+
+window.apikeyLoad = apikeyLoad;
+window.apikeySave = apikeySave;
+window.apikeyToggleVisibility = apikeyToggleVisibility;
 
 Object.assign(window, {
   profileSwitchTab, profileShowToast, profileSaveChanges,
