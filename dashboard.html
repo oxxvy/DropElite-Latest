@@ -30640,6 +30640,15 @@ let expUserProgress      = null;
 // Defensive get
 function exp(id) { return document.getElementById(id); }
 
+// Supabase client access — API exposes raw client via window.API._supa()
+function expSb() {
+  if (window.API && typeof window.API._supa === 'function') return window.API._supa();
+  return null;
+}
+function expHasSb() {
+  return !!(window.API && typeof window.API._supa === 'function' && window.API._supa());
+}
+
 // HTML escape
 function expEsc(str) {
   if (str == null) return '';
@@ -30691,8 +30700,8 @@ async function expLoadChains() {
     let chains = [];
     if (window.API.getExplorerChains) {
       chains = await window.API.getExplorerChains();
-    } else if (window.API.supabase) {
-      const { data, error } = await window.API.supabase
+    } else if (expSb()) {
+      const { data, error } = await expSb()
         .from('chains')
         .select('*')
         .eq('status', 'active')
@@ -30813,9 +30822,9 @@ function expRenderHero() {
 
 // ─── THESIS ───
 async function expLoadThesis(chainId) {
-  if (!window.API || !window.API.supabase) return;
+  if (!expHasSb()) return;
   try {
-    const { data, error } = await window.API.supabase
+    const { data, error } = await expSb()
       .from('chain_thesis')
       .select('*')
       .eq('chain_id', chainId)
@@ -30878,9 +30887,9 @@ function expRenderThesis() {
 
 // ─── HIDDEN OPPS ───
 async function expLoadHiddenOpps(chainId) {
-  if (!window.API || !window.API.supabase) return;
+  if (!expHasSb()) return;
   try {
-    const { data, error } = await window.API.supabase
+    const { data, error } = await expSb()
       .from('hidden_opportunities')
       .select('*')
       .eq('chain_id', chainId)
@@ -30931,9 +30940,9 @@ function expRenderHiddenOpps() {
 
 // ─── SMART MONEY ───
 async function expLoadSmartMoney(chainId) {
-  if (!window.API || !window.API.supabase) return;
+  if (!expHasSb()) return;
   try {
-    const { data, error } = await window.API.supabase
+    const { data, error } = await expSb()
       .from('smart_money_events')
       .select('*')
       .eq('chain_id', chainId)
@@ -30982,9 +30991,9 @@ function expRenderSmartMoney() {
 
 // ─── PROTOCOLS ───
 async function expLoadProtocols(chainId) {
-  if (!window.API || !window.API.supabase) return;
+  if (!expHasSb()) return;
   try {
-    const { data, error } = await window.API.supabase
+    const { data, error } = await expSb()
       .from('chain_protocols')
       .select('*')
       .eq('chain_id', chainId)
@@ -31041,9 +31050,9 @@ window.expOpenProtocol = function(url) {
 
 // ─── PLAYBOOK ───
 async function expLoadPlaybook(chainId) {
-  if (!window.API || !window.API.supabase) return;
+  if (!expHasSb()) return;
   try {
-    const { data, error } = await window.API.supabase
+    const { data, error } = await expSb()
       .from('chain_playbook')
       .select('*')
       .eq('chain_id', chainId)
@@ -31062,14 +31071,14 @@ async function expLoadPlaybook(chainId) {
 }
 
 async function expLoadUserProgress(chainId) {
-  if (!window.API || !window.API.supabase) return;
+  if (!expHasSb()) return;
   try {
-    const user = window.API.user || (window.API.getUser && window.API.getUser());
+    const user = await window.API.getUser();
     if (!user || !user.id) {
       expUserProgress = { playbook_completed: [], checklist_completed: [] };
       return;
     }
-    const { data, error } = await window.API.supabase
+    const { data, error } = await expSb()
       .from('user_chain_progress')
       .select('*')
       .eq('user_id', user.id)
@@ -31149,8 +31158,8 @@ function expRenderPlaybook() {
 }
 
 window.expTogglePlaybookStep = async function(stepId) {
-  if (!window.API || !window.API.supabase) return;
-  const user = window.API.user || (window.API.getUser && window.API.getUser());
+  if (!expHasSb()) return;
+  const user = await window.API.getUser();
   if (!user || !user.id) {
     expToast('⚠️', 'Sign in', 'Please sign in to track progress');
     return;
@@ -31167,7 +31176,7 @@ window.expTogglePlaybookStep = async function(stepId) {
 
   // Save to DB (upsert)
   try {
-    const { error } = await window.API.supabase
+    const { error } = await expSb()
       .from('user_chain_progress')
       .upsert({
         user_id: user.id,
@@ -31190,9 +31199,9 @@ window.expTogglePlaybookStep = async function(stepId) {
 
 // ─── CHECKLIST ───
 async function expLoadChecklist(chainId) {
-  if (!window.API || !window.API.supabase) return;
+  if (!expHasSb()) return;
   try {
-    const { data, error } = await window.API.supabase
+    const { data, error } = await expSb()
       .from('chain_checklist')
       .select('*')
       .eq('chain_id', chainId)
@@ -31259,8 +31268,8 @@ function expRenderChecklist() {
 }
 
 window.expToggleChecklistItem = async function(itemId) {
-  if (!window.API || !window.API.supabase) return;
-  const user = window.API.user || (window.API.getUser && window.API.getUser());
+  if (!expHasSb()) return;
+  const user = await window.API.getUser();
   if (!user || !user.id) {
     expToast('⚠️', 'Sign in', 'Please sign in to track progress');
     return;
@@ -31276,7 +31285,7 @@ window.expToggleChecklistItem = async function(itemId) {
   }
 
   try {
-    const { error } = await window.API.supabase
+    const { error } = await expSb()
       .from('user_chain_progress')
       .upsert({
         user_id: user.id,
