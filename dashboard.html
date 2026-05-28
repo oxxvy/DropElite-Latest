@@ -12122,1584 +12122,1270 @@ canvas.mini-chart { width: 100% !important; }
 /* END v3.3 WALLETS REDESIGN */
 
 /* END WALLETS TAB STYLES */
-/* START FARMING ROUTES TAB STYLES */
-.farming-routes-view.tab-panel.active { display: block; }
+/* START EXPLORER TAB STYLES */
+/* ═══════════════════════════════════════════════════════════════════════════
+   v3.4 — EXPLORER TAB (Chunk 9)
+   Per-chain intelligence center — replaces Farming Routes
+   All scoped to .explorer-view .exp-* — no leaks
+   ─────────────────────────────────────────────────────────────────────────── */
 
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap');
-
-:root {
-  --gold: #f5c518;
-  --gold-dim: #c9a010;
-  --gold-glow: rgba(245,197,24,0.18);
-  --gold-glow-strong: rgba(245,197,24,0.35);
-  --cyan: #00e5ff;
-  --cyan-dim: rgba(0,229,255,0.12);
-  --red: #ff3b5c;
-  --green: #00ff88;
-  --purple: #9d4edd;
-  --bg-deep: #02030a;
-  --bg-card: rgba(8,12,28,0.82);
-  --bg-card2: rgba(12,18,38,0.75);
-  --border: rgba(245,197,24,0.18);
-  --border-bright: rgba(245,197,24,0.5);
-  --text: #e8eaf0;
-  --text-dim: #8a90a8;
-  --text-muted: #4a5068;
-  --mono: 'Share Tech Mono', monospace;
-  --display: 'Orbitron', sans-serif;
-  --body: 'Rajdhani', sans-serif;
+/* CRITICAL: Neutralize legacy .farming-routes-view-style overlays
+   from the removed Farming Routes tab. Same lesson from Chunk 8. */
+.explorer-view {
+  background: transparent !important;
+  min-height: auto !important;
+  overflow-x: visible !important;
+  padding: 0 !important;
+}
+.explorer-view::before { display: none !important; }
+.explorer-view #grid-bg { display: none !important; }
+.explorer-view .page-wrap {
+  position: static !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-.farming-routes-view *, .farming-routes-view *::before, .farming-routes-view *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-.farming-routes-view { scroll-behavior: smooth; }
-
-.farming-routes-view {
-  background: var(--bg-deep);
-  color: var(--text);
-  font-family: var(--body);
-  font-size: 15px;
-  min-height: 100vh;
-  overflow-x: hidden;
-  position: relative;
-}
-
-/* ─── ANIMATED GRID BACKGROUND ─────────────────────── */
-.farming-routes-view::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(245,197,24,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245,197,24,0.03) 1px, transparent 1px);
-  background-size: 48px 48px;
-  animation: routes-gridPulse 8s ease-in-out infinite;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.farming-routes-view::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 60% 40% at 20% 10%, rgba(245,197,24,0.07) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 50% at 80% 80%, rgba(0,229,255,0.04) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 60% at 50% 50%, rgba(2,3,10,0.6) 0%, transparent 100%);
-  z-index: 0;
-  pointer-events: none;
-}
-
-@keyframes routes-gridPulse {
-  0%,100% { opacity: 0.8; }
-  50% { opacity: 1.2; }
-}
-
-/* ─── LAYOUT ────────────────────────────────────────── */
-.farming-routes-view .page-wrap {
+.explorer-view .exp-page {
   position: relative;
   z-index: 1;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 32px 80px;
+
+  --exp-gold:        #f5c842;
+  --exp-gold-bright: #ffe066;
+  --exp-gold-dim:    #a8862a;
+  --exp-gold-soft:   rgba(245,200,66,0.08);
+  --exp-gold-glow:   rgba(245,200,66,0.25);
+  --exp-cyan:        #4af0ff;
+  --exp-cyan-soft:   rgba(74,240,255,0.08);
+  --exp-cyan-glow:   rgba(74,240,255,0.25);
+  --exp-purple:      #b070ff;
+  --exp-purple-soft: rgba(176,112,255,0.08);
+  --exp-purple-glow: rgba(176,112,255,0.25);
+  --exp-pink:        #ff5e8a;
+  --exp-pink-soft:   rgba(255,94,138,0.08);
+  --exp-orange:      #ff9046;
+  --exp-orange-soft: rgba(255,144,70,0.08);
+  --exp-green:       #00e87a;
+  --exp-green-soft:  rgba(0,232,122,0.08);
+  --exp-green-glow:  rgba(0,232,122,0.25);
+  --exp-red:         #ff4757;
+  --exp-red-soft:    rgba(255,71,87,0.08);
+  --exp-text:        #e8eaf0;
+  --exp-text-dim:    #7a849a;
+  --exp-text-muted:  #4d556b;
+  --exp-bg-card:     rgba(255,255,255,0.025);
+  --exp-bg-card-hi:  rgba(255,255,255,0.04);
+  --exp-bg-card-dk:  rgba(0,0,0,0.25);
+  --exp-border:      rgba(255,255,255,0.06);
+  --exp-border-br:   rgba(245,200,66,0.25);
+
+  font-family: 'Rajdhani', sans-serif;
+  color: var(--exp-text);
+  padding: 4px;
 }
+.explorer-view .exp-page * { box-sizing: border-box; }
 
-/* ─── TOPBAR ────────────────────────────────────────── */
-.farming-routes-view .topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 0 14px;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 0;
-}
-
-.farming-routes-view .topbar-logo {
-  font-family: var(--display);
-  font-size: 18px;
-  font-weight: 900;
-  letter-spacing: 3px;
-  color: var(--gold);
-  text-shadow: 0 0 18px var(--gold-glow-strong);
-}
-
-.farming-routes-view .topbar-logo span { color: var(--text-dim); font-weight: 400; }
-
-.farming-routes-view .topbar-nav {
-  display: flex;
-  gap: 4px;
-}
-
-.farming-routes-view .nav-tab {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 1.5px;
-  padding: 6px 16px;
-  background: transparent;
-  border: 1px solid transparent;
-  color: var(--text-dim);
-  cursor: pointer;
-  text-transform: uppercase;
-  transition: all 0.2s;
-  border-radius: 2px;
-}
-
-.farming-routes-view .nav-tab.active {
-  background: rgba(245,197,24,0.1);
-  border-color: var(--border-bright);
-  color: var(--gold);
-  box-shadow: 0 0 14px rgba(245,197,24,0.12);
-}
-
-.farming-routes-view .nav-tab:hover:not(.active) {
-  color: var(--text);
-  border-color: var(--border);
-}
-
-.farming-routes-view .topbar-user {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--text-dim);
-}
-
-.farming-routes-view .rank-badge {
-  padding: 4px 10px;
-  background: linear-gradient(135deg, rgba(245,197,24,0.18), rgba(245,197,24,0.06));
-  border: 1px solid var(--border-bright);
-  border-radius: 2px;
-  color: var(--gold);
-  font-size: 10px;
-  letter-spacing: 2px;
-  text-shadow: 0 0 8px rgba(245,197,24,0.5);
-}
-
-/* ─── HERO SECTION ──────────────────────────────────── */
-.farming-routes-view .hero {
-  padding: 48px 0 36px;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 40px;
-}
-
-.farming-routes-view .hero-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 32px;
-  margin-bottom: 36px;
-}
-
-.farming-routes-view .hero-title-block {}
-
-.farming-routes-view .hero-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 4px;
-  color: var(--gold);
-  text-transform: uppercase;
-  margin-bottom: 10px;
-  opacity: 0.8;
-}
-
-.farming-routes-view .hero-label::before {
-  content: '▶ ';
-  font-size: 8px;
-}
-
-.farming-routes-view .hero-title {
-  font-family: var(--display);
-  font-size: clamp(28px, 3.5vw, 48px);
-  font-weight: 900;
-  letter-spacing: 4px;
-  line-height: 1.05;
-  color: var(--text);
-  text-shadow: 0 0 40px rgba(245,197,24,0.1);
-}
-
-.farming-routes-view .hero-title em {
-  color: var(--gold);
-  font-style: normal;
-  text-shadow: 0 0 30px var(--gold-glow-strong);
-}
-
-.farming-routes-view .hero-subtitle {
-  font-family: var(--mono);
+/* No-data state */
+.explorer-view .exp-no-data {
+  padding: 14px;
+  text-align: center;
+  color: var(--exp-text-dim);
   font-size: 12px;
-  color: var(--text-dim);
-  letter-spacing: 1.5px;
-  margin-top: 14px;
-  line-height: 1.6;
+  font-style: italic;
 }
 
-.farming-routes-view .hero-actions {
+/* Page header */
+.explorer-view .exp-page-head { margin-bottom: 18px; }
+.explorer-view .exp-bc {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--exp-cyan);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.explorer-view .exp-bc-sep { color: var(--exp-gold); }
+.explorer-view .exp-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--exp-text);
+  line-height: 1;
+  margin: 0 0 6px 0;
+  letter-spacing: 0.5px;
+}
+.explorer-view .exp-title span {
+  color: var(--exp-gold);
+  text-shadow: 0 0 18px var(--exp-gold-glow);
+}
+.explorer-view .exp-sub {
+  font-size: 13.5px;
+  color: var(--exp-text-dim);
+  margin: 0;
+}
+
+/* Chain Picker Bar */
+.explorer-view .exp-chain-bar {
+  background: var(--exp-bg-card);
+  border: 1px solid var(--exp-border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
   display: flex;
+  align-items: center;
   gap: 10px;
   flex-wrap: wrap;
-  align-items: flex-start;
-  padding-top: 8px;
 }
-
-/* ─── BUTTONS ───────────────────────────────────────── */
-.farming-routes-view .btn {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  padding: 11px 22px;
-  border: 1px solid;
+.explorer-view .exp-chain-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10.5px;
+  color: var(--exp-text-dim);
+  letter-spacing: 1.5px;
+  margin-right: 4px;
+  font-weight: 700;
+}
+.explorer-view .exp-chain-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  flex: 1;
+}
+.explorer-view .exp-chain-pill {
+  background: var(--exp-bg-card-dk);
+  border: 1px solid var(--exp-border);
+  color: var(--exp-text);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.6px;
+  padding: 8px 14px;
+  border-radius: 8px;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.25s;
-  border-radius: 2px;
-  white-space: nowrap;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 700;
 }
-
-.farming-routes-view .btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
-  transform: translateX(-100%);
-  transition: transform 0.4s;
-}
-
-.farming-routes-view .btn:hover::before { transform: translateX(100%); }
-
-.farming-routes-view .btn-primary {
-  background: linear-gradient(135deg, rgba(245,197,24,0.2), rgba(245,197,24,0.08));
-  border-color: var(--gold);
-  color: var(--gold);
-  box-shadow: 0 0 20px rgba(245,197,24,0.15), inset 0 1px 0 rgba(245,197,24,0.2);
-}
-
-.farming-routes-view .btn-primary:hover {
-  background: linear-gradient(135deg, rgba(245,197,24,0.35), rgba(245,197,24,0.15));
-  box-shadow: 0 0 35px rgba(245,197,24,0.3), inset 0 1px 0 rgba(245,197,24,0.3);
+.explorer-view .exp-chain-pill:hover {
+  border-color: var(--exp-border-br);
   transform: translateY(-1px);
 }
-
-.farming-routes-view .btn-secondary {
-  background: rgba(255,255,255,0.03);
-  border-color: rgba(255,255,255,0.12);
-  color: var(--text-dim);
+.explorer-view .exp-chain-pill.active {
+  background: linear-gradient(135deg, var(--exp-gold-dim), var(--exp-gold));
+  color: #0a0e1a;
+  border-color: var(--exp-gold);
+  box-shadow: 0 0 14px var(--exp-gold-glow);
+}
+.explorer-view .exp-chain-pill .exp-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--exp-green);
+  box-shadow: 0 0 6px var(--exp-green-glow);
 }
 
-.farming-routes-view .btn-secondary:hover {
-  border-color: rgba(255,255,255,0.25);
-  color: var(--text);
-  background: rgba(255,255,255,0.06);
-}
-
-.farming-routes-view .btn-cyan {
-  background: rgba(0,229,255,0.06);
-  border-color: rgba(0,229,255,0.4);
-  color: var(--cyan);
-}
-
-.farming-routes-view .btn-cyan:hover {
-  background: rgba(0,229,255,0.14);
-  box-shadow: 0 0 20px rgba(0,229,255,0.18);
-}
-
-.farming-routes-view .btn-sm {
-  padding: 7px 14px;
-  font-size: 10px;
-}
-
-.farming-routes-view .btn-xs {
-  padding: 5px 10px;
-  font-size: 9px;
-  letter-spacing: 1.5px;
-}
-
-/* ─── HERO STATS ────────────────────────────────────── */
-.farming-routes-view .hero-stats {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
-}
-
-.farming-routes-view .stat-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 18px 20px;
+/* Chain Hero */
+.explorer-view .exp-chain-hero {
+  background: linear-gradient(135deg,
+    rgba(0,82,255,0.16) 0%,
+    rgba(74,240,255,0.08) 50%,
+    rgba(176,112,255,0.06) 100%);
+  border: 1px solid var(--exp-cyan);
+  border-radius: 14px;
+  padding: 22px 26px;
+  margin-bottom: 20px;
   position: relative;
   overflow: hidden;
-  transition: border-color 0.3s;
 }
-
-.farming-routes-view .stat-card::before {
+.explorer-view .exp-chain-hero::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: 0.5;
+  top: -50%;
+  right: -10%;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(74,240,255,0.18), transparent 70%);
+  pointer-events: none;
 }
-
-.farming-routes-view .stat-card:hover { border-color: var(--border-bright); }
-
-.farming-routes-view .stat-label {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 8px;
-}
-
-.farming-routes-view .stat-value {
-  font-family: var(--display);
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--gold);
-  text-shadow: 0 0 20px rgba(245,197,24,0.4);
-  letter-spacing: 1px;
-  line-height: 1;
-}
-
-.farming-routes-view .stat-value.green { color: var(--green); text-shadow: 0 0 20px rgba(0,255,136,0.3); }
-.farming-routes-view .stat-value.cyan { color: var(--cyan); text-shadow: 0 0 20px rgba(0,229,255,0.3); }
-
-.farming-routes-view .stat-sub {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text-muted);
-  margin-top: 5px;
-  letter-spacing: 0.5px;
-}
-
-.farming-routes-view .stat-pulse {
-  display: inline-block;
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--green);
-  margin-right: 5px;
-  animation: routes-pulse 2s ease-in-out infinite;
-  box-shadow: 0 0 8px rgba(0,255,136,0.6);
-}
-
-@keyframes routes-pulse {
-  0%,100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.7); }
-}
-
-/* ─── SECTION TITLES ────────────────────────────────── */
-.farming-routes-view .section-head {
+.explorer-view .exp-hero-top {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
   gap: 16px;
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 1;
+}
+.explorer-view .exp-chain-logo-big {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, #0052ff, #4af0ff);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: white;
+  box-shadow: 0 8px 24px rgba(0,82,255,0.4);
+  flex-shrink: 0;
+}
+.explorer-view .exp-chain-title-block { flex: 1; min-width: 0; }
+.explorer-view .exp-chain-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--exp-text);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+.explorer-view .exp-chain-desc {
+  font-size: 13px;
+  color: var(--exp-text-dim);
+  line-height: 1.5;
+}
+.explorer-view .exp-chain-tags {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.explorer-view .exp-chain-tag {
+  background: rgba(0,0,0,0.3);
+  padding: 3px 9px;
+  border-radius: 12px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.8px;
+  color: var(--exp-cyan);
+  font-weight: 700;
+}
+.explorer-view .exp-chain-hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+.explorer-view .exp-external-btn {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--exp-border);
+  color: var(--exp-text);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.explorer-view .exp-external-btn:hover {
+  border-color: var(--exp-cyan);
+  color: var(--exp-cyan);
 }
 
-.farming-routes-view .section-title {
-  font-family: var(--display);
-  font-size: 13px;
-  letter-spacing: 4px;
+.explorer-view .exp-chain-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+.explorer-view .exp-cstat {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--exp-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.explorer-view .exp-cstat-lbl {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--exp-text-dim);
+  letter-spacing: 1px;
+  margin-bottom: 4px;
   font-weight: 700;
-  color: var(--text);
-  text-transform: uppercase;
+}
+.explorer-view .exp-cstat-val {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--exp-text);
+  line-height: 1;
+  margin-bottom: 2px;
+}
+.explorer-view .exp-cstat-val.cyan { color: var(--exp-cyan); }
+.explorer-view .exp-cstat-val.green { color: var(--exp-green); }
+.explorer-view .exp-cstat-val.purple { color: var(--exp-purple); }
+.explorer-view .exp-cstat-val.gold { color: var(--exp-gold); }
+.explorer-view .exp-cstat-delta {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  color: var(--exp-green);
+}
+.explorer-view .exp-cstat-delta.red { color: var(--exp-red); }
+.explorer-view .exp-cstat-delta.dim { color: var(--exp-text-muted); }
+
+/* THESIS CARD ⭐ */
+.explorer-view .exp-thesis-card {
+  background: linear-gradient(135deg,
+    rgba(0,232,122,0.08) 0%,
+    rgba(245,200,66,0.06) 100%);
+  border: 1px solid var(--exp-gold);
+  border-radius: 14px;
+  padding: 22px 26px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.explorer-view .exp-thesis-card::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  left: -10%;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(245,200,66,0.15), transparent 70%);
+  pointer-events: none;
+}
+.explorer-view .exp-thesis-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 1;
+  gap: 16px;
+}
+.explorer-view .exp-thesis-title-block { flex: 1; min-width: 0; }
+.explorer-view .exp-thesis-eyebrow {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10.5px;
+  color: var(--exp-gold);
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+.explorer-view .exp-thesis-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--exp-text);
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+.explorer-view .exp-thesis-title span {
+  color: var(--exp-gold);
+  text-shadow: 0 0 14px var(--exp-gold-glow);
+}
+.explorer-view .exp-thesis-meta {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--exp-text-dim);
+  letter-spacing: 0.8px;
+}
+.explorer-view .exp-thesis-score-block {
+  text-align: center;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid var(--exp-gold);
+  border-radius: 12px;
+  padding: 14px 22px;
+  box-shadow: 0 0 16px var(--exp-gold-glow);
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+.explorer-view .exp-thesis-score-lbl {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  color: var(--exp-gold);
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+.explorer-view .exp-thesis-score-num {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--exp-gold);
+  text-shadow: 0 0 16px var(--exp-gold-glow);
+  line-height: 1;
+}
+.explorer-view .exp-thesis-score-max {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  color: var(--exp-text-muted);
+  font-weight: 500;
+}
+.explorer-view .exp-thesis-score-tag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--exp-green);
+  letter-spacing: 1px;
+  margin-top: 4px;
+  font-weight: 700;
+}
+.explorer-view .exp-thesis-bullets {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+.explorer-view .exp-thesis-bullet {
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(245,200,66,0.15);
+  border-radius: 8px;
+  padding: 12px 14px;
   display: flex;
   align-items: center;
   gap: 12px;
-}
-
-.farming-routes-view .section-title::before {
-  content: '';
-  display: block;
-  width: 3px;
-  height: 18px;
-  background: var(--gold);
-  box-shadow: 0 0 10px var(--gold-glow-strong);
-  border-radius: 1px;
-}
-
-.farming-routes-view .section-tag {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 2px;
-  padding: 3px 8px;
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  border-radius: 2px;
-}
-
-/* ─── AI PANEL ──────────────────────────────────────── */
-.farming-routes-view .ai-panel {
-  background: linear-gradient(135deg, rgba(8,12,28,0.95), rgba(12,8,28,0.95));
-  border: 1px solid rgba(157,78,221,0.35);
-  border-radius: 6px;
-  padding: 28px 32px;
-  margin-bottom: 40px;
-  position: relative;
-  overflow: hidden;
-}
-
-.farming-routes-view .ai-panel::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--purple), transparent);
-}
-
-.farming-routes-view .ai-panel::after {
-  content: 'AI';
-  position: absolute;
-  top: 18px; right: 24px;
-  font-family: var(--display);
-  font-size: 48px;
-  font-weight: 900;
-  color: rgba(157,78,221,0.06);
-  letter-spacing: 4px;
-}
-
-.farming-routes-view .ai-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 22px;
-}
-
-.farming-routes-view .ai-icon {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(157,78,221,0.3), rgba(157,78,221,0.05));
-  border: 1px solid rgba(157,78,221,0.5);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px;
-  animation: routes-aiGlow 3s ease-in-out infinite;
-  flex-shrink: 0;
-}
-
-@keyframes routes-aiGlow {
-  0%,100% { box-shadow: 0 0 12px rgba(157,78,221,0.3); }
-  50% { box-shadow: 0 0 28px rgba(157,78,221,0.6); }
-}
-
-.farming-routes-view .ai-title {
-  font-family: var(--display);
-  font-size: 12px;
-  letter-spacing: 3px;
-  color: var(--purple);
-}
-
-.farming-routes-view .ai-subtitle {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text-muted);
-  letter-spacing: 1px;
-  margin-top: 2px;
-}
-
-.farming-routes-view .ai-recommendations {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-}
-
-.farming-routes-view .ai-rec-card {
-  background: rgba(157,78,221,0.06);
-  border: 1px solid rgba(157,78,221,0.2);
-  border-radius: 4px;
-  padding: 16px 18px;
-  cursor: pointer;
-  transition: all 0.25s;
-  position: relative;
-}
-
-.farming-routes-view .ai-rec-card:hover {
-  border-color: rgba(157,78,221,0.5);
-  background: rgba(157,78,221,0.12);
-  transform: translateY(-2px);
-}
-
-.farming-routes-view .ai-rec-tag {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 2px;
-  color: var(--purple);
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-
-.farming-routes-view .ai-rec-text {
-  font-family: var(--body);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text);
-  line-height: 1.4;
-  margin-bottom: 8px;
-}
-
-.farming-routes-view .ai-rec-meta {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text-muted);
-}
-
-.farming-routes-view .ai-rec-value {
-  position: absolute;
-  top: 14px; right: 14px;
-  font-family: var(--display);
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--green);
-  text-shadow: 0 0 10px rgba(0,255,136,0.4);
-}
-
-/* ─── FILTERS ───────────────────────────────────────── */
-.farming-routes-view .filter-bar {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 20px 24px;
-  margin-bottom: 28px;
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.farming-routes-view .filter-search {
-  position: relative;
-  flex: 1;
-  min-width: 220px;
-}
-
-.farming-routes-view .filter-search input {
-  width: 100%;
-  background: rgba(0,0,0,0.3);
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  padding: 10px 14px 10px 36px;
-  color: var(--text);
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 1px;
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.farming-routes-view .filter-search input:focus { border-color: var(--gold); }
-.farming-routes-view .filter-search input::placeholder { color: var(--text-muted); }
-
-.farming-routes-view .filter-search-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-muted);
-  font-size: 13px;
-}
-
-.farming-routes-view .filter-group {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.farming-routes-view .filter-chip {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  padding: 6px 12px;
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  cursor: pointer;
-  border-radius: 2px;
   transition: all 0.2s;
-  text-transform: uppercase;
 }
-
-.farming-routes-view .filter-chip.active, .farming-routes-view .filter-chip:hover {
-  border-color: var(--gold);
-  color: var(--gold);
-  background: rgba(245,197,24,0.08);
+.explorer-view .exp-thesis-bullet:hover {
+  border-color: var(--exp-gold);
+  transform: translateY(-1px);
 }
-
-.farming-routes-view .filter-select {
-  background: rgba(0,0,0,0.3);
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  padding: 9px 12px;
-  color: var(--text-dim);
-  font-family: var(--mono);
-  font-size: 11px;
-  outline: none;
-  cursor: pointer;
-  letter-spacing: 1px;
-}
-
-/* ─── FEATURED ROUTES ───────────────────────────────── */
-.farming-routes-view .featured-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-bottom: 44px;
-}
-
-.farming-routes-view .route-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 24px;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.farming-routes-view .route-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: 0.4;
-  transition: opacity 0.3s;
-}
-
-.farming-routes-view .route-card:hover {
-  border-color: var(--border-bright);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 30px var(--gold-glow);
-}
-
-.farming-routes-view .route-card:hover::before { opacity: 1; }
-
-.farming-routes-view .route-card.featured {
-  border-color: rgba(245,197,24,0.3);
-  box-shadow: 0 0 30px var(--gold-glow), inset 0 0 30px rgba(245,197,24,0.02);
-}
-
-.farming-routes-view .route-card.featured-top {
-  grid-column: span 2;
-  background: linear-gradient(135deg, rgba(12,18,38,0.95), rgba(8,12,28,0.95));
-}
-
-.farming-routes-view .route-card-badge {
-  position: absolute;
-  top: 16px; right: 16px;
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 2px;
-  padding: 4px 10px;
-  border-radius: 2px;
-  text-transform: uppercase;
-}
-
-.farming-routes-view .badge-hot { background: rgba(255,59,92,0.15); border: 1px solid rgba(255,59,92,0.4); color: var(--red); }
-.farming-routes-view .badge-new { background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.3); color: var(--cyan); }
-.farming-routes-view .badge-elite { background: rgba(245,197,24,0.12); border: 1px solid var(--border-bright); color: var(--gold); }
-.farming-routes-view .badge-trending { background: rgba(0,255,136,0.1); border: 1px solid rgba(0,255,136,0.3); color: var(--green); }
-
-.farming-routes-view .route-chain-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-
-.farming-routes-view .chain-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.farming-routes-view .chain-dot.base { background: #2151f5; box-shadow: 0 0 6px rgba(33,81,245,0.6); }
-.farming-routes-view .chain-dot.zksync { background: #6e4aff; box-shadow: 0 0 6px rgba(110,74,255,0.6); }
-.farming-routes-view .chain-dot.arb { background: #28a0f0; box-shadow: 0 0 6px rgba(40,160,240,0.6); }
-.farming-routes-view .chain-dot.sol { background: #9945ff; box-shadow: 0 0 6px rgba(153,69,255,0.6); }
-.farming-routes-view .chain-dot.hyper { background: #00ff88; box-shadow: 0 0 6px rgba(0,255,136,0.6); }
-.farming-routes-view .chain-dot.lz { background: var(--gold); box-shadow: 0 0 6px var(--gold-glow-strong); }
-
-.farming-routes-view .route-name {
-  font-family: var(--display);
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--text);
-  letter-spacing: 1.5px;
-  margin-bottom: 6px;
-  line-height: 1.3;
-}
-
-.farming-routes-view .route-desc {
-  font-size: 12px;
-  color: var(--text-dim);
-  line-height: 1.5;
-  margin-bottom: 18px;
-  font-family: var(--body);
-}
-
-.farming-routes-view .route-meta-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 18px;
-}
-
-.farming-routes-view .route-meta-item { }
-
-.farming-routes-view .route-meta-label {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 2px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-
-.farming-routes-view .route-meta-value {
-  font-family: var(--display);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.farming-routes-view .route-meta-value.gold { color: var(--gold); }
-.farming-routes-view .route-meta-value.green { color: var(--green); }
-.farming-routes-view .route-meta-value.cyan { color: var(--cyan); }
-
-.farming-routes-view .route-footer {
+.explorer-view .exp-thesis-bullet-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--exp-gold-soft);
+  border: 1px solid var(--exp-gold);
+  border-radius: 8px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-  gap: 10px;
-}
-
-.farming-routes-view .route-popularity {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.farming-routes-view .popularity-bar {
-  width: 80px;
-  height: 3px;
-  background: rgba(255,255,255,0.08);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.farming-routes-view .popularity-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--gold-dim), var(--gold));
-  border-radius: 2px;
-  box-shadow: 0 0 6px rgba(245,197,24,0.5);
-}
-
-.farming-routes-view .popularity-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--gold);
-}
-
-.farming-routes-view .difficulty-tag {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 1.5px;
-  padding: 3px 9px;
-  border-radius: 2px;
-  text-transform: uppercase;
-}
-.farming-routes-view .diff-beginner { background: rgba(0,255,136,0.1); border: 1px solid rgba(0,255,136,0.3); color: var(--green); }
-.farming-routes-view .diff-intermediate { background: rgba(245,197,24,0.1); border: 1px solid var(--border-bright); color: var(--gold); }
-.farming-routes-view .diff-advanced { background: rgba(255,59,92,0.1); border: 1px solid rgba(255,59,92,0.35); color: var(--red); }
-.farming-routes-view .diff-expert { background: rgba(157,78,221,0.1); border: 1px solid rgba(157,78,221,0.35); color: var(--purple); }
-
-/* ─── STEP-BY-STEP SYSTEM ───────────────────────────── */
-.farming-routes-view .route-detail-panel {
-  background: var(--bg-card);
-  border: 1px solid var(--border-bright);
-  border-radius: 6px;
-  margin-bottom: 44px;
-  overflow: hidden;
-}
-
-.farming-routes-view .route-detail-header {
-  background: linear-gradient(135deg, rgba(245,197,24,0.12), rgba(245,197,24,0.03));
-  border-bottom: 1px solid var(--border-bright);
-  padding: 24px 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.farming-routes-view .route-detail-title {
-  font-family: var(--display);
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  color: var(--gold);
-}
-
-.farming-routes-view .route-detail-meta {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.farming-routes-view .rdm-item {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text-muted);
-  letter-spacing: 1px;
-}
-
-.farming-routes-view .rdm-item span {
-  color: var(--text);
-  font-weight: 600;
-}
-
-.farming-routes-view .route-progress-bar {
-  height: 3px;
-  background: rgba(255,255,255,0.05);
-  position: relative;
-}
-
-.farming-routes-view .route-progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, rgba(245,197,24,0.6), var(--gold));
-  box-shadow: 0 0 10px rgba(245,197,24,0.4);
-  transition: width 0.5s ease;
-}
-
-.farming-routes-view .route-steps {
-  padding: 0;
-}
-
-.farming-routes-view .route-step {
-  display: grid;
-  grid-template-columns: 60px 1fr auto;
-  gap: 0;
-  border-bottom: 1px solid var(--border);
-  transition: background 0.2s;
-  position: relative;
-}
-
-.farming-routes-view .route-step:last-child { border-bottom: none; }
-
-.farming-routes-view .route-step:hover { background: rgba(245,197,24,0.025); }
-
-.farming-routes-view .route-step.completed { opacity: 0.7; }
-
-.farming-routes-view .step-num-col {
-  display: flex;
-  align-items: flex-start;
   justify-content: center;
-  padding: 24px 0 24px;
-  border-right: 1px solid var(--border);
-  flex-direction: column;
-  align-items: center;
+  font-size: 16px;
+  flex-shrink: 0;
 }
-
-.farming-routes-view .step-number {
-  width: 30px; height: 30px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--display);
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--text-muted);
-  transition: all 0.3s;
+.explorer-view .exp-thesis-bullet-text {
+  font-size: 12.5px;
+  color: var(--exp-text);
+  line-height: 1.4;
 }
-
-.farming-routes-view .route-step.completed .step-number {
-  background: rgba(0,255,136,0.15);
-  border-color: rgba(0,255,136,0.5);
-  color: var(--green);
-}
-
-.farming-routes-view .route-step.active .step-number {
-  background: rgba(245,197,24,0.15);
-  border-color: var(--gold);
-  color: var(--gold);
-  box-shadow: 0 0 15px rgba(245,197,24,0.3);
-}
-
-.farming-routes-view .step-connector {
-  width: 2px;
-  flex: 1;
-  background: var(--border);
-  margin: 6px auto 0;
-  min-height: 20px;
-}
-
-.farming-routes-view .route-step.completed .step-connector { background: rgba(0,255,136,0.3); }
-
-.farming-routes-view .step-body {
-  padding: 22px 28px;
-}
-
-.farming-routes-view .step-action-label {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 2.5px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  margin-bottom: 6px;
-}
-
-.farming-routes-view .step-title {
-  font-family: var(--body);
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 8px;
+.explorer-view .exp-thesis-bullet-text b { color: var(--exp-gold); }
+.explorer-view .exp-thesis-footer {
+  margin-top: 14px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
-}
-
-.farming-routes-view .step-verified {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 1.5px;
-  padding: 2px 7px;
-  background: rgba(0,255,136,0.1);
-  border: 1px solid rgba(0,255,136,0.3);
-  color: var(--green);
-  border-radius: 2px;
-}
-
-.farming-routes-view .step-desc {
-  font-family: var(--body);
-  font-size: 13px;
-  color: var(--text-dim);
-  line-height: 1.55;
-  margin-bottom: 14px;
-}
-
-.farming-routes-view .step-meta-row {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-bottom: 14px;
-}
-
-.farming-routes-view .step-meta-tag {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text-muted);
-  letter-spacing: 1px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.farming-routes-view .step-meta-tag .val {
-  color: var(--text);
-  font-weight: 600;
-}
-
-.farming-routes-view .step-safe-banner {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: rgba(0,229,255,0.06);
-  border: 1px solid rgba(0,229,255,0.2);
-  border-radius: 3px;
-  margin-bottom: 14px;
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--cyan);
-  letter-spacing: 0.5px;
-}
-
-.farming-routes-view .step-warning {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: rgba(255,165,0,0.06);
-  border: 1px solid rgba(255,165,0,0.25);
-  border-radius: 3px;
-  margin-bottom: 14px;
-  font-family: var(--mono);
-  font-size: 10px;
-  color: #ffaa00;
-  letter-spacing: 0.5px;
-}
-
-.farming-routes-view .step-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  color: var(--gold);
-  text-decoration: none;
-  border: 1px solid rgba(245,197,24,0.3);
-  padding: 5px 12px;
-  border-radius: 2px;
-  background: rgba(245,197,24,0.06);
-  transition: all 0.2s;
-  cursor: pointer;
-}
-
-.farming-routes-view .step-link:hover {
-  background: rgba(245,197,24,0.14);
-  border-color: var(--gold);
-}
-
-.farming-routes-view .step-action-col {
-  padding: 22px 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
-  border-left: 1px solid var(--border);
-}
-
-.farming-routes-view .step-check {
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  border: 2px solid var(--border);
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.2s;
-  background: transparent;
-  font-size: 13px;
-  color: transparent;
-}
-
-.farming-routes-view .step-check.checked {
-  border-color: var(--green);
-  background: rgba(0,255,136,0.15);
-  color: var(--green);
-}
-
-.farming-routes-view .step-check:hover {
-  border-color: var(--gold);
-  background: rgba(245,197,24,0.08);
-}
-
-/* ─── PROGRESS TRACKER ──────────────────────────────── */
-.farming-routes-view .progress-section {
-  margin-bottom: 44px;
-}
-
-.farming-routes-view .progress-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 280px;
-  gap: 16px;
-}
-
-.farming-routes-view .progress-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 22px 24px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10.5px;
+  color: var(--exp-text-dim);
   position: relative;
-  overflow: hidden;
+  z-index: 1;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.explorer-view .exp-thesis-footer b { color: var(--exp-text); }
+.explorer-view .exp-thesis-source {
+  color: var(--exp-gold);
+  letter-spacing: 1px;
+  font-weight: 700;
 }
 
-.farming-routes-view .progress-card-title {
-  font-family: var(--mono);
+/* Row 1: 3 columns */
+.explorer-view .exp-row1 {
+  display: grid;
+  grid-template-columns: 320px 1fr 340px;
+  gap: 16px;
+  margin-bottom: 20px;
+  align-items: start;
+}
+
+/* Card base */
+.explorer-view .exp-card {
+  background: var(--exp-bg-card);
+  border: 1px solid var(--exp-border);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.explorer-view .exp-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.explorer-view .exp-card-title {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--exp-cyan);
+  letter-spacing: 2px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.explorer-view .exp-card-title.gold { color: var(--exp-gold); }
+.explorer-view .exp-card-title.purple { color: var(--exp-purple); }
+.explorer-view .exp-card-title.green { color: var(--exp-green); }
+.explorer-view .exp-card-action {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--exp-text-dim);
+  background: transparent;
+  border: 1px solid var(--exp-border);
+  padding: 3px 9px;
+  border-radius: 5px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+.explorer-view .exp-card-action:hover {
+  color: var(--exp-cyan);
+  border-color: var(--exp-cyan);
+}
+.explorer-view .exp-card-hint {
+  font-size: 11px;
+  color: var(--exp-text-dim);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.explorer-view .exp-sec-tag {
+  font-family: 'Share Tech Mono', monospace;
   font-size: 9px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--text-muted);
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+.explorer-view .exp-sec-tag.live {
+  background: var(--exp-green-soft);
+  color: var(--exp-green);
+  border: 1px solid var(--exp-green);
+}
+.explorer-view .exp-sec-tag.phase {
+  background: var(--exp-purple-soft);
+  color: var(--exp-purple);
+  border: 1px solid rgba(176,112,255,0.3);
+}
+.explorer-view .exp-sec-tag.new {
+  background: var(--exp-gold-soft);
+  color: var(--exp-gold);
+  border: 1px solid var(--exp-gold);
+}
+
+/* Reputation card */
+.explorer-view .exp-wscore-big {
+  text-align: center;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--exp-green-soft), transparent);
+  border: 1px solid var(--exp-green);
+  border-radius: 10px;
   margin-bottom: 14px;
 }
-
-.farming-routes-view .big-num {
-  font-family: var(--display);
-  font-size: 36px;
-  font-weight: 900;
+.explorer-view .exp-wscore-num {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--exp-green);
+  text-shadow: 0 0 18px var(--exp-green-glow);
   line-height: 1;
+}
+.explorer-view .exp-wscore-max {
+  font-size: 18px;
+  color: var(--exp-text-muted);
+}
+.explorer-view .exp-wscore-tag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--exp-green);
+  letter-spacing: 1.5px;
+  margin-top: 4px;
+  font-weight: 700;
+}
+.explorer-view .exp-wscore-percentile {
+  font-size: 11.5px;
+  color: var(--exp-text-dim);
+  margin-top: 6px;
+}
+.explorer-view .exp-wscore-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.explorer-view .exp-wscore-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
   margin-bottom: 4px;
 }
-
-.farming-routes-view .big-num.gold { color: var(--gold); text-shadow: 0 0 30px rgba(245,197,24,0.4); }
-.farming-routes-view .big-num.green { color: var(--green); text-shadow: 0 0 30px rgba(0,255,136,0.4); }
-.farming-routes-view .big-num.cyan { color: var(--cyan); text-shadow: 0 0 30px rgba(0,229,255,0.3); }
-
-.farming-routes-view .progress-desc {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text-muted);
-  letter-spacing: 0.5px;
-  margin-bottom: 14px;
+.explorer-view .exp-wscore-row-name {
+  font-size: 11.5px;
+  color: var(--exp-text-dim);
+}
+.explorer-view .exp-wscore-row-val {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--exp-text);
+}
+.explorer-view .exp-wscore-bar-bg {
+  height: 4px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: -2px;
+  margin-bottom: 6px;
+}
+.explorer-view .exp-wscore-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s;
 }
 
-.farming-routes-view .tac-progress-bar {
+/* Top Protocols grid */
+.explorer-view .exp-protocol-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+.explorer-view .exp-protocol {
+  background: var(--exp-bg-card-dk);
+  border: 1px solid var(--exp-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.explorer-view .exp-protocol:hover {
+  background: var(--exp-bg-card-hi);
+  border-color: var(--exp-border-br);
+  transform: translateY(-1px);
+}
+.explorer-view .exp-protocol-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.explorer-view .exp-protocol-logo.cyan { background: var(--exp-cyan-soft); color: var(--exp-cyan); border: 1px solid var(--exp-cyan); }
+.explorer-view .exp-protocol-logo.purple { background: var(--exp-purple-soft); color: var(--exp-purple); border: 1px solid var(--exp-purple); }
+.explorer-view .exp-protocol-logo.gold { background: var(--exp-gold-soft); color: var(--exp-gold); border: 1px solid var(--exp-gold); }
+.explorer-view .exp-protocol-logo.pink { background: var(--exp-pink-soft); color: var(--exp-pink); border: 1px solid var(--exp-pink); }
+.explorer-view .exp-protocol-logo.green { background: var(--exp-green-soft); color: var(--exp-green); border: 1px solid var(--exp-green); }
+.explorer-view .exp-protocol-logo.orange { background: var(--exp-orange-soft); color: var(--exp-orange); border: 1px solid var(--exp-orange); }
+.explorer-view .exp-protocol-body { min-width: 0; }
+.explorer-view .exp-protocol-name {
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--exp-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
+}
+.explorer-view .exp-protocol-cat {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--exp-text-dim);
+  letter-spacing: 0.8px;
+}
+.explorer-view .exp-protocol-tvl {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--exp-cyan);
+}
+.explorer-view .exp-protocol-interactions {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--exp-text-muted);
+  text-align: right;
+}
+.explorer-view .exp-protocol.you-interacted {
+  border-left: 2px solid var(--exp-green);
+}
+
+/* Playbook */
+.explorer-view .exp-playbook-progress {
+  background: var(--exp-bg-card-dk);
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+.explorer-view .exp-playbook-pct {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+.explorer-view .exp-playbook-pct-num {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--exp-gold);
+}
+.explorer-view .exp-playbook-pct-lbl {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  color: var(--exp-text-dim);
+  letter-spacing: 1.2px;
+  margin-left: 6px;
+}
+.explorer-view .exp-playbook-est {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  color: var(--exp-text-dim);
+  letter-spacing: 1.2px;
+  text-align: right;
+}
+.explorer-view .exp-playbook-est-val {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  color: var(--exp-gold);
+  font-weight: 700;
+}
+.explorer-view .exp-playbook-bar-bg {
   height: 5px;
   background: rgba(255,255,255,0.05);
-  border-radius: 3px;
+  border-radius: 2.5px;
   overflow: hidden;
-  margin-top: 12px;
 }
-
-.farming-routes-view .tac-progress-fill {
+.explorer-view .exp-playbook-bar-fill {
   height: 100%;
-  border-radius: 3px;
-  position: relative;
+  background: linear-gradient(90deg, var(--exp-gold-dim), var(--exp-gold));
+  border-radius: 2.5px;
+  transition: width 0.4s;
 }
-
-.farming-routes-view .tac-progress-fill::after {
-  content: '';
-  position: absolute;
-  top: 0; right: 0;
-  width: 6px; height: 100%;
-  background: white;
-  opacity: 0.6;
-  border-radius: 3px;
-  animation: routes-scanline 2s ease-in-out infinite;
-}
-
-@keyframes routes-scanline {
-  0%,100% { opacity: 0.6; }
-  50% { opacity: 1; }
-}
-
-.farming-routes-view .fill-gold { background: linear-gradient(90deg, rgba(245,197,24,0.5), var(--gold)); box-shadow: 0 0 8px rgba(245,197,24,0.4); }
-.farming-routes-view .fill-green { background: linear-gradient(90deg, rgba(0,255,136,0.5), var(--green)); box-shadow: 0 0 8px rgba(0,255,136,0.3); }
-.farming-routes-view .fill-cyan { background: linear-gradient(90deg, rgba(0,229,255,0.5), var(--cyan)); box-shadow: 0 0 8px rgba(0,229,255,0.3); }
-.farming-routes-view .fill-purple { background: linear-gradient(90deg, rgba(157,78,221,0.5), var(--purple)); box-shadow: 0 0 8px rgba(157,78,221,0.3); }
-
-.farming-routes-view .rank-panel {
-  background: linear-gradient(135deg, rgba(245,197,24,0.08), rgba(245,197,24,0.02));
-  border: 1px solid rgba(245,197,24,0.25);
-  border-radius: 6px;
-  padding: 22px 24px;
+.explorer-view .exp-playbook-steps {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-}
-
-.farming-routes-view .rank-title {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.farming-routes-view .rank-name {
-  font-family: var(--display);
-  font-size: 20px;
-  font-weight: 900;
-  letter-spacing: 3px;
-  color: var(--gold);
-  text-shadow: 0 0 20px rgba(245,197,24,0.4);
-}
-
-.farming-routes-view .rank-badges-row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.farming-routes-view .rank-badge-item {
-  font-family: var(--mono);
-  font-size: 8px;
-  letter-spacing: 1.5px;
-  padding: 4px 9px;
-  background: rgba(245,197,24,0.08);
-  border: 1px solid var(--border-bright);
-  color: var(--gold-dim);
-  border-radius: 2px;
-  text-transform: uppercase;
-}
-
-.farming-routes-view .xp-bar-wrap {
-  flex: 1;
-}
-
-.farming-routes-view .xp-label-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 6px;
-  font-family: var(--mono);
-  font-size: 9px;
-  color: var(--text-muted);
-  letter-spacing: 1px;
-}
-
-.farming-routes-view .xp-label-row span { color: var(--gold); }
-
-/* ─── ANALYTICS ─────────────────────────────────────── */
-.farming-routes-view .analytics-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-bottom: 44px;
-}
-
-.farming-routes-view .analytics-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 20px 22px;
-  position: relative;
-  overflow: hidden;
-}
-
-.farming-routes-view .analytics-card-label {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 10px;
-}
-
-.farming-routes-view .analytics-card-val {
-  font-family: var(--display);
-  font-size: 26px;
-  font-weight: 700;
-  margin-bottom: 6px;
-  line-height: 1;
-}
-
-.farming-routes-view .analytics-card-change {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 1px;
-}
-
-.farming-routes-view .change-up { color: var(--green); }
-.farming-routes-view .change-down { color: var(--red); }
-
-.farming-routes-view .mini-chart {
-  position: absolute;
-  bottom: 0; right: 0;
-  width: 80px; height: 40px;
-  opacity: 0.5;
-}
-
-/* ─── COMMUNITY ROUTES ──────────────────────────────── */
-.farming-routes-view .community-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 44px;
-}
-
-.farming-routes-view .community-card {
-  background: var(--bg-card2);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 20px 22px;
-  transition: all 0.25s;
-  cursor: pointer;
-}
-
-.farming-routes-view .community-card:hover {
-  border-color: rgba(0,229,255,0.3);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-}
-
-.farming-routes-view .community-farmer {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-
-.farming-routes-view .farmer-avatar {
-  width: 34px; height: 34px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px;
-  border: 1px solid var(--border);
-  background: rgba(255,255,255,0.04);
-  flex-shrink: 0;
-}
-
-.farming-routes-view .farmer-name {
-  font-family: var(--body);
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text);
-}
-
-.farming-routes-view .farmer-rank {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 1.5px;
-  color: var(--gold);
-  margin-top: 2px;
-}
-
-.farming-routes-view .community-route-name {
-  font-family: var(--body);
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 8px;
-}
-
-.farming-routes-view .community-route-tags {
-  display: flex;
   gap: 6px;
-  flex-wrap: wrap;
-  margin-bottom: 12px;
 }
-
-.farming-routes-view .ctag {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 1px;
-  padding: 3px 8px;
-  border-radius: 2px;
-  text-transform: uppercase;
+.explorer-view .exp-step {
+  display: grid;
+  grid-template-columns: 22px 1fr auto;
+  gap: 9px;
+  align-items: center;
+  padding: 8px 10px;
+  background: var(--exp-bg-card-dk);
+  border-radius: 7px;
+  border-left: 2px solid transparent;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
 }
-
-.farming-routes-view .ctag-blue { background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.2); color: var(--cyan); }
-.farming-routes-view .ctag-gold { background: rgba(245,197,24,0.08); border: 1px solid var(--border); color: var(--gold-dim); }
-.farming-routes-view .ctag-green { background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2); color: var(--green); }
-
-.farming-routes-view .community-stats {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 12px;
-  border-top: 1px solid var(--border);
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text-muted);
+.explorer-view .exp-step:hover { background: var(--exp-bg-card-hi); }
+.explorer-view .exp-step.done { border-left-color: var(--exp-green); }
+.explorer-view .exp-step.current {
+  border-left-color: var(--exp-gold);
+  background: var(--exp-gold-soft);
 }
-
-/* ─── QUICK ACTIONS ─────────────────────────────────── */
-.farming-routes-view .quick-actions {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 24px 28px;
-  margin-bottom: 44px;
+.explorer-view .exp-step-num {
+  width: 22px;
+  height: 22px;
+  background: var(--exp-bg-card-dk);
+  border: 1.5px solid var(--exp-text-muted);
+  border-radius: 50%;
   display: flex;
   align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-
-.farming-routes-view .qa-label {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  white-space: nowrap;
-  padding-right: 14px;
-  border-right: 1px solid var(--border);
-}
-
-/* ─── GAMIFICATION ──────────────────────────────────── */
-.farming-routes-view .gamification-section {
-  margin-bottom: 44px;
-}
-
-.farming-routes-view .achievements-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 14px;
-}
-
-.farming-routes-view .achievement-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 20px 16px;
-  text-align: center;
-  transition: all 0.25s;
-  cursor: pointer;
-  position: relative;
-}
-
-.farming-routes-view .achievement-card.unlocked {
-  border-color: rgba(245,197,24,0.35);
-  background: linear-gradient(135deg, rgba(245,197,24,0.06), rgba(8,12,28,0.95));
-}
-
-.farming-routes-view .achievement-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-}
-
-.farming-routes-view .achievement-icon {
-  font-size: 28px;
-  margin-bottom: 12px;
-  display: block;
-  filter: drop-shadow(0 0 8px rgba(245,197,24,0.3));
-}
-
-.farming-routes-view .achievement-card:not(.unlocked) .achievement-icon { filter: grayscale(1) opacity(0.3); }
-
-.farming-routes-view .achievement-title {
-  font-family: var(--display);
+  justify-content: center;
+  font-family: 'Share Tech Mono', monospace;
   font-size: 10px;
+  color: var(--exp-text-dim);
   font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--text);
-  margin-bottom: 5px;
-  text-transform: uppercase;
+}
+.explorer-view .exp-step.done .exp-step-num {
+  background: var(--exp-green);
+  border-color: var(--exp-green);
+  color: #0a0e1a;
+}
+.explorer-view .exp-step.current .exp-step-num {
+  background: var(--exp-gold);
+  border-color: var(--exp-gold);
+  color: #0a0e1a;
+}
+.explorer-view .exp-step-body { min-width: 0; }
+.explorer-view .exp-step-title {
+  font-weight: 700;
+  color: var(--exp-text);
+  font-size: 12px;
+}
+.explorer-view .exp-step.done .exp-step-title {
+  color: var(--exp-text-dim);
+  text-decoration: line-through;
+}
+.explorer-view .exp-step-time {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  color: var(--exp-text-muted);
+}
+.explorer-view .exp-step-xp {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  color: var(--exp-gold);
+  font-weight: 700;
 }
 
-.farming-routes-view .achievement-desc {
-  font-family: var(--mono);
-  font-size: 9px;
-  color: var(--text-muted);
-  letter-spacing: 0.5px;
+/* HIDDEN OPPORTUNITIES */
+.explorer-view .exp-hidden-card {
+  background: linear-gradient(135deg,
+    rgba(176,112,255,0.06) 0%,
+    rgba(255,94,138,0.04) 100%);
+  border: 1px solid var(--exp-purple);
+  border-radius: 14px;
+  padding: 20px 22px;
+  margin-bottom: 20px;
+}
+.explorer-view .exp-hidden-warning {
+  font-size: 11px;
+  color: var(--exp-orange);
+  background: var(--exp-orange-soft);
+  border: 1px solid rgba(255,144,70,0.3);
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-bottom: 14px;
   line-height: 1.5;
 }
-
-.farming-routes-view .achievement-xp {
-  font-family: var(--display);
-  font-size: 11px;
+.explorer-view .exp-hidden-warning b { color: var(--exp-orange); }
+.explorer-view .exp-hidden-table-wrap {
+  overflow-x: auto;
+}
+.explorer-view .exp-hidden-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.explorer-view .exp-hidden-table th {
+  text-align: left;
+  padding: 9px 8px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--exp-purple);
+  letter-spacing: 1.5px;
   font-weight: 700;
-  color: var(--gold);
-  margin-top: 10px;
+  border-bottom: 1px solid var(--exp-purple);
 }
-
-.farming-routes-view .achievement-card:not(.unlocked) .achievement-xp { color: var(--text-muted); }
-
-.farming-routes-view .locked-overlay {
-  position: absolute;
-  top: 8px; right: 8px;
-  font-size: 11px;
-  opacity: 0.3;
+.explorer-view .exp-hidden-table td {
+  padding: 11px 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  vertical-align: middle;
 }
-
-/* ─── UTILITY ───────────────────────────────────────── */
-.farming-routes-view .flex { display: flex; }
-.farming-routes-view .items-center { align-items: center; }
-.farming-routes-view .gap-2 { gap: 8px; }
-.farming-routes-view .gap-3 { gap: 12px; }
-.farming-routes-view .mt-1 { margin-top: 4px; }
-.farming-routes-view .ml-auto { margin-left: auto; }
-
-.farming-routes-view .divider {
-  height: 1px;
-  background: var(--border);
-  margin: 40px 0;
+.explorer-view .exp-hidden-table tr:last-child td { border-bottom: none; }
+.explorer-view .exp-hidden-table tr:hover { background: rgba(176,112,255,0.04); }
+.explorer-view .exp-hidden-col-protocol { width: 24%; }
+.explorer-view .exp-hidden-col-farmers { width: 80px; text-align: right; }
+.explorer-view .exp-hidden-col-risk { width: 90px; text-align: center; }
+.explorer-view .exp-hidden-col-action { width: 90px; }
+.explorer-view .exp-hidden-protocol-cell {
+  display: flex;
+  align-items: center;
+  gap: 9px;
 }
-
-.farming-routes-view .tooltip-wrap {
-  position: relative;
+.explorer-view .exp-hidden-pname {
+  font-weight: 700;
+  color: var(--exp-text);
+}
+.explorer-view .exp-hidden-pcat {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--exp-text-dim);
+  letter-spacing: 0.5px;
+}
+.explorer-view .exp-hidden-why {
+  font-size: 11.5px;
+  color: var(--exp-text);
+  line-height: 1.4;
+  max-width: 320px;
+}
+.explorer-view .exp-hidden-why b { color: var(--exp-purple); }
+.explorer-view .exp-hidden-farmers {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--exp-cyan);
+}
+.explorer-view .exp-hidden-risk {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  font-weight: 700;
   display: inline-block;
 }
-
-.farming-routes-view .tooltip-wrap:hover .tooltip-box {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(-4px);
+.explorer-view .exp-hidden-risk.low {
+  background: var(--exp-green-soft);
+  color: var(--exp-green);
+  border: 1px solid var(--exp-green);
 }
-
-.farming-routes-view .tooltip-box {
-  position: absolute;
-  bottom: calc(100% + 6px);
-  left: 50%;
-  transform: translateX(-50%) translateY(0);
-  background: rgba(10,14,30,0.97);
-  border: 1px solid var(--border-bright);
-  border-radius: 3px;
-  padding: 8px 12px;
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text);
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
+.explorer-view .exp-hidden-risk.med {
+  background: var(--exp-orange-soft);
+  color: var(--exp-orange);
+  border: 1px solid var(--exp-orange);
+}
+.explorer-view .exp-hidden-risk.high {
+  background: var(--exp-red-soft);
+  color: var(--exp-red);
+  border: 1px solid var(--exp-red);
+}
+.explorer-view .exp-hidden-action {
+  background: linear-gradient(135deg, var(--exp-purple-soft), transparent);
+  border: 1px solid var(--exp-purple);
+  color: var(--exp-purple);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-block;
   transition: all 0.2s;
-  z-index: 100;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+}
+.explorer-view .exp-hidden-action:hover {
+  background: var(--exp-purple);
+  color: #0a0e1a;
 }
 
-/* ─── ANIMATED SCAN LINE ────────────────────────────── */
-.farming-routes-view .scan-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0;
+/* SMART MONEY */
+.explorer-view .exp-smart-card {
+  background: var(--exp-bg-card);
+  border: 1px solid var(--exp-cyan);
+  border-radius: 14px;
+  padding: 20px 22px;
+  margin-bottom: 20px;
+}
+.explorer-view .exp-smart-disclaimer {
+  font-size: 10.5px;
+  color: var(--exp-text-muted);
+  font-style: italic;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+.explorer-view .exp-smart-disclaimer b { color: var(--exp-text); }
+.explorer-view .exp-smart-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.explorer-view .exp-smart-item {
+  background: var(--exp-bg-card-dk);
+  border-left: 3px solid var(--exp-cyan);
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 14px;
+  align-items: center;
+}
+.explorer-view .exp-smart-item-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--exp-cyan-soft);
+  border: 1px solid var(--exp-cyan);
+  color: var(--exp-cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.explorer-view .exp-smart-item-icon.purple {
+  background: var(--exp-purple-soft);
+  border-color: var(--exp-purple);
+  color: var(--exp-purple);
+}
+.explorer-view .exp-smart-item-icon.green {
+  background: var(--exp-green-soft);
+  border-color: var(--exp-green);
+  color: var(--exp-green);
+}
+.explorer-view .exp-smart-item-icon.gold {
+  background: var(--exp-gold-soft);
+  border-color: var(--exp-gold);
+  color: var(--exp-gold);
+}
+.explorer-view .exp-smart-item-icon.orange {
+  background: var(--exp-orange-soft);
+  border-color: var(--exp-orange);
+  color: var(--exp-orange);
+}
+.explorer-view .exp-smart-item-body { min-width: 0; }
+.explorer-view .exp-smart-item-title {
+  font-weight: 700;
+  color: var(--exp-text);
+  font-size: 13px;
+  margin-bottom: 3px;
+}
+.explorer-view .exp-smart-item-desc {
+  font-size: 11.5px;
+  color: var(--exp-text-dim);
+  line-height: 1.4;
+}
+.explorer-view .exp-smart-item-desc b { color: var(--exp-text); }
+.explorer-view .exp-smart-item-desc a {
+  color: var(--exp-cyan);
+  text-decoration: none;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10.5px;
+}
+.explorer-view .exp-smart-item-desc a:hover { text-decoration: underline; }
+.explorer-view .exp-smart-item-meta {
+  text-align: right;
+  flex-shrink: 0;
+}
+.explorer-view .exp-smart-item-time {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--exp-text-muted);
+  margin-bottom: 2px;
+}
+.explorer-view .exp-smart-item-impact {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.8px;
+  font-weight: 700;
+  display: inline-block;
+}
+.explorer-view .exp-smart-item-impact.bull {
+  background: var(--exp-green-soft);
+  color: var(--exp-green);
+}
+.explorer-view .exp-smart-item-impact.watch {
+  background: var(--exp-cyan-soft);
+  color: var(--exp-cyan);
+}
+.explorer-view .exp-smart-item-impact.warn {
+  background: var(--exp-orange-soft);
+  color: var(--exp-orange);
+}
+
+/* Checklist */
+.explorer-view .exp-checklist-card {
+  background: var(--exp-bg-card);
+  border: 1px solid var(--exp-border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+.explorer-view .exp-checklist-progress-block { text-align: right; }
+.explorer-view .exp-checklist-progress-num {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--exp-cyan);
+}
+.explorer-view .exp-checklist-progress-lbl {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  color: var(--exp-text-dim);
+  letter-spacing: 1px;
+}
+.explorer-view .exp-checklist-categories {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.explorer-view .exp-cl-cat {
+  background: var(--exp-bg-card-dk);
+  border: 1px solid var(--exp-border);
+  border-radius: 8px;
+  padding: 12px;
+}
+.explorer-view .exp-cl-cat-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.explorer-view .exp-cl-cat-name {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10.5px;
+  color: var(--exp-text);
+  letter-spacing: 1.5px;
+  font-weight: 700;
+}
+.explorer-view .exp-cl-cat-count {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  color: var(--exp-cyan);
+  font-weight: 700;
+}
+.explorer-view .exp-cl-items {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.explorer-view .exp-cl-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: var(--exp-text-dim);
+  cursor: pointer;
+  padding: 2px 0;
+  transition: color 0.2s;
+}
+.explorer-view .exp-cl-item:hover { color: var(--exp-text); }
+.explorer-view .exp-cl-item.done { color: var(--exp-text); }
+.explorer-view .exp-cl-check {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  background: var(--exp-bg-card-dk);
+  border: 1px solid var(--exp-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.explorer-view .exp-cl-item.done .exp-cl-check {
+  background: var(--exp-green);
+  color: #0a0e1a;
+  border-color: var(--exp-green);
+}
+
+/* Sybil Risk Detail */
+.explorer-view .exp-sybil-detail {
+  background: var(--exp-bg-card);
+  border: 1px solid var(--exp-purple);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 20px;
+}
+.explorer-view .exp-sybil-meter {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  background: var(--exp-bg-card-dk);
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
+.explorer-view .exp-sybil-meter-num {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--exp-green);
+  line-height: 1;
+  text-shadow: 0 0 10px var(--exp-green-glow);
+}
+.explorer-view .exp-sybil-meter-body { flex: 1; min-width: 0; }
+.explorer-view .exp-sybil-meter-tag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--exp-green);
+  letter-spacing: 1.2px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.explorer-view .exp-sybil-meter-bar-bg {
+  height: 5px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 2.5px;
+  overflow: hidden;
+}
+.explorer-view .exp-sybil-meter-bar-fill {
   height: 100%;
-  background: linear-gradient(transparent 50%, rgba(0,229,255,0.008) 50%);
-  background-size: 100% 4px;
-  pointer-events: none;
-  z-index: 9999;
-  animation: routes-scanMove 10s linear infinite;
-  opacity: 0.4;
+  background: linear-gradient(90deg, var(--exp-green), #00ff90);
+  border-radius: 2.5px;
+}
+.explorer-view .exp-sybil-info {
+  font-size: 11px;
+  color: var(--exp-text-dim);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.explorer-view .exp-sybil-flex {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.explorer-view .exp-risk-factor-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.explorer-view .exp-risk-factor {
+  display: grid;
+  grid-template-columns: 16px 1fr auto;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 10px;
+  background: var(--exp-bg-card-dk);
+  border-radius: 6px;
+  font-size: 11.5px;
+}
+.explorer-view .exp-rf-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  flex-shrink: 0;
+}
+.explorer-view .exp-rf-icon.good {
+  background: var(--exp-green-soft);
+  color: var(--exp-green);
+}
+.explorer-view .exp-rf-icon.warn {
+  background: var(--exp-orange-soft);
+  color: var(--exp-orange);
+}
+.explorer-view .exp-rf-name {
+  color: var(--exp-text);
+  font-weight: 600;
+}
+.explorer-view .exp-rf-status {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+.explorer-view .exp-rf-status.good { color: var(--exp-green); }
+.explorer-view .exp-rf-status.warn { color: var(--exp-orange); }
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 1180px) {
+  .explorer-view .exp-row1 { grid-template-columns: 1fr 1fr; }
+  .explorer-view .exp-row1 > .exp-card:first-child { grid-column: 1 / -1; }
+  .explorer-view .exp-chain-stats { grid-template-columns: repeat(2, 1fr); }
+  .explorer-view .exp-checklist-categories { grid-template-columns: 1fr 1fr; }
+  .explorer-view .exp-thesis-bullets { grid-template-columns: 1fr; }
+  .explorer-view .exp-sybil-flex { grid-template-columns: 1fr; }
+}
+@media (max-width: 800px) {
+  .explorer-view .exp-row1 { grid-template-columns: 1fr; }
+  .explorer-view .exp-chain-stats { grid-template-columns: 1fr 1fr; }
+  .explorer-view .exp-checklist-categories { grid-template-columns: 1fr; }
+  .explorer-view .exp-title { font-size: 24px; }
+  .explorer-view .exp-thesis-head { flex-direction: column; gap: 14px; }
+  .explorer-view .exp-thesis-score-block { align-self: stretch; }
+  .explorer-view .exp-hero-top { flex-direction: column; align-items: flex-start; }
+  .explorer-view .exp-chain-hero-actions { flex-direction: row; align-items: flex-start; flex-wrap: wrap; }
+  .explorer-view .exp-smart-item { grid-template-columns: auto 1fr; }
+  .explorer-view .exp-smart-item-meta { grid-column: 2; text-align: left; padding-top: 4px; }
+}
+@media (max-width: 540px) {
+  .explorer-view .exp-chain-stats { grid-template-columns: 1fr; }
+  .explorer-view .exp-chain-pill { font-size: 10.5px; padding: 6px 10px; }
 }
 
-@keyframes routes-scanMove {
-  from { background-position: 0 0; }
-  to { background-position: 0 100%; }
-}
-
-/* ─── CORNER DECORATIONS ────────────────────────────── */
-.farming-routes-view .corner-deco {
-  position: absolute;
-  width: 14px; height: 14px;
-  border-color: var(--gold);
-  border-style: solid;
-  opacity: 0.6;
-}
-
-.farming-routes-view .corner-deco.tl { top: 0; left: 0; border-width: 2px 0 0 2px; }
-.farming-routes-view .corner-deco.tr { top: 0; right: 0; border-width: 2px 2px 0 0; }
-.farming-routes-view .corner-deco.bl { bottom: 0; left: 0; border-width: 0 0 2px 2px; }
-.farming-routes-view .corner-deco.br { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
-
-/* ─── RESPONSIVE ────────────────────────────────────── */
-@media (max-width: 1100px) {
-  .farming-routes-view .featured-grid { grid-template-columns: 1fr 1fr; }
-  .farming-routes-view .route-card.featured-top { grid-column: span 2; }
-  .farming-routes-view .hero-stats { grid-template-columns: repeat(3, 1fr); }
-  .farming-routes-view .ai-recommendations { grid-template-columns: 1fr 1fr; }
-  .farming-routes-view .progress-grid { grid-template-columns: 1fr 1fr; }
-  .farming-routes-view .analytics-grid { grid-template-columns: 1fr 1fr; }
-  .farming-routes-view .achievements-grid { grid-template-columns: repeat(3, 1fr); }
-}
-
-@media (max-width: 768px) {
-  .farming-routes-view .page-wrap { padding: 0 16px 60px; }
-  .farming-routes-view .featured-grid, .farming-routes-view .community-grid { grid-template-columns: 1fr; }
-  .farming-routes-view .route-card.featured-top { grid-column: span 1; }
-  .farming-routes-view .hero-stats { grid-template-columns: 1fr 1fr; }
-  .farming-routes-view .ai-recommendations { grid-template-columns: 1fr; }
-  .farming-routes-view .analytics-grid { grid-template-columns: 1fr 1fr; }
-  .farming-routes-view .progress-grid { grid-template-columns: 1fr; }
-  .farming-routes-view .hero-top { flex-direction: column; }
-  .farming-routes-view .route-step { grid-template-columns: 48px 1fr; }
-  .farming-routes-view .step-action-col { display: none; }
-  .farming-routes-view .achievements-grid { grid-template-columns: 1fr 1fr; }
-}
-
-/* ─── GLOW PULSE ON CARDS ───────────────────────────── */
-@keyframes routes-cardGlow {
-  0%,100% { box-shadow: 0 0 20px rgba(245,197,24,0.08); }
-  50% { box-shadow: 0 0 35px rgba(245,197,24,0.18); }
-}
-
-.farming-routes-view .route-card.featured { animation: routes-cardGlow 4s ease-in-out infinite; }
-
-/* ─── FLICKER ───────────────────────────────────────── */
-@keyframes routes-flicker {
-  0%,98%,100% { opacity: 1; }
-  99% { opacity: 0.85; }
-}
-
-.farming-routes-view .hero-title { animation: routes-flicker 8s ease-in-out infinite; }
-
-.farming-routes-view { isolation: isolate; }
-.farming-routes-view::before, .farming-routes-view::after, .farming-routes-view .scan-overlay { position: absolute; }
-/* END FARMING ROUTES TAB STYLES */
+/* END v3.4 EXPLORER TAB STYLES */
+/* END EXPLORER TAB STYLES */
 /* START REWARDS TAB STYLES */
 .rewards-view.tab-panel.active { display: block; }
 
@@ -20505,9 +20191,9 @@ canvas.mini-chart { width: 100% !important; }
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="14" height="11" rx="2"/><path d="M7 6V5a3 3 0 016 0v1"/></svg>
       Wallets
     </a>
-    <a class="nav-item" href="#farming-routes" data-tab-target="farming-routes" aria-current="false">
-      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 3a7 7 0 100 14A7 7 0 0010 3z"/><path d="M10 7v3l2 2"/></svg>
-      Farming Routes
+    <a class="nav-item" href="#explorer" data-tab-target="explorer" aria-current="false">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10" cy="10" r="8"/><path d="M10 4l1.5 4.5L16 10l-4.5 1.5L10 16l-1.5-4.5L4 10l4.5-1.5z"/></svg>
+      Explorer
     </a>
 
     <div class="nav-section-label">INTEL</div>
@@ -22003,416 +21689,264 @@ canvas.mini-chart { width: 100% !important; }
     <!-- END WALLETS TAB CONTENT -->
 
 
-    <!-- START FARMING ROUTES TAB CONTENT -->
-    <section class="tab-panel farming-routes-view" id="tab-farming-routes" data-tab-panel="farming-routes">
-      <div class="scan-overlay"></div>
+    <!-- ═══════════════════════════════════════════════════════════════════
+         EXPLORER TAB — v3.4 (Chunk 9)
+         Per-chain intelligence center — merges LayerHub + zkCodex + Nomis
+         Replaces "Farming Routes" tab
+         Scope: .explorer-view .exp-* (CSS leak protection)
+         ─────────────────────────────────────────────────────────────── -->
+    <!-- START EXPLORER TAB CONTENT -->
+    <section class="tab-panel explorer-view" id="tab-explorer" data-tab-panel="explorer">
 
-      <div class="page-wrap">
+      <div class="exp-page">
 
-        <!-- TOPBAR -->
-      <!-- HERO SECTION -->
-        <section class="hero">
-          <div class="hero-top">
-            <div class="hero-title-block">
-              <div class="hero-label">// FARMING ROUTES</div>
-              <h1 class="hero-title">Farming <em>Routes</em></h1>
-              <div class="hero-subtitle">
-                Curated, step-by-step farming guides for active opportunities.
-              </div>
+        <!-- Page header -->
+        <div class="exp-page-head">
+          <div class="exp-bc">✦ DROP ELITE <span class="exp-bc-sep">/</span> EXPLORER</div>
+          <h1 class="exp-title"><span>Explorer</span></h1>
+          <p class="exp-sub">Deep per-chain intelligence — thesis, alpha, your activity & curated playbook.</p>
+        </div>
+
+        <!-- Chain Picker Bar -->
+        <div class="exp-chain-bar">
+          <span class="exp-chain-label">CHAIN:</span>
+          <div class="exp-chain-pills" id="expChainPills">
+            <div class="exp-no-data">Loading chains...</div>
+          </div>
+        </div>
+
+        <!-- Chain Hero -->
+        <div class="exp-chain-hero" id="expChainHero">
+          <div class="exp-hero-top">
+            <div class="exp-chain-logo-big" id="expChainLogo">—</div>
+            <div class="exp-chain-title-block">
+              <div class="exp-chain-name" id="expChainName">Select a chain</div>
+              <div class="exp-chain-desc" id="expChainDesc">—</div>
+              <div class="exp-chain-tags" id="expChainTags"></div>
             </div>
-            <div class="hero-actions">
-              <button class="btn btn-primary" onclick="routesScrollToStep()">▶ START ROUTE</button>
-              <button class="btn btn-cyan btn-secondary">⬆ IMPORT ROUTE</button>
-              <button class="btn btn-secondary">✦ GENERATE ROUTE</button>
-              <button class="btn btn-secondary">◈ OPEN INTEL</button>
+            <div class="exp-chain-hero-actions" id="expChainActions">
+              <button class="exp-external-btn" onclick="expGoExternal('official')">🔗 OFFICIAL SITE</button>
+              <button class="exp-external-btn" onclick="expGoExternal('docs')">📖 DOCS</button>
+              <button class="exp-external-btn" onclick="expGoExternal('discord')">💬 DISCORD</button>
             </div>
           </div>
-
-          <div class="hero-stats">
-            <div class="stat-card">
-              <div class="stat-label">Active Routes</div>
-              <div class="stat-value" id="routesStatActive">—</div>
-              <div class="stat-sub"><span class="stat-pulse"></span>Live & Updated</div>
+          <div class="exp-chain-stats" id="expChainStats">
+            <div class="exp-cstat">
+              <div class="exp-cstat-lbl">TVL</div>
+              <div class="exp-cstat-val cyan" id="expStatTvl">—</div>
+              <div class="exp-cstat-delta" id="expStatTvlDelta">—</div>
             </div>
-            <div class="stat-card" style="opacity:0.55">
-              <div class="stat-label">Routes Completed <span style="color:var(--text-dim);font-size:9px">· DEMO</span></div>
-              <div class="stat-value green">8</div>
-              <div class="stat-sub">Needs progress tracking · Phase 2.5</div>
+            <div class="exp-cstat">
+              <div class="exp-cstat-lbl">DAILY USERS</div>
+              <div class="exp-cstat-val green" id="expStatUsers">—</div>
+              <div class="exp-cstat-delta" id="expStatUsersDelta">—</div>
             </div>
-            <div class="stat-card">
-              <div class="stat-label">Est. Farming Value</div>
-              <div class="stat-value" id="routesStatValue">$0</div>
-              <div class="stat-sub" id="routesStatValueSub">Across 0 routes</div>
+            <div class="exp-cstat">
+              <div class="exp-cstat-lbl">24H VOLUME</div>
+              <div class="exp-cstat-val purple" id="expStatVolume">—</div>
+              <div class="exp-cstat-delta" id="expStatVolumeDelta">—</div>
             </div>
-            <div class="stat-card">
-              <div class="stat-label">Best Route</div>
-              <div class="stat-value cyan" id="routesStatBest" style="font-size:16px; padding-top:4px;">—</div>
-              <div class="stat-sub" id="routesStatBestSub">Highest reward</div>
-            </div>
-            <div class="stat-card" style="opacity:0.55">
-              <div class="stat-label">Success Rate <span style="color:var(--text-dim);font-size:9px">· DEMO</span></div>
-              <div class="stat-value">91<span style="font-size:14px; color:var(--text-muted);">%</span></div>
-              <div class="stat-sub">Cross-user data · Phase 3</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- AI RECOMMENDATION PANEL -->
-        <div class="ai-panel" style="display:none">
-          <div class="ai-header">
-            <div class="ai-icon">🤖</div>
-            <div>
-              <div class="ai-title">ROUTE INTELLIGENCE ENGINE <span style="display:inline-block;background:rgba(255,184,0,0.12);color:var(--gold,#FFB800);border:1px solid rgba(255,184,0,0.25);padding:2px 7px;border-radius:4px;font-size:9px;font-family:var(--mono);margin-left:8px;vertical-align:middle;letter-spacing:0.5px;">DEMO · PHASE 3+</span></div>
-              <div class="ai-subtitle">Personalized · Real-time · Gas-aware · Wallet-matched</div>
-            </div>
-            <div class="ml-auto">
-              <span class="stat-pulse"></span>
-              <span style="font-family:var(--mono);font-size:10px;color:var(--text-muted);letter-spacing:1.5px;">ANALYZING MARKET CONDITIONS</span>
-            </div>
-          </div>
-          <div class="ai-recommendations">
-            <div class="ai-rec-card" onclick="routesSelectRoute('base')">
-              <div class="ai-rec-tag">🔥 Best Today</div>
-              <div class="ai-rec-text">Base Ecosystem Full Route</div>
-              <div class="ai-rec-meta">~$8 gas · 45min · High prob.</div>
-              <div class="ai-rec-value">$2,400+</div>
-            </div>
-            <div class="ai-rec-card" onclick="routesSelectRoute('beginner')">
-              <div class="ai-rec-tag">🌱 Best Beginner</div>
-              <div class="ai-rec-text">LayerZero Daily Loop — Easy Start</div>
-              <div class="ai-rec-meta">~$4 gas · 20min · Very safe</div>
-              <div class="ai-rec-value">$800+</div>
-            </div>
-            <div class="ai-rec-card" onclick="routesSelectRoute('gas')">
-              <div class="ai-rec-tag">⛽ Under $20 Gas</div>
-              <div class="ai-rec-text">Solana Volume Route — Gasless DeFi</div>
-              <div class="ai-rec-meta">~$0.05 gas · 30min · V. popular</div>
-              <div class="ai-rec-value">$1,800+</div>
-            </div>
-            <div class="ai-rec-card" onclick="routesSelectRoute('highreward')">
-              <div class="ai-rec-tag">💎 High Reward</div>
-              <div class="ai-rec-text">Hyperliquid Advanced — Elite Path</div>
-              <div class="ai-rec-meta">~$15 gas · 2h · Expert level</div>
-              <div class="ai-rec-value">$6,800+</div>
-            </div>
-            <div class="ai-rec-card" onclick="routesSelectRoute('trending')">
-              <div class="ai-rec-tag">📈 Trending Ecosystem</div>
-              <div class="ai-rec-text">zkSync Era Maximalist Route</div>
-              <div class="ai-rec-meta">~$12 gas · 60min · High prob.</div>
-              <div class="ai-rec-value">$3,200+</div>
-            </div>
-            <div class="ai-rec-card" onclick="routesSelectRoute('weekly')">
-              <div class="ai-rec-tag">📊 High Prob. This Week</div>
-              <div class="ai-rec-text">EigenLayer Points Strategy</div>
-              <div class="ai-rec-meta">~$20 gas · 90min · Advanced</div>
-              <div class="ai-rec-value">$5,100+</div>
+            <div class="exp-cstat">
+              <div class="exp-cstat-lbl">CURATED PROTOCOLS</div>
+              <div class="exp-cstat-val" id="expStatProtocols">—</div>
+              <div class="exp-cstat-delta dim" id="expStatCategories">—</div>
             </div>
           </div>
         </div>
 
-        <!-- FILTER BAR -->
-        <div class="filter-bar">
-          <div class="filter-search">
-            <span class="filter-search-icon">⌕</span>
-            <input type="text" placeholder="SEARCH ROUTES, PROTOCOLS, CHAINS..." />
+        <!-- ⭐ THESIS CARD: "Why Farm [Chain] Now?" -->
+        <div class="exp-thesis-card" id="expThesisCard">
+          <div class="exp-thesis-head">
+            <div class="exp-thesis-title-block">
+              <div class="exp-thesis-eyebrow" id="expThesisEyebrow">⚡ FARMING THESIS</div>
+              <h2 class="exp-thesis-title">Why farmers are watching <span id="expThesisChain">—</span> right now</h2>
+              <div class="exp-thesis-meta" id="expThesisMeta">Curated by DropElite research</div>
+            </div>
+            <div class="exp-thesis-score-block">
+              <div class="exp-thesis-score-lbl">THESIS SCORE</div>
+              <div>
+                <span class="exp-thesis-score-num" id="expThesisScore">—</span>
+                <span class="exp-thesis-score-max">/10</span>
+              </div>
+              <div class="exp-thesis-score-tag" id="expThesisConviction">—</div>
+            </div>
           </div>
-          <div class="filter-group">
-            <button class="filter-chip active" onclick="routesToggleFilter(this)">ALL</button>
-            <button class="filter-chip" onclick="routesToggleFilter(this)">MAINNET</button>
-            <button class="filter-chip" onclick="routesToggleFilter(this)">TESTNET</button>
-            <button class="filter-chip" onclick="routesToggleFilter(this)">BEGINNER</button>
-            <button class="filter-chip" onclick="routesToggleFilter(this)">ADVANCED</button>
+          <div class="exp-thesis-bullets" id="expThesisBullets">
+            <div class="exp-no-data" style="grid-column:1/-1;">Loading thesis...</div>
           </div>
-          <select class="filter-select">
-            <option>⛓ All Chains</option>
-            <option>Base</option>
-            <option>zkSync</option>
-            <option>Arbitrum</option>
-            <option>Solana</option>
-            <option>Ethereum</option>
-          </select>
-          <select class="filter-select">
-            <option>💰 Any Reward</option>
-            <option>$500–$1000</option>
-            <option>$1000–$5000</option>
-            <option>$5000+</option>
-          </select>
-          <select class="filter-select">
-            <option>↕ Sort: Popularity</option>
-            <option>Sort: Reward</option>
-            <option>Sort: Gas Cost</option>
-            <option>Sort: Time</option>
-          </select>
+          <div class="exp-thesis-footer">
+            <span>📝 Thesis updates weekly · Last revision: <b id="expThesisUpdated">—</b></span>
+            <span class="exp-thesis-source">RESEARCH BY: DROPELITE</span>
+          </div>
         </div>
 
-        <!-- FEATURED ROUTES -->
-        <section style="margin-bottom:44px;">
-          <div class="section-head">
-            <div class="section-title">FEATURED ROUTES</div>
-            <div class="section-tag">TOP HIGH-VALUE PATHS</div>
-          </div>
-          <div class="featured-grid" id="routesGrid">
-            <div style="grid-column:1/-1;padding:30px;text-align:center;color:var(--text-muted);font-size:12px;">Loading routes…</div>
-          </div>
-        </section>
+        <!-- Row 1: 3 columns — Reputation · Protocols · Playbook -->
+        <div class="exp-row1">
 
-        <!-- STEP-BY-STEP ROUTE SYSTEM -->
-        <section id="step-section" style="margin-bottom:44px;">
-          <div class="section-head">
-            <div class="section-title">STEP-BY-STEP EXECUTION</div>
-            <div class="flex gap-3 items-center">
-              <div class="section-tag" id="routesActiveLabel">SELECT A ROUTE ABOVE</div>
-              <button class="btn btn-secondary btn-sm" onclick="routesClearSelection()" id="routesClearBtn" style="display:none">⇄ Switch Route</button>
+          <!-- Your Reputation Card -->
+          <div class="exp-card">
+            <div class="exp-card-head">
+              <div class="exp-card-title gold">🏆 YOUR REPUTATION</div>
+              <span class="exp-sec-tag phase">7B+7D</span>
             </div>
-          </div>
-
-          <div id="routeDetailContainer">
-            <div style="padding:50px 30px;text-align:center;color:var(--text-muted);background:rgba(255,255,255,0.02);border:1px dashed rgba(255,255,255,0.1);border-radius:12px;">
-              <div style="font-size:14px;margin-bottom:8px;">Tap any route card above to see its full step-by-step guide here.</div>
-              <div style="font-size:11px;color:var(--text-dim);font-family:var(--mono);">Routes are published by the DropElite team.</div>
+            <div class="exp-wscore-big">
+              <div><span class="exp-wscore-num">—</span><span class="exp-wscore-max">/10</span></div>
+              <div class="exp-wscore-tag">CONNECT WALLET</div>
+              <div class="exp-wscore-percentile">Add a wallet to see your reputation</div>
             </div>
-          </div>
-        </section>
-
-        <!-- PROGRESS TRACKER -->
-        <section class="progress-section" style="display:none">
-          <div class="section-head">
-            <div class="section-title">ROUTE PROGRESS TRACKER <span style="display:inline-block;background:rgba(255,184,0,0.12);color:var(--gold,#FFB800);border:1px solid rgba(255,184,0,0.25);padding:2px 7px;border-radius:4px;font-size:9px;font-family:var(--mono);margin-left:8px;vertical-align:middle;letter-spacing:0.5px;">DEMO · PHASE 3+</span></div>
-            <div class="section-tag">SEASON 3 · WEEK 12</div>
-          </div>
-          <div class="progress-grid">
-            <div class="progress-card">
-              <div class="progress-card-title">TOTAL XP EARNED</div>
-              <div class="big-num gold" id="routesXpDisplay">4,820</div>
-              <div class="progress-desc">Route completions + streaks + bonuses</div>
-              <div class="xp-label-row">
-                <span>ELITE OPERATOR</span>
-                <span>6,000 XP</span>
+            <div class="exp-wscore-bars" id="expWscoreBars">
+              <div>
+                <div class="exp-wscore-row"><span class="exp-wscore-row-name">Activity</span><span class="exp-wscore-row-val">—</span></div>
+                <div class="exp-wscore-bar-bg"><div class="exp-wscore-bar-fill" style="width:0%;background:var(--exp-green)"></div></div>
               </div>
-              <div class="tac-progress-bar">
-                <div class="tac-progress-fill fill-gold" style="width:80%"></div>
+              <div>
+                <div class="exp-wscore-row"><span class="exp-wscore-row-name">Diversity</span><span class="exp-wscore-row-val">—</span></div>
+                <div class="exp-wscore-bar-bg"><div class="exp-wscore-bar-fill" style="width:0%;background:var(--exp-cyan)"></div></div>
+              </div>
+              <div>
+                <div class="exp-wscore-row"><span class="exp-wscore-row-name">DeFi Engagement</span><span class="exp-wscore-row-val">—</span></div>
+                <div class="exp-wscore-bar-bg"><div class="exp-wscore-bar-fill" style="width:0%;background:var(--exp-purple)"></div></div>
+              </div>
+              <div>
+                <div class="exp-wscore-row"><span class="exp-wscore-row-name">Anti-Sybil</span><span class="exp-wscore-row-val">—</span></div>
+                <div class="exp-wscore-bar-bg"><div class="exp-wscore-bar-fill" style="width:0%;background:var(--exp-gold)"></div></div>
+              </div>
+              <div>
+                <div class="exp-wscore-row"><span class="exp-wscore-row-name">Security</span><span class="exp-wscore-row-val">—</span></div>
+                <div class="exp-wscore-bar-bg"><div class="exp-wscore-bar-fill" style="width:0%;background:var(--exp-pink)"></div></div>
               </div>
             </div>
+          </div>
 
-            <div class="progress-card">
-              <div class="progress-card-title">ROUTES COMPLETED</div>
-              <div class="big-num green">8 <span style="font-size:14px;color:var(--text-muted)">/ 24</span></div>
-              <div class="progress-desc">5 this week · 3-day farming streak 🔥</div>
-              <div class="tac-progress-bar">
-                <div class="tac-progress-fill fill-green" style="width:33%"></div>
-              </div>
+          <!-- Top Protocols Card -->
+          <div class="exp-card">
+            <div class="exp-card-head">
+              <div class="exp-card-title">🏛 TOP PROTOCOLS</div>
+              <button class="exp-card-action" id="expProtocolsCount">VIEW ALL</button>
             </div>
+            <div class="exp-card-hint">
+              <span style="color:var(--exp-green)">●</span> = You've interacted (Phase 7B) · Click any for stats
+            </div>
+            <div class="exp-protocol-grid" id="expProtocolGrid">
+              <div class="exp-no-data" style="grid-column:1/-1;">Loading protocols...</div>
+            </div>
+          </div>
 
-            <div class="progress-card">
-              <div class="progress-card-title">WALLET PARTICIPATION</div>
-              <div class="big-num cyan">3</div>
-              <div class="progress-desc">Active wallets across all routes</div>
-              <div style="margin-top:12px;display:flex;flex-direction:column;gap:6px;">
-                <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--text-muted);">
-                  <span>0x4f...9a2c</span><span style="color:var(--green)">8 routes</span>
+          <!-- Playbook Card -->
+          <div class="exp-card">
+            <div class="exp-card-head">
+              <div class="exp-card-title purple">📖 AIRDROP PLAYBOOK</div>
+              <span class="exp-sec-tag live">LIVE</span>
+            </div>
+            <div class="exp-playbook-progress">
+              <div class="exp-playbook-pct">
+                <div>
+                  <span class="exp-playbook-pct-num" id="expPlaybookPct">0%</span>
+                  <span class="exp-playbook-pct-lbl" id="expPlaybookDone">0 of 0 done</span>
                 </div>
-                <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--text-muted);">
-                  <span>0xab...1f7e</span><span style="color:var(--gold)">3 routes</span>
-                </div>
-                <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--text-muted);">
-                  <span>0x88...c3a1</span><span style="color:var(--text-muted)">1 route</span>
+                <div class="exp-playbook-est">
+                  EST. LEFT<br>
+                  <span class="exp-playbook-est-val" id="expPlaybookEst">—</span>
                 </div>
               </div>
+              <div class="exp-playbook-bar-bg">
+                <div class="exp-playbook-bar-fill" id="expPlaybookBar" style="width:0%"></div>
+              </div>
             </div>
-
-            <div class="rank-panel">
-              <div class="rank-title">CURRENT RANK</div>
-              <div class="rank-name">ELITE OPERATOR</div>
-              <div class="rank-badges-row">
-                <div class="rank-badge-item">Route Runner</div>
-                <div class="rank-badge-item">Chain Specialist</div>
-                <div class="rank-badge-item">Shadow Farmer</div>
-              </div>
-              <div class="xp-bar-wrap">
-                <div class="xp-label-row">
-                  <span>Progress to Shadow Master</span>
-                  <span>4,820 / 6,000 XP</span>
-                </div>
-                <div class="tac-progress-bar">
-                  <div class="tac-progress-fill fill-gold" style="width:80%"></div>
-                </div>
-              </div>
-              <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);">Streak bonus: <span style="color:var(--gold)">+25% XP</span> active</div>
+            <div class="exp-playbook-steps" id="expPlaybookSteps">
+              <div class="exp-no-data">Loading playbook...</div>
             </div>
           </div>
-        </section>
-
-        <!-- QUICK ACTIONS -->
-        <div class="quick-actions">
-          <div class="qa-label">QUICK ACTIONS</div>
-          <button class="btn btn-primary btn-sm">▶ CONTINUE ROUTE</button>
-          <button class="btn btn-secondary btn-sm">⟳ SYNC WALLETS</button>
-          <button class="btn btn-secondary btn-sm">✓ MARK STEP DONE</button>
-          <button class="btn btn-secondary btn-sm">⬡ OPEN EXPLORER</button>
-          <button class="btn btn-cyan btn-sm">◈ VIEW INTEL</button>
-          <button class="btn btn-secondary btn-sm">↓ EXPORT ROUTE</button>
         </div>
 
-        <!-- ANALYTICS PREVIEW -->
-        <section style="margin-bottom:44px;display:none">
-          <div class="section-head">
-            <div class="section-title">ROUTE ANALYTICS <span style="display:inline-block;background:rgba(255,184,0,0.12);color:var(--gold,#FFB800);border:1px solid rgba(255,184,0,0.25);padding:2px 7px;border-radius:4px;font-size:9px;font-family:var(--mono);margin-left:8px;vertical-align:middle;letter-spacing:0.5px;">DEMO · PHASE 3+</span></div>
-            <div class="section-tag">LIVE · UPDATING</div>
+        <!-- ⭐ HIDDEN OPPORTUNITIES -->
+        <div class="exp-hidden-card">
+          <div class="exp-card-head">
+            <div class="exp-card-title purple">💎 HIDDEN OPPORTUNITIES — UNDERFARMED ALPHA</div>
+            <span class="exp-sec-tag new">VIP</span>
           </div>
-          <div class="analytics-grid">
-            <div class="analytics-card">
-              <div class="analytics-card-label">Avg Completion Rate</div>
-              <div class="analytics-card-val gold">91%</div>
-              <div class="analytics-card-change change-up">↑ +3.2% vs last week</div>
-              <svg class="mini-chart" viewBox="0 0 80 40">
-                <polyline points="0,35 10,30 20,28 30,22 40,18 50,12 60,10 70,8 80,5" fill="none" stroke="rgba(245,197,24,0.5)" stroke-width="1.5"/>
-                <polyline points="0,35 10,30 20,28 30,22 40,18 50,12 60,10 70,8 80,5 80,40 0,40" fill="rgba(245,197,24,0.06)" stroke="none"/>
-              </svg>
-            </div>
-            <div class="analytics-card">
-              <div class="analytics-card-label">Most Profitable Route</div>
-              <div class="analytics-card-val cyan" style="font-size:18px;margin-top:4px;">Hyperliquid</div>
-              <div class="analytics-card-change" style="color:var(--text-dim);">$6,800+ avg return</div>
-            </div>
-            <div class="analytics-card">
-              <div class="analytics-card-label">Avg Farming Cost</div>
-              <div class="analytics-card-val green">$8.40</div>
-              <div class="analytics-card-change change-down">↓ -$1.20 vs last week</div>
-              <svg class="mini-chart" viewBox="0 0 80 40">
-                <polyline points="0,10 10,14 20,12 30,16 40,14 50,11 60,9 70,8 80,6" fill="none" stroke="rgba(0,255,136,0.5)" stroke-width="1.5"/>
-                <polyline points="0,10 10,14 20,12 30,16 40,14 50,11 60,9 70,8 80,6 80,40 0,40" fill="rgba(0,255,136,0.06)" stroke="none"/>
-              </svg>
-            </div>
-            <div class="analytics-card">
-              <div class="analytics-card-label">Wallet Efficiency</div>
-              <div class="analytics-card-val" style="color:var(--purple);">87%</div>
-              <div class="analytics-card-change change-up">↑ +5.1% optimized</div>
-              <svg class="mini-chart" viewBox="0 0 80 40">
-                <polyline points="0,30 10,25 20,22 30,20 40,16 50,13 60,10 70,9 80,7" fill="none" stroke="rgba(157,78,221,0.5)" stroke-width="1.5"/>
-                <polyline points="0,30 10,25 20,22 30,20 40,16 50,13 60,10 70,9 80,7 80,40 0,40" fill="rgba(157,78,221,0.06)" stroke="none"/>
-              </svg>
-            </div>
+          <div class="exp-hidden-warning">
+            ⚠️ <b>RESEARCH ONLY — DO YOUR OWN DUE DILIGENCE.</b> Lower farmer count = potentially better allocation BUT also less certainty. Read each "Why Early" carefully.
           </div>
-        </section>
+          <div class="exp-hidden-table-wrap">
+            <table class="exp-hidden-table">
+              <thead>
+                <tr>
+                  <th class="exp-hidden-col-protocol">PROTOCOL</th>
+                  <th class="exp-hidden-col-why">WHY EARLY</th>
+                  <th class="exp-hidden-col-farmers">FARMERS</th>
+                  <th class="exp-hidden-col-risk">RISK</th>
+                  <th class="exp-hidden-col-action"></th>
+                </tr>
+              </thead>
+              <tbody id="expHiddenBody">
+                <tr><td colspan="5" class="exp-no-data">Loading hidden opportunities...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-        <!-- COMMUNITY ROUTES -->
-        <section style="margin-bottom:44px;display:none">
-          <div class="section-head">
-            <div class="section-title">COMMUNITY &amp; SOCIAL ROUTES <span style="display:inline-block;background:rgba(255,184,0,0.12);color:var(--gold,#FFB800);border:1px solid rgba(255,184,0,0.25);padding:2px 7px;border-radius:4px;font-size:9px;font-family:var(--mono);margin-left:8px;vertical-align:middle;letter-spacing:0.5px;">DEMO · PHASE 3+</span></div>
-            <div class="section-tag">TRENDING · EXCLUSIVE</div>
+        <!-- ⭐ SMART MONEY ACTIVITY -->
+        <div class="exp-smart-card">
+          <div class="exp-card-head">
+            <div class="exp-card-title green">🐋 SMART MONEY ACTIVITY</div>
+            <span class="exp-sec-tag new">CURATED</span>
           </div>
-          <div class="community-grid">
-            <div class="community-card">
-              <div class="community-farmer">
-                <div class="farmer-avatar">👤</div>
-                <div>
-                  <div class="farmer-name">0xDegenKing</div>
-                  <div class="farmer-rank">★ SHADOW MASTER · TOP 50</div>
-                </div>
-              </div>
-              <div class="community-route-name">Multi-Chain Volume Blitz Strategy</div>
-              <div class="community-route-tags">
-                <span class="ctag ctag-blue">Base</span>
-                <span class="ctag ctag-blue">zkSync</span>
-                <span class="ctag ctag-gold">$200+ gas</span>
-                <span class="ctag ctag-green">$8,000+ reward</span>
-              </div>
-              <div class="community-stats">
-                <span>👥 3,240 farming</span>
-                <span>⭐ 4.9/5</span>
-                <span>📈 96% success</span>
-              </div>
-            </div>
+          <div class="exp-smart-disclaimer">
+            📌 <b>Manually curated by DropElite</b> — notable on-chain activity from tracked wallets. Each item links to verification source. Updated 2-3x per week. <b style="color:var(--exp-orange)">Not financial advice.</b>
+          </div>
+          <div class="exp-smart-feed" id="expSmartFeed">
+            <div class="exp-no-data">Loading smart money activity...</div>
+          </div>
+        </div>
 
-            <div class="community-card">
-              <div class="community-farmer">
-                <div class="farmer-avatar">🦊</div>
-                <div>
-                  <div class="farmer-name">CryptoShadow_X</div>
-                  <div class="farmer-rank">★ ELITE OPERATOR · TOP 200</div>
-                </div>
-              </div>
-              <div class="community-route-name">Budget Farmer's Weekly Route ($50 total)</div>
-              <div class="community-route-tags">
-                <span class="ctag ctag-blue">LayerZero</span>
-                <span class="ctag ctag-blue">Arbitrum</span>
-                <span class="ctag ctag-green">Low gas</span>
-              </div>
-              <div class="community-stats">
-                <span>👥 8,190 farming</span>
-                <span>⭐ 4.7/5</span>
-                <span>📈 88% success</span>
-              </div>
-            </div>
-
-            <div class="community-card">
-              <div class="community-farmer">
-                <div class="farmer-avatar">🤖</div>
-                <div>
-                  <div class="farmer-name">AlphaRoute.eth</div>
-                  <div class="farmer-rank">★ CHAIN SPECIALIST · VERIFIED</div>
-                </div>
-              </div>
-              <div class="community-route-name">Solana DeFi Speedrun (30 min)</div>
-              <div class="community-route-tags">
-                <span class="ctag ctag-blue">Solana</span>
-                <span class="ctag ctag-gold">Beginner</span>
-                <span class="ctag ctag-green">Near-zero gas</span>
-              </div>
-              <div class="community-stats">
-                <span>👥 11,400 farming</span>
-                <span>⭐ 4.8/5</span>
-                <span>📈 92% success</span>
-              </div>
+        <!-- WHAT TO DO Checklist -->
+        <div class="exp-checklist-card">
+          <div class="exp-card-head">
+            <div class="exp-card-title">✅ WHAT TO DO ON THIS CHAIN</div>
+            <div class="exp-checklist-progress-block">
+              <div class="exp-checklist-progress-num" id="expChecklistProgress">0 / 0</div>
+              <div class="exp-checklist-progress-lbl">COMPLETE</div>
             </div>
           </div>
-        </section>
-
-        <!-- GAMIFICATION / ACHIEVEMENTS -->
-        <section class="gamification-section" style="display:none">
-          <div class="section-head">
-            <div class="section-title">ACHIEVEMENTS &amp; XP SYSTEM <span style="display:inline-block;background:rgba(255,184,0,0.12);color:var(--gold,#FFB800);border:1px solid rgba(255,184,0,0.25);padding:2px 7px;border-radius:4px;font-size:9px;font-family:var(--mono);margin-left:8px;vertical-align:middle;letter-spacing:0.5px;">DEMO · PHASE 3+</span></div>
-            <div class="section-tag">SEASON 3 ACTIVE</div>
+          <div class="exp-checklist-categories" id="expChecklistCategories">
+            <div class="exp-no-data" style="grid-column:1/-1;">Loading checklist...</div>
           </div>
-          <div class="achievements-grid">
-            <div class="achievement-card unlocked">
-              <span class="achievement-icon">🎯</span>
-              <div class="achievement-title">Route Runner</div>
-              <div class="achievement-desc">Complete your first farming route</div>
-              <div class="achievement-xp">+500 XP</div>
-            </div>
-            <div class="achievement-card unlocked">
-              <span class="achievement-icon">⛓</span>
-              <div class="achievement-title">Chain Specialist</div>
-              <div class="achievement-desc">Complete routes on 3+ chains</div>
-              <div class="achievement-xp">+1,200 XP</div>
-            </div>
-            <div class="achievement-card unlocked">
-              <span class="achievement-icon">🕶</span>
-              <div class="achievement-title">Shadow Farmer</div>
-              <div class="achievement-desc">Farm 5 routes in a single week</div>
-              <div class="achievement-xp">+800 XP</div>
-            </div>
-            <div class="achievement-card">
-              <span class="locked-overlay">🔒</span>
-              <span class="achievement-icon">💎</span>
-              <div class="achievement-title">Elite Operator</div>
-              <div class="achievement-desc">Complete 15 routes total</div>
-              <div class="achievement-xp">+2,000 XP</div>
-            </div>
-            <div class="achievement-card">
-              <span class="locked-overlay">🔒</span>
-              <span class="achievement-icon">👁</span>
-              <div class="achievement-title">Shadow Master</div>
-              <div class="achievement-desc">Top 1% wallet efficiency for 4 weeks</div>
-              <div class="achievement-xp">+5,000 XP</div>
+        </div>
+
+        <!-- Sybil Risk Detail -->
+        <div class="exp-sybil-detail">
+          <div class="exp-card-head">
+            <div class="exp-card-title purple">🛡 SYBIL RISK ANALYSIS</div>
+            <span class="exp-sec-tag phase">PHASE 7D</span>
+          </div>
+          <div class="exp-sybil-meter">
+            <div class="exp-sybil-meter-num">—</div>
+            <div class="exp-sybil-meter-body">
+              <div class="exp-sybil-meter-tag">CONNECT WALLET FOR ANALYSIS</div>
+              <div class="exp-sybil-meter-bar-bg"><div class="exp-sybil-meter-bar-fill" style="width:0%"></div></div>
             </div>
           </div>
-        </section>
+          <div class="exp-sybil-info">
+            Conservative analysis — once you add wallets in the Wallets tab, your Sybil score appears here. Starts at 100, deductions for risky patterns.
+          </div>
+          <div class="exp-sybil-flex">
+            <div class="exp-risk-factor-list">
+              <div class="exp-risk-factor"><div class="exp-rf-icon good">✓</div><div class="exp-rf-name">Wallet age check</div><div class="exp-rf-status good">Pending</div></div>
+              <div class="exp-risk-factor"><div class="exp-rf-icon good">✓</div><div class="exp-rf-name">Ecosystem diversity</div><div class="exp-rf-status good">Pending</div></div>
+              <div class="exp-risk-factor"><div class="exp-rf-icon good">✓</div><div class="exp-rf-name">Pattern analysis</div><div class="exp-rf-status good">Pending</div></div>
+            </div>
+            <div class="exp-risk-factor-list">
+              <div class="exp-risk-factor"><div class="exp-rf-icon good">✓</div><div class="exp-rf-name">Activity profile</div><div class="exp-rf-status good">Pending</div></div>
+              <div class="exp-risk-factor"><div class="exp-rf-icon good">✓</div><div class="exp-rf-name">Contract diversity</div><div class="exp-rf-status good">Pending</div></div>
+              <div class="exp-risk-factor"><div class="exp-rf-icon good">✓</div><div class="exp-rf-name">Tx pattern check</div><div class="exp-rf-status good">Pending</div></div>
+            </div>
+          </div>
+        </div>
 
-      </div><!-- /page-wrap -->
+      </div>
     </section>
-    <!-- END FARMING ROUTES TAB CONTENT -->
+    <!-- END EXPLORER TAB CONTENT -->
 
 
     <!-- START REWARDS TAB CONTENT -->
@@ -31087,339 +30621,745 @@ document.addEventListener('click', function(e) {
 })();
 /* END WALLETS TAB SCRIPT */
 
-/* START FARMING ROUTES TAB SCRIPT */
+/* START EXPLORER TAB SCRIPT — v3.4 (Chunk 9) */
+/* Per-chain intelligence: Thesis · Hidden Opps · Smart Money · Reputation · Playbook · Checklist */
 (function() {
 
-// ══════════════════════════════════════════════════════
-// STATE
-// ══════════════════════════════════════════════════════
-let routesData = [];
-let routesActive = null;          // currently-selected route (with steps)
-const routesStepStates = {};      // local per-step completion (in-memory only, resets on reload)
+// ─── STATE ───
+let expChains            = [];      // [{id, display_name, code, ...}]
+let expSelectedChainId   = null;
+let expCurrentChain      = null;
+let expThesis            = null;
+let expHiddenOpps        = [];
+let expSmartMoney        = [];
+let expProtocols         = [];
+let expPlaybook          = [];
+let expChecklist         = [];
+let expUserProgress      = null;
 
-// ══════════════════════════════════════════════════════
-// HELPERS
-// ══════════════════════════════════════════════════════
-function routesEscape(s) {
-  if (s == null) return '';
-  return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+// Defensive get
+function exp(id) { return document.getElementById(id); }
+
+// HTML escape
+function expEsc(str) {
+  if (str == null) return '';
+  return String(str)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
-const BADGE_DEFS = {
-  hot:      { cls: 'badge-hot',      label: '🔥 HOT'      },
-  elite:    { cls: 'badge-elite',    label: '★ ELITE'    },
-  new:      { cls: 'badge-new',      label: 'NEW'        },
-  trending: { cls: 'badge-trending', label: '↑ TRENDING' },
-  featured: { cls: 'badge-new',      label: '✦ FEATURED' }
-};
-
-// Map a chain code to the .chain-dot class used in the design
-function routesChainDot(chain) {
-  if (!chain) return '';
-  const c = chain.toLowerCase();
-  // Known dots in the CSS: base, zksync, lz, sol, hl, arb, eth
-  if (c === 'base') return 'base';
-  if (c === 'zk' || c === 'zksync') return 'zksync';
-  if (c === 'lz' || c === 'layerzero') return 'lz';
-  if (c === 'sol' || c === 'solana') return 'sol';
-  if (c === 'hl' || c === 'hyperliquid') return 'hl';
-  if (c === 'arb' || c === 'arbitrum') return 'arb';
-  if (c === 'eth' || c === 'ethereum') return 'eth';
-  return '';  // falls back to default styling
+// Markdown-style bold: **text** -> <b>text</b>
+function expMd(str) {
+  if (str == null) return '';
+  return String(str)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
 }
 
-function routesFmtTime(min) {
-  if (min == null || min === '') return '—';
-  const n = Number(min);
-  if (n < 60) return '~' + n + ' min';
-  const h = Math.floor(n / 60);
-  const m = n % 60;
-  return m === 0 ? '~' + h + ' hr' : '~' + h + 'h ' + m + 'm';
+function expTimeAgo(ts) {
+  if (!ts) return '—';
+  const ms = Date.now() - new Date(ts).getTime();
+  if (ms < 0) return 'just now';
+  const mins = Math.floor(ms / 60000);
+  if (mins < 60) return mins + 'm ago';
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return hours + 'h ago';
+  const days = Math.floor(hours / 24);
+  if (days < 30) return days + 'd ago';
+  const months = Math.floor(days / 30);
+  return months + 'mo ago';
 }
 
-function routesFmtUsd(v) {
-  if (v == null || v === '') return '—';
-  return '$' + Number(v).toLocaleString();
+function expDaysAgo(ts) {
+  if (!ts) return '—';
+  const days = Math.floor((Date.now() - new Date(ts).getTime()) / 86400000);
+  if (days < 1) return 'today';
+  if (days === 1) return 'yesterday';
+  return days + ' days ago';
 }
 
-// ══════════════════════════════════════════════════════
-// LOAD ROUTES FROM SUPABASE
-// ══════════════════════════════════════════════════════
-async function routesLoadFromSupabase() {
+// ─── LOAD ALL DATA ───
+async function expLoadChains() {
   try {
-    const grid = document.getElementById('routesGrid');
-    if (!window.API || !window.API.isLive()) {
-      if (grid) grid.innerHTML = '<div style="grid-column:1/-1;padding:30px;text-align:center;color:var(--text-muted);font-size:12px;">Supabase not connected. Check api.js keys.</div>';
+    if (!window.API || !window.API.isLive || !window.API.isLive()) {
+      const pills = exp('expChainPills');
+      if (pills) pills.innerHTML = '<div class="exp-no-data">Supabase not connected. Check api.js.</div>';
       return;
     }
-    routesData = await window.API.getRoutes();
-    routesRenderGrid();
-    routesUpdateStats();
+
+    // Try the API method, fallback to direct supabase call
+    let chains = [];
+    if (window.API.getExplorerChains) {
+      chains = await window.API.getExplorerChains();
+    } else if (window.API.supabase) {
+      const { data, error } = await window.API.supabase
+        .from('chains')
+        .select('*')
+        .eq('status', 'active')
+        .order('display_order', { ascending: true });
+      if (error) {
+        console.error('[expLoadChains]', error);
+        const pills = exp('expChainPills');
+        if (pills) pills.innerHTML = '<div class="exp-no-data">Failed to load chains. Run CHUNK-9-MIGRATION.sql first.</div>';
+        return;
+      }
+      chains = data || [];
+    }
+
+    expChains = chains || [];
+
+    if (expChains.length === 0) {
+      const pills = exp('expChainPills');
+      if (pills) pills.innerHTML = '<div class="exp-no-data">No chains yet. Add chains in Admin Panel.</div>';
+      return;
+    }
+
+    expRenderChainPills();
+
+    // Auto-select first chain (Base by default)
+    const firstChain = expChains[0];
+    await expSelectChain(firstChain.id);
   } catch (e) {
-    console.error('routesLoadFromSupabase:', e);
+    console.error('[expLoadChains]', e);
+    const pills = exp('expChainPills');
+    if (pills) pills.innerHTML = '<div class="exp-no-data">Error loading chains. Check console.</div>';
   }
 }
 
-// ══════════════════════════════════════════════════════
-// HERO STATS (real numbers from published routes)
-// ══════════════════════════════════════════════════════
-function routesUpdateStats() {
-  const data = routesData;
-  const count = data.length;
-  const totalValue = data.reduce((s, r) => s + Number(r.est_reward_usd || 0), 0);
-
-  let best = null;
-  for (const r of data) {
-    if (!best || Number(r.est_reward_usd || 0) > Number(best.est_reward_usd || 0)) best = r;
-  }
-
-  const setText = (id, val) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = val;
-  };
-
-  setText('routesStatActive', count.toString());
-  setText('routesStatValue', '$' + totalValue.toLocaleString());
-  setText('routesStatValueSub', 'Across ' + count + ' route' + (count === 1 ? '' : 's'));
-
-  if (best) {
-    setText('routesStatBest', best.name.length > 22 ? best.name.slice(0, 22) + '…' : best.name);
-    setText('routesStatBestSub', '$' + Number(best.est_reward_usd || 0).toLocaleString() + ' potential');
-  } else {
-    setText('routesStatBest', '—');
-    setText('routesStatBestSub', 'No routes yet');
-  }
-}
-
-// ══════════════════════════════════════════════════════
-// FEATURED ROUTES GRID
-// ══════════════════════════════════════════════════════
-function routesRenderGrid() {
-  const grid = document.getElementById('routesGrid');
-  if (!grid) return;
-
-  if (!routesData.length) {
-    grid.innerHTML = '<div style="grid-column:1/-1;padding:50px 30px;text-align:center;color:var(--text-muted);font-size:13px;">No routes published yet. The DropElite team will add curated farming routes here soon.</div>';
-    return;
-  }
-
-  grid.innerHTML = routesData.map((r, idx) => {
-    const isFeatured = (idx === 0);    // first/highest-priority gets the wide card
-    const chainCls = routesChainDot(r.chain);
-    const badgeDef = r.badge ? BADGE_DEFS[r.badge] : null;
-    const badgeHtml = badgeDef
-      ? `<div class="route-card-badge ${badgeDef.cls}">${badgeDef.label}</div>`
-      : '';
-    const popularity = Math.max(0, Math.min(100, Number(r.popularity || 0)));
-    const diffCls = r.difficulty ? 'diff-' + r.difficulty : '';
-    const diffLabel = r.difficulty ? (r.difficulty.charAt(0).toUpperCase() + r.difficulty.slice(1)) : '—';
-
-    return `
-      <div class="route-card ${isFeatured ? 'featured featured-top' : (idx < 2 ? 'featured' : '')}" onclick="routesSelectById(${r.id})">
-        ${isFeatured ? '<div class="corner-deco tl"></div><div class="corner-deco tr"></div><div class="corner-deco bl"></div><div class="corner-deco br"></div>' : ''}
-        ${badgeHtml}
-        <div class="route-chain-tag"><span class="chain-dot ${chainCls}"></span> ${routesEscape(r.chain || 'CHAIN')}</div>
-        <div class="route-name">${routesEscape(r.name)}</div>
-        <div class="route-desc">${routesEscape(r.description || '').slice(0, 220)}${(r.description || '').length > 220 ? '…' : ''}</div>
-        <div class="route-meta-grid">
-          <div class="route-meta-item">
-            <div class="route-meta-label">Est. Reward</div>
-            <div class="route-meta-value gold">${routesFmtUsd(r.est_reward_usd)}${r.est_reward_usd ? '+' : ''}</div>
-          </div>
-          <div class="route-meta-item">
-            <div class="route-meta-label">Gas Cost</div>
-            <div class="route-meta-value">${r.gas_cost_usd != null ? '~$' + r.gas_cost_usd : '—'}</div>
-          </div>
-          <div class="route-meta-item">
-            <div class="route-meta-label">Time</div>
-            <div class="route-meta-value">${routesFmtTime(r.time_minutes)}</div>
-          </div>
-          <div class="route-meta-item">
-            <div class="route-meta-label">Steps</div>
-            <div class="route-meta-value cyan">${r.steps_count || 0}</div>
-          </div>
-        </div>
-        <div class="route-footer">
-          <div class="route-popularity">
-            <div class="popularity-bar"><div class="popularity-fill" style="width:${popularity}%"></div></div>
-            <span class="popularity-label">${popularity}/100</span>
-          </div>
-          ${r.difficulty ? `<div class="difficulty-tag ${diffCls}">${diffLabel}</div>` : ''}
-          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();routesSelectById(${r.id})">START →</button>
-        </div>
-      </div>
-    `;
+function expRenderChainPills() {
+  const pills = exp('expChainPills');
+  if (!pills) return;
+  pills.innerHTML = expChains.map(function(c) {
+    const isActive = String(c.id) === String(expSelectedChainId);
+    return '<div class="exp-chain-pill ' + (isActive ? 'active' : '') + '" ' +
+      'onclick="expSelectChain(\'' + expEsc(c.id) + '\')">' +
+      '<span class="exp-dot"></span>' + expEsc(c.display_name) +
+      '</div>';
   }).join('');
 }
 
-// ══════════════════════════════════════════════════════
-// ROUTE SELECTION + STEP RENDERING
-// ══════════════════════════════════════════════════════
-async function routesSelectById(id) {
-  const container = document.getElementById('routeDetailContainer');
-  if (container) container.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text-muted);font-size:12px;">Loading route…</div>';
+window.expSelectChain = async function(chainId) {
+  expSelectedChainId = chainId;
+  expCurrentChain = expChains.find(function(c) { return String(c.id) === String(chainId); });
+  if (!expCurrentChain) return;
 
-  const route = await window.API.getRoute(id);
-  if (!route) {
-    if (container) container.innerHTML = '<div style="padding:40px;text-align:center;color:var(--red,#ff5050);font-size:12px;">Could not load this route. It may have been unpublished.</div>';
+  expRenderChainPills();
+  expRenderHero();
+
+  // Load all chain-specific data in parallel
+  await Promise.all([
+    expLoadThesis(chainId),
+    expLoadHiddenOpps(chainId),
+    expLoadSmartMoney(chainId),
+    expLoadProtocols(chainId),
+    expLoadPlaybook(chainId),
+    expLoadChecklist(chainId)
+  ]);
+};
+
+function expRenderHero() {
+  const c = expCurrentChain;
+  if (!c) return;
+
+  // Logo
+  const logo = exp('expChainLogo');
+  if (logo) {
+    logo.textContent = c.code || '—';
+    const color = c.color_primary || '#0052ff';
+    logo.style.background = 'linear-gradient(135deg, ' + color + ', ' + color + 'aa)';
+    logo.style.boxShadow = '0 8px 24px ' + color + '66';
+  }
+
+  // Name, desc
+  const setText = function(id, v) { const el = exp(id); if (el) el.textContent = v; };
+  setText('expChainName', c.display_name || '—');
+  setText('expChainDesc', c.description || '—');
+
+  // Tags
+  const tagsEl = exp('expChainTags');
+  if (tagsEl) {
+    let tags = [];
+    try {
+      tags = Array.isArray(c.tags) ? c.tags : (typeof c.tags === 'string' ? JSON.parse(c.tags) : []);
+    } catch(e) { tags = []; }
+    tagsEl.innerHTML = tags.map(function(t) {
+      return '<span class="exp-chain-tag">' + expEsc(t) + '</span>';
+    }).join('');
+  }
+
+  // Stats
+  setText('expStatTvl', c.tvl || '—');
+  setText('expStatTvlDelta', c.tvl_delta || '—');
+  setText('expStatUsers', c.daily_users || '—');
+  setText('expStatUsersDelta', c.daily_users_delta || '—');
+  setText('expStatVolume', c.volume_24h || '—');
+  setText('expStatVolumeDelta', c.volume_24h_delta || '—');
+  setText('expStatProtocols', String(c.protocols_count || 0));
+  const catsEl = exp('expStatCategories');
+  if (catsEl) catsEl.textContent = (c.protocols_categories || 0) + ' categories';
+
+  // Color deltas based on +/-
+  const colorDelta = function(elId, text) {
+    const el = exp(elId);
+    if (!el) return;
+    if (text && text.indexOf('-') === 0) el.className = 'exp-cstat-delta red';
+    else if (text && text.indexOf('+') === 0) el.className = 'exp-cstat-delta';
+    else el.className = 'exp-cstat-delta dim';
+  };
+  colorDelta('expStatTvlDelta', c.tvl_delta);
+  colorDelta('expStatUsersDelta', c.daily_users_delta);
+  colorDelta('expStatVolumeDelta', c.volume_24h_delta);
+}
+
+// ─── THESIS ───
+async function expLoadThesis(chainId) {
+  if (!window.API || !window.API.supabase) return;
+  try {
+    const { data, error } = await window.API.supabase
+      .from('chain_thesis')
+      .select('*')
+      .eq('chain_id', chainId)
+      .maybeSingle();
+    if (error) {
+      console.error('[expLoadThesis]', error);
+      return;
+    }
+    expThesis = data || null;
+    expRenderThesis();
+  } catch (e) {
+    console.error('[expLoadThesis]', e);
+  }
+}
+
+function expRenderThesis() {
+  const card = exp('expThesisCard');
+  if (!card) return;
+
+  if (!expThesis) {
+    const bulletsEl = exp('expThesisBullets');
+    if (bulletsEl) bulletsEl.innerHTML = '<div class="exp-no-data" style="grid-column:1/-1;">No thesis yet for this chain. Admins can add via Admin Panel.</div>';
+    const setText = function(id, v) { const el = exp(id); if (el) el.textContent = v; };
+    setText('expThesisScore', '—');
+    setText('expThesisConviction', '—');
+    setText('expThesisUpdated', '—');
+    setText('expThesisChain', expCurrentChain ? expCurrentChain.display_name : '—');
+    setText('expThesisEyebrow', '⚡ FARMING THESIS');
     return;
   }
-  routesActive = route;
 
-  // Reset step states for the new route
-  Object.keys(routesStepStates).forEach(k => delete routesStepStates[k]);
+  const setText = function(id, v) { const el = exp(id); if (el) el.textContent = v; };
+  setText('expThesisChain', expCurrentChain ? expCurrentChain.display_name : '—');
+  setText('expThesisScore', (expThesis.thesis_score || 0).toFixed(1));
+  setText('expThesisConviction', expThesis.conviction_tag || '—');
+  setText('expThesisEyebrow', '⚡ FARMING THESIS · WEEK ' + (expThesis.week_number || 1));
+  setText('expThesisUpdated', expDaysAgo(expThesis.updated_at));
+  setText('expThesisMeta', 'Curated by ' + (expThesis.source_credit || 'DropElite') + ' research · Updated ' + expDaysAgo(expThesis.updated_at));
 
-  // Update header label + show switch button
-  const lbl = document.getElementById('routesActiveLabel');
-  const btn = document.getElementById('routesClearBtn');
-  if (lbl) lbl.textContent = (route.chain || 'ROUTE') + ' · ' + (route.name || '').toUpperCase();
-  if (btn) btn.style.display = '';
+  // Bullets
+  let bullets = [];
+  try {
+    bullets = Array.isArray(expThesis.bullets) ? expThesis.bullets : (typeof expThesis.bullets === 'string' ? JSON.parse(expThesis.bullets) : []);
+  } catch(e) { bullets = []; }
 
-  routesRenderActive();
-  routesScrollToStep();
+  const bulletsEl = exp('expThesisBullets');
+  if (bulletsEl) {
+    if (bullets.length === 0) {
+      bulletsEl.innerHTML = '<div class="exp-no-data" style="grid-column:1/-1;">No thesis bullets yet.</div>';
+    } else {
+      bulletsEl.innerHTML = bullets.map(function(b) {
+        return '<div class="exp-thesis-bullet">' +
+          '<div class="exp-thesis-bullet-icon">' + expEsc(b.icon || '⚡') + '</div>' +
+          '<div class="exp-thesis-bullet-text">' + expMd(b.text || '') + '</div>' +
+          '</div>';
+      }).join('');
+    }
+  }
 }
 
-function routesRenderActive() {
-  const container = document.getElementById('routeDetailContainer');
-  if (!container || !routesActive) return;
-
-  const r = routesActive;
-  const steps = (r.steps || []).slice().sort((a, b) => (a.display_order || 0) - (b.display_order || 0));
-  const total = steps.length;
-  const done = steps.filter(s => routesStepStates[s.id]).length;
-  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-
-  container.innerHTML = `
-    <div class="route-detail-panel">
-      <div class="route-detail-header">
-        <div>
-          <div style="font-family:var(--mono);font-size:9px;letter-spacing:2.5px;color:var(--text-muted);margin-bottom:6px;">ACTIVE ROUTE · ${done} OF ${total} STEPS</div>
-          <div class="route-detail-title">${routesEscape(r.name)}</div>
-        </div>
-        <div class="route-detail-meta">
-          <div class="rdm-item">Chain: <span>${routesEscape(r.chain || '—')}</span></div>
-          <div class="rdm-item">Gas Budget: <span>${r.gas_cost_usd != null ? '~$' + r.gas_cost_usd : '—'}</span></div>
-          <div class="rdm-item">Duration: <span>${routesFmtTime(r.time_minutes)}</span></div>
-          <div class="rdm-item">Est. Reward: <span style="color:var(--gold)">${routesFmtUsd(r.est_reward_usd)}${r.est_reward_usd ? '+' : ''}</span></div>
-          <div class="rdm-item">Completion: <span style="color:var(--gold)">${pct}%</span></div>
-        </div>
-      </div>
-      <div class="route-progress-bar">
-        <div class="route-progress-fill" style="width:${pct}%"></div>
-      </div>
-
-      <div class="route-steps">
-        ${total === 0
-          ? '<div style="padding:40px;text-align:center;color:var(--text-muted);font-size:12px;">This route has no steps yet. The DropElite team will add them soon.</div>'
-          : steps.map((s, i) => routesRenderStep(s, i, total)).join('')
-        }
-      </div>
-
-      <div style="margin-top:14px;padding:12px 14px;background:rgba(255,184,0,0.06);border:1px solid rgba(255,184,0,0.15);border-radius:8px;font-size:11px;color:var(--text-dim);line-height:1.5;">
-        💡 <strong style="color:var(--gold)">Tip:</strong> Step completion is tracked locally in your browser only. It resets when you refresh — per-user progress tracking comes in Phase 2.5.
-      </div>
-    </div>
-  `;
+// ─── HIDDEN OPPS ───
+async function expLoadHiddenOpps(chainId) {
+  if (!window.API || !window.API.supabase) return;
+  try {
+    const { data, error } = await window.API.supabase
+      .from('hidden_opportunities')
+      .select('*')
+      .eq('chain_id', chainId)
+      .eq('status', 'active')
+      .order('display_order', { ascending: true });
+    if (error) {
+      console.error('[expLoadHiddenOpps]', error);
+      return;
+    }
+    expHiddenOpps = data || [];
+    expRenderHiddenOpps();
+  } catch (e) {
+    console.error('[expLoadHiddenOpps]', e);
+  }
 }
 
-function routesRenderStep(s, idx, total) {
-  const isDone = !!routesStepStates[s.id];
-  const stepCls = isDone ? 'completed' : (idx === 0 || routesStepStates[(routesActive.steps || []).sort((a,b)=>(a.display_order||0)-(b.display_order||0))[idx-1]?.id] ? 'active' : '');
-
-  return `
-    <div class="route-step ${stepCls}" data-step-id="${s.id}">
-      <div class="step-num-col">
-        <div class="step-number">${isDone ? '✓' : (idx + 1)}</div>
-        ${idx < total - 1 ? '<div class="step-connector"></div>' : ''}
-      </div>
-      <div class="step-body">
-        <div class="step-action-label">STEP ${idx + 1} OF ${total}</div>
-        <div class="step-title">${routesEscape(s.title)}</div>
-        ${s.description ? `<div class="step-desc">${routesEscape(s.description)}</div>` : ''}
-        <div class="step-meta-row">
-          ${s.gas_estimate ? `<div class="step-meta-tag">⛽ Gas: <span class="val">${routesEscape(s.gas_estimate)}</span></div>` : ''}
-          ${s.time_estimate ? `<div class="step-meta-tag">⏱ Time: <span class="val">${routesEscape(s.time_estimate)}</span></div>` : ''}
-          ${s.action_url ? `<a href="${routesEscape(s.action_url)}" target="_blank" rel="noopener" class="step-meta-tag" style="text-decoration:none;color:var(--cyan);background:rgba(0,229,255,0.08);border-color:rgba(0,229,255,0.2);">🔗 ${routesEscape(s.action_label || 'Open')}</a>` : ''}
-        </div>
-      </div>
-      <div class="step-action-col">
-        <div class="step-check ${isDone ? 'checked' : ''}" onclick="routesToggleStepById('${s.id}')" title="Toggle completion">✓</div>
-        <span style="font-family:var(--mono);font-size:9px;color:${isDone ? 'var(--green)' : 'var(--text-muted)'};letter-spacing:1px;">${isDone ? 'DONE' : 'TODO'}</span>
-      </div>
-    </div>
-  `;
+function expRenderHiddenOpps() {
+  const body = exp('expHiddenBody');
+  if (!body) return;
+  if (expHiddenOpps.length === 0) {
+    body.innerHTML = '<tr><td colspan="5" class="exp-no-data">No hidden opportunities yet for this chain. Admins can add via Admin Panel.</td></tr>';
+    return;
+  }
+  body.innerHTML = expHiddenOpps.map(function(o) {
+    const code = o.protocol_code || (o.protocol_name || 'X').slice(0, 2).toUpperCase();
+    const color = o.protocol_color || 'cyan';
+    const risk = (o.risk_tier || 'med').toLowerCase();
+    return '<tr>' +
+      '<td>' +
+        '<div class="exp-hidden-protocol-cell">' +
+          '<div class="exp-protocol-logo ' + color + '">' + expEsc(code) + '</div>' +
+          '<div>' +
+            '<div class="exp-hidden-pname">' + expEsc(o.protocol_name || '—') + '</div>' +
+            '<div class="exp-hidden-pcat">' + expEsc(o.category || '') + '</div>' +
+          '</div>' +
+        '</div>' +
+      '</td>' +
+      '<td><div class="exp-hidden-why">' + expMd(o.why_early || '') + '</div></td>' +
+      '<td style="text-align:right"><span class="exp-hidden-farmers">' + expEsc(o.farmers_count || '—') + '</span></td>' +
+      '<td style="text-align:center"><span class="exp-hidden-risk ' + risk + '">' + risk.toUpperCase() + '</span></td>' +
+      '<td>' + (o.explore_url
+        ? '<a class="exp-hidden-action" href="' + expEsc(o.explore_url) + '" target="_blank" rel="noopener">EXPLORE →</a>'
+        : '<button class="exp-hidden-action" onclick="expToast(\'🔗\',\'No URL\',\'Admin can add link\')">EXPLORE →</button>') +
+      '</td>' +
+      '</tr>';
+  }).join('');
 }
 
-function routesToggleStepById(stepId) {
-  routesStepStates[stepId] = !routesStepStates[stepId];
-  routesRenderActive();
+// ─── SMART MONEY ───
+async function expLoadSmartMoney(chainId) {
+  if (!window.API || !window.API.supabase) return;
+  try {
+    const { data, error } = await window.API.supabase
+      .from('smart_money_events')
+      .select('*')
+      .eq('chain_id', chainId)
+      .eq('status', 'active')
+      .order('display_order', { ascending: true });
+    if (error) {
+      console.error('[expLoadSmartMoney]', error);
+      return;
+    }
+    expSmartMoney = data || [];
+    expRenderSmartMoney();
+  } catch (e) {
+    console.error('[expLoadSmartMoney]', e);
+  }
 }
 
-function routesClearSelection() {
-  routesActive = null;
-  Object.keys(routesStepStates).forEach(k => delete routesStepStates[k]);
-  const lbl = document.getElementById('routesActiveLabel');
-  const btn = document.getElementById('routesClearBtn');
-  if (lbl) lbl.textContent = 'SELECT A ROUTE ABOVE';
-  if (btn) btn.style.display = 'none';
-  const container = document.getElementById('routeDetailContainer');
-  if (container) container.innerHTML = `
-    <div style="padding:50px 30px;text-align:center;color:var(--text-muted);background:rgba(255,255,255,0.02);border:1px dashed rgba(255,255,255,0.1);border-radius:12px;">
-      <div style="font-size:14px;margin-bottom:8px;">Tap any route card above to see its full step-by-step guide here.</div>
-      <div style="font-size:11px;color:var(--text-dim);font-family:var(--mono);">Routes are published by the DropElite team.</div>
-    </div>
-  `;
-  // Scroll back to the routes grid
-  const grid = document.getElementById('routesGrid');
-  if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+function expRenderSmartMoney() {
+  const feed = exp('expSmartFeed');
+  if (!feed) return;
+  if (expSmartMoney.length === 0) {
+    feed.innerHTML = '<div class="exp-no-data">No smart money events yet for this chain. Admins can add via Admin Panel.</div>';
+    return;
+  }
+  feed.innerHTML = expSmartMoney.map(function(e) {
+    const iconColor = e.icon_color || 'cyan';
+    const impact = (e.impact_tag || 'WATCH').toUpperCase();
+    let impactClass = 'watch';
+    if (impact === 'BULLISH') impactClass = 'bull';
+    else if (impact === 'CAUTION') impactClass = 'warn';
+    const linkHtml = e.etherscan_url
+      ? ' <a href="' + expEsc(e.etherscan_url) + '" target="_blank" rel="noopener">View ↗</a>'
+      : '';
+    return '<div class="exp-smart-item">' +
+      '<div class="exp-smart-item-icon ' + iconColor + '">' + expEsc(e.icon || '⚡') + '</div>' +
+      '<div class="exp-smart-item-body">' +
+        '<div class="exp-smart-item-title">' + expEsc(e.title || '—') + '</div>' +
+        '<div class="exp-smart-item-desc">' + expMd(e.description || '') + linkHtml + '</div>' +
+      '</div>' +
+      '<div class="exp-smart-item-meta">' +
+        '<div class="exp-smart-item-time">' + expTimeAgo(e.created_at) + '</div>' +
+        '<span class="exp-smart-item-impact ' + impactClass + '">' + impact + '</span>' +
+      '</div>' +
+      '</div>';
+  }).join('');
 }
 
-// ══════════════════════════════════════════════════════
-// LEGACY ONCLICK HANDLERS (so demo buttons don't crash)
-// ══════════════════════════════════════════════════════
-
-function routesToggleFilter(el) {
-  document.querySelectorAll('#tab-farming-routes .filter-chip').forEach(c => c.classList.remove('active'));
-  el.classList.add('active');
+// ─── PROTOCOLS ───
+async function expLoadProtocols(chainId) {
+  if (!window.API || !window.API.supabase) return;
+  try {
+    const { data, error } = await window.API.supabase
+      .from('chain_protocols')
+      .select('*')
+      .eq('chain_id', chainId)
+      .eq('status', 'active')
+      .order('display_order', { ascending: true });
+    if (error) {
+      console.error('[expLoadProtocols]', error);
+      return;
+    }
+    expProtocols = data || [];
+    expRenderProtocols();
+  } catch (e) {
+    console.error('[expLoadProtocols]', e);
+  }
 }
 
-function routesScrollToStep() {
-  const el = document.getElementById('step-section');
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+function expRenderProtocols() {
+  const grid = exp('expProtocolGrid');
+  if (!grid) return;
+  const countBtn = exp('expProtocolsCount');
+  if (countBtn) countBtn.textContent = 'VIEW ALL ' + (expCurrentChain?.protocols_count || expProtocols.length);
+
+  if (expProtocols.length === 0) {
+    grid.innerHTML = '<div class="exp-no-data" style="grid-column:1/-1;">No protocols yet for this chain.</div>';
+    return;
+  }
+
+  // Show top 8
+  grid.innerHTML = expProtocols.slice(0, 8).map(function(p) {
+    const code = p.protocol_code || (p.protocol_name || 'X').slice(0, 2).toUpperCase();
+    const color = p.protocol_color || 'cyan';
+    const url = p.url || '#';
+    return '<div class="exp-protocol" onclick="expOpenProtocol(\'' + expEsc(url) + '\')">' +
+      '<div class="exp-protocol-logo ' + color + '">' + expEsc(code) + '</div>' +
+      '<div class="exp-protocol-body">' +
+        '<div class="exp-protocol-name">' + expEsc(p.protocol_name || '—') + '</div>' +
+        '<div class="exp-protocol-cat">' + expEsc(p.category || '') + '</div>' +
+      '</div>' +
+      '<div>' +
+        '<div class="exp-protocol-tvl">' + expEsc(p.tvl || '—') + '</div>' +
+        '<div class="exp-protocol-interactions">' + expEsc(p.tvl_pct || '') + '</div>' +
+      '</div>' +
+      '</div>';
+  }).join('');
 }
 
-// Old onclicks in the AI panel call routesSelectRoute('base') etc.
-// We don't have a string→id mapping for demo cards, so just nudge the user to the grid.
-function routesSelectRoute(/* legacyId */) {
-  const grid = document.getElementById('routesGrid');
-  if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+window.expOpenProtocol = function(url) {
+  if (url && url !== '#') {
+    window.open(url, '_blank', 'noopener');
+  } else {
+    expToast('🔗', 'No URL', 'Admin can add protocol URL');
+  }
+};
+
+// ─── PLAYBOOK ───
+async function expLoadPlaybook(chainId) {
+  if (!window.API || !window.API.supabase) return;
+  try {
+    const { data, error } = await window.API.supabase
+      .from('chain_playbook')
+      .select('*')
+      .eq('chain_id', chainId)
+      .eq('status', 'active')
+      .order('step_order', { ascending: true });
+    if (error) {
+      console.error('[expLoadPlaybook]', error);
+      return;
+    }
+    expPlaybook = data || [];
+    await expLoadUserProgress(chainId);
+    expRenderPlaybook();
+  } catch (e) {
+    console.error('[expLoadPlaybook]', e);
+  }
 }
 
-function routesChangeRoute() {
-  routesClearSelection();
+async function expLoadUserProgress(chainId) {
+  if (!window.API || !window.API.supabase) return;
+  try {
+    const user = window.API.user || (window.API.getUser && window.API.getUser());
+    if (!user || !user.id) {
+      expUserProgress = { playbook_completed: [], checklist_completed: [] };
+      return;
+    }
+    const { data, error } = await window.API.supabase
+      .from('user_chain_progress')
+      .select('*')
+      .eq('user_id', user.id)
+      .eq('chain_id', chainId)
+      .maybeSingle();
+    if (error) {
+      console.error('[expLoadUserProgress]', error);
+      expUserProgress = { playbook_completed: [], checklist_completed: [] };
+      return;
+    }
+    expUserProgress = data || { playbook_completed: [], checklist_completed: [] };
+    // Normalize JSON fields
+    if (typeof expUserProgress.playbook_completed === 'string') {
+      try { expUserProgress.playbook_completed = JSON.parse(expUserProgress.playbook_completed); } catch(e) { expUserProgress.playbook_completed = []; }
+    }
+    if (typeof expUserProgress.checklist_completed === 'string') {
+      try { expUserProgress.checklist_completed = JSON.parse(expUserProgress.checklist_completed); } catch(e) { expUserProgress.checklist_completed = []; }
+    }
+    if (!Array.isArray(expUserProgress.playbook_completed)) expUserProgress.playbook_completed = [];
+    if (!Array.isArray(expUserProgress.checklist_completed)) expUserProgress.checklist_completed = [];
+  } catch (e) {
+    console.error('[expLoadUserProgress]', e);
+    expUserProgress = { playbook_completed: [], checklist_completed: [] };
+  }
 }
 
-// Legacy: hardcoded step toggle (no longer used but old elements may try)
-function routesToggleStep(/* n */) { /* no-op — replaced by routesToggleStepById */ }
+function expRenderPlaybook() {
+  const stepsEl = exp('expPlaybookSteps');
+  if (!stepsEl) return;
+  if (expPlaybook.length === 0) {
+    stepsEl.innerHTML = '<div class="exp-no-data">No playbook steps yet.</div>';
+    const setText = function(id, v) { const el = exp(id); if (el) el.textContent = v; };
+    setText('expPlaybookPct', '0%');
+    setText('expPlaybookDone', '0 of 0 done');
+    setText('expPlaybookEst', '—');
+    const bar = exp('expPlaybookBar');
+    if (bar) bar.style.width = '0%';
+    return;
+  }
 
-Object.assign(window, {
-  routesSelectById,
-  routesToggleStepById,
-  routesClearSelection,
-  routesScrollToStep,
-  routesToggleFilter,
-  routesSelectRoute,   // legacy
-  routesChangeRoute,   // legacy
-  routesToggleStep     // legacy no-op
+  const completed = (expUserProgress && expUserProgress.playbook_completed) || [];
+  const doneCount = expPlaybook.filter(function(s) { return completed.indexOf(s.id) >= 0; }).length;
+  const pct = Math.round(doneCount / expPlaybook.length * 100);
+  const remaining = expPlaybook.filter(function(s) { return completed.indexOf(s.id) < 0; });
+  let totalMinLeft = 0;
+  remaining.forEach(function(s) {
+    // Extract minutes from step_detail (e.g. "via Stargate · 12 min")
+    const match = (s.step_detail || '').match(/(\d+)\s*min/i);
+    if (match) totalMinLeft += parseInt(match[1], 10);
+  });
+  const estLeft = totalMinLeft > 0 ? Math.floor(totalMinLeft / 60) + 'h ' + (totalMinLeft % 60) + 'm' : '—';
+
+  const setText = function(id, v) { const el = exp(id); if (el) el.textContent = v; };
+  setText('expPlaybookPct', pct + '%');
+  setText('expPlaybookDone', doneCount + ' of ' + expPlaybook.length + ' done');
+  setText('expPlaybookEst', estLeft);
+  const bar = exp('expPlaybookBar');
+  if (bar) bar.style.width = pct + '%';
+
+  // Find current step (first not done)
+  const currentIdx = expPlaybook.findIndex(function(s) { return completed.indexOf(s.id) < 0; });
+
+  stepsEl.innerHTML = expPlaybook.map(function(s, idx) {
+    const isDone = completed.indexOf(s.id) >= 0;
+    const isCurrent = idx === currentIdx;
+    const cls = isDone ? 'done' : isCurrent ? 'current' : '';
+    const numDisplay = isDone ? '✓' : String(idx + 1);
+    return '<div class="exp-step ' + cls + '" onclick="expTogglePlaybookStep(\'' + expEsc(s.id) + '\')">' +
+      '<div class="exp-step-num">' + numDisplay + '</div>' +
+      '<div class="exp-step-body">' +
+        '<div class="exp-step-title">' + expEsc(s.step_title || '—') + '</div>' +
+        '<div class="exp-step-time">' + expEsc(s.step_detail || '') + '</div>' +
+      '</div>' +
+      '<div class="exp-step-xp">+' + (s.step_xp || 0) + '</div>' +
+      '</div>';
+  }).join('');
+}
+
+window.expTogglePlaybookStep = async function(stepId) {
+  if (!window.API || !window.API.supabase) return;
+  const user = window.API.user || (window.API.getUser && window.API.getUser());
+  if (!user || !user.id) {
+    expToast('⚠️', 'Sign in', 'Please sign in to track progress');
+    return;
+  }
+  if (!expUserProgress) expUserProgress = { playbook_completed: [], checklist_completed: [] };
+  if (!Array.isArray(expUserProgress.playbook_completed)) expUserProgress.playbook_completed = [];
+
+  const idx = expUserProgress.playbook_completed.indexOf(stepId);
+  if (idx >= 0) {
+    expUserProgress.playbook_completed.splice(idx, 1);
+  } else {
+    expUserProgress.playbook_completed.push(stepId);
+  }
+
+  // Save to DB (upsert)
+  try {
+    const { error } = await window.API.supabase
+      .from('user_chain_progress')
+      .upsert({
+        user_id: user.id,
+        chain_id: expSelectedChainId,
+        playbook_completed: expUserProgress.playbook_completed,
+        checklist_completed: expUserProgress.checklist_completed || [],
+        updated_at: new Date().toISOString()
+      }, { onConflict: 'user_id,chain_id' });
+    if (error) {
+      console.error('[expTogglePlaybookStep]', error);
+      expToast('⚠️', 'Save failed', error.message || 'Could not save progress');
+      return;
+    }
+    expRenderPlaybook();
+    if (idx < 0) expToast('✅', 'Step done', 'Progress saved');
+  } catch (e) {
+    console.error('[expTogglePlaybookStep]', e);
+  }
+};
+
+// ─── CHECKLIST ───
+async function expLoadChecklist(chainId) {
+  if (!window.API || !window.API.supabase) return;
+  try {
+    const { data, error } = await window.API.supabase
+      .from('chain_checklist')
+      .select('*')
+      .eq('chain_id', chainId)
+      .eq('status', 'active')
+      .order('category', { ascending: true })
+      .order('display_order', { ascending: true });
+    if (error) {
+      console.error('[expLoadChecklist]', error);
+      return;
+    }
+    expChecklist = data || [];
+    expRenderChecklist();
+  } catch (e) {
+    console.error('[expLoadChecklist]', e);
+  }
+}
+
+function expRenderChecklist() {
+  const wrap = exp('expChecklistCategories');
+  if (!wrap) return;
+  if (expChecklist.length === 0) {
+    wrap.innerHTML = '<div class="exp-no-data" style="grid-column:1/-1;">No checklist tasks yet for this chain.</div>';
+    const setText = function(id, v) { const el = exp(id); if (el) el.textContent = v; };
+    setText('expChecklistProgress', '0 / 0');
+    return;
+  }
+
+  const completed = (expUserProgress && expUserProgress.checklist_completed) || [];
+
+  // Group by category
+  const groups = {};
+  expChecklist.forEach(function(item) {
+    const cat = item.category || 'OTHER';
+    if (!groups[cat]) groups[cat] = { icon: item.category_icon || '⚡', items: [] };
+    groups[cat].items.push(item);
+  });
+
+  // Sum totals
+  const total = expChecklist.length;
+  const done = expChecklist.filter(function(i) { return completed.indexOf(i.id) >= 0; }).length;
+  const setText = function(id, v) { const el = exp(id); if (el) el.textContent = v; };
+  setText('expChecklistProgress', done + ' / ' + total);
+
+  // Render categories
+  wrap.innerHTML = Object.keys(groups).map(function(cat) {
+    const group = groups[cat];
+    const catDone = group.items.filter(function(i) { return completed.indexOf(i.id) >= 0; }).length;
+    return '<div class="exp-cl-cat">' +
+      '<div class="exp-cl-cat-head">' +
+        '<div class="exp-cl-cat-name">' + expEsc(group.icon) + ' ' + expEsc(cat) + '</div>' +
+        '<div class="exp-cl-cat-count">' + catDone + '/' + group.items.length + '</div>' +
+      '</div>' +
+      '<div class="exp-cl-items">' +
+        group.items.map(function(item) {
+          const isDone = completed.indexOf(item.id) >= 0;
+          return '<div class="exp-cl-item ' + (isDone ? 'done' : '') + '" onclick="expToggleChecklistItem(\'' + expEsc(item.id) + '\')">' +
+            '<div class="exp-cl-check">' + (isDone ? '✓' : '') + '</div>' +
+            expEsc(item.task_name) +
+            '</div>';
+        }).join('') +
+      '</div>' +
+      '</div>';
+  }).join('');
+}
+
+window.expToggleChecklistItem = async function(itemId) {
+  if (!window.API || !window.API.supabase) return;
+  const user = window.API.user || (window.API.getUser && window.API.getUser());
+  if (!user || !user.id) {
+    expToast('⚠️', 'Sign in', 'Please sign in to track progress');
+    return;
+  }
+  if (!expUserProgress) expUserProgress = { playbook_completed: [], checklist_completed: [] };
+  if (!Array.isArray(expUserProgress.checklist_completed)) expUserProgress.checklist_completed = [];
+
+  const idx = expUserProgress.checklist_completed.indexOf(itemId);
+  if (idx >= 0) {
+    expUserProgress.checklist_completed.splice(idx, 1);
+  } else {
+    expUserProgress.checklist_completed.push(itemId);
+  }
+
+  try {
+    const { error } = await window.API.supabase
+      .from('user_chain_progress')
+      .upsert({
+        user_id: user.id,
+        chain_id: expSelectedChainId,
+        playbook_completed: expUserProgress.playbook_completed || [],
+        checklist_completed: expUserProgress.checklist_completed,
+        updated_at: new Date().toISOString()
+      }, { onConflict: 'user_id,chain_id' });
+    if (error) {
+      console.error('[expToggleChecklistItem]', error);
+      expToast('⚠️', 'Save failed', error.message || 'Could not save progress');
+      return;
+    }
+    expRenderChecklist();
+  } catch (e) {
+    console.error('[expToggleChecklistItem]', e);
+  }
+};
+
+// ─── EXTERNAL LINKS ───
+window.expGoExternal = function(type) {
+  if (!expCurrentChain) return;
+  let url = '';
+  if (type === 'official') url = expCurrentChain.official_url;
+  else if (type === 'docs') url = expCurrentChain.docs_url;
+  else if (type === 'discord') url = expCurrentChain.discord_url;
+  if (url) {
+    window.open(url, '_blank', 'noopener');
+  } else {
+    expToast('🔗', 'No URL', 'Admin can add link in Admin Panel');
+  }
+};
+
+// ─── TOAST ───
+function expToast(icon, title, body) {
+  let container = document.getElementById('toastContainer');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'toastContainer';
+    container.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;';
+    document.body.appendChild(container);
+  }
+  const toast = document.createElement('div');
+  toast.style.cssText = 'background:rgba(8,13,26,0.95);border:1px solid #4af0ff;color:#e8eaf0;padding:14px 18px;border-radius:10px;box-shadow:0 8px 32px rgba(74,240,255,0.25);font-size:12.5px;display:flex;align-items:center;gap:10px;max-width:360px;backdrop-filter:blur(8px);opacity:0;transform:translateY(20px);transition:all 0.3s;';
+  toast.innerHTML = '<span style="font-size:18px;">' + icon + '</span>' +
+    '<div>' +
+      '<div style="font-weight:700;color:#4af0ff;margin-bottom:2px;">' + expEsc(title) + '</div>' +
+      '<div style="color:#7a849a;font-size:11.5px;">' + expEsc(body) + '</div>' +
+    '</div>';
+  container.appendChild(toast);
+  requestAnimationFrame(function() {
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateY(0)';
+  });
+  setTimeout(function() {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(20px)';
+    setTimeout(function() { toast.remove(); }, 400);
+  }, 3500);
+}
+
+// ─── INIT ───
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    try { expLoadChains(); } catch (e) { console.error('[exp init]', e); }
+  }, 800);
 });
 
-// ══════════════════════════════════════════════════════
-// INITIAL LOAD
-// ══════════════════════════════════════════════════════
-setTimeout(routesLoadFromSupabase, 600);
+// Refresh when switching to Explorer tab
+document.addEventListener('click', function(e) {
+  const trigger = e.target.closest && e.target.closest('[data-tab-target="explorer"]');
+  if (trigger) {
+    setTimeout(function() {
+      try {
+        if (expChains.length === 0) expLoadChains();
+        else if (expSelectedChainId) expSelectChain(expSelectedChainId);
+      } catch (err) { console.error('[exp refresh]', err); }
+    }, 300);
+  }
+});
 
 })();
-/* END FARMING ROUTES TAB SCRIPT */
+/* END EXPLORER TAB SCRIPT */
 
 /* START REWARDS TAB SCRIPT */
 (function() {
