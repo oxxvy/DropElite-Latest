@@ -29459,13 +29459,11 @@ window.atv2ToggleTrack = async function(e, projectId) {
         console.log('[atv2ToggleTrack] user resolved?', !!user, user && user.id);
         if (!user) { atv2ShowToast('⚠️', 'Sign in', 'Please sign in to track projects.'); return; }
         console.log('[atv2ToggleTrack] inserting row for projectId=', projectId);
+        // Minimal payload — only the two NOT NULL columns. DB defaults/triggers fill the rest.
         const { error } = await sb.from('user_project_progress')
           .upsert({
-            user_id:           user.id,
-            project_id:        projectId,
-            first_activity_at: new Date().toISOString(),
-            last_activity_at:  new Date().toISOString(),
-            is_active:         true
+            user_id:    user.id,
+            project_id: projectId
           }, { onConflict: 'user_id,project_id' });
         if (error) {
           console.error('[atv2ToggleTrack] insert error:', error);
