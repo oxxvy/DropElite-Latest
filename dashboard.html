@@ -29406,16 +29406,26 @@ window.atv2SwitchMode = function(mode) {
 
 // ─── TOGGLE TRACK (★ star button) ───
 window.atv2ToggleTrack = async function(e, projectId) {
+  console.log('[atv2ToggleTrack] CLICKED, projectId=', projectId);
   if (e) { e.stopPropagation(); e.preventDefault(); }
-  if (!window.API || !window.API.isLive || !window.API.isLive()) {
+
+  if (!window.API) {
+    console.error('[atv2ToggleTrack] window.API missing');
+    atv2ShowToast('⚠️', 'API missing', 'window.API not loaded.');
+    return;
+  }
+  if (!window.API.isLive || !window.API.isLive()) {
+    console.error('[atv2ToggleTrack] API not live');
     atv2ShowToast('⚠️', 'Not connected', 'Supabase API not available.');
     return;
   }
 
   // Resolve raw supabase client (api.js exposes it via _supa())
   const sb = (typeof window.API._supa === 'function') ? window.API._supa() : null;
+  console.log('[atv2ToggleTrack] sb resolved?', !!sb);
 
   const isTracked = !!atv2UserProgress[projectId];
+  console.log('[atv2ToggleTrack] currently tracked?', isTracked);
 
   try {
     if (isTracked) {
@@ -29446,7 +29456,9 @@ window.atv2ToggleTrack = async function(e, projectId) {
         await window.API.trackProject(projectId);
       } else if (sb) {
         const user = await window.API.getCurrentUser();
+        console.log('[atv2ToggleTrack] user resolved?', !!user, user && user.id);
         if (!user) { atv2ShowToast('⚠️', 'Sign in', 'Please sign in to track projects.'); return; }
+        console.log('[atv2ToggleTrack] inserting row for projectId=', projectId);
         const { error } = await sb.from('user_project_progress')
           .upsert({
             user_id:           user.id,
@@ -29460,6 +29472,7 @@ window.atv2ToggleTrack = async function(e, projectId) {
           atv2ShowToast('⚠️', 'Failed', error.message || 'Could not track.');
           return;
         }
+        console.log('[atv2ToggleTrack] insert SUCCESS');
       } else {
         atv2ShowToast('⚠️', 'Not available', 'API client not initialized.');
         return;
