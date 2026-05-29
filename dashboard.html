@@ -29407,46 +29407,65 @@ window.atv2SwitchMode = function(mode) {
 // ─── TOGGLE TRACK (★ star button) ───
 window.atv2ToggleTrack = async function(e, projectId) {
   if (e) { e.stopPropagation(); e.preventDefault(); }
-  if (!window.API || !window.API.isLive || !window.API.isLive()) return;
+  if (!window.API || !window.API.isLive || !window.API.isLive()) {
+    atv2ShowToast('⚠️', 'Not connected', 'Supabase API not available.');
+    return;
+  }
+
+  // Resolve raw supabase client (api.js exposes it via _supa())
+  const sb = (typeof window.API._supa === 'function') ? window.API._supa() : null;
 
   const isTracked = !!atv2UserProgress[projectId];
 
   try {
     if (isTracked) {
-      // UNTRACK — soft delete via direct Supabase if API method doesn't exist
+      // UNTRACK
       if (window.API.untrackProject) {
         await window.API.untrackProject(projectId);
-      } else if (window.supa) {
+      } else if (sb) {
         const user = await window.API.getCurrentUser();
-        if (user) {
-          await window.supa.from('user_project_progress')
-            .delete()
-            .eq('user_id', user.id)
-            .eq('project_id', projectId);
+        if (!user) { atv2ShowToast('⚠️', 'Sign in', 'Please sign in to track projects.'); return; }
+        const { error } = await sb.from('user_project_progress')
+          .delete()
+          .eq('user_id', user.id)
+          .eq('project_id', projectId);
+        if (error) {
+          console.error('[atv2ToggleTrack] untrack error:', error);
+          atv2ShowToast('⚠️', 'Failed', error.message || 'Could not untrack.');
+          return;
         }
+      } else {
+        atv2ShowToast('⚠️', 'Not available', 'API client not initialized.');
+        return;
       }
       delete atv2UserProgress[projectId];
       atv2ShowToast('⭐', 'Untracked', 'Project removed from My Farms.');
     } else {
-      // TRACK — insert row in user_project_progress
+      // TRACK — insert/upsert row in user_project_progress
       if (window.API.trackProject) {
         await window.API.trackProject(projectId);
-      } else if (window.supa) {
+      } else if (sb) {
         const user = await window.API.getCurrentUser();
-        if (user) {
-          const { error } = await window.supa.from('user_project_progress')
-            .upsert({
-              user_id:     user.id,
-              project_id:  projectId,
-              first_activity_at: new Date().toISOString(),
-              last_activity_at:  new Date().toISOString(),
-              is_active:   true
-            }, { onConflict: 'user_id,project_id' });
-          if (error) console.error('[atv2ToggleTrack] insert error:', error);
+        if (!user) { atv2ShowToast('⚠️', 'Sign in', 'Please sign in to track projects.'); return; }
+        const { error } = await sb.from('user_project_progress')
+          .upsert({
+            user_id:           user.id,
+            project_id:        projectId,
+            first_activity_at: new Date().toISOString(),
+            last_activity_at:  new Date().toISOString(),
+            is_active:         true
+          }, { onConflict: 'user_id,project_id' });
+        if (error) {
+          console.error('[atv2ToggleTrack] insert error:', error);
+          atv2ShowToast('⚠️', 'Failed', error.message || 'Could not track.');
+          return;
         }
+      } else {
+        atv2ShowToast('⚠️', 'Not available', 'API client not initialized.');
+        return;
       }
 
-      // Refresh progress map locally (the DB trigger will fill in actual values)
+      // Refresh progress map locally
       if (window.API.getUserProjectProgress) {
         const newMap = await window.API.getUserProjectProgress();
         atv2UserProgress = newMap || {};
@@ -29459,7 +29478,7 @@ window.atv2ToggleTrack = async function(e, projectId) {
     atv2RenderAll();
   } catch (err) {
     console.error('[atv2ToggleTrack] failed:', err);
-    atv2ShowToast('⚠️', 'Failed', 'Could not update tracking. Check console.');
+    atv2ShowToast('⚠️', 'Failed', err.message || 'Could not update tracking. Check console.');
   }
 };
 
