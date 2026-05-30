@@ -30281,7 +30281,7 @@ async function expLoadPlaybook(chainId) {
 async function expLoadUserProgress(chainId) {
   if (!expHasSb()) return;
   try {
-    const user = await window.API.getUser();
+    const user = await window.API.getCurrentUser();
     if (!user || !user.id) {
       expUserProgress = { playbook_completed: [], checklist_completed: [] };
       return;
@@ -30367,7 +30367,7 @@ function expRenderPlaybook() {
 
 window.expTogglePlaybookStep = async function(stepId) {
   if (!expHasSb()) return;
-  const user = await window.API.getUser();
+  const user = await window.API.getCurrentUser();
   if (!user || !user.id) {
     expToast('⚠️', 'Sign in', 'Please sign in to track progress');
     return;
@@ -30477,7 +30477,7 @@ function expRenderChecklist() {
 
 window.expToggleChecklistItem = async function(itemId) {
   if (!expHasSb()) return;
-  const user = await window.API.getUser();
+  const user = await window.API.getCurrentUser();
   if (!user || !user.id) {
     expToast('⚠️', 'Sign in', 'Please sign in to track progress');
     return;
@@ -33271,7 +33271,7 @@ async function apikeyLoad() {
   const statusEl = document.getElementById('apikeyStatus');
   if (!sb) { if (statusEl) statusEl.textContent = 'Supabase not connected'; return; }
   try {
-    const user = await window.API.getUser();
+    const user = await window.API.getCurrentUser();
     if (!user || !user.id) { if (statusEl) statusEl.textContent = 'Sign in to manage keys'; return; }
     const { data, error } = await sb
       .from('user_api_keys')
@@ -33300,7 +33300,7 @@ async function apikeySave() {
   const sb = _apikeySb();
   if (!sb) { profileShowToast('Supabase not connected', '⚠️'); return; }
   try {
-    const user = await window.API.getUser();
+    const user = await window.API.getCurrentUser();
     if (!user || !user.id) { profileShowToast('Please sign in first', '⚠️'); return; }
     const alchemy = (document.getElementById('apikeyAlchemy') || {}).value || '';
     const moralis = (document.getElementById('apikeyMoralis') || {}).value || '';
