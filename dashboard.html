@@ -21628,7 +21628,7 @@ select.exp-field-input option { background: #0a0e1a; color: #e8eaf0; }
     <!-- ═══════════════════════════════════════════════════════════════
          INTEL HUB v4 — Intelligence Layer (Chunk 12)
          ═══════════════════════════════════════════════════════════════ -->
-    <section class="tab-panel intel-hub-view" id="tab-intel" data-tab-panel="intel">
+    <section class="tab-panel intel-hub-view" id="tab-intel" data-tab-panel="intel-hub">
     <div class="ih-page">
 
       <!-- Page header -->
@@ -32507,8 +32507,15 @@ if (document.readyState === 'loading') {
 
 // Re-load when tab becomes active
 document.addEventListener('click', function(e) {
-  const btn = e.target.closest('[data-tab="intel"]');
+  const btn = e.target.closest('[data-tab-target="intel-hub"]');
   if (btn) setTimeout(window.__ihLoadAll, 100);
+});
+
+// Also load when CustomEvent fires (dispatched by main tab switcher)
+document.addEventListener('dropelite:tabchange', function(e) {
+  if (e.detail && e.detail.tabName === 'intel-hub' && window.__ihLoadAll) {
+    setTimeout(window.__ihLoadAll, 100);
+  }
 });
 
 })();
