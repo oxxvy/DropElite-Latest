@@ -582,6 +582,608 @@ button{cursor:pointer;font-family:'Rajdhani',sans-serif}
   letter-spacing:0.5px;padding:11px 22px;border-radius:8px;
   box-shadow:0 0 14px var(--cyan-glow);
 }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   USERS TAB (Chunk 16) — admin Users management
+   All styles scoped under #section-users
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Layout: main + right rail */
+#section-users .users-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 16px;
+  align-items: flex-start;
+}
+#section-users .users-main { min-width: 0; }
+
+/* KPIs override — 3 cards full width */
+#section-users .users-kpis { grid-template-columns: repeat(3, 1fr); margin-bottom: 16px; }
+@media (max-width: 1280px) { #section-users .users-kpis { grid-template-columns: 1fr; } }
+
+/* STATUS TABS */
+#section-users .user-status-tabs {
+  display: flex; align-items: center; gap: 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 14px;
+  overflow-x: auto; scrollbar-width: none;
+}
+#section-users .user-status-tabs::-webkit-scrollbar { display: none; }
+#section-users .ust {
+  background: transparent; border: none;
+  color: var(--text-dim);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.2px;
+  padding: 11px 18px;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 7px;
+  transition: color 0.15s;
+}
+#section-users .ust:hover { color: var(--text); }
+#section-users .ust.active {
+  color: var(--purple);
+  border-bottom-color: var(--purple);
+  font-weight: 700;
+}
+#section-users .ust-count {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  background: var(--bg-card-dk);
+  border: 1px solid var(--border);
+  padding: 2px 7px;
+  border-radius: 4px;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+#section-users .ust.active .ust-count {
+  background: var(--purple-soft);
+  border-color: rgba(176,112,255,0.25);
+  color: var(--purple);
+}
+#section-users .ust-spacer { flex: 1; }
+#section-users .ust-filter-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-hi);
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 12px; font-weight: 600;
+  padding: 7px 13px;
+  border-radius: 7px;
+  margin-bottom: 6px;
+}
+#section-users .ust-filter-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+
+/* FILTER ROW */
+#section-users .user-filter-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr auto;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding: 14px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+}
+#section-users .ufr-field {
+  position: relative;
+  display: flex; align-items: center;
+}
+#section-users .ufr-field input {
+  width: 100%;
+  background: var(--bg-card-dk);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px; font-weight: 500;
+  padding: 9px 14px 9px 34px;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+#section-users .ufr-field input:focus { border-color: var(--cyan); }
+#section-users .ufr-field input::placeholder { color: var(--text-muted); }
+#section-users .ufr-ico {
+  position: absolute; left: 11px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px; color: var(--text-muted);
+  pointer-events: none;
+}
+#section-users .ufr-select {
+  background: var(--bg-card-dk);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px; font-weight: 500;
+  padding: 9px 28px 9px 12px;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' stroke='%238a92a8' stroke-width='1.5' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+#section-users .ufr-select:focus { border-color: var(--cyan); }
+#section-users .ufr-reset {
+  background: var(--bg-card-dk);
+  border: 1px solid var(--border-hi);
+  color: var(--text-dim);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 12.5px; font-weight: 600;
+  padding: 9px 16px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+#section-users .ufr-reset:hover { color: var(--orange); border-color: var(--orange); }
+
+@media (max-width: 980px) {
+  #section-users .user-filter-row { grid-template-columns: 1fr 1fr; }
+  #section-users .user-filter-row .ufr-search { grid-column: 1 / -1; }
+}
+
+/* USERS TABLE */
+#section-users .users-table-card { padding: 16px 18px; }
+#section-users .utc-table-wrap { overflow-x: auto; }
+#section-users .users-tbl tr { cursor: pointer; }
+#section-users .users-tbl tr.selected td { background: rgba(176,112,255,0.06); }
+#section-users .users-tbl tr.selected td:first-child {
+  position: relative;
+}
+#section-users .users-tbl tr.selected td:first-child::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; background: var(--purple);
+  box-shadow: 0 0 6px var(--purple);
+}
+#section-users .users-tbl .th-sort {
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--purple);
+  font-size: 10px;
+  margin-left: 3px;
+}
+
+#section-users .uc-user {
+  display: flex; align-items: center; gap: 10px;
+}
+#section-users .uc-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px; font-weight: 800;
+  color: white; flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+#section-users .uc-name {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-weight: 700; color: var(--text); font-size: 13px;
+}
+#section-users .uc-pro {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+  color: #0a0e1a;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 8px; font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.8px;
+  box-shadow: 0 0 8px var(--gold-glow);
+}
+#section-users .uc-addr-mono {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.3px;
+}
+#section-users .uc-email {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+#section-users .uc-role-pill {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--purple-soft);
+  color: var(--purple);
+  border: 1px solid rgba(176,112,255,0.3);
+}
+#section-users .uc-role-pill.admin {
+  background: var(--gold-soft);
+  color: var(--gold);
+  border-color: rgba(245,200,66,0.3);
+}
+#section-users .uc-role-pill.super_admin {
+  background: rgba(255,71,87,0.08);
+  color: var(--red);
+  border-color: rgba(255,71,87,0.3);
+}
+#section-users .uc-role-pill.moderator {
+  background: var(--cyan-soft);
+  color: var(--cyan);
+  border-color: rgba(74,240,255,0.3);
+}
+#section-users .uc-role-pill.user {
+  background: var(--bg-card-dk);
+  color: var(--text-dim);
+  border-color: var(--border);
+}
+
+#section-users .uc-status-badge {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-flex; align-items: center; gap: 5px;
+}
+#section-users .uc-status-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; box-shadow: 0 0 4px currentColor; }
+#section-users .uc-status-badge.active    { background: var(--green-soft); color: var(--green); border: 1px solid rgba(0,232,122,0.3); }
+#section-users .uc-status-badge.inactive  { background: var(--bg-card-dk); color: var(--text-muted); border: 1px solid var(--border); }
+#section-users .uc-status-badge.suspended { background: var(--orange-soft); color: var(--orange); border: 1px solid rgba(255,144,70,0.3); }
+#section-users .uc-status-badge.banned    { background: rgba(255,71,87,0.08); color: var(--red); border: 1px solid rgba(255,71,87,0.3); }
+
+#section-users .uc-action-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 14px;
+}
+#section-users .uc-action-btn:hover { color: var(--text); border-color: var(--border-hi); }
+
+#section-users .users-pager {
+  display: flex; align-items: center; gap: 10px;
+}
+
+/* ─── RIGHT RAIL ─── */
+#section-users .user-rail {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 0;
+  position: sticky;
+  top: 16px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+#section-users .user-rail::-webkit-scrollbar { width: 4px; }
+#section-users .user-rail::-webkit-scrollbar-thumb { background: rgba(245,200,66,0.2); border-radius: 2px; }
+
+/* Empty state */
+#section-users .user-rail-empty {
+  padding: 60px 24px;
+  text-align: center;
+}
+#section-users .ure-ico {
+  width: 64px; height: 64px;
+  border-radius: 16px;
+  background: var(--bg-card-dk);
+  border: 1px solid var(--border);
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  font-size: 28px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+#section-users .ure-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 15px; font-weight: 700;
+  color: var(--text-dim);
+  letter-spacing: 0.3px;
+  margin-bottom: 6px;
+}
+#section-users .ure-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Header */
+#section-users .urc-head {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border);
+  gap: 10px;
+}
+#section-users .urc-head-left { display: flex; align-items: flex-start; gap: 12px; min-width: 0; flex: 1; }
+#section-users .urc-avatar {
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px; font-weight: 800;
+  color: white; flex-shrink: 0;
+  border: 2px solid rgba(255,255,255,0.1);
+}
+#section-users .urc-meta { min-width: 0; flex: 1; }
+#section-users .urc-name-row {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 3px;
+  flex-wrap: wrap;
+}
+#section-users .urc-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 15px; font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.2px;
+}
+#section-users .urc-plan-badge {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 8px; font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.8px;
+}
+#section-users .urc-plan-badge.pro {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+  color: #0a0e1a;
+  box-shadow: 0 0 8px var(--gold-glow);
+}
+#section-users .urc-plan-badge.free {
+  background: var(--bg-card-dk);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+}
+#section-users .urc-addr {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10.5px;
+  color: var(--text-muted);
+  letter-spacing: 0.3px;
+  margin-bottom: 5px;
+}
+#section-users .urc-status-badge {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-flex; align-items: center; gap: 5px;
+}
+#section-users .urc-status-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; box-shadow: 0 0 4px currentColor; }
+#section-users .urc-status-badge.active { background: var(--green-soft); color: var(--green); border: 1px solid rgba(0,232,122,0.3); }
+#section-users .urc-status-badge.inactive { background: var(--bg-card-dk); color: var(--text-muted); border: 1px solid var(--border); }
+#section-users .urc-status-badge.suspended { background: var(--orange-soft); color: var(--orange); border: 1px solid rgba(255,144,70,0.3); }
+#section-users .urc-status-badge.banned { background: rgba(255,71,87,0.08); color: var(--red); border: 1px solid rgba(255,71,87,0.3); }
+
+#section-users .urc-close {
+  width: 28px; height: 28px;
+  background: var(--bg-card-dk);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  border-radius: 6px;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+#section-users .urc-close:hover { color: var(--red); border-color: var(--red); }
+
+/* Rail tabs */
+#section-users .urc-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  padding: 0 14px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+#section-users .urc-tabs::-webkit-scrollbar { display: none; }
+#section-users .urc-tab {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 12px; font-weight: 600;
+  padding: 11px 12px;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+#section-users .urc-tab:hover { color: var(--text); }
+#section-users .urc-tab.active {
+  color: var(--purple);
+  border-bottom-color: var(--purple);
+  font-weight: 700;
+}
+
+/* Rail tab panels */
+#section-users .urc-tab-panel { display: none; padding: 16px; }
+#section-users .urc-tab-panel.active { display: block; }
+
+/* Rail cards */
+#section-users .urc-card {
+  background: var(--bg-card-dk);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+#section-users .urc-card:last-child { margin-bottom: 0; }
+#section-users .urc-card-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px; font-weight: 700;
+  color: var(--text-dim);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/* Key-value grid in rail */
+#section-users .urc-kv { display: flex; flex-direction: column; gap: 8px; }
+#section-users .urc-kv-row {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 10px;
+  align-items: center;
+  font-size: 12px;
+}
+#section-users .urc-kv-row .k {
+  color: var(--text-muted);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+#section-users .urc-kv-row .v {
+  color: var(--text);
+  font-weight: 600;
+  word-break: break-word;
+}
+#section-users .urc-kv-row .v.urc-id {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10.5px;
+  color: var(--cyan);
+}
+
+/* Stats grid in rail */
+#section-users .urc-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+#section-users .urc-stat {
+  text-align: left;
+}
+#section-users .urc-stat-val {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px; font-weight: 800;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+#section-users .urc-stat-val.gold { color: var(--gold); }
+#section-users .urc-stat-lbl {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--text-muted);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+/* Action buttons in rail */
+#section-users .urc-actions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+#section-users .urc-btn {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.3px;
+  padding: 9px 12px;
+  border-radius: 7px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+#section-users .urc-btn-ghost {
+  background: var(--bg-card);
+  border: 1px solid var(--border-hi);
+  color: var(--text);
+}
+#section-users .urc-btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+#section-users .urc-btn-warn {
+  background: transparent;
+  border: 1px solid var(--orange);
+  color: var(--orange);
+}
+#section-users .urc-btn-warn:hover { background: var(--orange); color: #0a0e1a; }
+#section-users .urc-btn-danger {
+  background: transparent;
+  border: 1px solid var(--red);
+  color: var(--red);
+}
+#section-users .urc-btn-danger:hover { background: var(--red); color: white; }
+#section-users .urc-btn-primary {
+  background: linear-gradient(135deg, var(--cyan), #3a8bb5);
+  color: #0a0e1a;
+  border: none;
+  font-weight: 800;
+  box-shadow: 0 0 12px var(--cyan-glow);
+}
+#section-users .urc-btn-primary:hover { filter: brightness(1.1); }
+#section-users .urc-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+#section-users .urc-action-note {
+  margin-top: 10px;
+  padding: 8px 11px;
+  background: rgba(245,200,66,0.06);
+  border: 1px solid rgba(245,200,66,0.25);
+  border-left: 3px solid var(--gold);
+  border-radius: 6px;
+  font-size: 11px;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+#section-users .urc-field-label {
+  display: block;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+/* Activity list / Wallets list inside rail */
+#section-users .urc-activity-list,
+#section-users .urc-wallets-list {
+  display: flex; flex-direction: column; gap: 8px;
+}
+#section-users .urc-list-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 9px 11px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  font-size: 11.5px;
+}
+#section-users .urc-li-title {
+  color: var(--text);
+  font-weight: 600;
+}
+#section-users .urc-li-meta {
+  color: var(--text-muted);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+}
+#section-users .urc-li-val {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  color: var(--gold);
+  font-size: 12px;
+}
+
+/* MOBILE: rail becomes modal */
+@media (max-width: 1100px) {
+  #section-users .users-layout { grid-template-columns: 1fr; }
+  #section-users .user-rail {
+    position: fixed;
+    top: 0; right: 0;
+    width: min(380px, 100vw);
+    height: 100vh;
+    border-radius: 0;
+    border-right: none;
+    z-index: 300;
+    transform: translateX(100%);
+    transition: transform 0.25s;
+    max-height: 100vh;
+  }
+  #section-users .user-rail.open { transform: translateX(0); box-shadow: -8px 0 30px rgba(0,0,0,0.5); }
+}
+
+
 </style>
 </head>
 <body>
@@ -821,7 +1423,216 @@ button{cursor:pointer;font-family:'Rajdhani',sans-serif}
     </section>
 
     <!-- Other sections (Coming Soon placeholders) -->
-    <section class="section" id="section-users"><div class="soon-card"><div class="soon-icon">👥</div><div class="soon-title">User <span>Management</span></div><div class="soon-sub">Full user management with search, filters, status, plan changes, and bulk actions.</div><span class="soon-pill"><span class="dot"></span>COMING SOON</span></div></section>
+    <section class="section" id="section-users">
+      <!-- USERS LAYOUT: KPIs + Filters + Table + Right Rail -->
+      <div class="users-layout">
+
+        <!-- LEFT: KPIs + Filters + Table -->
+        <div class="users-main">
+
+          <!-- 3 KPI CARDS -->
+          <div class="kpis users-kpis" id="usersKpisRow">
+            <!-- populated by JS -->
+          </div>
+
+          <!-- STATUS TABS -->
+          <div class="user-status-tabs" id="userStatusTabs">
+            <button class="ust active" data-status="all">All Users <span class="ust-count" id="ustCountAll">—</span></button>
+            <button class="ust" data-status="active">Active <span class="ust-count" id="ustCountActive">—</span></button>
+            <button class="ust" data-status="inactive">Inactive <span class="ust-count" id="ustCountInactive">—</span></button>
+            <button class="ust" data-status="suspended">Suspended <span class="ust-count" id="ustCountSuspended">—</span></button>
+            <button class="ust" data-status="banned">Banned <span class="ust-count" id="ustCountBanned">—</span></button>
+            <div class="ust-spacer"></div>
+            <button class="ust-filter-btn" id="userFilterToggleBtn">⊟ Filters</button>
+          </div>
+
+          <!-- FILTER ROW -->
+          <div class="user-filter-row" id="userFilterRow">
+            <div class="ufr-field ufr-search">
+              <span class="ufr-ico">🔍</span>
+              <input type="text" id="userSearchInput" placeholder="Search by name, email, wallet...">
+            </div>
+            <select id="userRoleFilter" class="ufr-select">
+              <option value="">All Roles</option>
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+              <option value="super_admin">Super Admin</option>
+              <option value="moderator">Moderator</option>
+            </select>
+            <select id="userPlanFilter" class="ufr-select">
+              <option value="">All Plans</option>
+              <option value="free">Free</option>
+              <option value="pro">Pro</option>
+            </select>
+            <select id="userJoinedFilter" class="ufr-select">
+              <option value="">Any Time</option>
+              <option value="1">Last 24 hours</option>
+              <option value="7">Last 7 days</option>
+              <option value="30">Last 30 days</option>
+              <option value="90">Last 90 days</option>
+            </select>
+            <button class="ufr-reset" id="userResetBtn">⟲ Reset</button>
+          </div>
+
+          <!-- USERS TABLE -->
+          <div class="card users-table-card">
+            <div class="utc-table-wrap">
+              <table class="tbl users-tbl">
+                <thead>
+                  <tr>
+                    <th>USER</th>
+                    <th>WALLET</th>
+                    <th>EMAIL</th>
+                    <th>ROLE</th>
+                    <th>STATUS</th>
+                    <th>PLAN</th>
+                    <th>JOINED <span class="th-sort">↓</span></th>
+                    <th>LAST ACTIVE</th>
+                    <th>ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                  <tr><td colspan="9" class="tbl-empty">Loading users…</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="tbl-foot">
+              <span class="tbl-foot-info" id="usersTableInfo">Loading…</span>
+              <div class="users-pager">
+                <div class="pager" id="usersPager"></div>
+                <select id="usersPerPage" class="ufr-select" style="min-width:90px;">
+                  <option value="10">10 / page</option>
+                  <option value="25">25 / page</option>
+                  <option value="50">50 / page</option>
+                  <option value="100">100 / page</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT RAIL: User detail (hidden by default) -->
+        <aside class="user-rail" id="userRail">
+          <!-- empty state -->
+          <div class="user-rail-empty" id="userRailEmpty">
+            <div class="ure-ico">👤</div>
+            <div class="ure-title">Select a user</div>
+            <div class="ure-sub">Click any row in the table to see full details and actions.</div>
+          </div>
+
+          <!-- populated state -->
+          <div class="user-rail-content" id="userRailContent" style="display:none;">
+            <!-- Header -->
+            <div class="urc-head">
+              <div class="urc-head-left">
+                <div class="urc-avatar" id="urcAvatar"></div>
+                <div class="urc-meta">
+                  <div class="urc-name-row">
+                    <div class="urc-name" id="urcName">—</div>
+                    <span class="urc-plan-badge" id="urcPlanBadge"></span>
+                  </div>
+                  <div class="urc-addr" id="urcAddr">—</div>
+                  <span class="urc-status-badge" id="urcStatusBadge"></span>
+                </div>
+              </div>
+              <button class="urc-close" id="userRailClose" title="Close">✕</button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="urc-tabs">
+              <button class="urc-tab active" data-rtab="overview">Overview</button>
+              <button class="urc-tab" data-rtab="activity">Activity</button>
+              <button class="urc-tab" data-rtab="wallets">Wallets</button>
+              <button class="urc-tab" data-rtab="permissions">Permissions</button>
+            </div>
+
+            <!-- Overview tab -->
+            <div class="urc-tab-panel active" data-rtabpanel="overview">
+
+              <!-- User Information -->
+              <div class="urc-card">
+                <div class="urc-card-title">User Information</div>
+                <div class="urc-kv">
+                  <div class="urc-kv-row"><span class="k">Username</span><span class="v" id="urcUsername">—</span></div>
+                  <div class="urc-kv-row"><span class="k">Email</span><span class="v" id="urcEmail">—</span></div>
+                  <div class="urc-kv-row"><span class="k">Role</span><span class="v" id="urcRole">—</span></div>
+                  <div class="urc-kv-row"><span class="k">Joined</span><span class="v" id="urcJoined">—</span></div>
+                  <div class="urc-kv-row"><span class="k">Last Active</span><span class="v" id="urcLastActive">—</span></div>
+                  <div class="urc-kv-row"><span class="k">Location</span><span class="v" id="urcLocation">—</span></div>
+                  <div class="urc-kv-row"><span class="k">User ID</span><span class="v urc-id" id="urcId">—</span></div>
+                </div>
+              </div>
+
+              <!-- Statistics -->
+              <div class="urc-card">
+                <div class="urc-card-title">Statistics</div>
+                <div class="urc-stats-grid">
+                  <div class="urc-stat"><div class="urc-stat-val" id="urcStatAirdrops">—</div><div class="urc-stat-lbl">Airdrops</div></div>
+                  <div class="urc-stat"><div class="urc-stat-val" id="urcStatClaims">—</div><div class="urc-stat-lbl">Claims</div></div>
+                  <div class="urc-stat"><div class="urc-stat-val" id="urcStatWallets">—</div><div class="urc-stat-lbl">Wallets</div></div>
+                  <div class="urc-stat"><div class="urc-stat-val gold" id="urcStatEarned">—</div><div class="urc-stat-lbl">Total Earned</div></div>
+                </div>
+              </div>
+
+              <!-- Actions -->
+              <div class="urc-card urc-card-actions">
+                <div class="urc-card-title">Actions</div>
+                <div class="urc-actions-grid">
+                  <button class="urc-btn urc-btn-ghost" id="urcBtnEdit">✎ Edit User</button>
+                  <button class="urc-btn urc-btn-ghost" id="urcBtnResetPw">🔑 Reset Password</button>
+                  <button class="urc-btn urc-btn-warn" id="urcBtnSuspend">⏸ Suspend User</button>
+                  <button class="urc-btn urc-btn-danger" id="urcBtnBan">🚫 Ban User</button>
+                </div>
+                <div class="urc-action-note" id="urcActionNote" style="display:none;"></div>
+              </div>
+            </div>
+
+            <!-- Activity tab -->
+            <div class="urc-tab-panel" data-rtabpanel="activity">
+              <div class="urc-card">
+                <div class="urc-card-title">Recent Claims</div>
+                <div id="urcActivityList" class="urc-activity-list">
+                  <div class="tbl-empty">Loading…</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Wallets tab -->
+            <div class="urc-tab-panel" data-rtabpanel="wallets">
+              <div class="urc-card">
+                <div class="urc-card-title">Connected Wallets</div>
+                <div id="urcWalletsList" class="urc-wallets-list">
+                  <div class="tbl-empty">Loading…</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Permissions tab -->
+            <div class="urc-tab-panel" data-rtabpanel="permissions">
+              <div class="urc-card">
+                <div class="urc-card-title">Role &amp; Permissions</div>
+                <div class="urc-kv">
+                  <div class="urc-kv-row"><span class="k">Current Role</span><span class="v" id="urcPermRole">—</span></div>
+                  <div class="urc-kv-row"><span class="k">Subscription</span><span class="v" id="urcPermPlan">—</span></div>
+                </div>
+                <div style="margin-top:14px;">
+                  <label class="urc-field-label">Change Role</label>
+                  <select id="urcChangeRole" class="ufr-select" style="width:100%;">
+                    <option value="user">User</option>
+                    <option value="moderator">Moderator</option>
+                    <option value="admin">Admin</option>
+                    <option value="super_admin">Super Admin</option>
+                  </select>
+                  <button class="urc-btn urc-btn-primary" id="urcBtnSaveRole" style="margin-top:10px;width:100%;">Save Role Change</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </section>
     <section class="section" id="section-airdrops"><div class="soon-card"><div class="soon-icon">🎯</div><div class="soon-title">Airdrop <span>Management</span></div><div class="soon-sub">Create, edit, and manage all curated airdrops shown to users. Set tier, status, allocation, and timeline.</div><span class="soon-pill"><span class="dot"></span>COMING SOON</span></div></section>
     <section class="section" id="section-projects"><div class="soon-card"><div class="soon-icon">📦</div><div class="soon-title">Project <span>Catalog</span></div><div class="soon-sub">Manage the master project database — logos, descriptions, chains, categories, and Intel Hub feed.</div><span class="soon-pill"><span class="dot"></span>COMING SOON</span></div></section>
     <section class="section" id="section-rewards"><div class="soon-card"><div class="soon-icon">💎</div><div class="soon-title">Claims & <span>Rewards</span></div><div class="soon-sub">View aggregate claim activity, dispute resolution, and reward distribution metrics across all users.</div><span class="soon-pill"><span class="dot"></span>COMING SOON</span></div></section>
@@ -1361,6 +2172,727 @@ if(document.readyState==='loading'){
 }else{
   adminBoot();
 }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   USERS TAB SCRIPT (Chunk 16)
+   ═══════════════════════════════════════════════════════════════ */
+(function() {
+'use strict';
+
+// State
+let usersState = {
+  all: [],          // all users loaded from server
+  filtered: [],     // after filters applied
+  statusTab: 'all',
+  search: '',
+  roleFilter: '',
+  planFilter: '',
+  joinedFilter: '',
+  page: 1,
+  perPage: 10,
+  selectedId: null,
+  loaded: false
+};
+
+// Helpers
+function uTimeAgo(ts) {
+  if (!ts) return '—';
+  const d = new Date(ts);
+  if (isNaN(d)) return '—';
+  const sec = Math.floor((Date.now() - d.getTime()) / 1000);
+  if (sec < 60) return sec + 's ago';
+  if (sec < 3600) return Math.floor(sec / 60) + 'm ago';
+  if (sec < 86400) return Math.floor(sec / 3600) + 'h ago';
+  if (sec < 604800) return Math.floor(sec / 86400) + 'd ago';
+  return aFmtDate(ts);
+}
+
+// ─── LOAD all users ──────────────────────────────────────
+async function loadAllUsers() {
+  const tbody = document.getElementById('usersTableBody');
+  if (!tbody) return;
+  try {
+    const sb = aSb();
+    if (!sb) throw new Error('Supabase offline');
+    const { data, error } = await sb
+      .from('profiles')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    usersState.all = data || [];
+    usersState.loaded = true;
+    renderUsersKpis();
+    renderUserStatusCounts();
+    applyFiltersAndRender();
+  } catch (e) {
+    console.error('[users] load:', e);
+    tbody.innerHTML = '<tr><td colspan="9" class="tbl-empty">Failed to load users: ' + aEsc(e.message || 'Unknown') + '</td></tr>';
+    aToast('⚠', 'Load failed', (e.message || 'Unknown').slice(0, 80), 'error');
+  }
+}
+
+// ─── KPIs ────────────────────────────────────────────────
+function renderUsersKpis() {
+  const wrap = document.getElementById('usersKpisRow');
+  if (!wrap) return;
+  const all = usersState.all;
+  const now = Date.now();
+  const wkAgo = now - 7 * 86400000;
+  const total = all.length;
+  const active = all.filter(u => (u.status || 'active') === 'active').length;
+  const newCount = all.filter(u => {
+    const t = new Date(u.created_at).getTime();
+    return !isNaN(t) && t >= wkAgo;
+  }).length;
+  const activePct = total > 0 ? ((active / total) * 100).toFixed(1) + '% of total' : '0% of total';
+
+  wrap.innerHTML = `
+    <div class="kpi purple">
+      <div class="kpi-head"><div class="kpi-icon">👥</div><div class="kpi-lbl">Total Users</div></div>
+      <div class="kpi-val">${aFmtNum(total)}</div>
+      <div class="kpi-delta neutral">${aEsc(newCount > 0 ? '+' + newCount + ' joined this week' : 'no new this week')}</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-head"><div class="kpi-icon">✓</div><div class="kpi-lbl">Active Users</div></div>
+      <div class="kpi-val">${aFmtNum(active)}</div>
+      <div class="kpi-delta neutral">${aEsc(activePct)}</div>
+    </div>
+    <div class="kpi cyan">
+      <div class="kpi-head"><div class="kpi-icon">⭐</div><div class="kpi-lbl">New Users (7D)</div></div>
+      <div class="kpi-val">${aFmtNum(newCount)}</div>
+      <div class="kpi-delta neutral">last 7 days</div>
+    </div>
+  `;
+}
+
+// ─── STATUS TAB COUNTS ───────────────────────────────────
+function renderUserStatusCounts() {
+  const all = usersState.all;
+  const counts = { all: all.length, active: 0, inactive: 0, suspended: 0, banned: 0 };
+  all.forEach(u => {
+    const s = (u.status || 'active').toLowerCase();
+    if (counts[s] != null) counts[s]++;
+  });
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = aFmtNum(v); };
+  set('ustCountAll', counts.all);
+  set('ustCountActive', counts.active);
+  set('ustCountInactive', counts.inactive);
+  set('ustCountSuspended', counts.suspended);
+  set('ustCountBanned', counts.banned);
+}
+
+// ─── FILTER + RENDER ─────────────────────────────────────
+function applyFiltersAndRender() {
+  let filtered = usersState.all.slice();
+
+  // Status tab filter
+  if (usersState.statusTab !== 'all') {
+    filtered = filtered.filter(u => (u.status || 'active').toLowerCase() === usersState.statusTab);
+  }
+
+  // Search
+  const q = (usersState.search || '').toLowerCase().trim();
+  if (q) {
+    filtered = filtered.filter(u => {
+      const fields = [u.username, u.display_name, u.email, u.id, u.x_handle, u.discord_handle].filter(Boolean);
+      return fields.some(f => String(f).toLowerCase().includes(q));
+    });
+  }
+
+  // Role filter
+  if (usersState.roleFilter) {
+    filtered = filtered.filter(u => (u.role || 'user') === usersState.roleFilter);
+  }
+
+  // Plan filter
+  if (usersState.planFilter) {
+    filtered = filtered.filter(u => (u.subscription_plan || u.plan || 'free').toLowerCase() === usersState.planFilter);
+  }
+
+  // Joined filter
+  if (usersState.joinedFilter) {
+    const days = parseInt(usersState.joinedFilter);
+    if (!isNaN(days)) {
+      const cutoff = Date.now() - days * 86400000;
+      filtered = filtered.filter(u => {
+        const t = new Date(u.created_at).getTime();
+        return !isNaN(t) && t >= cutoff;
+      });
+    }
+  }
+
+  usersState.filtered = filtered;
+  if (usersState.page > Math.ceil(filtered.length / usersState.perPage)) usersState.page = 1;
+  renderUsersTable();
+  renderUsersPager();
+}
+
+// ─── RENDER TABLE ────────────────────────────────────────
+function renderUsersTable() {
+  const tbody = document.getElementById('usersTableBody');
+  if (!tbody) return;
+  const filtered = usersState.filtered;
+  const start = (usersState.page - 1) * usersState.perPage;
+  const slice = filtered.slice(start, start + usersState.perPage);
+
+  if (!slice.length) {
+    tbody.innerHTML = '<tr><td colspan="9" class="tbl-empty">No users match these filters.</td></tr>';
+    document.getElementById('usersTableInfo').textContent = '0 users';
+    return;
+  }
+
+  tbody.innerHTML = slice.map(u => {
+    const name = u.display_name || u.username || (u.email || 'user').split('@')[0] || 'User';
+    const initials = aInitials(name);
+    const isPro = (u.subscription_plan || u.plan || '').toLowerCase() === 'pro';
+    const role = (u.role || 'user').toLowerCase();
+    const roleLabel = role === 'super_admin' ? 'Super Admin' : role.charAt(0).toUpperCase() + role.slice(1);
+    const status = (u.status || 'active').toLowerCase();
+    const statusLabel = status.charAt(0).toUpperCase() + status.slice(1);
+    const plan = (u.subscription_plan || u.plan || 'free').toLowerCase();
+    const wallet = u.primary_wallet || u.wallet_address || '—';
+    const isSelected = usersState.selectedId === u.id;
+    return `
+      <tr class="${isSelected ? 'selected' : ''}" data-uid="${aEsc(u.id)}">
+        <td>
+          <div class="uc-user">
+            <div class="uc-avatar" style="background:${aSafeColor(name)};">${aEsc(initials)}</div>
+            <div class="uc-name">
+              ${aEsc(name)}
+              ${isPro ? '<span class="uc-pro">PRO</span>' : ''}
+            </div>
+          </div>
+        </td>
+        <td><span class="uc-addr-mono">${aEsc(aAddrShort(wallet))}</span></td>
+        <td><span class="uc-email">${aEsc(u.email || '—')}</span></td>
+        <td><span class="uc-role-pill ${aEsc(role)}">${aEsc(roleLabel)}</span></td>
+        <td><span class="uc-status-badge ${aEsc(status)}"><span class="dot"></span>${aEsc(statusLabel)}</span></td>
+        <td><span class="uc-role-pill ${plan === 'pro' ? 'admin' : 'user'}">${aEsc(plan.toUpperCase())}</span></td>
+        <td class="tbl-date">${aEsc(aFmtDate(u.created_at))}</td>
+        <td class="tbl-date">${aEsc(uTimeAgo(u.last_active_at || u.updated_at || u.created_at))}</td>
+        <td><button class="uc-action-btn" onclick="event.stopPropagation();uShowRail('${aEsc(u.id)}')">⋯</button></td>
+      </tr>
+    `;
+  }).join('');
+
+  // Row click → open rail
+  tbody.querySelectorAll('tr[data-uid]').forEach(tr => {
+    tr.addEventListener('click', () => uShowRail(tr.getAttribute('data-uid')));
+  });
+
+  document.getElementById('usersTableInfo').textContent =
+    'Showing ' + (start + 1) + ' to ' + (start + slice.length) + ' of ' + aFmtNum(filtered.length) + ' users';
+}
+
+// ─── PAGER ───────────────────────────────────────────────
+function renderUsersPager() {
+  const pager = document.getElementById('usersPager');
+  if (!pager) return;
+  const total = usersState.filtered.length;
+  const totalPages = Math.max(1, Math.ceil(total / usersState.perPage));
+  const cur = usersState.page;
+
+  // Build sensible pager: ‹ 1 ... cur-1 cur cur+1 ... last ›
+  let pages = [];
+  pages.push(1);
+  if (cur - 1 > 2) pages.push('…');
+  for (let i = Math.max(2, cur - 1); i <= Math.min(totalPages - 1, cur + 1); i++) pages.push(i);
+  if (cur + 1 < totalPages - 1) pages.push('…');
+  if (totalPages > 1) pages.push(totalPages);
+  pages = [...new Set(pages)];
+
+  let html = `<button class="pg-btn" ${cur === 1 ? 'disabled' : ''} data-pg="prev">‹</button>`;
+  pages.forEach(p => {
+    if (p === '…') html += `<span class="pg-btn" style="cursor:default;">…</span>`;
+    else html += `<button class="pg-btn ${p === cur ? 'active' : ''}" data-pg="${p}">${p}</button>`;
+  });
+  html += `<button class="pg-btn" ${cur === totalPages ? 'disabled' : ''} data-pg="next">›</button>`;
+  pager.innerHTML = html;
+
+  pager.querySelectorAll('button[data-pg]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const v = btn.getAttribute('data-pg');
+      if (v === 'prev') usersState.page = Math.max(1, cur - 1);
+      else if (v === 'next') usersState.page = Math.min(totalPages, cur + 1);
+      else usersState.page = parseInt(v) || 1;
+      renderUsersTable();
+      renderUsersPager();
+    });
+  });
+}
+
+// ─── RIGHT RAIL ──────────────────────────────────────────
+async function uShowRail(userId) {
+  const user = usersState.all.find(u => u.id === userId);
+  if (!user) return;
+  usersState.selectedId = userId;
+  renderUsersTable();
+
+  document.getElementById('userRailEmpty').style.display = 'none';
+  document.getElementById('userRailContent').style.display = 'block';
+  document.getElementById('userRail').classList.add('open');
+
+  // Reset to overview tab
+  document.querySelectorAll('#section-users .urc-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('#section-users .urc-tab-panel').forEach(p => p.classList.remove('active'));
+  const otab = document.querySelector('#section-users .urc-tab[data-rtab="overview"]');
+  const opanel = document.querySelector('#section-users .urc-tab-panel[data-rtabpanel="overview"]');
+  if (otab) otab.classList.add('active');
+  if (opanel) opanel.classList.add('active');
+
+  renderRailHeader(user);
+  renderRailOverview(user);
+  loadRailStats(user);
+}
+
+function renderRailHeader(u) {
+  const name = u.display_name || u.username || (u.email || 'user').split('@')[0] || 'User';
+  const initials = aInitials(name);
+  const wallet = u.primary_wallet || u.wallet_address || '—';
+  const isPro = (u.subscription_plan || u.plan || '').toLowerCase() === 'pro';
+  const status = (u.status || 'active').toLowerCase();
+  const statusLabel = status.charAt(0).toUpperCase() + status.slice(1);
+
+  const av = document.getElementById('urcAvatar');
+  av.style.background = aSafeColor(name);
+  av.textContent = initials;
+  document.getElementById('urcName').textContent = name;
+  document.getElementById('urcAddr').textContent = aAddrShort(wallet);
+  const pb = document.getElementById('urcPlanBadge');
+  pb.className = 'urc-plan-badge ' + (isPro ? 'pro' : 'free');
+  pb.textContent = isPro ? 'PRO' : 'FREE';
+  const sb = document.getElementById('urcStatusBadge');
+  sb.className = 'urc-status-badge ' + status;
+  sb.innerHTML = '<span class="dot"></span>' + aEsc(statusLabel);
+}
+
+function renderRailOverview(u) {
+  const name = u.display_name || u.username || (u.email || 'user').split('@')[0] || 'User';
+  const role = (u.role || 'user').toLowerCase();
+  const roleLabel = role === 'super_admin' ? 'Super Admin' : role.charAt(0).toUpperCase() + role.slice(1);
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  set('urcUsername', name);
+  set('urcEmail', u.email || '—');
+  set('urcRole', roleLabel);
+  set('urcJoined', aFmtDate(u.created_at));
+  set('urcLastActive', uTimeAgo(u.last_active_at || u.updated_at || u.created_at));
+  set('urcLocation', u.location || u.country || '—');
+  set('urcId', u.id);
+
+  // Permissions tab
+  set('urcPermRole', roleLabel);
+  set('urcPermPlan', (u.subscription_plan || u.plan || 'free').toUpperCase());
+  const cr = document.getElementById('urcChangeRole');
+  if (cr) cr.value = role;
+
+  // Update action button states for suspend/ban
+  const status = (u.status || 'active').toLowerCase();
+  const suspendBtn = document.getElementById('urcBtnSuspend');
+  const banBtn = document.getElementById('urcBtnBan');
+  if (suspendBtn) {
+    suspendBtn.textContent = status === 'suspended' ? '▶ Unsuspend' : '⏸ Suspend User';
+  }
+  if (banBtn) {
+    banBtn.textContent = status === 'banned' ? '✓ Unban' : '🚫 Ban User';
+    banBtn.disabled = false;
+  }
+
+  // Note: prevent admins from suspending/banning themselves
+  const note = document.getElementById('urcActionNote');
+  window.API.getCurrentUser().then(curUser => {
+    if (curUser && curUser.id === u.id) {
+      note.style.display = 'block';
+      note.textContent = '⚠ This is your own account. Suspend/Ban disabled.';
+      if (suspendBtn) suspendBtn.disabled = true;
+      if (banBtn) banBtn.disabled = true;
+    } else if (role === 'super_admin' || role === 'admin') {
+      note.style.display = 'block';
+      note.textContent = 'ℹ This user is an admin. Be careful with destructive actions.';
+      if (suspendBtn) suspendBtn.disabled = false;
+      if (banBtn) banBtn.disabled = false;
+    } else {
+      note.style.display = 'none';
+    }
+  });
+}
+
+async function loadRailStats(u) {
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  set('urcStatAirdrops', '…');
+  set('urcStatClaims', '…');
+  set('urcStatWallets', '…');
+  set('urcStatEarned', '…');
+  try {
+    const sb = aSb();
+    const count = async (table) => {
+      try {
+        const { count } = await sb.from(table).select('*', { count: 'exact', head: true }).eq('user_id', u.id);
+        return count || 0;
+      } catch (e) { return 0; }
+    };
+    const sumEarned = async () => {
+      try {
+        const { data } = await sb.from('user_claim_rewards').select('usd_value').eq('user_id', u.id);
+        return (data || []).reduce((s, r) => s + (Number(r.usd_value) || 0), 0);
+      } catch (e) { return 0; }
+    };
+    const [a, c, w, e] = await Promise.all([
+      count('user_airdrops'),
+      count('user_claim_rewards'),
+      count('user_wallets'),
+      sumEarned()
+    ]);
+    set('urcStatAirdrops', aFmtNum(a));
+    set('urcStatClaims', aFmtNum(c));
+    set('urcStatWallets', aFmtNum(w));
+    set('urcStatEarned', aFmt$(e));
+  } catch (err) {
+    console.error('[users] stats:', err);
+  }
+}
+
+function uHideRail() {
+  usersState.selectedId = null;
+  document.getElementById('userRail').classList.remove('open');
+  document.getElementById('userRailEmpty').style.display = 'block';
+  document.getElementById('userRailContent').style.display = 'none';
+  renderUsersTable();
+}
+
+// ─── ACTIONS (suspend/ban/unban/reset-pw/change-role) ───
+async function uActionSuspend() {
+  if (!usersState.selectedId) return;
+  const u = usersState.all.find(x => x.id === usersState.selectedId);
+  if (!u) return;
+  const status = (u.status || 'active').toLowerCase();
+  const action = status === 'suspended' ? 'unsuspend' : 'suspend';
+  const name = u.display_name || u.username || u.email || 'this user';
+  if (!confirm((action === 'suspend' ? '⏸ Suspend' : '▶ Unsuspend') + ' "' + name + '"?\n\n' + (action === 'suspend' ? 'They will be blocked from logging in until unsuspended.' : 'They will be able to log in again.'))) return;
+
+  try {
+    const sb = aSb();
+    const cur = await window.API.getCurrentUser();
+    const newStatus = action === 'suspend' ? 'suspended' : 'active';
+    const payload = {
+      status: newStatus,
+      suspended_at: action === 'suspend' ? new Date().toISOString() : null,
+      suspended_by: action === 'suspend' ? (cur && cur.id) : null,
+      updated_at: new Date().toISOString()
+    };
+    const { error } = await sb.from('profiles').update(payload).eq('id', u.id);
+    if (error) throw error;
+    Object.assign(u, payload);
+    renderRailHeader(u);
+    renderRailOverview(u);
+    renderUsersTable();
+    renderUserStatusCounts();
+    renderUsersKpis();
+    aToast(action === 'suspend' ? '⏸' : '▶', action === 'suspend' ? 'Suspended' : 'Unsuspended', '"' + name + '" status updated.', 'success');
+  } catch (e) {
+    console.error('[users] suspend:', e);
+    aToast('⚠', 'Failed', (e.message || 'Unknown').slice(0, 80), 'error');
+  }
+}
+
+async function uActionBan() {
+  if (!usersState.selectedId) return;
+  const u = usersState.all.find(x => x.id === usersState.selectedId);
+  if (!u) return;
+  const status = (u.status || 'active').toLowerCase();
+  const name = u.display_name || u.username || u.email || 'this user';
+  if (status === 'banned') {
+    if (!confirm('✓ Unban "' + name + '"? They will be restored to active status.')) return;
+    try {
+      const sb = aSb();
+      const payload = { status: 'active', ban_reason: null, updated_at: new Date().toISOString() };
+      const { error } = await sb.from('profiles').update(payload).eq('id', u.id);
+      if (error) throw error;
+      Object.assign(u, payload);
+      renderRailHeader(u);
+      renderRailOverview(u);
+      renderUsersTable();
+      renderUserStatusCounts();
+      renderUsersKpis();
+      aToast('✓', 'Unbanned', '"' + name + '" restored.', 'success');
+    } catch (e) { aToast('⚠', 'Failed', e.message.slice(0, 80), 'error'); }
+    return;
+  }
+  // Ban flow
+  const c1 = confirm('🚫 BAN "' + name + '"?\n\nThey will be permanently blocked. Their data stays.\n\nContinue?');
+  if (!c1) return;
+  const reason = prompt('Reason for ban (logged for audit):', '');
+  if (reason === null) return;
+  const conf = prompt('Type "BAN" in uppercase to confirm:');
+  if (conf !== 'BAN') { aToast('ℹ', 'Cancelled', 'Ban not applied.', null); return; }
+
+  try {
+    const sb = aSb();
+    const cur = await window.API.getCurrentUser();
+    const payload = {
+      status: 'banned',
+      ban_reason: reason || '(no reason given)',
+      suspended_at: new Date().toISOString(),
+      suspended_by: cur && cur.id,
+      updated_at: new Date().toISOString()
+    };
+    const { error } = await sb.from('profiles').update(payload).eq('id', u.id);
+    if (error) throw error;
+    Object.assign(u, payload);
+    renderRailHeader(u);
+    renderRailOverview(u);
+    renderUsersTable();
+    renderUserStatusCounts();
+    renderUsersKpis();
+    aToast('🚫', 'Banned', '"' + name + '" has been banned.', 'success');
+  } catch (e) {
+    console.error('[users] ban:', e);
+    aToast('⚠', 'Failed', (e.message || 'Unknown').slice(0, 80), 'error');
+  }
+}
+
+async function uActionResetPassword() {
+  if (!usersState.selectedId) return;
+  const u = usersState.all.find(x => x.id === usersState.selectedId);
+  if (!u || !u.email) { aToast('⚠', 'No email', 'This user has no email on file.', 'error'); return; }
+  if (!confirm('Send password reset email to ' + u.email + '?')) return;
+  try {
+    const sb = aSb();
+    const { error } = await sb.auth.resetPasswordForEmail(u.email, {
+      redirectTo: window.location.origin + '/dashboard.html'
+    });
+    if (error) throw error;
+    aToast('📧', 'Email sent', 'Reset link sent to ' + u.email, 'success');
+  } catch (e) {
+    console.error('[users] reset pw:', e);
+    aToast('⚠', 'Failed', (e.message || 'Unknown').slice(0, 80), 'error');
+  }
+}
+
+async function uActionEdit() {
+  if (!usersState.selectedId) return;
+  const u = usersState.all.find(x => x.id === usersState.selectedId);
+  if (!u) return;
+  // Inline lightweight edit: just display name + email for now
+  const newName = prompt('Edit display name:', u.display_name || u.username || '');
+  if (newName === null) return;
+  if (!newName.trim()) { aToast('⚠', 'Empty', 'Name cannot be empty.', 'error'); return; }
+  try {
+    const sb = aSb();
+    const payload = { display_name: newName.trim(), updated_at: new Date().toISOString() };
+    const { error } = await sb.from('profiles').update(payload).eq('id', u.id);
+    if (error) throw error;
+    Object.assign(u, payload);
+    renderRailHeader(u);
+    renderRailOverview(u);
+    renderUsersTable();
+    aToast('✓', 'Updated', 'Display name changed.', 'success');
+  } catch (e) {
+    console.error('[users] edit:', e);
+    aToast('⚠', 'Failed', (e.message || 'Unknown').slice(0, 80), 'error');
+  }
+}
+
+async function uActionSaveRole() {
+  if (!usersState.selectedId) return;
+  const u = usersState.all.find(x => x.id === usersState.selectedId);
+  if (!u) return;
+  const newRole = document.getElementById('urcChangeRole').value;
+  if (newRole === (u.role || 'user')) { aToast('ℹ', 'No change', 'Role is already set to ' + newRole, null); return; }
+  const name = u.display_name || u.username || u.email || 'this user';
+  if (!confirm('Change role of "' + name + '" to "' + newRole + '"?')) return;
+
+  try {
+    const sb = aSb();
+    const payload = { role: newRole, updated_at: new Date().toISOString() };
+    const { error } = await sb.from('profiles').update(payload).eq('id', u.id);
+    if (error) throw error;
+    Object.assign(u, payload);
+    renderRailHeader(u);
+    renderRailOverview(u);
+    renderUsersTable();
+    aToast('🛡', 'Role changed', name + ' is now ' + newRole, 'success');
+  } catch (e) {
+    console.error('[users] role:', e);
+    aToast('⚠', 'Failed', (e.message || 'Unknown').slice(0, 80), 'error');
+  }
+}
+
+// ─── ACTIVITY / WALLETS tabs (load on tab switch) ────────
+async function uLoadActivityTab() {
+  const list = document.getElementById('urcActivityList');
+  if (!list) return;
+  list.innerHTML = '<div class="tbl-empty">Loading…</div>';
+  if (!usersState.selectedId) return;
+  try {
+    const sb = aSb();
+    const { data, error } = await sb.from('user_claim_rewards')
+      .select('*').eq('user_id', usersState.selectedId)
+      .order('claimed_date', { ascending: false }).limit(10);
+    if (error) throw error;
+    if (!data || !data.length) { list.innerHTML = '<div class="tbl-empty">No claims yet.</div>'; return; }
+    list.innerHTML = data.map(r => `
+      <div class="urc-list-item">
+        <div>
+          <div class="urc-li-title">${aEsc(r.project_name || 'Claim')}</div>
+          <div class="urc-li-meta">${aEsc(aFmtDate(r.claimed_date || r.created_at))}</div>
+        </div>
+        <div class="urc-li-val">${aEsc(aFmt$(r.usd_value || 0))}</div>
+      </div>
+    `).join('');
+  } catch (e) {
+    list.innerHTML = '<div class="tbl-empty">Failed to load.</div>';
+    console.error(e);
+  }
+}
+
+async function uLoadWalletsTab() {
+  const list = document.getElementById('urcWalletsList');
+  if (!list) return;
+  list.innerHTML = '<div class="tbl-empty">Loading…</div>';
+  if (!usersState.selectedId) return;
+  try {
+    const sb = aSb();
+    const { data, error } = await sb.from('user_wallets')
+      .select('*').eq('user_id', usersState.selectedId).limit(20);
+    if (error) throw error;
+    if (!data || !data.length) { list.innerHTML = '<div class="tbl-empty">No wallets added.</div>'; return; }
+    list.innerHTML = data.map(w => `
+      <div class="urc-list-item">
+        <div>
+          <div class="urc-li-title">${aEsc(w.label || w.nickname || 'Wallet')}</div>
+          <div class="urc-li-meta">${aEsc(aAddrShort(w.address || ''))}</div>
+        </div>
+        <div class="urc-li-meta">${aEsc(w.chain || 'EVM')}</div>
+      </div>
+    `).join('');
+  } catch (e) {
+    list.innerHTML = '<div class="tbl-empty">Failed to load.</div>';
+    console.error(e);
+  }
+}
+
+// ─── WIRING ──────────────────────────────────────────────
+function initUsersTab() {
+  // Status tabs
+  document.querySelectorAll('#section-users .ust').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('#section-users .ust').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      usersState.statusTab = t.getAttribute('data-status');
+      usersState.page = 1;
+      applyFiltersAndRender();
+    });
+  });
+
+  // Filters
+  const search = document.getElementById('userSearchInput');
+  if (search) {
+    let searchT;
+    search.addEventListener('input', () => {
+      clearTimeout(searchT);
+      searchT = setTimeout(() => {
+        usersState.search = search.value;
+        usersState.page = 1;
+        applyFiltersAndRender();
+      }, 250);
+    });
+  }
+  const roleF = document.getElementById('userRoleFilter');
+  if (roleF) roleF.addEventListener('change', () => { usersState.roleFilter = roleF.value; usersState.page = 1; applyFiltersAndRender(); });
+  const planF = document.getElementById('userPlanFilter');
+  if (planF) planF.addEventListener('change', () => { usersState.planFilter = planF.value; usersState.page = 1; applyFiltersAndRender(); });
+  const joinedF = document.getElementById('userJoinedFilter');
+  if (joinedF) joinedF.addEventListener('change', () => { usersState.joinedFilter = joinedF.value; usersState.page = 1; applyFiltersAndRender(); });
+
+  const reset = document.getElementById('userResetBtn');
+  if (reset) reset.addEventListener('click', () => {
+    usersState.search = ''; usersState.roleFilter = ''; usersState.planFilter = ''; usersState.joinedFilter = '';
+    usersState.statusTab = 'all'; usersState.page = 1;
+    if (search) search.value = '';
+    if (roleF) roleF.value = '';
+    if (planF) planF.value = '';
+    if (joinedF) joinedF.value = '';
+    document.querySelectorAll('#section-users .ust').forEach(x => x.classList.remove('active'));
+    const allTab = document.querySelector('#section-users .ust[data-status="all"]');
+    if (allTab) allTab.classList.add('active');
+    applyFiltersAndRender();
+  });
+
+  // Per-page selector
+  const perPage = document.getElementById('usersPerPage');
+  if (perPage) perPage.addEventListener('change', () => {
+    usersState.perPage = parseInt(perPage.value) || 10;
+    usersState.page = 1;
+    renderUsersTable();
+    renderUsersPager();
+  });
+
+  // Rail close
+  const close = document.getElementById('userRailClose');
+  if (close) close.addEventListener('click', uHideRail);
+
+  // Rail tabs
+  document.querySelectorAll('#section-users .urc-tab').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('#section-users .urc-tab').forEach(x => x.classList.remove('active'));
+      document.querySelectorAll('#section-users .urc-tab-panel').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      const target = t.getAttribute('data-rtab');
+      const panel = document.querySelector('#section-users .urc-tab-panel[data-rtabpanel="' + target + '"]');
+      if (panel) panel.classList.add('active');
+      if (target === 'activity') uLoadActivityTab();
+      if (target === 'wallets') uLoadWalletsTab();
+    });
+  });
+
+  // Action buttons
+  const eBtn = document.getElementById('urcBtnEdit');
+  if (eBtn) eBtn.addEventListener('click', uActionEdit);
+  const rBtn = document.getElementById('urcBtnResetPw');
+  if (rBtn) rBtn.addEventListener('click', uActionResetPassword);
+  const sBtn = document.getElementById('urcBtnSuspend');
+  if (sBtn) sBtn.addEventListener('click', uActionSuspend);
+  const bBtn = document.getElementById('urcBtnBan');
+  if (bBtn) bBtn.addEventListener('click', uActionBan);
+  const saveRoleBtn = document.getElementById('urcBtnSaveRole');
+  if (saveRoleBtn) saveRoleBtn.addEventListener('click', uActionSaveRole);
+
+  // Filter toggle (mobile-friendly)
+  const filterToggle = document.getElementById('userFilterToggleBtn');
+  if (filterToggle) filterToggle.addEventListener('click', () => {
+    const row = document.getElementById('userFilterRow');
+    if (row) row.style.display = row.style.display === 'none' ? 'grid' : 'none';
+  });
+}
+
+// Expose
+window.uShowRail = uShowRail;
+window.uHideRail = uHideRail;
+window.loadUsersTab = loadAllUsers;
+window.initUsersTab = initUsersTab;
+
+// Hook into section switching — when Users tab opens, load if not loaded
+const origSwitch = window.switchSection;
+if (origSwitch && !window.__usersHooked) {
+  window.__usersHooked = true;
+  window.switchSection = function(name) {
+    origSwitch(name);
+    if (name === 'users' && !usersState.loaded) {
+      loadAllUsers();
+    }
+  };
+}
+
+// Init on DOM ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initUsersTab);
+} else {
+  initUsersTab();
+}
+
+})();
+
 </script>
 </body>
 </html>
