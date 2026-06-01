@@ -1184,6 +1184,718 @@ button{cursor:pointer;font-family:'Rajdhani',sans-serif}
 }
 
 
+
+
+/* ═══════════════════════════════════════════════════════════════
+   AIRDROPS TAB (Chunk 17) — admin Airdrops management
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Layout */
+#section-airdrops .ad-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 16px;
+  align-items: flex-start;
+}
+#section-airdrops .ad-main { min-width: 0; }
+
+/* 5 KPI cards full row */
+#section-airdrops .ad-kpis {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+@media (max-width: 1400px) { #section-airdrops .ad-kpis { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 720px) { #section-airdrops .ad-kpis { grid-template-columns: 1fr; } }
+
+#section-airdrops .ad-kpi-special {
+  background: linear-gradient(135deg, rgba(176,112,255,0.10), rgba(74,240,255,0.04));
+  border-color: rgba(176,112,255,0.25);
+}
+#section-airdrops .ad-kpi-link {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--cyan);
+  letter-spacing: 0.4px;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+}
+#section-airdrops .ad-kpi-link:hover { color: var(--text); }
+
+/* STATUS TABS */
+#section-airdrops .ad-status-tabs {
+  display: flex; align-items: center; gap: 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 14px;
+  overflow-x: auto; scrollbar-width: none;
+}
+#section-airdrops .ad-status-tabs::-webkit-scrollbar { display: none; }
+#section-airdrops .ast {
+  background: transparent; border: none;
+  color: var(--text-dim);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.2px;
+  padding: 11px 18px;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 7px;
+  transition: color 0.15s;
+}
+#section-airdrops .ast:hover { color: var(--text); }
+#section-airdrops .ast.active {
+  color: var(--purple);
+  border-bottom-color: var(--purple);
+  font-weight: 700;
+}
+#section-airdrops .ast-count {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  background: var(--bg-card-dk);
+  border: 1px solid var(--border);
+  padding: 2px 7px;
+  border-radius: 4px;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+#section-airdrops .ast.active .ast-count {
+  background: var(--purple-soft);
+  border-color: rgba(176,112,255,0.25);
+  color: var(--purple);
+}
+#section-airdrops .ast-spacer { flex: 1; }
+
+/* FILTER ROW */
+#section-airdrops .ad-filter-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr auto;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding: 14px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+}
+@media (max-width: 1100px) {
+  #section-airdrops .ad-filter-row { grid-template-columns: 1fr 1fr 1fr; }
+  #section-airdrops .ad-filter-row .ufr-search { grid-column: 1 / -1; }
+}
+
+/* TABLE */
+#section-airdrops .ad-table-card { padding: 16px 18px; }
+#section-airdrops .ad-table-wrap { overflow-x: auto; }
+#section-airdrops .ad-tbl tr { cursor: pointer; }
+#section-airdrops .ad-tbl tr.selected td { background: rgba(176,112,255,0.06); }
+#section-airdrops .ad-tbl tr.selected td:first-child {
+  position: relative;
+}
+#section-airdrops .ad-tbl tr.selected td:first-child::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; background: var(--purple);
+  box-shadow: 0 0 6px var(--purple);
+}
+
+#section-airdrops .ad-name-cell {
+  display: flex; align-items: center; gap: 10px;
+}
+#section-airdrops .ad-logo {
+  width: 30px; height: 30px;
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px; font-weight: 800;
+  color: white; flex-shrink: 0;
+}
+#section-airdrops .ad-name {
+  font-weight: 700;
+  color: var(--text);
+  font-size: 13px;
+  white-space: nowrap;
+}
+#section-airdrops .ad-token {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--bg-card-dk);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+#section-airdrops .ad-status-badge {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-flex; align-items: center; gap: 5px;
+}
+#section-airdrops .ad-status-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; box-shadow: 0 0 4px currentColor; }
+#section-airdrops .ad-status-badge.active    { background: var(--green-soft); color: var(--green); border: 1px solid rgba(0,232,122,0.3); }
+#section-airdrops .ad-status-badge.upcoming  { background: var(--cyan-soft); color: var(--cyan); border: 1px solid rgba(74,240,255,0.3); }
+#section-airdrops .ad-status-badge.completed { background: var(--purple-soft); color: var(--purple); border: 1px solid rgba(176,112,255,0.3); }
+#section-airdrops .ad-status-badge.cancelled { background: rgba(255,71,87,0.08); color: var(--red); border: 1px solid rgba(255,71,87,0.3); }
+#section-airdrops .ad-status-badge.draft     { background: var(--bg-card-dk); color: var(--text-muted); border: 1px solid var(--border); }
+
+#section-airdrops .ad-participants-cell {
+  display: flex; flex-direction: column;
+}
+#section-airdrops .ad-participants-num {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  color: var(--text);
+  font-size: 12.5px;
+}
+#section-airdrops .ad-participants-delta {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  color: var(--green);
+  font-weight: 700;
+  margin-top: 2px;
+  letter-spacing: 0.3px;
+}
+#section-airdrops .ad-participants-delta.down { color: var(--red); }
+
+#section-airdrops .ad-allocation-cell {
+  display: flex; flex-direction: column;
+}
+#section-airdrops .ad-allocation-main {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  color: var(--text);
+  font-size: 12.5px;
+}
+#section-airdrops .ad-allocation-usd {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  letter-spacing: 0.3px;
+}
+
+#section-airdrops .ad-actions {
+  display: flex; gap: 5px; align-items: center;
+}
+#section-airdrops .ad-act-btn {
+  width: 28px; height: 28px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  border-radius: 6px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  transition: all 0.15s;
+}
+#section-airdrops .ad-act-btn:hover { color: var(--text); border-color: var(--border-hi); }
+#section-airdrops .ad-act-btn.edit:hover { color: var(--cyan); border-color: var(--cyan); }
+#section-airdrops .ad-act-btn.danger:hover { color: var(--red); border-color: var(--red); }
+
+#section-airdrops .ad-pager-wrap {
+  display: flex; align-items: center; gap: 10px;
+}
+
+/* ─── RIGHT RAIL ─── */
+#section-airdrops .ad-rail {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 0;
+  position: sticky;
+  top: 16px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+#section-airdrops .ad-rail::-webkit-scrollbar { width: 4px; }
+#section-airdrops .ad-rail::-webkit-scrollbar-thumb { background: rgba(245,200,66,0.2); border-radius: 2px; }
+
+/* Empty state */
+#section-airdrops .ad-rail-empty {
+  padding: 60px 24px;
+  text-align: center;
+}
+#section-airdrops .ad-re-ico {
+  width: 64px; height: 64px;
+  border-radius: 16px;
+  background: var(--bg-card-dk);
+  border: 1px solid var(--border);
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  font-size: 28px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+#section-airdrops .ad-re-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 15px; font-weight: 700;
+  color: var(--text-dim);
+  letter-spacing: 0.3px;
+  margin-bottom: 6px;
+}
+#section-airdrops .ad-re-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Hero header */
+#section-airdrops .ad-hero {
+  position: relative;
+  padding: 28px 20px 18px;
+  background: linear-gradient(135deg, rgba(176,112,255,0.15), rgba(74,240,255,0.06));
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+#section-airdrops .ad-hero::before {
+  content: '';
+  position: absolute;
+  top: -40%; right: -20%;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, var(--purple), transparent 65%);
+  filter: blur(50px);
+  opacity: 0.4;
+  pointer-events: none;
+}
+#section-airdrops .ad-hero-close {
+  position: absolute;
+  top: 12px; right: 12px;
+  width: 28px; height: 28px;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid var(--border-hi);
+  color: var(--text-dim);
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  z-index: 2;
+}
+#section-airdrops .ad-hero-close:hover { color: var(--red); border-color: var(--red); }
+#section-airdrops .ad-hero-logo {
+  width: 64px; height: 64px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 22px; font-weight: 800;
+  color: white;
+  margin: 0 auto 14px;
+  box-shadow: 0 0 24px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.1);
+  position: relative;
+  z-index: 1;
+}
+#section-airdrops .ad-hero-name-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+  flex-wrap: wrap;
+}
+#section-airdrops .ad-hero-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 17px; font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+  text-align: center;
+}
+#section-airdrops .ad-hero-chips {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 12px;
+  position: relative;
+  z-index: 1;
+}
+#section-airdrops .ad-chip {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid var(--border-hi);
+  color: var(--text);
+  padding: 3px 9px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+#section-airdrops .ad-chip.gold { color: var(--gold); border-color: rgba(245,200,66,0.3); }
+#section-airdrops .ad-chip.cyan { color: var(--cyan); border-color: rgba(74,240,255,0.3); }
+
+/* Rail tabs */
+#section-airdrops .ad-rail-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  padding: 0 14px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+#section-airdrops .ad-rail-tabs::-webkit-scrollbar { display: none; }
+#section-airdrops .ad-rtab {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 12px; font-weight: 600;
+  padding: 11px 12px;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+#section-airdrops .ad-rtab:hover { color: var(--text); }
+#section-airdrops .ad-rtab.active {
+  color: var(--purple);
+  border-bottom-color: var(--purple);
+  font-weight: 700;
+}
+
+/* Rail panels */
+#section-airdrops .ad-rtab-panel { display: none; padding: 16px; }
+#section-airdrops .ad-rtab-panel.active { display: block; }
+
+/* Stat rows (Overview top section) */
+#section-airdrops .ad-stat-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+#section-airdrops .ad-stat-row:first-child { padding-top: 0; }
+#section-airdrops .ad-stat-row:last-child { border-bottom: none; padding-bottom: 0; }
+#section-airdrops .ad-stat-ico {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+#section-airdrops .ad-stat-ico.purple { background: var(--purple-soft); color: var(--purple); border: 1px solid rgba(176,112,255,0.25); }
+#section-airdrops .ad-stat-ico.cyan { background: var(--cyan-soft); color: var(--cyan); border: 1px solid rgba(74,240,255,0.25); }
+#section-airdrops .ad-stat-ico.green { background: var(--green-soft); color: var(--green); border: 1px solid rgba(0,232,122,0.25); }
+#section-airdrops .ad-stat-ico.gold { background: var(--gold-soft); color: var(--gold); border: 1px solid rgba(245,200,66,0.25); }
+#section-airdrops .ad-stat-ico.orange { background: var(--orange-soft); color: var(--orange); border: 1px solid rgba(255,144,70,0.25); }
+
+#section-airdrops .ad-stat-body { flex: 1; min-width: 0; }
+#section-airdrops .ad-stat-lbl {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px;
+  color: var(--text-muted);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+#section-airdrops .ad-stat-val {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13.5px; font-weight: 700;
+  color: var(--text);
+  line-height: 1.1;
+}
+#section-airdrops .ad-stat-side {
+  text-align: right;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10.5px;
+  color: var(--text-dim);
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+#section-airdrops .ad-stat-side.green { color: var(--green); }
+
+/* Info card (rail) */
+#section-airdrops .ad-info-card {
+  background: var(--bg-card-dk);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  margin-top: 14px;
+}
+#section-airdrops .ad-info-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px; font-weight: 700;
+  color: var(--text-dim);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+#section-airdrops .ad-kv-row {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 10px;
+  align-items: center;
+  font-size: 12px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+#section-airdrops .ad-kv-row:last-child { border-bottom: none; }
+#section-airdrops .ad-kv-row .k {
+  color: var(--text-muted);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+#section-airdrops .ad-kv-row .v {
+  color: var(--text);
+  font-weight: 600;
+  word-break: break-word;
+  text-align: right;
+}
+#section-airdrops .ad-kv-row .v.link {
+  color: var(--cyan);
+  text-decoration: none;
+}
+#section-airdrops .ad-kv-row .v.link:hover { text-decoration: underline; }
+#section-airdrops .ad-kv-row .v.status-active { color: var(--green); }
+#section-airdrops .ad-kv-row .v.status-cancelled { color: var(--red); }
+#section-airdrops .ad-kv-row .v.status-completed { color: var(--purple); }
+#section-airdrops .ad-kv-row .v.status-upcoming { color: var(--cyan); }
+
+/* Action buttons (rail bottom) */
+#section-airdrops .ad-actions-stack {
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 16px;
+  border-top: 1px solid var(--border);
+}
+#section-airdrops .ad-rail-btn {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.4px;
+  padding: 12px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  transition: all 0.15s;
+}
+#section-airdrops .ad-rail-btn.primary {
+  background: linear-gradient(135deg, var(--purple), #7a4fb0);
+  color: white;
+  border: none;
+  box-shadow: 0 0 16px var(--purple-glow);
+}
+#section-airdrops .ad-rail-btn.primary:hover { filter: brightness(1.1); }
+#section-airdrops .ad-rail-btn.ghost {
+  background: var(--bg-card-dk);
+  border: 1px solid var(--border-hi);
+  color: var(--text);
+}
+#section-airdrops .ad-rail-btn.ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+#section-airdrops .ad-rail-btn.danger {
+  background: transparent;
+  border: 1px solid var(--red);
+  color: var(--red);
+}
+#section-airdrops .ad-rail-btn.danger:hover { background: var(--red); color: white; }
+
+/* ─── MODAL (Add/Edit form) ─── */
+#section-airdrops .ad-modal-backdrop {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(3,6,12,0.78);
+  backdrop-filter: blur(6px);
+  z-index: 500;
+  align-items: flex-start; justify-content: center;
+  padding: 40px 20px;
+  overflow-y: auto;
+}
+#section-airdrops .ad-modal-backdrop.open { display: flex; }
+#section-airdrops .ad-modal {
+  background: var(--bg-deep);
+  border: 1px solid var(--border-hi);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 720px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(176,112,255,0.15);
+  position: relative;
+}
+#section-airdrops .ad-modal-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+}
+#section-airdrops .ad-modal-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px; font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.2px;
+}
+#section-airdrops .ad-modal-close {
+  width: 32px; height: 32px;
+  background: var(--bg-card-dk);
+  border: 1px solid var(--border-hi);
+  color: var(--text-dim);
+  border-radius: 7px;
+  font-size: 14px;
+  cursor: pointer;
+}
+#section-airdrops .ad-modal-close:hover { color: var(--red); border-color: var(--red); }
+#section-airdrops .ad-modal-body {
+  padding: 20px 24px;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+#section-airdrops .ad-modal-body::-webkit-scrollbar { width: 4px; }
+#section-airdrops .ad-modal-body::-webkit-scrollbar-thumb { background: rgba(245,200,66,0.2); border-radius: 2px; }
+#section-airdrops .ad-modal-foot {
+  display: flex; justify-content: flex-end; gap: 10px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+}
+
+/* Form grid */
+#section-airdrops .ad-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+#section-airdrops .ad-form-field { display: flex; flex-direction: column; }
+#section-airdrops .ad-form-field.full { grid-column: 1 / -1; }
+#section-airdrops .ad-form-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px; font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+#section-airdrops .ad-form-label .req { color: var(--red); margin-left: 3px; }
+#section-airdrops .ad-form-input,
+#section-airdrops .ad-form-select,
+#section-airdrops .ad-form-textarea {
+  width: 100%;
+  background: var(--bg-card-dk);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13.5px; font-weight: 500;
+  padding: 10px 13px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+#section-airdrops .ad-form-input:focus,
+#section-airdrops .ad-form-select:focus,
+#section-airdrops .ad-form-textarea:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 1px rgba(74,240,255,0.15);
+}
+#section-airdrops .ad-form-textarea {
+  min-height: 70px; resize: vertical; line-height: 1.4;
+  font-family: 'Rajdhani', sans-serif;
+}
+#section-airdrops .ad-form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' stroke='%238a92a8' stroke-width='1.5' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+#section-airdrops .ad-form-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  font-style: italic;
+}
+#section-airdrops .ad-form-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 8px 0;
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 600;
+}
+#section-airdrops .ad-form-checkbox input { width: 16px; height: 16px; accent-color: var(--purple); cursor: pointer; }
+
+@media (max-width: 720px) {
+  #section-airdrops .ad-form-grid { grid-template-columns: 1fr; }
+}
+
+/* Modal-specific buttons */
+#section-airdrops .ad-modal-btn {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.4px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+#section-airdrops .ad-modal-btn.ghost {
+  background: var(--bg-card-dk);
+  border: 1px solid var(--border-hi);
+  color: var(--text);
+}
+#section-airdrops .ad-modal-btn.ghost:hover { border-color: var(--text-dim); }
+#section-airdrops .ad-modal-btn.primary {
+  background: linear-gradient(135deg, var(--purple), #7a4fb0);
+  color: white;
+  border: none;
+  box-shadow: 0 0 14px var(--purple-glow);
+}
+#section-airdrops .ad-modal-btn.primary:hover { filter: brightness(1.1); }
+#section-airdrops .ad-modal-btn.primary:disabled { opacity: 0.6; cursor: wait; }
+
+/* Top action buttons */
+#section-airdrops .ad-add-btn {
+  background: linear-gradient(135deg, var(--purple), #7a4fb0);
+  color: white;
+  border: none;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px; font-weight: 800;
+  letter-spacing: 0.5px;
+  padding: 9px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 0 16px var(--purple-glow);
+  display: inline-flex; align-items: center; gap: 7px;
+}
+#section-airdrops .ad-add-btn:hover { filter: brightness(1.1); }
+#section-airdrops .ad-export-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-hi);
+  color: var(--text);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 9px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+#section-airdrops .ad-export-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+
+#section-airdrops .ad-toolbar {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 10px; flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+#section-airdrops .ad-toolbar-right { display: flex; gap: 8px; align-items: center; }
+
+/* MOBILE: rail becomes modal */
+@media (max-width: 1100px) {
+  #section-airdrops .ad-layout { grid-template-columns: 1fr; }
+  #section-airdrops .ad-rail {
+    position: fixed;
+    top: 0; right: 0;
+    width: min(380px, 100vw);
+    height: 100vh;
+    border-radius: 0;
+    z-index: 300;
+    transform: translateX(100%);
+    transition: transform 0.25s;
+    max-height: 100vh;
+  }
+  #section-airdrops .ad-rail.open { transform: translateX(0); box-shadow: -8px 0 30px rgba(0,0,0,0.5); }
+}
+
+
 </style>
 </head>
 <body>
@@ -1633,7 +2345,414 @@ button{cursor:pointer;font-family:'Rajdhani',sans-serif}
 
       </div>
     </section>
-    <section class="section" id="section-airdrops"><div class="soon-card"><div class="soon-icon">🎯</div><div class="soon-title">Airdrop <span>Management</span></div><div class="soon-sub">Create, edit, and manage all curated airdrops shown to users. Set tier, status, allocation, and timeline.</div><span class="soon-pill"><span class="dot"></span>COMING SOON</span></div></section>
+    <section class="section" id="section-airdrops">
+
+      <!-- TOOLBAR (Export / Add Airdrop) -->
+      <div class="ad-toolbar">
+        <div></div>
+        <div class="ad-toolbar-right">
+          <button class="ad-export-btn" id="adExportBtn">⬇ EXPORT</button>
+          <button class="ad-add-btn" id="adAddBtn">+ ADD AIRDROP</button>
+        </div>
+      </div>
+
+      <!-- LAYOUT -->
+      <div class="ad-layout">
+
+        <!-- MAIN -->
+        <div class="ad-main">
+
+          <!-- 5 KPIs -->
+          <div class="ad-kpis" id="adKpisRow">
+            <!-- populated by JS -->
+          </div>
+
+          <!-- STATUS TABS -->
+          <div class="ad-status-tabs" id="adStatusTabs">
+            <button class="ast active" data-status="all">All Airdrops <span class="ast-count" id="astCountAll">—</span></button>
+            <button class="ast" data-status="upcoming">Upcoming <span class="ast-count" id="astCountUpcoming">—</span></button>
+            <button class="ast" data-status="active">Active <span class="ast-count" id="astCountActive">—</span></button>
+            <button class="ast" data-status="completed">Completed <span class="ast-count" id="astCountCompleted">—</span></button>
+            <button class="ast" data-status="cancelled">Cancelled <span class="ast-count" id="astCountCancelled">—</span></button>
+            <button class="ast" data-status="draft">Drafts <span class="ast-count" id="astCountDraft">—</span></button>
+            <div class="ast-spacer"></div>
+          </div>
+
+          <!-- FILTER ROW -->
+          <div class="ad-filter-row" id="adFilterRow">
+            <div class="ufr-field ufr-search">
+              <span class="ufr-ico">🔍</span>
+              <input type="text" id="adSearchInput" placeholder="Search by name, token, project...">
+            </div>
+            <select id="adStatusFilter" class="ufr-select">
+              <option value="">All Status</option>
+              <option value="draft">Draft</option>
+              <option value="upcoming">Upcoming</option>
+              <option value="active">Active</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+            <select id="adChainFilter" class="ufr-select">
+              <option value="">All Chains</option>
+            </select>
+            <select id="adCategoryFilter" class="ufr-select">
+              <option value="">All Categories</option>
+              <option value="DeFi">DeFi</option>
+              <option value="L2">Layer 2</option>
+              <option value="NFT">NFT</option>
+              <option value="Gaming">Gaming</option>
+              <option value="Infrastructure">Infrastructure</option>
+              <option value="Social">Social</option>
+              <option value="AI">AI</option>
+              <option value="DePIN">DePIN</option>
+            </select>
+            <select id="adDateFilter" class="ufr-select">
+              <option value="">Any Date</option>
+              <option value="active-now">Active Now</option>
+              <option value="this-week">This Week</option>
+              <option value="this-month">This Month</option>
+              <option value="next-30">Next 30 Days</option>
+            </select>
+            <button class="ufr-reset" id="adResetBtn">⟲ Reset</button>
+          </div>
+
+          <!-- TABLE -->
+          <div class="card ad-table-card">
+            <div class="ad-table-wrap">
+              <table class="tbl ad-tbl">
+                <thead>
+                  <tr>
+                    <th>AIRDROP</th>
+                    <th>PROJECT</th>
+                    <th>TOKEN</th>
+                    <th>STATUS</th>
+                    <th>PARTICIPANTS</th>
+                    <th>ALLOCATION</th>
+                    <th>START</th>
+                    <th>END</th>
+                    <th>ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="adTableBody">
+                  <tr><td colspan="9" class="tbl-empty">Loading airdrops…</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="tbl-foot">
+              <span class="tbl-foot-info" id="adTableInfo">Loading…</span>
+              <div class="ad-pager-wrap">
+                <div class="pager" id="adPager"></div>
+                <select id="adPerPage" class="ufr-select" style="min-width:90px;">
+                  <option value="10">10 / page</option>
+                  <option value="25">25 / page</option>
+                  <option value="50">50 / page</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT RAIL -->
+        <aside class="ad-rail" id="adRail">
+          <!-- Empty state -->
+          <div class="ad-rail-empty" id="adRailEmpty">
+            <div class="ad-re-ico">🎯</div>
+            <div class="ad-re-title">Select an airdrop</div>
+            <div class="ad-re-sub">Click any row in the table to see full details and edit options. Or click <b>+ Add Airdrop</b> to create one.</div>
+          </div>
+
+          <!-- Populated state -->
+          <div class="ad-rail-content" id="adRailContent" style="display:none;">
+
+            <!-- Hero header -->
+            <div class="ad-hero">
+              <button class="ad-hero-close" id="adRailClose">✕</button>
+              <div class="ad-hero-logo" id="adHeroLogo"></div>
+              <div class="ad-hero-name-row">
+                <div class="ad-hero-name" id="adHeroName">—</div>
+                <span class="ad-status-badge active" id="adHeroStatus"><span class="dot"></span>—</span>
+              </div>
+              <div class="ad-hero-chips" id="adHeroChips">
+                <!-- chips populated by JS -->
+              </div>
+            </div>
+
+            <!-- Rail tabs -->
+            <div class="ad-rail-tabs">
+              <button class="ad-rtab active" data-adrtab="overview">Overview</button>
+              <button class="ad-rtab" data-adrtab="participants">Participants</button>
+              <button class="ad-rtab" data-adrtab="claims">Claims</button>
+              <button class="ad-rtab" data-adrtab="activity">Activity</button>
+            </div>
+
+            <!-- Overview panel -->
+            <div class="ad-rtab-panel active" data-adrtabpanel="overview">
+
+              <!-- Stat rows -->
+              <div class="ad-stat-row">
+                <div class="ad-stat-ico purple">📦</div>
+                <div class="ad-stat-body">
+                  <div class="ad-stat-lbl">Total Allocation</div>
+                  <div class="ad-stat-val" id="adStatAllocation">—</div>
+                </div>
+                <div class="ad-stat-side" id="adStatAllocationUsd">—</div>
+              </div>
+
+              <div class="ad-stat-row">
+                <div class="ad-stat-ico cyan">👥</div>
+                <div class="ad-stat-body">
+                  <div class="ad-stat-lbl">Participants</div>
+                  <div class="ad-stat-val" id="adStatParticipants">—</div>
+                </div>
+                <div class="ad-stat-side green" id="adStatParticipantsDelta">—</div>
+              </div>
+
+              <div class="ad-stat-row">
+                <div class="ad-stat-ico green">✓</div>
+                <div class="ad-stat-body">
+                  <div class="ad-stat-lbl">Claimed</div>
+                  <div class="ad-stat-val" id="adStatClaimed">—</div>
+                </div>
+                <div class="ad-stat-side" id="adStatClaimedAmount">—</div>
+              </div>
+
+              <div class="ad-stat-row">
+                <div class="ad-stat-ico gold">⏱</div>
+                <div class="ad-stat-body">
+                  <div class="ad-stat-lbl">Ends In</div>
+                  <div class="ad-stat-val" id="adStatEndsIn">—</div>
+                </div>
+                <div class="ad-stat-side" id="adStatEndsAt">—</div>
+              </div>
+
+              <!-- Info card -->
+              <div class="ad-info-card">
+                <div class="ad-info-title">Airdrop Information</div>
+                <div class="ad-kv-row"><span class="k">Status</span><span class="v" id="adInfoStatus">—</span></div>
+                <div class="ad-kv-row"><span class="k">Type</span><span class="v" id="adInfoType">—</span></div>
+                <div class="ad-kv-row"><span class="k">Network</span><span class="v" id="adInfoNetwork">—</span></div>
+                <div class="ad-kv-row"><span class="k">Category</span><span class="v" id="adInfoCategory">—</span></div>
+                <div class="ad-kv-row"><span class="k">Start Date</span><span class="v" id="adInfoStart">—</span></div>
+                <div class="ad-kv-row"><span class="k">End Date</span><span class="v" id="adInfoEnd">—</span></div>
+                <div class="ad-kv-row"><span class="k">Eligibility</span><span class="v" id="adInfoEligibility">—</span></div>
+                <div class="ad-kv-row"><span class="k">Website</span><span class="v" id="adInfoWebsite">—</span></div>
+                <div class="ad-kv-row"><span class="k">Twitter</span><span class="v" id="adInfoTwitter">—</span></div>
+              </div>
+
+            </div>
+
+            <!-- Participants panel -->
+            <div class="ad-rtab-panel" data-adrtabpanel="participants">
+              <div class="ad-info-card">
+                <div class="ad-info-title">Top Participants</div>
+                <div id="adParticipantsList">
+                  <div class="tbl-empty">Loading…</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Claims panel -->
+            <div class="ad-rtab-panel" data-adrtabpanel="claims">
+              <div class="ad-info-card">
+                <div class="ad-info-title">Recent Claims</div>
+                <div id="adClaimsList">
+                  <div class="tbl-empty">Loading…</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Activity panel -->
+            <div class="ad-rtab-panel" data-adrtabpanel="activity">
+              <div class="ad-info-card">
+                <div class="ad-info-title">Audit Trail</div>
+                <div class="ad-kv-row"><span class="k">Created</span><span class="v" id="adAuditCreated">—</span></div>
+                <div class="ad-kv-row"><span class="k">Last Edit</span><span class="v" id="adAuditUpdated">—</span></div>
+                <div class="ad-kv-row"><span class="k">Cancelled</span><span class="v" id="adAuditCancelled">—</span></div>
+                <div class="ad-kv-row"><span class="k">Cancel Reason</span><span class="v" id="adAuditReason">—</span></div>
+              </div>
+            </div>
+
+            <!-- Action buttons stack -->
+            <div class="ad-actions-stack">
+              <button class="ad-rail-btn primary" id="adBtnView">↗ VIEW AIRDROP PAGE</button>
+              <button class="ad-rail-btn ghost" id="adBtnEdit">✎ EDIT AIRDROP</button>
+              <button class="ad-rail-btn danger" id="adBtnCancel">🚫 CANCEL AIRDROP</button>
+            </div>
+
+          </div>
+        </aside>
+
+      </div>
+
+      <!-- ADD / EDIT MODAL -->
+      <div class="ad-modal-backdrop" id="adModalBackdrop">
+        <div class="ad-modal">
+          <div class="ad-modal-head">
+            <div class="ad-modal-title" id="adModalTitle">+ Add New Airdrop</div>
+            <button class="ad-modal-close" id="adModalClose">✕</button>
+          </div>
+          <div class="ad-modal-body">
+            <div class="ad-form-grid">
+
+              <div class="ad-form-field full">
+                <label class="ad-form-label">Airdrop Name <span class="req">*</span></label>
+                <input type="text" class="ad-form-input" id="afName" placeholder="e.g., Monad Testnet Airdrop" maxlength="120">
+              </div>
+
+              <div class="ad-form-field">
+                <label class="ad-form-label">Project Name <span class="req">*</span></label>
+                <input type="text" class="ad-form-input" id="afProject" placeholder="e.g., Monad" maxlength="80">
+              </div>
+
+              <div class="ad-form-field">
+                <label class="ad-form-label">Token Symbol</label>
+                <input type="text" class="ad-form-input" id="afToken" placeholder="e.g., MON" maxlength="20">
+              </div>
+
+              <div class="ad-form-field">
+                <label class="ad-form-label">Status</label>
+                <select class="ad-form-select" id="afStatus">
+                  <option value="draft">Draft (hidden from users)</option>
+                  <option value="upcoming">Upcoming</option>
+                  <option value="active">Active</option>
+                  <option value="completed">Completed</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </div>
+
+              <div class="ad-form-field">
+                <label class="ad-form-label">Chain / Network</label>
+                <input type="text" class="ad-form-input" id="afChain" placeholder="e.g., Ethereum, Monad, Solana" maxlength="40">
+              </div>
+
+              <div class="ad-form-field">
+                <label class="ad-form-label">Category</label>
+                <select class="ad-form-select" id="afCategory">
+                  <option value="">— None —</option>
+                  <option value="DeFi">DeFi</option>
+                  <option value="L2">Layer 2</option>
+                  <option value="NFT">NFT</option>
+                  <option value="Gaming">Gaming</option>
+                  <option value="Infrastructure">Infrastructure</option>
+                  <option value="Social">Social</option>
+                  <option value="AI">AI</option>
+                  <option value="DePIN">DePIN</option>
+                </select>
+              </div>
+
+              <div class="ad-form-field">
+                <label class="ad-form-label">Network Type</label>
+                <select class="ad-form-select" id="afNetworkType">
+                  <option value="mainnet">Mainnet</option>
+                  <option value="testnet">Testnet</option>
+                </select>
+              </div>
+
+              <div class="ad-form-field">
+                <label class="ad-form-label">Layer</label>
+                <input type="text" class="ad-form-input" id="afLayer" placeholder="e.g., Layer 1, Layer 2" maxlength="20">
+              </div>
+
+              <div class="ad-form-field">
+                <label class="ad-form-label">Total Allocation (tokens)</label>
+                <input type="number" class="ad-form-input" id="afAllocation" placeholder="5000000" min="0" step="any">
+              </div>
+
+              <div class="ad-form-field">
+                <label class="ad-form-label">Allocation USD Value</label>
+                <input type="number" class="ad-form-input" id="afAllocationUsd" placeholder="2450000" min="0" step="any">
+              </div>
+
+              <div class="ad-form-field">
+                <label class="ad-form-label">Start Date</label>
+                <input type="datetime-local" class="ad-form-input" id="afStartDate">
+              </div>
+
+              <div class="ad-form-field">
+                <label class="ad-form-label">End Date</label>
+                <input type="datetime-local" class="ad-form-input" id="afEndDate">
+              </div>
+
+              <div class="ad-form-field">
+                <label class="ad-form-label">Tier</label>
+                <select class="ad-form-select" id="afTier">
+                  <option value="standard">Standard</option>
+                  <option value="featured">Featured</option>
+                  <option value="premium">Premium</option>
+                </select>
+              </div>
+
+              <div class="ad-form-field">
+                <label class="ad-form-label">Difficulty</label>
+                <select class="ad-form-select" id="afDifficulty">
+                  <option value="easy">Easy</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="hard">Hard</option>
+                </select>
+              </div>
+
+              <div class="ad-form-field">
+                <label class="ad-form-label">Estimated Reward</label>
+                <input type="text" class="ad-form-input" id="afRewardEst" placeholder="e.g., $50-500" maxlength="60">
+              </div>
+
+              <div class="ad-form-field">
+                <label class="ad-form-label">Time Required</label>
+                <input type="text" class="ad-form-input" id="afTimeReq" placeholder="e.g., 30 min" maxlength="40">
+              </div>
+
+              <div class="ad-form-field">
+                <label class="ad-form-label">Website URL</label>
+                <input type="url" class="ad-form-input" id="afWebsite" placeholder="https://...">
+              </div>
+
+              <div class="ad-form-field">
+                <label class="ad-form-label">Twitter URL</label>
+                <input type="url" class="ad-form-input" id="afTwitter" placeholder="https://twitter.com/...">
+              </div>
+
+              <div class="ad-form-field">
+                <label class="ad-form-label">Claim URL</label>
+                <input type="url" class="ad-form-input" id="afClaimUrl" placeholder="https://...">
+              </div>
+
+              <div class="ad-form-field">
+                <label class="ad-form-label">Docs URL</label>
+                <input type="url" class="ad-form-input" id="afDocs" placeholder="https://...">
+              </div>
+
+              <div class="ad-form-field full">
+                <label class="ad-form-label">Description</label>
+                <textarea class="ad-form-textarea" id="afDescription" placeholder="Short description shown to users" maxlength="500"></textarea>
+              </div>
+
+              <div class="ad-form-field full">
+                <label class="ad-form-label">Eligibility Criteria</label>
+                <textarea class="ad-form-textarea" id="afEligibility" placeholder="Who qualifies? What tasks? Snapshots?" maxlength="600"></textarea>
+              </div>
+
+              <div class="ad-form-field full" style="display:flex;gap:20px;flex-wrap:wrap;">
+                <label class="ad-form-checkbox">
+                  <input type="checkbox" id="afVisible" checked>
+                  Visible to users
+                </label>
+                <label class="ad-form-checkbox">
+                  <input type="checkbox" id="afFeatured">
+                  Featured (top of list)
+                </label>
+              </div>
+
+            </div>
+          </div>
+          <div class="ad-modal-foot">
+            <button class="ad-modal-btn ghost" id="adModalCancel">Cancel</button>
+            <button class="ad-modal-btn primary" id="adModalSave">💾 Save Airdrop</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
     <section class="section" id="section-projects"><div class="soon-card"><div class="soon-icon">📦</div><div class="soon-title">Project <span>Catalog</span></div><div class="soon-sub">Manage the master project database — logos, descriptions, chains, categories, and Intel Hub feed.</div><span class="soon-pill"><span class="dot"></span>COMING SOON</span></div></section>
     <section class="section" id="section-rewards"><div class="soon-card"><div class="soon-icon">💎</div><div class="soon-title">Claims & <span>Rewards</span></div><div class="soon-sub">View aggregate claim activity, dispute resolution, and reward distribution metrics across all users.</div><span class="soon-pill"><span class="dot"></span>COMING SOON</span></div></section>
     <section class="section" id="section-wallets"><div class="soon-card"><div class="soon-icon">⛓</div><div class="soon-title">Wallet <span>Registry</span></div><div class="soon-sub">View tracked wallets across the platform, reputation scores, and on-chain activity overview.</div><span class="soon-pill"><span class="dot"></span>COMING SOON</span></div></section>
@@ -2889,6 +4008,904 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initUsersTab);
 } else {
   initUsersTab();
+}
+
+})();
+
+
+
+/* ═══════════════════════════════════════════════════════════════
+   AIRDROPS TAB SCRIPT (Chunk 17)
+   ═══════════════════════════════════════════════════════════════ */
+(function() {
+'use strict';
+
+// State
+let adState = {
+  all: [],
+  filtered: [],
+  statusTab: 'all',
+  search: '',
+  statusFilter: '',
+  chainFilter: '',
+  categoryFilter: '',
+  dateFilter: '',
+  page: 1,
+  perPage: 10,
+  selectedId: null,
+  loaded: false,
+  editingId: null
+};
+
+// Helpers
+function adFmtTokenAmt(n) {
+  const v = Number(n) || 0;
+  if (v === 0) return '0';
+  if (v >= 1e9) return (v / 1e9).toFixed(1) + 'B';
+  if (v >= 1e6) return (v / 1e6).toFixed(1) + 'M';
+  if (v >= 1e3) return (v / 1e3).toFixed(1) + 'K';
+  return v.toLocaleString('en-US');
+}
+function adFmtRel(ts) {
+  if (!ts) return '—';
+  const d = new Date(ts);
+  if (isNaN(d)) return '—';
+  const now = Date.now();
+  const diff = d.getTime() - now;
+  const abs = Math.abs(diff);
+  const days = Math.floor(abs / 86400000);
+  const hours = Math.floor((abs % 86400000) / 3600000);
+  const mins = Math.floor((abs % 3600000) / 60000);
+  if (diff <= 0) return 'Ended';
+  if (days > 0) return days + 'd ' + hours + 'h ' + mins + 'm';
+  if (hours > 0) return hours + 'h ' + mins + 'm';
+  return mins + 'm';
+}
+function adFmtDateTime(ts) {
+  if (!ts) return '—';
+  const d = new Date(ts);
+  if (isNaN(d)) return '—';
+  return d.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true }) + ' UTC';
+}
+function adDtLocal(ts) {
+  if (!ts) return '';
+  const d = new Date(ts);
+  if (isNaN(d)) return '';
+  // datetime-local needs YYYY-MM-DDTHH:MM
+  const pad = n => String(n).padStart(2, '0');
+  return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+}
+
+// ─── LOAD all airdrops ───────────────────────────────────
+async function adLoadAll() {
+  const tbody = document.getElementById('adTableBody');
+  if (!tbody) return;
+  try {
+    const sb = aSb();
+    if (!sb) throw new Error('Supabase offline');
+    const { data, error } = await sb
+      .from('admin_airdrops')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    adState.all = data || [];
+    adState.loaded = true;
+    adRenderKpis();
+    adRenderStatusCounts();
+    adPopulateChainFilter();
+    adApplyFiltersAndRender();
+  } catch (e) {
+    console.error('[ad] load:', e);
+    tbody.innerHTML = '<tr><td colspan="9" class="tbl-empty">Failed to load airdrops: ' + aEsc(e.message || 'Unknown') + '</td></tr>';
+    aToast('⚠', 'Load failed', (e.message || 'Unknown').slice(0, 80), 'error');
+  }
+}
+
+// ─── KPIs ────────────────────────────────────────────────
+function adRenderKpis() {
+  const wrap = document.getElementById('adKpisRow');
+  if (!wrap) return;
+  const all = adState.all;
+  const now = Date.now();
+  const wkAgo = now - 7 * 86400000;
+
+  const total = all.length;
+  const newThisWeek = all.filter(a => new Date(a.created_at).getTime() >= wkAgo).length;
+
+  const totalFunding = all.reduce((s, a) => s + (Number(a.allocation_usd) || 0), 0);
+  const fundingThisWeek = all.filter(a => new Date(a.created_at).getTime() >= wkAgo)
+    .reduce((s, a) => s + (Number(a.allocation_usd) || 0), 0);
+  const fundingPrev = totalFunding - fundingThisWeek;
+  const fundingPct = fundingPrev > 0 ? ((fundingThisWeek / fundingPrev) * 100).toFixed(1) : '—';
+
+  const totalParticipants = all.reduce((s, a) => s + (Number(a.participants_count) || 0), 0);
+
+  const totalClaimed = all.reduce((s, a) => s + (Number(a.claimed_usd) || 0), 0);
+  const claimedPct = totalFunding > 0 ? ((totalClaimed / totalFunding) * 100).toFixed(1) + '% of total' : '0% of total';
+
+  const upcoming = all.filter(a => a.status === 'upcoming').length;
+
+  wrap.innerHTML = `
+    <div class="kpi purple">
+      <div class="kpi-head"><div class="kpi-icon">📦</div><div class="kpi-lbl">Total Airdrops</div></div>
+      <div class="kpi-val">${aFmtNum(total)}</div>
+      <div class="kpi-delta neutral">${aEsc(newThisWeek > 0 ? '+' + newThisWeek + ' vs last 7 days' : 'no new this week')}</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-head"><div class="kpi-icon">💰</div><div class="kpi-lbl">Total Funding</div></div>
+      <div class="kpi-val">${aFmt$(totalFunding)}</div>
+      <div class="kpi-delta neutral">${aEsc(fundingPct !== '—' ? '↑ ' + fundingPct + '% vs last 7 days' : 'no prior data')}</div>
+    </div>
+    <div class="kpi cyan">
+      <div class="kpi-head"><div class="kpi-icon">👥</div><div class="kpi-lbl">Total Participants</div></div>
+      <div class="kpi-val">${aFmtNum(totalParticipants)}</div>
+      <div class="kpi-delta neutral">across all airdrops</div>
+    </div>
+    <div class="kpi gold">
+      <div class="kpi-head"><div class="kpi-icon">🎁</div><div class="kpi-lbl">Total Claimed</div></div>
+      <div class="kpi-val">${aFmt$(totalClaimed)}</div>
+      <div class="kpi-delta neutral">${aEsc(claimedPct)}</div>
+    </div>
+    <div class="kpi pink ad-kpi-special">
+      <div class="kpi-head"><div class="kpi-icon">⏱</div><div class="kpi-lbl">Upcoming</div></div>
+      <div class="kpi-val">${aFmtNum(upcoming)}</div>
+      <a href="#" class="ad-kpi-link" onclick="adSwitchToStatus('upcoming');return false;">View upcoming airdrops →</a>
+    </div>
+  `;
+}
+
+// ─── STATUS TAB COUNTS ───────────────────────────────────
+function adRenderStatusCounts() {
+  const all = adState.all;
+  const counts = { all: all.length, draft: 0, upcoming: 0, active: 0, completed: 0, cancelled: 0 };
+  all.forEach(a => {
+    const s = (a.status || 'draft').toLowerCase();
+    if (counts[s] != null) counts[s]++;
+  });
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = aFmtNum(v); };
+  set('astCountAll', counts.all);
+  set('astCountUpcoming', counts.upcoming);
+  set('astCountActive', counts.active);
+  set('astCountCompleted', counts.completed);
+  set('astCountCancelled', counts.cancelled);
+  set('astCountDraft', counts.draft);
+}
+
+// ─── Chain filter populate ───────────────────────────────
+function adPopulateChainFilter() {
+  const sel = document.getElementById('adChainFilter');
+  if (!sel) return;
+  const chains = [...new Set(adState.all.map(a => a.chain).filter(Boolean))].sort();
+  const current = sel.value;
+  sel.innerHTML = '<option value="">All Chains</option>' +
+    chains.map(c => `<option value="${aEsc(c)}">${aEsc(c)}</option>`).join('');
+  sel.value = current;
+}
+
+// ─── Switch to a status tab (programmatic, used by KPI link) ──
+function adSwitchToStatus(status) {
+  document.querySelectorAll('#section-airdrops .ast').forEach(x => x.classList.remove('active'));
+  const tab = document.querySelector('#section-airdrops .ast[data-status="' + status + '"]');
+  if (tab) tab.classList.add('active');
+  adState.statusTab = status;
+  adState.page = 1;
+  adApplyFiltersAndRender();
+}
+window.adSwitchToStatus = adSwitchToStatus;
+
+// ─── FILTER + RENDER ─────────────────────────────────────
+function adApplyFiltersAndRender() {
+  let filtered = adState.all.slice();
+
+  // Status tab
+  if (adState.statusTab !== 'all') {
+    filtered = filtered.filter(a => (a.status || 'draft').toLowerCase() === adState.statusTab);
+  }
+
+  // Search
+  const q = (adState.search || '').toLowerCase().trim();
+  if (q) {
+    filtered = filtered.filter(a => {
+      return [a.airdrop_name, a.project_name, a.token_symbol, a.chain, a.category, a.description]
+        .filter(Boolean)
+        .some(f => String(f).toLowerCase().includes(q));
+    });
+  }
+
+  if (adState.statusFilter) filtered = filtered.filter(a => (a.status || '') === adState.statusFilter);
+  if (adState.chainFilter) filtered = filtered.filter(a => (a.chain || '') === adState.chainFilter);
+  if (adState.categoryFilter) filtered = filtered.filter(a => (a.category || '') === adState.categoryFilter);
+
+  if (adState.dateFilter) {
+    const now = Date.now();
+    filtered = filtered.filter(a => {
+      const s = a.start_date ? new Date(a.start_date).getTime() : 0;
+      const e = a.end_date ? new Date(a.end_date).getTime() : 0;
+      if (adState.dateFilter === 'active-now') return s <= now && (e === 0 || e >= now);
+      if (adState.dateFilter === 'this-week') return s >= now - 7 * 86400000 && s <= now + 7 * 86400000;
+      if (adState.dateFilter === 'this-month') return s >= now - 30 * 86400000 && s <= now + 30 * 86400000;
+      if (adState.dateFilter === 'next-30') return s >= now && s <= now + 30 * 86400000;
+      return true;
+    });
+  }
+
+  adState.filtered = filtered;
+  if (adState.page > Math.max(1, Math.ceil(filtered.length / adState.perPage))) adState.page = 1;
+  adRenderTable();
+  adRenderPager();
+}
+
+// ─── TABLE ───────────────────────────────────────────────
+function adRenderTable() {
+  const tbody = document.getElementById('adTableBody');
+  if (!tbody) return;
+  const filtered = adState.filtered;
+  const start = (adState.page - 1) * adState.perPage;
+  const slice = filtered.slice(start, start + adState.perPage);
+
+  if (!slice.length) {
+    if (!adState.all.length) {
+      tbody.innerHTML = `<tr><td colspan="9" class="tbl-empty">
+        No airdrops yet. Click <b>+ Add Airdrop</b> to create your first one.
+      </td></tr>`;
+    } else {
+      tbody.innerHTML = '<tr><td colspan="9" class="tbl-empty">No airdrops match these filters.</td></tr>';
+    }
+    document.getElementById('adTableInfo').textContent = '0 airdrops';
+    return;
+  }
+
+  tbody.innerHTML = slice.map(a => {
+    const name = a.airdrop_name || 'Untitled';
+    const proj = a.project_name || '—';
+    const token = a.token_symbol || '—';
+    const status = (a.status || 'draft').toLowerCase();
+    const statusLabel = status.charAt(0).toUpperCase() + status.slice(1);
+    const participants = Number(a.participants_count) || 0;
+    const allocation = Number(a.total_allocation) || 0;
+    const allocUsd = Number(a.allocation_usd) || 0;
+    const isSelected = adState.selectedId === a.id;
+
+    return `
+      <tr class="${isSelected ? 'selected' : ''}" data-aid="${aEsc(a.id)}">
+        <td>
+          <div class="ad-name-cell">
+            <div class="ad-logo" style="background:${aSafeColor(name)};">${aEsc(name.charAt(0).toUpperCase())}</div>
+            <div class="ad-name">${aEsc(name)}</div>
+          </div>
+        </td>
+        <td>
+          <div class="ad-name-cell">
+            <div class="ad-logo" style="background:${aSafeColor(proj)};width:22px;height:22px;font-size:9px;">${aEsc(proj.charAt(0).toUpperCase())}</div>
+            <div class="ad-name" style="font-size:12px;">${aEsc(proj)}</div>
+          </div>
+        </td>
+        <td><span class="ad-token">${aEsc(token)}</span></td>
+        <td><span class="ad-status-badge ${aEsc(status)}"><span class="dot"></span>${aEsc(statusLabel)}</span></td>
+        <td>
+          <div class="ad-participants-cell">
+            <div class="ad-participants-num">${participants > 0 ? aFmtNum(participants) : '—'}</div>
+          </div>
+        </td>
+        <td>
+          <div class="ad-allocation-cell">
+            <div class="ad-allocation-main">${allocation > 0 ? adFmtTokenAmt(allocation) + ' ' + aEsc(token) : '—'}</div>
+            ${allocUsd > 0 ? '<div class="ad-allocation-usd">(' + aFmt$(allocUsd) + ')</div>' : ''}
+          </div>
+        </td>
+        <td class="tbl-date">${aEsc(aFmtDate(a.start_date))}</td>
+        <td class="tbl-date">${aEsc(aFmtDate(a.end_date))}</td>
+        <td>
+          <div class="ad-actions">
+            <button class="ad-act-btn" title="View stats" onclick="event.stopPropagation();adShowRail('${aEsc(a.id)}')">📊</button>
+            <button class="ad-act-btn edit" title="Edit" onclick="event.stopPropagation();adOpenModal('${aEsc(a.id)}')">✎</button>
+            <button class="ad-act-btn danger" title="Cancel" onclick="event.stopPropagation();adCancelFromRow('${aEsc(a.id)}')">⋯</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  // Row click → open rail
+  tbody.querySelectorAll('tr[data-aid]').forEach(tr => {
+    tr.addEventListener('click', () => adShowRail(tr.getAttribute('data-aid')));
+  });
+
+  document.getElementById('adTableInfo').textContent =
+    'Showing ' + (start + 1) + ' to ' + (start + slice.length) + ' of ' + aFmtNum(filtered.length) + ' airdrops';
+}
+
+// ─── PAGER ───────────────────────────────────────────────
+function adRenderPager() {
+  const pager = document.getElementById('adPager');
+  if (!pager) return;
+  const total = adState.filtered.length;
+  const totalPages = Math.max(1, Math.ceil(total / adState.perPage));
+  const cur = adState.page;
+
+  let pages = [1];
+  if (cur - 1 > 2) pages.push('…');
+  for (let i = Math.max(2, cur - 1); i <= Math.min(totalPages - 1, cur + 1); i++) pages.push(i);
+  if (cur + 1 < totalPages - 1) pages.push('…');
+  if (totalPages > 1) pages.push(totalPages);
+  pages = [...new Set(pages)];
+
+  let html = `<button class="pg-btn" ${cur === 1 ? 'disabled' : ''} data-pg="prev">‹</button>`;
+  pages.forEach(p => {
+    if (p === '…') html += `<span class="pg-btn" style="cursor:default;">…</span>`;
+    else html += `<button class="pg-btn ${p === cur ? 'active' : ''}" data-pg="${p}">${p}</button>`;
+  });
+  html += `<button class="pg-btn" ${cur === totalPages ? 'disabled' : ''} data-pg="next">›</button>`;
+  pager.innerHTML = html;
+
+  pager.querySelectorAll('button[data-pg]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const v = btn.getAttribute('data-pg');
+      if (v === 'prev') adState.page = Math.max(1, cur - 1);
+      else if (v === 'next') adState.page = Math.min(totalPages, cur + 1);
+      else adState.page = parseInt(v) || 1;
+      adRenderTable();
+      adRenderPager();
+    });
+  });
+}
+
+// ─── RIGHT RAIL ──────────────────────────────────────────
+function adShowRail(airdropId) {
+  const a = adState.all.find(x => x.id === airdropId);
+  if (!a) return;
+  adState.selectedId = airdropId;
+  adRenderTable();
+
+  document.getElementById('adRailEmpty').style.display = 'none';
+  document.getElementById('adRailContent').style.display = 'block';
+  document.getElementById('adRail').classList.add('open');
+
+  // Reset to Overview tab
+  document.querySelectorAll('#section-airdrops .ad-rtab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('#section-airdrops .ad-rtab-panel').forEach(p => p.classList.remove('active'));
+  const otab = document.querySelector('#section-airdrops .ad-rtab[data-adrtab="overview"]');
+  const opanel = document.querySelector('#section-airdrops .ad-rtab-panel[data-adrtabpanel="overview"]');
+  if (otab) otab.classList.add('active');
+  if (opanel) opanel.classList.add('active');
+
+  adRenderRailHero(a);
+  adRenderRailOverview(a);
+}
+window.adShowRail = adShowRail;
+
+function adRenderRailHero(a) {
+  const name = a.airdrop_name || 'Untitled';
+  const proj = a.project_name || '';
+  const status = (a.status || 'draft').toLowerCase();
+  const statusLabel = status.charAt(0).toUpperCase() + status.slice(1);
+
+  const logo = document.getElementById('adHeroLogo');
+  logo.style.background = aSafeColor(name);
+  logo.textContent = name.charAt(0).toUpperCase();
+
+  document.getElementById('adHeroName').textContent = name;
+  const sb = document.getElementById('adHeroStatus');
+  sb.className = 'ad-status-badge ' + status;
+  sb.innerHTML = '<span class="dot"></span>' + aEsc(statusLabel);
+
+  const chips = [];
+  if (a.chain) chips.push('<span class="ad-chip">' + aEsc(a.chain) + '</span>');
+  if (a.token_symbol) chips.push('<span class="ad-chip gold">' + aEsc(a.token_symbol) + '</span>');
+  if (a.layer) chips.push('<span class="ad-chip cyan">' + aEsc(a.layer) + '</span>');
+  if (a.category) chips.push('<span class="ad-chip">' + aEsc(a.category) + '</span>');
+  document.getElementById('adHeroChips').innerHTML = chips.join('');
+}
+
+function adRenderRailOverview(a) {
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  const setHtml = (id, v) => { const el = document.getElementById(id); if (el) el.innerHTML = v; };
+
+  const allocation = Number(a.total_allocation) || 0;
+  const allocUsd = Number(a.allocation_usd) || 0;
+  const claimedAmount = Number(a.claimed_amount) || 0;
+  const claimedUsd = Number(a.claimed_usd) || 0;
+  const participants = Number(a.participants_count) || 0;
+  const token = a.token_symbol || '';
+  const claimedPct = allocation > 0 ? ((claimedAmount / allocation) * 100).toFixed(1) : '0';
+
+  set('adStatAllocation', allocation > 0 ? adFmtTokenAmt(allocation) + ' ' + token : '—');
+  set('adStatAllocationUsd', allocUsd > 0 ? aFmt$(allocUsd) : '—');
+
+  set('adStatParticipants', participants > 0 ? aFmtNum(participants) : '—');
+  set('adStatParticipantsDelta', '');
+
+  set('adStatClaimed', claimedPct + '%');
+  set('adStatClaimedAmount', claimedAmount > 0 ? adFmtTokenAmt(claimedAmount) + ' ' + token : '—');
+
+  if (a.end_date) {
+    set('adStatEndsIn', adFmtRel(a.end_date));
+    set('adStatEndsAt', adFmtDateTime(a.end_date));
+  } else {
+    set('adStatEndsIn', '—');
+    set('adStatEndsAt', '');
+  }
+
+  // Info card
+  const status = (a.status || 'draft').toLowerCase();
+  setHtml('adInfoStatus', '<span class="status-' + status + '">' + aEsc(status.charAt(0).toUpperCase() + status.slice(1)) + '</span>');
+  set('adInfoType', a.network_type ? (a.network_type.charAt(0).toUpperCase() + a.network_type.slice(1)) : '—');
+  set('adInfoNetwork', a.chain || '—');
+  set('adInfoCategory', a.category || '—');
+  set('adInfoStart', a.start_date ? adFmtDateTime(a.start_date) : '—');
+  set('adInfoEnd', a.end_date ? adFmtDateTime(a.end_date) : '—');
+  set('adInfoEligibility', a.eligibility_text ? (a.eligibility_text.length > 60 ? a.eligibility_text.slice(0, 60) + '…' : a.eligibility_text) : 'See eligibility criteria');
+
+  // Links
+  if (a.website_url) {
+    setHtml('adInfoWebsite', '<a href="' + aEsc(a.website_url) + '" target="_blank" rel="noopener" class="link">' + aEsc(a.website_url.replace(/^https?:\/\//, '').slice(0, 30)) + ' ↗</a>');
+  } else setHtml('adInfoWebsite', '<span class="v" style="color:var(--text-muted);">—</span>');
+
+  if (a.twitter_url) {
+    setHtml('adInfoTwitter', '<a href="' + aEsc(a.twitter_url) + '" target="_blank" rel="noopener" class="link">' + aEsc(a.twitter_url.replace(/^https?:\/\/(www\.)?twitter\.com\//, '@').replace(/^https?:\/\/(www\.)?x\.com\//, '@').slice(0, 30)) + ' ↗</a>');
+  } else setHtml('adInfoTwitter', '<span class="v" style="color:var(--text-muted);">—</span>');
+
+  // Audit
+  set('adAuditCreated', a.created_at ? adFmtDateTime(a.created_at) : '—');
+  set('adAuditUpdated', a.updated_at ? adFmtDateTime(a.updated_at) : '—');
+  set('adAuditCancelled', a.cancelled_at ? adFmtDateTime(a.cancelled_at) : '—');
+  set('adAuditReason', a.cancel_reason || '—');
+
+  // Action button states
+  const cancelBtn = document.getElementById('adBtnCancel');
+  if (cancelBtn) {
+    if (status === 'cancelled') {
+      cancelBtn.textContent = '↶ UNCANCEL (RESTORE)';
+      cancelBtn.className = 'ad-rail-btn ghost';
+    } else {
+      cancelBtn.textContent = '🚫 CANCEL AIRDROP';
+      cancelBtn.className = 'ad-rail-btn danger';
+    }
+  }
+  const viewBtn = document.getElementById('adBtnView');
+  if (viewBtn) {
+    if (a.website_url || a.claim_url) {
+      viewBtn.style.display = '';
+      viewBtn.onclick = () => window.open(a.claim_url || a.website_url, '_blank');
+    } else {
+      viewBtn.style.display = 'none';
+    }
+  }
+}
+
+function adHideRail() {
+  adState.selectedId = null;
+  document.getElementById('adRail').classList.remove('open');
+  document.getElementById('adRailEmpty').style.display = 'block';
+  document.getElementById('adRailContent').style.display = 'none';
+  adRenderTable();
+}
+window.adHideRail = adHideRail;
+
+// ─── MODAL (Add / Edit) ──────────────────────────────────
+function adOpenModal(editId) {
+  adState.editingId = editId || null;
+  const modal = document.getElementById('adModalBackdrop');
+  const title = document.getElementById('adModalTitle');
+  if (editId) {
+    title.textContent = '✎ Edit Airdrop';
+    const a = adState.all.find(x => x.id === editId);
+    if (a) adFillForm(a);
+  } else {
+    title.textContent = '+ Add New Airdrop';
+    adFillForm({});
+  }
+  modal.classList.add('open');
+}
+window.adOpenModal = adOpenModal;
+
+function adCloseModal() {
+  document.getElementById('adModalBackdrop').classList.remove('open');
+  adState.editingId = null;
+}
+
+function adFillForm(a) {
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v == null ? '' : v; };
+  const setCheck = (id, v) => { const el = document.getElementById(id); if (el) el.checked = !!v; };
+  set('afName', a.airdrop_name || '');
+  set('afProject', a.project_name || '');
+  set('afToken', a.token_symbol || '');
+  set('afStatus', a.status || 'draft');
+  set('afChain', a.chain || '');
+  set('afCategory', a.category || '');
+  set('afNetworkType', a.network_type || 'mainnet');
+  set('afLayer', a.layer || '');
+  set('afAllocation', a.total_allocation || '');
+  set('afAllocationUsd', a.allocation_usd || '');
+  set('afStartDate', adDtLocal(a.start_date));
+  set('afEndDate', adDtLocal(a.end_date));
+  set('afTier', a.tier || 'standard');
+  set('afDifficulty', a.difficulty || 'medium');
+  set('afRewardEst', a.reward_estimate || '');
+  set('afTimeReq', a.time_required || '');
+  set('afWebsite', a.website_url || '');
+  set('afTwitter', a.twitter_url || '');
+  set('afClaimUrl', a.claim_url || '');
+  set('afDocs', a.docs_url || '');
+  set('afDescription', a.description || '');
+  set('afEligibility', a.eligibility_text || '');
+  setCheck('afVisible', a.visible_to_users !== false);
+  setCheck('afFeatured', !!a.is_featured);
+}
+
+async function adSaveModal() {
+  const get = id => (document.getElementById(id) || {}).value || '';
+  const getNum = id => {
+    const v = (document.getElementById(id) || {}).value;
+    if (v === '' || v == null) return null;
+    return Number(v);
+  };
+  const getCheck = id => !!(document.getElementById(id) || {}).checked;
+  const getDt = id => {
+    const v = (document.getElementById(id) || {}).value;
+    return v ? new Date(v).toISOString() : null;
+  };
+
+  const name = get('afName').trim();
+  const proj = get('afProject').trim();
+  if (!name) { aToast('⚠', 'Required', 'Airdrop name is required.', 'error'); return; }
+  if (!proj) { aToast('⚠', 'Required', 'Project name is required.', 'error'); return; }
+
+  const saveBtn = document.getElementById('adModalSave');
+  saveBtn.disabled = true;
+  saveBtn.textContent = '⏳ Saving…';
+
+  try {
+    const sb = aSb();
+    const cur = await window.API.getCurrentUser();
+    const payload = {
+      airdrop_name: name,
+      project_name: proj,
+      token_symbol: get('afToken').trim().toUpperCase(),
+      status: get('afStatus') || 'draft',
+      chain: get('afChain').trim(),
+      category: get('afCategory'),
+      network_type: get('afNetworkType') || 'mainnet',
+      layer: get('afLayer').trim(),
+      total_allocation: getNum('afAllocation') || 0,
+      allocation_usd: getNum('afAllocationUsd') || 0,
+      start_date: getDt('afStartDate'),
+      end_date: getDt('afEndDate'),
+      tier: get('afTier') || 'standard',
+      difficulty: get('afDifficulty') || 'medium',
+      reward_estimate: get('afRewardEst').trim(),
+      time_required: get('afTimeReq').trim(),
+      website_url: get('afWebsite').trim(),
+      twitter_url: get('afTwitter').trim(),
+      claim_url: get('afClaimUrl').trim(),
+      docs_url: get('afDocs').trim(),
+      description: get('afDescription').trim(),
+      eligibility_text: get('afEligibility').trim(),
+      visible_to_users: getCheck('afVisible'),
+      is_featured: getCheck('afFeatured'),
+      updated_at: new Date().toISOString()
+    };
+
+    if (adState.editingId) {
+      const { error } = await sb.from('admin_airdrops').update(payload).eq('id', adState.editingId);
+      if (error) throw error;
+      // Update local state
+      const idx = adState.all.findIndex(x => x.id === adState.editingId);
+      if (idx >= 0) Object.assign(adState.all[idx], payload);
+      aToast('✓', 'Updated', name + ' saved.', 'success');
+    } else {
+      payload.created_by = cur && cur.id;
+      const { data, error } = await sb.from('admin_airdrops').insert(payload).select().single();
+      if (error) throw error;
+      adState.all.unshift(data);
+      aToast('✓', 'Created', name + ' added.', 'success');
+    }
+
+    adCloseModal();
+    adRenderKpis();
+    adRenderStatusCounts();
+    adPopulateChainFilter();
+    adApplyFiltersAndRender();
+    // Re-open rail if we were editing
+    if (adState.selectedId) {
+      const fresh = adState.all.find(x => x.id === adState.selectedId);
+      if (fresh) {
+        adRenderRailHero(fresh);
+        adRenderRailOverview(fresh);
+      }
+    }
+  } catch (e) {
+    console.error('[ad] save:', e);
+    aToast('⚠', 'Save failed', (e.message || 'Unknown').slice(0, 100), 'error');
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.textContent = '💾 Save Airdrop';
+  }
+}
+
+// ─── CANCEL airdrop ──────────────────────────────────────
+async function adCancelAirdrop(id) {
+  const a = adState.all.find(x => x.id === id);
+  if (!a) return;
+  const name = a.airdrop_name || 'this airdrop';
+  const status = (a.status || 'draft').toLowerCase();
+
+  if (status === 'cancelled') {
+    // Uncancel flow
+    if (!confirm('↶ Restore "' + name + '"?\nIt will revert to "draft" status — set it back to active/upcoming yourself when ready.')) return;
+    try {
+      const sb = aSb();
+      const payload = {
+        status: 'draft',
+        cancel_reason: null,
+        cancelled_at: null,
+        cancelled_by: null,
+        updated_at: new Date().toISOString()
+      };
+      const { error } = await sb.from('admin_airdrops').update(payload).eq('id', id);
+      if (error) throw error;
+      Object.assign(a, payload);
+      adRenderTable();
+      adRenderStatusCounts();
+      adRenderKpis();
+      if (adState.selectedId === id) { adRenderRailHero(a); adRenderRailOverview(a); }
+      aToast('↶', 'Restored', name + ' is now draft.', 'success');
+    } catch (e) { aToast('⚠', 'Failed', (e.message || 'Unknown').slice(0, 80), 'error'); }
+    return;
+  }
+
+  if (!confirm('🚫 Cancel "' + name + '"?\nUsers will see "Cancelled" status. You can restore from draft later.')) return;
+  const reason = prompt('Reason for cancellation (logged for audit):', '');
+  if (reason === null) return;
+
+  try {
+    const sb = aSb();
+    const cur = await window.API.getCurrentUser();
+    const payload = {
+      status: 'cancelled',
+      cancel_reason: reason || '(no reason given)',
+      cancelled_at: new Date().toISOString(),
+      cancelled_by: cur && cur.id,
+      updated_at: new Date().toISOString()
+    };
+    const { error } = await sb.from('admin_airdrops').update(payload).eq('id', id);
+    if (error) throw error;
+    Object.assign(a, payload);
+    adRenderTable();
+    adRenderStatusCounts();
+    adRenderKpis();
+    if (adState.selectedId === id) { adRenderRailHero(a); adRenderRailOverview(a); }
+    aToast('🚫', 'Cancelled', name + ' has been cancelled.', 'success');
+  } catch (e) {
+    console.error('[ad] cancel:', e);
+    aToast('⚠', 'Failed', (e.message || 'Unknown').slice(0, 80), 'error');
+  }
+}
+
+function adCancelFromRow(id) { adCancelAirdrop(id); }
+window.adCancelFromRow = adCancelFromRow;
+
+// ─── EXPORT ──────────────────────────────────────────────
+function adExportCsv() {
+  if (!adState.filtered.length) { aToast('ℹ', 'Nothing to export', 'Filter shows 0 airdrops.', null); return; }
+  const cols = ['airdrop_name','project_name','token_symbol','chain','category','status','total_allocation','allocation_usd','participants_count','claimed_amount','start_date','end_date','website_url','twitter_url','created_at'];
+  const rows = [cols.join(',')];
+  adState.filtered.forEach(a => {
+    rows.push(cols.map(c => {
+      const v = a[c];
+      if (v == null) return '';
+      const s = String(v);
+      if (s.includes(',') || s.includes('"') || s.includes('\n')) return '"' + s.replace(/"/g, '""') + '"';
+      return s;
+    }).join(','));
+  });
+  const blob = new Blob([rows.join('\n')], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'admin-airdrops-' + new Date().toISOString().slice(0,10) + '.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+  aToast('⬇', 'Exported', rows.length - 1 + ' airdrops downloaded.', 'success');
+}
+
+// ─── EVENT WIRING ────────────────────────────────────────
+function adInit() {
+  // Status tabs
+  document.querySelectorAll('#section-airdrops .ast').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('#section-airdrops .ast').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      adState.statusTab = t.getAttribute('data-status');
+      adState.page = 1;
+      adApplyFiltersAndRender();
+    });
+  });
+
+  // Search
+  const search = document.getElementById('adSearchInput');
+  if (search) {
+    let st;
+    search.addEventListener('input', () => {
+      clearTimeout(st);
+      st = setTimeout(() => {
+        adState.search = search.value;
+        adState.page = 1;
+        adApplyFiltersAndRender();
+      }, 250);
+    });
+  }
+
+  // Filters
+  const wireSelect = (id, key) => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('change', () => { adState[key] = el.value; adState.page = 1; adApplyFiltersAndRender(); });
+  };
+  wireSelect('adStatusFilter', 'statusFilter');
+  wireSelect('adChainFilter', 'chainFilter');
+  wireSelect('adCategoryFilter', 'categoryFilter');
+  wireSelect('adDateFilter', 'dateFilter');
+
+  // Reset
+  const reset = document.getElementById('adResetBtn');
+  if (reset) reset.addEventListener('click', () => {
+    adState.search = ''; adState.statusFilter = ''; adState.chainFilter = ''; adState.categoryFilter = ''; adState.dateFilter = '';
+    adState.statusTab = 'all'; adState.page = 1;
+    if (search) search.value = '';
+    ['adStatusFilter','adChainFilter','adCategoryFilter','adDateFilter'].forEach(id => { const e = document.getElementById(id); if (e) e.value = ''; });
+    document.querySelectorAll('#section-airdrops .ast').forEach(x => x.classList.remove('active'));
+    const allTab = document.querySelector('#section-airdrops .ast[data-status="all"]');
+    if (allTab) allTab.classList.add('active');
+    adApplyFiltersAndRender();
+  });
+
+  // Per-page
+  const perPage = document.getElementById('adPerPage');
+  if (perPage) perPage.addEventListener('change', () => {
+    adState.perPage = parseInt(perPage.value) || 10;
+    adState.page = 1;
+    adRenderTable();
+    adRenderPager();
+  });
+
+  // Add button
+  const addBtn = document.getElementById('adAddBtn');
+  if (addBtn) addBtn.addEventListener('click', () => adOpenModal(null));
+
+  // Export
+  const expBtn = document.getElementById('adExportBtn');
+  if (expBtn) expBtn.addEventListener('click', adExportCsv);
+
+  // Modal close handlers
+  const mc = document.getElementById('adModalClose');
+  if (mc) mc.addEventListener('click', adCloseModal);
+  const mCancel = document.getElementById('adModalCancel');
+  if (mCancel) mCancel.addEventListener('click', adCloseModal);
+  const mSave = document.getElementById('adModalSave');
+  if (mSave) mSave.addEventListener('click', adSaveModal);
+
+  // Modal backdrop click to close
+  const backdrop = document.getElementById('adModalBackdrop');
+  if (backdrop) backdrop.addEventListener('click', e => {
+    if (e.target === backdrop) adCloseModal();
+  });
+
+  // Rail close
+  const rc = document.getElementById('adRailClose');
+  if (rc) rc.addEventListener('click', adHideRail);
+
+  // Rail tabs
+  document.querySelectorAll('#section-airdrops .ad-rtab').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('#section-airdrops .ad-rtab').forEach(x => x.classList.remove('active'));
+      document.querySelectorAll('#section-airdrops .ad-rtab-panel').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      const tname = t.getAttribute('data-adrtab');
+      const panel = document.querySelector('#section-airdrops .ad-rtab-panel[data-adrtabpanel="' + tname + '"]');
+      if (panel) panel.classList.add('active');
+      // Lazy-load other tabs
+      if (tname === 'participants') adLoadParticipants();
+      if (tname === 'claims') adLoadClaims();
+    });
+  });
+
+  // Rail action buttons
+  const btnEdit = document.getElementById('adBtnEdit');
+  if (btnEdit) btnEdit.addEventListener('click', () => { if (adState.selectedId) adOpenModal(adState.selectedId); });
+  const btnCancel = document.getElementById('adBtnCancel');
+  if (btnCancel) btnCancel.addEventListener('click', () => { if (adState.selectedId) adCancelAirdrop(adState.selectedId); });
+}
+
+// ─── Participants / Claims lazy loaders ──────────────────
+async function adLoadParticipants() {
+  const list = document.getElementById('adParticipantsList');
+  if (!list || !adState.selectedId) return;
+  list.innerHTML = '<div class="tbl-empty">Loading…</div>';
+  try {
+    const sb = aSb();
+    const a = adState.all.find(x => x.id === adState.selectedId);
+    if (!a) return;
+    // Find claims for this project, group by user
+    const { data, error } = await sb.from('user_claim_rewards')
+      .select('user_id, usd_value, claimed_date')
+      .eq('project_name', a.project_name)
+      .order('claimed_date', { ascending: false })
+      .limit(50);
+    if (error) throw error;
+    if (!data || !data.length) { list.innerHTML = '<div class="tbl-empty">No participants yet.</div>'; return; }
+    // Aggregate per user
+    const agg = {};
+    data.forEach(r => {
+      if (!agg[r.user_id]) agg[r.user_id] = { user_id: r.user_id, claims: 0, total: 0 };
+      agg[r.user_id].claims += 1;
+      agg[r.user_id].total += Number(r.usd_value) || 0;
+    });
+    const top = Object.values(agg).sort((x, y) => y.total - x.total).slice(0, 10);
+    list.innerHTML = top.map(p => `
+      <div class="urc-list-item">
+        <div>
+          <div class="urc-li-title">${aEsc(aAddrShort(p.user_id))}</div>
+          <div class="urc-li-meta">${aFmtNum(p.claims)} claim${p.claims === 1 ? '' : 's'}</div>
+        </div>
+        <div class="urc-li-val">${aFmt$(p.total)}</div>
+      </div>
+    `).join('');
+  } catch (e) {
+    list.innerHTML = '<div class="tbl-empty">Failed to load.</div>';
+    console.error('[ad] participants:', e);
+  }
+}
+
+async function adLoadClaims() {
+  const list = document.getElementById('adClaimsList');
+  if (!list || !adState.selectedId) return;
+  list.innerHTML = '<div class="tbl-empty">Loading…</div>';
+  try {
+    const sb = aSb();
+    const a = adState.all.find(x => x.id === adState.selectedId);
+    if (!a) return;
+    const { data, error } = await sb.from('user_claim_rewards')
+      .select('*')
+      .eq('project_name', a.project_name)
+      .order('claimed_date', { ascending: false })
+      .limit(10);
+    if (error) throw error;
+    if (!data || !data.length) { list.innerHTML = '<div class="tbl-empty">No claims yet.</div>'; return; }
+    list.innerHTML = data.map(c => `
+      <div class="urc-list-item">
+        <div>
+          <div class="urc-li-title">${aEsc(aAddrShort(c.user_id))}</div>
+          <div class="urc-li-meta">${aEsc(aFmtDate(c.claimed_date || c.created_at))}</div>
+        </div>
+        <div class="urc-li-val">${aEsc(aFmt$(c.usd_value || 0))}</div>
+      </div>
+    `).join('');
+  } catch (e) {
+    list.innerHTML = '<div class="tbl-empty">Failed to load.</div>';
+    console.error('[ad] claims:', e);
+  }
+}
+
+// ─── Hook into switchSection ─────────────────────────────
+window.loadAirdropsTab = adLoadAll;
+
+if (!window.__airdropsHooked) {
+  window.__airdropsHooked = true;
+  const orig = window.switchSection;
+  if (orig) {
+    window.switchSection = function(name) {
+      orig(name);
+      if (name === 'airdrops' && !adState.loaded) {
+        adLoadAll();
+      }
+    };
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', adInit);
+} else {
+  adInit();
 }
 
 })();
