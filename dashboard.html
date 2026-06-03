@@ -19198,6 +19198,9 @@ select.exp-field-input option { background: #0a0e1a; color: #e8eaf0; }
           <div class="do-day1-tasks" id="doDay1Tasks">
             <!-- Populated by JS from platform_settings -->
           </div>
+          <div style="margin-top:18px;">
+            <button onclick="doSkipDay1()" style="background:none;border:none;color:var(--text-muted);font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;">SKIP → GO TO DASHBOARD</button>
+          </div>
         </div>
       </div>
 
@@ -26322,16 +26325,17 @@ function doRenderDay1() {
       if (!isDone) {
         // If it's a social link, open it
         if (link) window.open(link, '_blank');
-        // If it's "add wallet", switch to wallets tab
-        if (tid === 'd1_add_wallet') {
-          const tabSwitcher = document.querySelector('[data-tab-target="wallets"]');
-          if (tabSwitcher) tabSwitcher.click();
-          return;
-        }
 
+        // Mark the task done
         const res = await window.API.completeTask(tid, 'day1', null);
         if (res.ok) {
           row.classList.add('done');
+
+          // If it's "add wallet", also switch to wallets tab
+          if (tid === 'd1_add_wallet') {
+            const tabSwitcher = document.querySelector('[data-tab-target="wallets"]');
+            if (tabSwitcher) tabSwitcher.click();
+          }
 
           // Check if all Day 1 tasks are done
           const allRows = el.querySelectorAll('.do-day1-row');
@@ -26353,6 +26357,61 @@ function doRenderDay1() {
       }
     });
   });
+}
+
+// ─── Auto-complete wallet task if user already has wallets ───
+async function doAutoCompleteWalletTask() {
+  try {
+    const sb = window.API._supa();
+    const user = await window.API.getCurrentUser();
+    if (!sb || !user) return;
+    const { data: wallets } = await sb.from('wallets').select('id').eq('user_id', user.id).limit(1);
+    if (wallets && wallets.length > 0) {
+      // User already has a wallet — mark d1_add_wallet as done
+      const row = document.querySelector('.do-day1-row[data-task-id="d1_add_wallet"]');
+      if (row && !row.classList.contains('done')) {
+        await window.API.completeTask('d1_add_wallet', 'day1', null);
+        row.classList.add('done');
+        // Check if all tasks are now done
+        const el = $('doDay1Tasks');
+        if (el) {
+          const allRows = el.querySelectorAll('.do-day1-row');
+          const allDone = [...allRows].every(r => r.classList.contains('done'));
+          if (allDone) {
+            try {
+              await sb.from('profiles').update({ onboarding_completed: true }).eq('id', user.id);
+            } catch (e) { console.error('onboarding flag:', e); }
+            doIsDay1 = false;
+            doShowMainView();
+            doRefreshStreakAfterAction();
+          }
+        }
+      }
+    }
+  } catch (e) { console.error('[do] auto-wallet:', e); }
+}
+
+// ─── Skip Day 1 (for users who want to jump ahead) ───
+window.doSkipDay1 = async function() {
+  try {
+    const sb = window.API._supa();
+    const user = await window.API.getCurrentUser();
+    if (sb && user) {
+      await sb.from('profiles').update({ onboarding_completed: true }).eq('id', user.id);
+    }
+  } catch (e) { console.error('[do] skip:', e); }
+  doIsDay1 = false;
+  doShowMainView();
+  doLoadAll_afterSkip();
+};
+
+async function doLoadAll_afterSkip() {
+  doRenderFlash();
+  doRenderActions();
+  doRenderStreak();
+  doRenderWeekStats();
+  doRenderDeadlines();
+  doRenderNew();
 }
 
 // ─── View switching ───
@@ -26450,6 +26509,8 @@ async function doLoadAll() {
     if (doIsDay1) {
       doRenderDay1();
       doShowDay1();
+      // Auto-complete "add wallet" if user already has wallets
+      doAutoCompleteWalletTask();
     } else {
       doRenderFlash();
       doRenderActions();
