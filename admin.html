@@ -1896,6 +1896,260 @@ button{cursor:pointer;font-family:'Rajdhani',sans-serif}
 }
 
 
+/* ═══════════════════════════════════════════════════════════════════════
+   CHUNK 18A — PLATFORM SETTINGS
+   ═══════════════════════════════════════════════════════════════════════ */
+#section-settings .ps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 18px;
+}
+@media (max-width: 920px) { #section-settings .ps-grid { grid-template-columns: 1fr; } }
+
+#section-settings .ps-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex; flex-direction: column;
+}
+#section-settings .ps-card-head {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid var(--border);
+}
+#section-settings .ps-card-icon {
+  font-size: 22px; width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--purple-soft);
+  border-radius: 9px; flex-shrink: 0;
+}
+#section-settings .ps-card-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px; font-weight: 800; letter-spacing: 0.6px;
+  color: var(--text);
+}
+#section-settings .ps-card-sub {
+  font-size: 11.5px; color: var(--text-dim); margin-top: 2px;
+}
+#section-settings .ps-card-body {
+  padding: 14px 18px; flex: 1;
+  display: flex; flex-direction: column; gap: 10px;
+}
+#section-settings .ps-card-foot {
+  padding: 10px 18px 14px;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: flex-end; gap: 12px;
+}
+#section-settings .ps-field { display: flex; flex-direction: column; gap: 4px; }
+#section-settings .ps-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px; color: var(--text-dim);
+  letter-spacing: 1.1px; font-weight: 700;
+  text-transform: uppercase;
+}
+#section-settings .ps-input,
+#section-settings .ps-textarea {
+  background: var(--bg-card-dk);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13.5px; font-weight: 500;
+  padding: 8px 12px;
+  transition: border-color 0.15s;
+}
+#section-settings .ps-input:focus,
+#section-settings .ps-textarea:focus {
+  outline: none; border-color: var(--purple);
+}
+#section-settings .ps-textarea {
+  resize: vertical; min-height: 60px;
+}
+#section-settings .ps-save-btn {
+  background: linear-gradient(135deg, var(--purple), #7a4fb0);
+  color: #fff;
+  border: none;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 0.5px;
+  padding: 8px 16px;
+  border-radius: 7px;
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--purple-glow);
+}
+#section-settings .ps-save-btn:hover { filter: brightness(1.1); }
+#section-settings .ps-save-btn:disabled { opacity: 0.5; cursor: wait; }
+#section-settings .ps-saved-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px; color: var(--green);
+  letter-spacing: 0.6px; font-weight: 700;
+}
+#section-settings .ps-hint {
+  font-size: 12px; color: var(--text-muted);
+  text-align: center; padding: 20px 0;
+}
+
+/* Toggle switch */
+#section-settings .ps-toggle-row {
+  flex-direction: row; align-items: center; justify-content: space-between;
+}
+#section-settings .ps-toggle-label {
+  font-size: 13px; color: var(--text); font-weight: 600;
+}
+#section-settings .ps-switch {
+  position: relative; width: 40px; height: 22px; flex-shrink: 0;
+}
+#section-settings .ps-switch input { opacity: 0; width: 0; height: 0; }
+#section-settings .ps-slider {
+  position: absolute; cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--bg-card-dk);
+  border: 1px solid var(--border);
+  border-radius: 22px; transition: 0.2s;
+}
+#section-settings .ps-slider::before {
+  content: '';
+  position: absolute; height: 16px; width: 16px;
+  left: 2px; bottom: 2px;
+  background: var(--text-dim);
+  border-radius: 50%; transition: 0.2s;
+}
+#section-settings .ps-switch input:checked + .ps-slider {
+  background: var(--purple-soft); border-color: var(--purple);
+}
+#section-settings .ps-switch input:checked + .ps-slider::before {
+  background: var(--purple); transform: translateX(18px);
+}
+
+/* Day 1 Mission editable rows */
+#section-settings .ps-task-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+#section-settings .ps-task-row:last-child { border-bottom: none; }
+#section-settings .ps-task-num {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px; color: var(--purple);
+  font-weight: 700; width: 18px; text-align: center; flex-shrink: 0;
+}
+#section-settings .ps-task-input {
+  flex: 1;
+  background: var(--bg-card-dk);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px; font-weight: 500;
+  padding: 6px 10px;
+}
+#section-settings .ps-task-input:focus { outline: none; border-color: var(--purple); }
+#section-settings .ps-task-type {
+  background: var(--bg-card-dk);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-dim);
+  font-size: 10px; font-weight: 600;
+  padding: 4px 8px;
+  font-family: 'Share Tech Mono', monospace;
+  width: 80px; text-align: center; flex-shrink: 0;
+}
+
+/* Streak milestone rows */
+#section-settings .ps-mile-row {
+  display: grid; grid-template-columns: 50px 1fr 90px 100px;
+  gap: 8px; align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+#section-settings .ps-mile-row:last-child { border-bottom: none; }
+#section-settings .ps-mile-days {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px; font-weight: 800;
+  color: var(--gold); text-align: center;
+}
+#section-settings .ps-mile-label {
+  font-size: 13px; color: var(--text); font-weight: 600;
+}
+#section-settings .ps-mile-type {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px; color: var(--cyan);
+  letter-spacing: 0.6px; font-weight: 700;
+  text-transform: uppercase;
+}
+#section-settings .ps-mile-value {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px; color: var(--text-dim);
+  font-weight: 700; text-align: right;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   CHUNK 18A — FLASH BADGE (in airdrop table rows)
+   ═══════════════════════════════════════════════════════════════════════ */
+#section-airdrops .ad-flash-badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  background: linear-gradient(135deg, rgba(255,144,70,0.15), rgba(255,94,138,0.10));
+  border: 1px solid rgba(255,144,70,0.3);
+  color: var(--orange);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8.5px; font-weight: 700;
+  letter-spacing: 0.8px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin-left: 6px;
+  animation: flashPulse 2s ease-in-out infinite;
+}
+@keyframes flashPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Toggle switch (shared between settings & airdrop flash) */
+#section-airdrops .ps-switch {
+  position: relative; width: 40px; height: 22px; flex-shrink: 0;
+}
+#section-airdrops .ps-switch input { opacity: 0; width: 0; height: 0; }
+#section-airdrops .ps-slider {
+  position: absolute; cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--bg-card-dk);
+  border: 1px solid var(--border);
+  border-radius: 22px; transition: 0.2s;
+}
+#section-airdrops .ps-slider::before {
+  content: '';
+  position: absolute; height: 16px; width: 16px;
+  left: 2px; bottom: 2px;
+  background: var(--text-dim);
+  border-radius: 50%; transition: 0.2s;
+}
+#section-airdrops .ps-switch input:checked + .ps-slider {
+  background: rgba(255,144,70,0.15); border-color: var(--orange);
+}
+#section-airdrops .ps-switch input:checked + .ps-slider::before {
+  background: var(--orange); transform: translateX(18px);
+}
+
+/* Flash form section in airdrop modal */
+#section-airdrops .ad-flash-section {
+  grid-column: 1 / -1;
+  background: rgba(255,144,70,0.04);
+  border: 1px solid rgba(255,144,70,0.15);
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+#section-airdrops .ad-flash-header {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10.5px; font-weight: 800;
+  color: var(--orange); letter-spacing: 0.5px;
+}
+#section-airdrops .ad-flash-fields {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+@media (max-width: 600px) { #section-airdrops .ad-flash-fields { grid-template-columns: 1fr; } }
+
 </style>
 </head>
 <body>
@@ -2743,6 +2997,27 @@ button{cursor:pointer;font-family:'Rajdhani',sans-serif}
                 </label>
               </div>
 
+              <!-- ⚡ FLASH OPPORTUNITY SECTION -->
+              <div class="ad-flash-section">
+                <div class="ad-flash-header">
+                  <span>⚡</span> Flash Opportunity Mode
+                  <label class="ps-switch" style="margin-left:auto;">
+                    <input type="checkbox" id="afFlash">
+                    <span class="ps-slider"></span>
+                  </label>
+                </div>
+                <div class="ad-flash-fields" id="afFlashFields" style="display:none;">
+                  <div class="ad-form-field">
+                    <label class="ad-form-label">Flash Ends At</label>
+                    <input type="datetime-local" class="ad-form-input" id="afFlashEnds">
+                  </div>
+                  <div class="ad-form-field">
+                    <label class="ad-form-label">Spots Left</label>
+                    <input type="number" class="ad-form-input" id="afFlashSpots" placeholder="e.g., 500" min="0">
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
           <div class="ad-modal-foot">
@@ -2758,7 +3033,127 @@ button{cursor:pointer;font-family:'Rajdhani',sans-serif}
     <section class="section" id="section-wallets"><div class="soon-card"><div class="soon-icon">⛓</div><div class="soon-title">Wallet <span>Registry</span></div><div class="soon-sub">View tracked wallets across the platform, reputation scores, and on-chain activity overview.</div><span class="soon-pill"><span class="dot"></span>COMING SOON</span></div></section>
     <section class="section" id="section-roles"><div class="soon-card"><div class="soon-icon">🛡</div><div class="soon-title">Roles & <span>Permissions</span></div><div class="soon-sub">Granular role-based access control. Manage admin/moderator/user roles and permission sets.</div><span class="soon-pill"><span class="dot"></span>COMING SOON</span></div></section>
     <section class="section" id="section-logs"><div class="soon-card"><div class="soon-icon">📜</div><div class="soon-title">System <span>Logs</span></div><div class="soon-sub">Real-time system event logs — errors, warnings, info messages from all services.</div><span class="soon-pill"><span class="dot"></span>COMING SOON</span></div></section>
-    <section class="section" id="section-settings"><div class="soon-card"><div class="soon-icon">⚙</div><div class="soon-title">Platform <span>Settings</span></div><div class="soon-sub">Global platform configuration — feature flags, rate limits, defaults, and admin overrides.</div><span class="soon-pill"><span class="dot"></span>COMING SOON</span></div></section>
+    <section class="section" id="section-settings">
+      <!-- PLATFORM SETTINGS — 4 panels in a 2-col grid -->
+      <div class="ps-grid">
+
+        <!-- ── PANEL 1: Social Handles ── -->
+        <div class="ps-card">
+          <div class="ps-card-head">
+            <div class="ps-card-icon">🔗</div>
+            <div>
+              <div class="ps-card-title">Social Handles</div>
+              <div class="ps-card-sub">Links shown in Day 1 Mission & footer</div>
+            </div>
+          </div>
+          <div class="ps-card-body">
+            <div class="ps-field">
+              <label class="ps-label">Twitter / X URL</label>
+              <input type="url" class="ps-input" id="psTwitterUrl" placeholder="https://x.com/dropelite">
+            </div>
+            <div class="ps-field">
+              <label class="ps-label">Twitter Handle</label>
+              <input type="text" class="ps-input" id="psTwitterHandle" placeholder="@dropelite">
+            </div>
+            <div class="ps-field">
+              <label class="ps-label">Discord Invite URL</label>
+              <input type="url" class="ps-input" id="psDiscordUrl" placeholder="https://discord.gg/...">
+            </div>
+            <div class="ps-field">
+              <label class="ps-label">Telegram Group URL</label>
+              <input type="url" class="ps-input" id="psTelegramUrl" placeholder="https://t.me/dropelite">
+            </div>
+            <div class="ps-field">
+              <label class="ps-label">Telegram Handle</label>
+              <input type="text" class="ps-input" id="psTelegramHandle" placeholder="@dropelite">
+            </div>
+          </div>
+          <div class="ps-card-foot">
+            <span class="ps-saved-label" id="psSocialsSaved" style="display:none">✓ Saved</span>
+            <button class="ps-save-btn" id="psSaveSocials">💾 Save Socials</button>
+          </div>
+        </div>
+
+        <!-- ── PANEL 2: Day 1 Mission ── -->
+        <div class="ps-card">
+          <div class="ps-card-head">
+            <div class="ps-card-icon">🎯</div>
+            <div>
+              <div class="ps-card-title">Day 1 Mission</div>
+              <div class="ps-card-sub">5 onboarding tasks for new users</div>
+            </div>
+          </div>
+          <div class="ps-card-body" id="psDay1Body">
+            <!-- Populated by JS — 5 editable task rows -->
+            <div class="ps-hint">Loading tasks…</div>
+          </div>
+          <div class="ps-card-foot">
+            <span class="ps-saved-label" id="psDay1Saved" style="display:none">✓ Saved</span>
+            <button class="ps-save-btn" id="psSaveDay1">💾 Save Tasks</button>
+          </div>
+        </div>
+
+        <!-- ── PANEL 3: Featured Action ── -->
+        <div class="ps-card">
+          <div class="ps-card-head">
+            <div class="ps-card-icon">⭐</div>
+            <div>
+              <div class="ps-card-title">Featured Action</div>
+              <div class="ps-card-sub">Admin-picked daily action shown to all users</div>
+            </div>
+          </div>
+          <div class="ps-card-body">
+            <div class="ps-field ps-toggle-row">
+              <label class="ps-toggle-label">Enable Featured Action</label>
+              <label class="ps-switch">
+                <input type="checkbox" id="psFeaturedEnabled">
+                <span class="ps-slider"></span>
+              </label>
+            </div>
+            <div class="ps-field">
+              <label class="ps-label">Title</label>
+              <input type="text" class="ps-input" id="psFeaturedTitle" placeholder="e.g., Bridge to Base today" maxlength="100">
+            </div>
+            <div class="ps-field">
+              <label class="ps-label">Description</label>
+              <textarea class="ps-textarea" id="psFeaturedDesc" placeholder="What should the user do?" maxlength="300"></textarea>
+            </div>
+            <div class="ps-field">
+              <label class="ps-label">Link / URL</label>
+              <input type="url" class="ps-input" id="psFeaturedLink" placeholder="https://...">
+            </div>
+            <div class="ps-field">
+              <label class="ps-label">CTA Button Label</label>
+              <input type="text" class="ps-input" id="psFeaturedCta" placeholder="Go" maxlength="20">
+            </div>
+          </div>
+          <div class="ps-card-foot">
+            <span class="ps-saved-label" id="psFeaturedSaved" style="display:none">✓ Saved</span>
+            <button class="ps-save-btn" id="psSaveFeatured">💾 Save Featured</button>
+          </div>
+        </div>
+
+        <!-- ── PANEL 4: Streak Rewards ── -->
+        <div class="ps-card">
+          <div class="ps-card-head">
+            <div class="ps-card-icon">🔥</div>
+            <div>
+              <div class="ps-card-title">Streak Rewards</div>
+              <div class="ps-card-sub">Milestones that reward consistency</div>
+            </div>
+          </div>
+          <div class="ps-card-body" id="psStreakBody">
+            <!-- Populated by JS — milestone rows -->
+            <div class="ps-hint">Loading milestones…</div>
+          </div>
+          <div class="ps-card-foot">
+            <span class="ps-saved-label" id="psStreakSaved" style="display:none">✓ Saved</span>
+            <button class="ps-save-btn" id="psSaveStreak">💾 Save Milestones</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
     <section class="section" id="section-integrations"><div class="soon-card"><div class="soon-icon">🔌</div><div class="soon-title">Platform <span>Integrations</span></div><div class="soon-sub">Manage third-party service integrations — Stripe, Razorpay, Resend, push notification providers.</div><span class="soon-pill"><span class="dot"></span>COMING SOON</span></div></section>
     <section class="section" id="section-notifications"><div class="soon-card"><div class="soon-icon">🔔</div><div class="soon-title">Notification <span>Center</span></div><div class="soon-sub">Send platform-wide announcements, manage notification templates, and view delivery stats.</div><span class="soon-pill"><span class="dot"></span>COMING SOON</span></div></section>
     <section class="section" id="section-security"><div class="soon-card"><div class="soon-icon">🔐</div><div class="soon-title">Security <span>Center</span></div><div class="soon-sub">Security policies, 2FA enforcement, IP allowlists, session controls, and suspicious activity alerts.</div><span class="soon-pill"><span class="dot"></span>COMING SOON</span></div></section>
@@ -2866,7 +3261,7 @@ const SECTION_META={
   wallets:{title:'Wallets',sub:'Tracked wallets across the platform'},
   roles:{title:'Roles & Permissions',sub:'Role-based access control'},
   logs:{title:'System Logs',sub:'Real-time system events'},
-  settings:{title:'Platform Settings',sub:'Global configuration'},
+  settings:{title:'Platform Settings',sub:'Social handles, Day 1 Mission, streak rewards & featured actions'},
   integrations:{title:'Integrations',sub:'Third-party service connections'},
   notifications:{title:'Notifications',sub:'Send announcements & manage templates'},
   security:{title:'Security',sub:'Platform security policies'},
@@ -4271,7 +4666,7 @@ function adRenderTable() {
         <td>
           <div class="ad-name-cell">
             <div class="ad-logo" style="background:${aSafeColor(name)};">${aEsc(name.charAt(0).toUpperCase())}</div>
-            <div class="ad-name">${aEsc(name)}</div>
+            <div class="ad-name">${aEsc(name)}${a.is_flash ? '<span class="ad-flash-badge">⚡ FLASH</span>' : ''}</div>
           </div>
         </td>
         <td>
@@ -4531,6 +4926,12 @@ function adFillForm(a) {
   set('afEligibility', a.eligibility_text || '');
   setCheck('afVisible', a.visible_to_users !== false);
   setCheck('afFeatured', !!a.is_featured);
+  // Flash fields
+  setCheck('afFlash', !!a.is_flash);
+  set('afFlashEnds', adDtLocal(a.flash_ends_at));
+  set('afFlashSpots', a.flash_spots_left != null ? a.flash_spots_left : '');
+  const ff = document.getElementById('afFlashFields');
+  if (ff) ff.style.display = a.is_flash ? 'grid' : 'none';
 }
 
 async function adSaveModal() {
@@ -4583,6 +4984,9 @@ async function adSaveModal() {
       eligibility_text: get('afEligibility').trim(),
       visible_to_users: getCheck('afVisible'),
       is_featured: getCheck('afFeatured'),
+      is_flash: getCheck('afFlash'),
+      flash_ends_at: getCheck('afFlash') ? getDt('afFlashEnds') : null,
+      flash_spots_left: getCheck('afFlash') ? getNum('afFlashSpots') : null,
       updated_at: new Date().toISOString()
     };
 
@@ -4907,6 +5311,239 @@ if (document.readyState === 'loading') {
 } else {
   adInit();
 }
+
+})();
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CHUNK 18A — FLASH TOGGLE IN AIRDROP FORM
+   ═══════════════════════════════════════════════════════════════════════════ */
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    const cb = document.getElementById('afFlash');
+    if (cb) {
+      cb.addEventListener('change', function() {
+        const ff = document.getElementById('afFlashFields');
+        if (ff) ff.style.display = cb.checked ? 'grid' : 'none';
+      });
+    }
+  });
+})();
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CHUNK 18A — PLATFORM SETTINGS ADMIN SECTION
+   ═══════════════════════════════════════════════════════════════════════════ */
+(function() {
+  'use strict';
+
+  let psLoaded = false;
+  let psData = {};  // { socials: {...}, day1_mission: {...}, featured_action: {...}, streak_rewards: {...} }
+
+  // ─── Load all settings from DB ───
+  async function psLoadAll() {
+    if (psLoaded) return;
+    if (!window.API || !window.API.isLive()) return;
+    try {
+      const rows = await window.API.getAllPlatformSettings();
+      rows.forEach(r => { psData[r.key] = r.value; });
+      psLoaded = true;
+      psRenderSocials();
+      psRenderDay1();
+      psRenderFeatured();
+      psRenderStreaks();
+    } catch (e) {
+      console.error('[ps] load:', e);
+    }
+  }
+
+  // ─── Flash saved indicator ───
+  function psFlashSaved(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.display = 'inline';
+    setTimeout(() => { el.style.display = 'none'; }, 2500);
+  }
+
+  // ─── SOCIAL HANDLES ───
+  function psRenderSocials() {
+    const s = psData.socials || {};
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v || ''; };
+    set('psTwitterUrl', s.twitter_url);
+    set('psTwitterHandle', s.twitter_handle);
+    set('psDiscordUrl', s.discord_url);
+    set('psTelegramUrl', s.telegram_url);
+    set('psTelegramHandle', s.telegram_handle);
+  }
+
+  async function psSaveSocials() {
+    const get = id => (document.getElementById(id) || {}).value || '';
+    const val = {
+      twitter_url: get('psTwitterUrl').trim(),
+      twitter_handle: get('psTwitterHandle').trim(),
+      discord_url: get('psDiscordUrl').trim(),
+      telegram_url: get('psTelegramUrl').trim(),
+      telegram_handle: get('psTelegramHandle').trim()
+    };
+    const btn = document.getElementById('psSaveSocials');
+    btn.disabled = true; btn.textContent = '⏳ Saving…';
+    const res = await window.API.savePlatformSetting('socials', val);
+    btn.disabled = false; btn.textContent = '💾 Save Socials';
+    if (res.ok) {
+      psData.socials = val;
+      aToast('✓', 'Saved', 'Social handles updated.', 'success');
+      psFlashSaved('psSocialsSaved');
+    } else {
+      aToast('⚠', 'Error', res.error || 'Save failed', 'error');
+    }
+  }
+
+  // ─── DAY 1 MISSION ───
+  function psRenderDay1() {
+    const body = document.getElementById('psDay1Body');
+    if (!body) return;
+    const d = psData.day1_mission || {};
+    const tasks = d.tasks || [];
+    if (!tasks.length) {
+      body.innerHTML = '<div class="ps-hint">No tasks configured.</div>';
+      return;
+    }
+    body.innerHTML = tasks.map((t, i) => `
+      <div class="ps-task-row">
+        <div class="ps-task-num">${i + 1}</div>
+        <input type="text" class="ps-task-input" id="psTask${i}" value="${aEsc(t.label || '')}" maxlength="100">
+        <div class="ps-task-type">${aEsc(t.type || 'social')}</div>
+      </div>
+    `).join('');
+  }
+
+  async function psSaveDay1() {
+    const d = psData.day1_mission || {};
+    const tasks = (d.tasks || []).map((t, i) => {
+      const el = document.getElementById('psTask' + i);
+      return { ...t, label: el ? el.value.trim() : t.label };
+    });
+    const val = { tasks };
+    const btn = document.getElementById('psSaveDay1');
+    btn.disabled = true; btn.textContent = '⏳ Saving…';
+    const res = await window.API.savePlatformSetting('day1_mission', val);
+    btn.disabled = false; btn.textContent = '💾 Save Tasks';
+    if (res.ok) {
+      psData.day1_mission = val;
+      aToast('✓', 'Saved', 'Day 1 Mission updated.', 'success');
+      psFlashSaved('psDay1Saved');
+    } else {
+      aToast('⚠', 'Error', res.error || 'Save failed', 'error');
+    }
+  }
+
+  // ─── FEATURED ACTION ───
+  function psRenderFeatured() {
+    const f = psData.featured_action || {};
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v || ''; };
+    const cb = document.getElementById('psFeaturedEnabled');
+    if (cb) cb.checked = !!f.enabled;
+    set('psFeaturedTitle', f.title);
+    set('psFeaturedDesc', f.description);
+    set('psFeaturedLink', f.link);
+    set('psFeaturedCta', f.cta_label);
+  }
+
+  async function psSaveFeatured() {
+    const get = id => (document.getElementById(id) || {}).value || '';
+    const val = {
+      enabled: !!(document.getElementById('psFeaturedEnabled') || {}).checked,
+      title: get('psFeaturedTitle').trim(),
+      description: get('psFeaturedDesc').trim(),
+      link: get('psFeaturedLink').trim(),
+      airdrop_id: null,
+      cta_label: get('psFeaturedCta').trim() || 'Go'
+    };
+    const btn = document.getElementById('psSaveFeatured');
+    btn.disabled = true; btn.textContent = '⏳ Saving…';
+    const res = await window.API.savePlatformSetting('featured_action', val);
+    btn.disabled = false; btn.textContent = '💾 Save Featured';
+    if (res.ok) {
+      psData.featured_action = val;
+      aToast('✓', 'Saved', 'Featured Action updated.', 'success');
+      psFlashSaved('psFeaturedSaved');
+    } else {
+      aToast('⚠', 'Error', res.error || 'Save failed', 'error');
+    }
+  }
+
+  // ─── STREAK REWARDS ───
+  function psRenderStreaks() {
+    const body = document.getElementById('psStreakBody');
+    if (!body) return;
+    const s = psData.streak_rewards || {};
+    const miles = s.milestones || [];
+    if (!miles.length) {
+      body.innerHTML = '<div class="ps-hint">No milestones configured.</div>';
+      return;
+    }
+    body.innerHTML = miles.map((m, i) => {
+      let valDisplay = '';
+      if (m.type === 'badge') valDisplay = m.value;
+      else if (m.type === 'pro_days') valDisplay = m.value + ' days';
+      else if (m.type === 'discount') valDisplay = m.value + '% off';
+      else valDisplay = String(m.value);
+      return `
+        <div class="ps-mile-row">
+          <div class="ps-mile-days">${m.days}d</div>
+          <div class="ps-mile-label">${aEsc(m.label)}</div>
+          <div class="ps-mile-type">${aEsc(m.type)}</div>
+          <div class="ps-mile-value">${aEsc(valDisplay)}</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  async function psSaveStreak() {
+    // Streak milestones are currently read-only display — save the existing config
+    // (editing individual milestones is a future enhancement)
+    const val = psData.streak_rewards || {};
+    const btn = document.getElementById('psSaveStreak');
+    btn.disabled = true; btn.textContent = '⏳ Saving…';
+    const res = await window.API.savePlatformSetting('streak_rewards', val);
+    btn.disabled = false; btn.textContent = '💾 Save Milestones';
+    if (res.ok) {
+      aToast('✓', 'Confirmed', 'Streak milestones confirmed.', 'success');
+      psFlashSaved('psStreakSaved');
+    } else {
+      aToast('⚠', 'Error', res.error || 'Save failed', 'error');
+    }
+  }
+
+  // ─── Hook save buttons ───
+  function psInit() {
+    const wire = (id, fn) => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('click', fn);
+    };
+    wire('psSaveSocials', psSaveSocials);
+    wire('psSaveDay1', psSaveDay1);
+    wire('psSaveFeatured', psSaveFeatured);
+    wire('psSaveStreak', psSaveStreak);
+  }
+
+  // ─── Hook into switchSection ───
+  if (!window.__settingsHooked) {
+    window.__settingsHooked = true;
+    const prev = window.switchSection;
+    if (prev) {
+      window.switchSection = function(name) {
+        prev(name);
+        if (name === 'settings' && !psLoaded) {
+          psLoadAll();
+        }
+      };
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', psInit);
+  } else {
+    psInit();
+  }
 
 })();
 
