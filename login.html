@@ -32,29 +32,46 @@
 }
 
 [data-theme="light"] {
-  --gold: #b8860b; --gold-bright: #d4a017; --gold-dim: #8b6914;
-  --gold-glow: rgba(184,134,11,0.12);
-  --bg: #f0f1f5; --bg2: #e4e6ec;
-  --surface: rgba(0,0,0,0.04); --surface2: rgba(0,0,0,0.07);
-  --border: rgba(184,134,11,0.22); --border2: rgba(0,0,0,0.09);
-  --text: #1a1d28; --text-dim: #555d72; --text-muted: #8e95a8;
-  --green: #00a858; --red: #d93545; --blue: #0094a8;
+  --gold: #c48a08; --gold-bright: #e0a00a; --gold-dim: #9a6e06;
+  --gold-glow: rgba(196,138,8,0.22);
+  --bg: #dde2ee; --bg2: #d0d7e5;
+  --surface: rgba(255,255,255,0.55); --surface2: rgba(255,255,255,0.70);
+  --border: rgba(196,138,8,0.30); --border2: rgba(10,14,30,0.10);
+  --text: #0a0e1a; --text-dim: #3d4a65; --text-muted: #6b7894;
+  --green: #008a4a; --red: #c42838; --blue: #007a90;
 }
-[data-theme="light"] .login-card { background: linear-gradient(135deg, rgba(255,255,255,0.92), rgba(244,245,250,0.94)); box-shadow: 0 20px 50px rgba(0,0,0,0.1), 0 0 0 1px rgba(184,134,11,0.08); }
-[data-theme="light"] .top-status { background: rgba(240,241,245,0.9); }
-[data-theme="light"] .brand-icon { box-shadow: 0 0 18px rgba(184,134,11,0.35); }
-[data-theme="light"] .brand-name { text-shadow: none; }
-[data-theme="light"] .logo { text-shadow: none; }
-[data-theme="light"] .btn-login { color: #fff; box-shadow: 0 3px 14px rgba(184,134,11,0.25); }
-[data-theme="light"] .demo-row { background: rgba(184,134,11,0.04); }
-[data-theme="light"] .demo-row:hover { background: rgba(184,134,11,0.08); }
-[data-theme="light"] #grid-canvas { opacity: 0.06; }
-[data-theme="light"] .page-glow { opacity: 0.2; }
+[data-theme="light"] .login-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.80), rgba(245,248,255,0.85));
+  border-color: rgba(196,138,8,0.22);
+  box-shadow: 0 20px 50px rgba(10,14,30,0.12), 0 0 0 1px rgba(255,255,255,0.5) inset, 0 0 60px rgba(196,138,8,0.05);
+  backdrop-filter: blur(20px);
+}
+[data-theme="light"] .top-status { background: rgba(215,222,235,0.90); border-bottom-color: rgba(10,14,30,0.10); box-shadow: 0 1px 6px rgba(10,14,30,0.05); }
+[data-theme="light"] .brand-icon { box-shadow: 0 0 18px rgba(196,138,8,0.40); }
+[data-theme="light"] .brand-name { text-shadow: 0 0 12px rgba(196,138,8,0.15); }
+[data-theme="light"] .btn-login { color: #fff; background: linear-gradient(135deg, #c48a08, #9a6e06); box-shadow: 0 3px 16px rgba(196,138,8,0.30); }
+[data-theme="light"] .btn-login:hover { box-shadow: 0 6px 24px rgba(196,138,8,0.45); }
+[data-theme="light"] .demo-row { background: rgba(196,138,8,0.06); border-color: rgba(10,14,30,0.08); }
+[data-theme="light"] .demo-row:hover { background: rgba(196,138,8,0.12); border-color: rgba(196,138,8,0.25); }
+[data-theme="light"] #grid-canvas { opacity: 0.12; }
+[data-theme="light"] .page-glow { opacity: 0.5; }
 [data-theme="light"] .corner-accent.tl, [data-theme="light"] .corner-accent.tr,
-[data-theme="light"] .corner-accent.bl, [data-theme="light"] .corner-accent.br { border-color: var(--gold); opacity: 0.3; }
-[data-theme="light"] input { background: rgba(255,255,255,0.6); border-color: rgba(0,0,0,0.12); color: var(--text); }
-[data-theme="light"] input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(184,134,11,0.1); }
-[data-theme="light"] input::placeholder { color: var(--text-muted); }
+[data-theme="light"] .corner-accent.bl, [data-theme="light"] .corner-accent.br { border-color: var(--gold); opacity: 0.35; }
+[data-theme="light"] input {
+  background: rgba(255,255,255,0.65);
+  border-color: rgba(10,14,30,0.12);
+  color: #0a0e1a;
+  box-shadow: 0 1px 4px rgba(10,14,30,0.04) inset;
+}
+[data-theme="light"] input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(196,138,8,0.12), 0 0 12px rgba(196,138,8,0.08); background: rgba(255,255,255,0.85); }
+[data-theme="light"] input::placeholder { color: #8e9ab0; }
+[data-theme="light"] .field label { color: #3d4a65; }
+[data-theme="light"] .field label::before { background: var(--gold); box-shadow: 0 0 6px rgba(196,138,8,0.5); }
+[data-theme="light"] .subtitle { color: #6b7894; }
+[data-theme="light"] .demo-creds-label { color: var(--gold); }
+[data-theme="light"] .demo-row .creds { color: #3d4a65; }
+[data-theme="light"] .status-line { color: #6b7894; border-top-color: rgba(10,14,30,0.08); }
+[data-theme="light"] .demo-hint { color: #6b7894; }
 
 html, body { overflow-x: hidden; }
 body {
