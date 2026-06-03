@@ -25994,27 +25994,10 @@ function dailyInjectRandomAlert() {
   });
 
 // ═══════════════════════════════════════════
-// INIT
+// INIT — DISABLED (replaced by Chunk 18B Daily Operations)
+// Old DOM elements removed; keeping function defs above for safety.
 // ═══════════════════════════════════════════
-document.addEventListener('DOMContentLoaded', () => {
-  // Build the static visual pieces first
-  dailyBuildWeekChart();
-  dailyBuildAlerts();
 
-  // Load real missions + progress from Supabase
-  // (small delay so the Supabase client + auth are ready)
-  setTimeout(() => {
-    dailyLoadFromSupabase();
-  }, 600);
-
-  // Randomly inject new alert every 18–35 seconds
-  setInterval(dailyInjectRandomAlert, 18000 + Math.random() * 17000);
-
-  // Welcome toast
-  setTimeout(() => {
-    dailyShowToast('⚔️', 'DAILY COMMAND ACTIVE', 'Good hunting, Elite Operator.', 'gold');
-  }, 800);
-});
 })();
 /* END DAILY MISSIONS TAB SCRIPT */
 
@@ -26406,6 +26389,7 @@ window.doFollowNew = async function(btn) {
 
 // ─── MAIN LOAD ───
 async function doLoadAll() {
+  console.log('[do] doLoadAll called, doLoaded=' + doLoaded + ', API=' + !!window.API + ', live=' + (window.API ? window.API.isLive() : 'n/a'));
   if (doLoaded) return;
   if (!window.API || !window.API.isLive()) {
     console.warn('[do] API not ready, retrying in 500ms');
@@ -26456,6 +26440,7 @@ async function doLoadAll() {
     // Check Day 1 state
     const onboarded = profile && profile.onboarding_completed;
     doIsDay1 = !onboarded;
+    console.log('[do] Data loaded. onboarded=' + onboarded + ', doIsDay1=' + doIsDay1 + ', followed=' + doFollowed.length + ', flash=' + doFlash.length);
 
     // Set greeting
     const userName = profile ? profile.name : '';
@@ -26487,12 +26472,14 @@ async function doLoadAll() {
 // ─── Hook into tab switching ───
 document.addEventListener('dropelite:tabchange', function(e) {
   if (e.detail && e.detail.tabName === 'daily-missions' && !doLoaded) {
+    console.log('[do] Tab switched to daily-missions, calling doLoadAll');
     doLoadAll();
   }
 });
 
 // Also fire on DOMContentLoaded if hash is already daily-missions
 document.addEventListener('DOMContentLoaded', function() {
+  console.log('[do] DOMContentLoaded, hash=' + location.hash);
   if (location.hash === '#daily-missions') {
     setTimeout(doLoadAll, 300);
   }
