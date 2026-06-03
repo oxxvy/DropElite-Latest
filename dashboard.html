@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DropElite — Overview</title>
+<script>
+(function(){var t=localStorage.getItem('dropelite_theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -38,6 +41,109 @@
   --radius:      12px;
   --radius-lg:   18px;
 }
+
+[data-theme="light"] {
+  --gold:        #b8860b;
+  --gold-bright: #d4a017;
+  --gold-dim:    #8b6914;
+  --gold-glow:   rgba(184,134,11,0.12);
+  --gold-glow2:  rgba(184,134,11,0.06);
+  --bg:          #f0f1f5;
+  --bg2:         #e4e6ec;
+  --bg3:         #d8dae2;
+  --surface:     rgba(0,0,0,0.04);
+  --surface2:    rgba(0,0,0,0.07);
+  --border:      rgba(184,134,11,0.22);
+  --border2:     rgba(0,0,0,0.09);
+  --text:        #1a1d28;
+  --text-dim:    #555d72;
+  --text-muted:  #8e95a8;
+  --green:       #00a858;
+  --green-glow:  rgba(0,168,88,0.12);
+  --red:         #d93545;
+  --red-glow:    rgba(217,53,69,0.12);
+  --blue:        #0094a8;
+  --blue-glow:   rgba(0,148,168,0.10);
+  --orange:      #d07030;
+}
+
+[data-theme="light"] body { background: var(--bg); color: var(--text); }
+[data-theme="light"] .topbar { background: rgba(240,241,245,0.92); border-bottom-color: var(--border); }
+[data-theme="light"] .sidebar { background: rgba(228,230,236,0.85); }
+[data-theme="light"] .hero-card { background: linear-gradient(135deg, rgba(184,134,11,0.06) 0%, rgba(240,241,245,0.95) 40%, rgba(228,230,236,0.98) 100%); }
+[data-theme="light"] .stat-val { color: var(--text); }
+[data-theme="light"] .hero-title { color: var(--text); }
+[data-theme="light"] .avatar { background: linear-gradient(135deg, #d8dae2, #e4e6ec); color: var(--gold); border-color: var(--gold); box-shadow: 0 0 8px rgba(184,134,11,0.2); }
+[data-theme="light"] .card { background: rgba(255,255,255,0.7); border-color: var(--border2); backdrop-filter: blur(10px); }
+[data-theme="light"] .card:hover { border-color: rgba(184,134,11,0.25); box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
+[data-theme="light"] .mission-row { background: rgba(255,255,255,0.5); }
+[data-theme="light"] .mission-row:hover { background: rgba(184,134,11,0.06); }
+[data-theme="light"] .gwei-widget { background: rgba(255,255,255,0.5); border-color: rgba(0,148,168,0.2); }
+[data-theme="light"] .mission-timer { background: rgba(255,255,255,0.5); }
+[data-theme="light"] .mission-progress { background: rgba(255,255,255,0.4); }
+[data-theme="light"] .qa-btn { background: rgba(255,255,255,0.5); }
+[data-theme="light"] .qa-btn:hover { background: rgba(184,134,11,0.08); }
+[data-theme="light"] .feed-item { border-bottom-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .rank-pill { background: rgba(184,134,11,0.06); }
+[data-theme="light"] .crypto-ticker { background: rgba(255,255,255,0.5); }
+[data-theme="light"] .crypto-ticker::before { background: linear-gradient(90deg, rgba(240,241,245,0.95), transparent); }
+[data-theme="light"] .crypto-ticker::after { background: linear-gradient(270deg, rgba(240,241,245,0.95), transparent); }
+[data-theme="light"] #grid-canvas { opacity: 0.08; }
+[data-theme="light"] .page-glow { opacity: 0.3; }
+[data-theme="light"] .logo { color: var(--gold); text-shadow: none; }
+[data-theme="light"] .logo-icon { box-shadow: 0 0 12px rgba(184,134,11,0.35); }
+[data-theme="light"] .btn-gold { background: linear-gradient(135deg, var(--gold) 0%, #8b6914 100%); color: #fff; box-shadow: 0 2px 12px rgba(184,134,11,0.25); }
+[data-theme="light"] .modal-overlay, [data-theme="light"] .sidebar-backdrop { background: rgba(0,0,0,0.4); }
+[data-theme="light"] input, [data-theme="light"] select, [data-theme="light"] textarea { background: rgba(255,255,255,0.6); border-color: rgba(0,0,0,0.12); color: var(--text); }
+[data-theme="light"] input:focus, [data-theme="light"] select:focus, [data-theme="light"] textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(184,134,11,0.1); }
+[data-theme="light"] ::-webkit-scrollbar-thumb { background: rgba(184,134,11,0.25); }
+[data-theme="light"] .xp-bg { background: rgba(0,0,0,0.06); }
+[data-theme="light"] .stat-icon.icon-gold { background: rgba(184,134,11,0.1); border-color: rgba(184,134,11,0.2); }
+[data-theme="light"] .stat-icon.icon-green { background: rgba(0,168,88,0.1); border-color: rgba(0,168,88,0.2); }
+[data-theme="light"] .stat-icon.icon-blue { background: rgba(0,148,168,0.1); border-color: rgba(0,148,168,0.2); }
+[data-theme="light"] .stat-icon.icon-orange { background: rgba(208,112,48,0.1); border-color: rgba(208,112,48,0.2); }
+[data-theme="light"] .stat-icon.icon-red { background: rgba(217,53,69,0.1); border-color: rgba(217,53,69,0.2); }
+[data-theme="light"] .stat-icon.icon-purple { background: rgba(157,78,221,0.1); border-color: rgba(157,78,221,0.2); }
+@media (max-width: 800px) { [data-theme="light"] .sidebar { background: rgba(240,241,245,0.98); } }
+[data-theme="light"] .nav-item.active { color: var(--gold); background: rgba(184,134,11,0.08); }
+[data-theme="light"] .tb-btn { background: rgba(255,255,255,0.5); }
+[data-theme="light"] .topbar-status { color: var(--text-dim); }
+[data-theme="light"] .section-title { color: var(--text-dim); }
+
+/* Light theme — broad inner-surface overrides for all tabs */
+[data-theme="light"] .tab-panel [style*="background:rgba(0,0,0"] { background: rgba(0,0,0,0.03) !important; }
+[data-theme="light"] .tab-panel [style*="background:linear-gradient(135deg,#0a0f1e"] { background: rgba(255,255,255,0.85) !important; }
+[data-theme="light"] .tab-panel [style*="background:#0a0f1e"] { background: rgba(255,255,255,0.85) !important; }
+[data-theme="light"] .pi-card, [data-theme="light"] .pi-detail-view { background: rgba(255,255,255,0.6); }
+[data-theme="light"] .dm-mission, [data-theme="light"] .dm-tier { background: rgba(255,255,255,0.5); }
+[data-theme="light"] .rw-card, [data-theme="light"] .rw-stat { background: rgba(255,255,255,0.5); }
+[data-theme="light"] .ih-card, [data-theme="light"] .ih-intel-card, [data-theme="light"] .ih-signal-card, [data-theme="light"] .ih-feed-card { background: rgba(255,255,255,0.5); }
+[data-theme="light"] .at-card, [data-theme="light"] .at-row { background: rgba(255,255,255,0.5); }
+[data-theme="light"] .ex-card, [data-theme="light"] .ex-route-card { background: rgba(255,255,255,0.5); }
+[data-theme="light"] .wa-card, [data-theme="light"] .wallet-card { background: rgba(255,255,255,0.5); }
+[data-theme="light"] .an-card, [data-theme="light"] .rp-card, [data-theme="light"] .se-card { background: rgba(255,255,255,0.5); }
+[data-theme="light"] .badge-pill { filter: saturate(0.85); }
+[data-theme="light"] .gwei-cell { background: rgba(0,0,0,0.03); border-color: var(--border2); }
+[data-theme="light"] .mp-bar-bg, [data-theme="light"] .chain-bar-bg { background: rgba(0,0,0,0.06); }
+
+.theme-toggle {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  width: 38px; height: 38px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  padding: 0;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+.theme-toggle:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-glow2); }
+.theme-toggle svg { width: 18px; height: 18px; }
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: block; }
+[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+[data-theme="light"] .theme-toggle .icon-moon { display: none; }
 
 html { scroll-behavior: smooth; }
 
@@ -18452,6 +18558,10 @@ select.exp-field-input option { background: #0a0e1a; color: #e8eaf0; }
         <div class="status-dot"></div>
         SYSTEM ONLINE &nbsp;·&nbsp; <span id="live-time">--:--:--</span>
       </div>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle light/dark theme" aria-label="Toggle theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
       <button class="tb-btn" id="ov-alert-pill" data-tab-target="overview" style="border-color:rgba(245,200,66,0.3);color:var(--gold)">
         <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2v4M10 14v4M2 10h4M14 10h4"/><circle cx="10" cy="10" r="3"/></svg>
         <span class="btn-label">0 Alerts</span>
@@ -33495,6 +33605,16 @@ document.addEventListener('dropelite:tabchange', function(e) {
 
 
 /* END PROFILE TAB SCRIPT */
+</script>
+
+<!-- ═══ THEME TOGGLE ═══ -->
+<script>
+function toggleTheme(){
+  var h=document.documentElement;
+  var isLight=h.getAttribute('data-theme')==='light';
+  if(isLight){h.removeAttribute('data-theme');localStorage.setItem('dropelite_theme','dark');}
+  else{h.setAttribute('data-theme','light');localStorage.setItem('dropelite_theme','light');}
+}
 </script>
 
 <!-- ═══ BACKEND LAYER (Supabase) ═══ -->
