@@ -18413,6 +18413,366 @@ select.exp-field-input option { background: #0a0e1a; color: #e8eaf0; }
 
 
 /* END PROFILE TAB STYLES */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CHUNK 18B — DAILY OPERATIONS TAB
+   ═══════════════════════════════════════════════════════════════════════════ */
+.daily-missions-view .do-wrap {
+  max-width: 800px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 22px;
+  padding-bottom: 40px;
+}
+
+/* ── Greeting ── */
+.daily-missions-view .do-greet {
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;
+  flex-wrap: wrap;
+}
+.daily-missions-view .do-greet-msg {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px; font-weight: 800;
+  color: var(--text); letter-spacing: 0.5px;
+  line-height: 1.3;
+}
+.daily-missions-view .do-greet-msg span { color: var(--gold); }
+.daily-missions-view .do-greet-date {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10.5px; color: var(--text-muted);
+  letter-spacing: 1.2px; text-transform: uppercase;
+}
+
+/* ── Section header bar ── */
+.daily-missions-view .do-sec-head {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 10px;
+}
+.daily-missions-view .do-sec-icon { font-size: 16px; }
+.daily-missions-view .do-sec-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11.5px; font-weight: 800;
+  letter-spacing: 0.8px; color: var(--text);
+}
+.daily-missions-view .do-sec-badge {
+  margin-left: auto;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 4px;
+}
+.daily-missions-view .do-sec-badge.pro {
+  background: linear-gradient(135deg, rgba(245,200,66,0.12), rgba(245,200,66,0.04));
+  border: 1px solid rgba(245,200,66,0.25);
+  color: var(--gold);
+}
+
+/* ── Flash Opportunities ── */
+.daily-missions-view .do-flash-scroll {
+  display: flex; gap: 12px;
+  overflow-x: auto; padding-bottom: 6px;
+  scrollbar-width: thin;
+}
+.daily-missions-view .do-flash-card {
+  flex: 0 0 260px;
+  background: linear-gradient(135deg, rgba(255,144,70,0.06), rgba(255,94,138,0.04));
+  border: 1px solid rgba(255,144,70,0.2);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex; flex-direction: column; gap: 8px;
+  transition: border-color 0.2s;
+}
+.daily-missions-view .do-flash-card:hover { border-color: rgba(255,144,70,0.45); }
+.daily-missions-view .do-flash-top {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.daily-missions-view .do-flash-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px; font-weight: 700;
+  color: var(--text); letter-spacing: 0.3px;
+}
+.daily-missions-view .do-flash-timer {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px; font-weight: 700;
+  color: #ff9046; letter-spacing: 0.5px;
+  animation: flashPulse 2s ease-in-out infinite;
+}
+@keyframes flashPulse { 0%,100%{opacity:1;} 50%{opacity:0.6;} }
+.daily-missions-view .do-flash-desc {
+  font-size: 12px; color: var(--text-muted); line-height: 1.4;
+}
+.daily-missions-view .do-flash-meta {
+  display: flex; align-items: center; gap: 10px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px; color: var(--text-dim); letter-spacing: 0.5px;
+}
+.daily-missions-view .do-flash-spots { color: var(--cyan); }
+.daily-missions-view .do-flash-empty {
+  text-align: center; padding: 24px;
+  font-size: 12.5px; color: var(--text-muted);
+  background: rgba(255,255,255,0.02);
+  border: 1px dashed rgba(255,255,255,0.08);
+  border-radius: 10px;
+}
+
+/* ── Today's Actions ── */
+.daily-missions-view .do-actions-list {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.daily-missions-view .do-action-row {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.daily-missions-view .do-action-row:hover { border-color: rgba(255,255,255,0.15); }
+.daily-missions-view .do-action-row.done {
+  opacity: 0.55;
+  border-color: rgba(74,240,255,0.15);
+}
+.daily-missions-view .do-action-row.done .do-action-check {
+  background: var(--cyan);
+  border-color: var(--cyan);
+}
+.daily-missions-view .do-action-row.done .do-action-check::after {
+  content: '✓'; color: #050810; font-size: 12px; font-weight: 800;
+}
+.daily-missions-view .do-action-check {
+  width: 22px; height: 22px; flex-shrink: 0;
+  border: 2px solid rgba(255,255,255,0.18);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  transition: 0.2s;
+}
+.daily-missions-view .do-action-body { flex: 1; min-width: 0; }
+.daily-missions-view .do-action-title {
+  font-size: 13.5px; font-weight: 600; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.daily-missions-view .do-action-sub {
+  font-size: 11px; color: var(--text-muted); margin-top: 2px;
+}
+.daily-missions-view .do-action-tag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8.5px; font-weight: 700;
+  letter-spacing: 0.8px; text-transform: uppercase;
+  padding: 3px 7px; border-radius: 4px; flex-shrink: 0;
+}
+.daily-missions-view .do-action-tag.featured {
+  background: rgba(245,200,66,0.1); border: 1px solid rgba(245,200,66,0.25); color: var(--gold);
+}
+.daily-missions-view .do-action-tag.tracked {
+  background: rgba(74,240,255,0.08); border: 1px solid rgba(74,240,255,0.2); color: var(--cyan);
+}
+
+/* ── Streak ── */
+.daily-missions-view .do-streak-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex; align-items: center; gap: 18px;
+  flex-wrap: wrap;
+}
+.daily-missions-view .do-streak-fire {
+  font-size: 36px; line-height: 1;
+}
+.daily-missions-view .do-streak-info { flex: 1; min-width: 160px; }
+.daily-missions-view .do-streak-count {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 28px; font-weight: 900;
+  color: var(--gold); letter-spacing: 1px;
+}
+.daily-missions-view .do-streak-count small {
+  font-size: 12px; font-weight: 600; color: var(--text-muted);
+  letter-spacing: 0.5px; margin-left: 6px;
+}
+.daily-missions-view .do-streak-next {
+  font-size: 11.5px; color: var(--text-muted); margin-top: 4px;
+}
+.daily-missions-view .do-streak-bar-wrap {
+  width: 100%; height: 6px; border-radius: 6px;
+  background: rgba(255,255,255,0.06); margin-top: 8px; overflow: hidden;
+}
+.daily-missions-view .do-streak-bar {
+  height: 100%; border-radius: 6px;
+  background: linear-gradient(90deg, var(--gold), #ff9046);
+  transition: width 0.5s ease;
+}
+.daily-missions-view .do-streak-badges {
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.daily-missions-view .do-badge {
+  font-size: 10px; padding: 4px 9px; border-radius: 5px;
+  font-family: 'Share Tech Mono', monospace;
+  font-weight: 700; letter-spacing: 0.5px;
+  background: rgba(176,112,255,0.1);
+  border: 1px solid rgba(176,112,255,0.2);
+  color: var(--purple);
+}
+.daily-missions-view .do-badge.earned { color: var(--gold); border-color: rgba(245,200,66,0.3); background: rgba(245,200,66,0.08); }
+
+/* ── This Week Stats ── */
+.daily-missions-view .do-stats-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+}
+.daily-missions-view .do-stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  text-align: center;
+}
+.daily-missions-view .do-stat-num {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 22px; font-weight: 900;
+  letter-spacing: 1px;
+}
+.daily-missions-view .do-stat-num.gold { color: var(--gold); }
+.daily-missions-view .do-stat-num.cyan { color: var(--cyan); }
+.daily-missions-view .do-stat-num.purple { color: var(--purple); }
+.daily-missions-view .do-stat-num.green { color: #4ade80; }
+.daily-missions-view .do-stat-lbl {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px; letter-spacing: 1.2px;
+  color: var(--text-muted); text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ── Upcoming Deadlines ── */
+.daily-missions-view .do-deadlines-list {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.daily-missions-view .do-dl-row {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+.daily-missions-view .do-dl-date {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px; font-weight: 700;
+  color: var(--cyan); letter-spacing: 0.5px;
+  min-width: 70px;
+}
+.daily-missions-view .do-dl-date.urgent { color: #ff4d6a; }
+.daily-missions-view .do-dl-name {
+  flex: 1; font-size: 13px; color: var(--text); font-weight: 600;
+}
+.daily-missions-view .do-dl-type {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8.5px; font-weight: 700; letter-spacing: 0.8px;
+  color: var(--text-dim); text-transform: uppercase;
+}
+.daily-missions-view .do-dl-empty {
+  text-align: center; padding: 18px;
+  font-size: 12px; color: var(--text-muted);
+  border: 1px dashed rgba(255,255,255,0.08);
+  border-radius: 8px;
+}
+
+/* ── Added Overnight ── */
+.daily-missions-view .do-new-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+.daily-missions-view .do-new-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex; flex-direction: column; gap: 6px;
+  transition: border-color 0.2s;
+}
+.daily-missions-view .do-new-card:hover { border-color: rgba(74,240,255,0.25); }
+.daily-missions-view .do-new-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px; font-weight: 700;
+  color: var(--text); letter-spacing: 0.3px;
+}
+.daily-missions-view .do-new-chain {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9.5px; color: var(--cyan); letter-spacing: 0.5px;
+}
+.daily-missions-view .do-new-desc {
+  font-size: 11.5px; color: var(--text-muted); line-height: 1.35;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.daily-missions-view .do-new-follow {
+  align-self: flex-start; margin-top: 4px;
+  background: rgba(74,240,255,0.08);
+  border: 1px solid rgba(74,240,255,0.2);
+  color: var(--cyan);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 0.8px; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 5px;
+  cursor: pointer; transition: 0.2s;
+}
+.daily-missions-view .do-new-follow:hover {
+  background: rgba(74,240,255,0.15); border-color: var(--cyan);
+}
+
+/* ── Day 1 Mission (empty state) ── */
+.daily-missions-view .do-day1-card {
+  background: linear-gradient(135deg, rgba(245,200,66,0.04), rgba(176,112,255,0.04));
+  border: 1px solid rgba(245,200,66,0.15);
+  border-radius: 14px;
+  padding: 24px 28px;
+  text-align: center;
+}
+.daily-missions-view .do-day1-emoji { font-size: 38px; margin-bottom: 8px; }
+.daily-missions-view .do-day1-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px; font-weight: 800;
+  color: var(--gold); letter-spacing: 0.8px;
+  margin-bottom: 4px;
+}
+.daily-missions-view .do-day1-sub {
+  font-size: 13px; color: var(--text-muted); margin-bottom: 16px;
+}
+.daily-missions-view .do-day1-tasks {
+  display: flex; flex-direction: column; gap: 8px;
+  max-width: 420px; margin: 0 auto;
+}
+.daily-missions-view .do-day1-row {
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+  padding: 11px 14px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.daily-missions-view .do-day1-row:hover { border-color: rgba(245,200,66,0.25); }
+.daily-missions-view .do-day1-row.done { opacity: 0.5; }
+.daily-missions-view .do-day1-row.done .do-action-check {
+  background: var(--gold); border-color: var(--gold);
+}
+.daily-missions-view .do-day1-row.done .do-action-check::after {
+  content: '✓'; color: #050810; font-size: 12px; font-weight: 800;
+}
+
+/* ── Loading ── */
+.daily-missions-view .do-loading {
+  text-align: center; padding: 60px 20px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px; color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .daily-missions-view .do-greet-msg { font-size: 16px; }
+  .daily-missions-view .do-streak-card { padding: 14px; gap: 12px; }
+  .daily-missions-view .do-streak-count { font-size: 22px; }
+  .daily-missions-view .do-flash-card { flex: 0 0 230px; }
+  .daily-missions-view .do-stats-grid { grid-template-columns: 1fr 1fr; }
+}
+
 </style>
 </head>
 <body>
@@ -18818,347 +19178,132 @@ select.exp-field-input option { background: #0a0e1a; color: #e8eaf0; }
          Scope: .daily-missions-view (existing scope preserved)
     ═══════════════════════════════════════════════════════════════════ -->
     <section class="tab-panel daily-missions-view" id="tab-daily-missions" data-tab-panel="daily-missions">
-      <div class="toast-container" id="toastContainer"></div>
 
-      <div class="dm-workspace">
+      <div class="do-wrap" id="doWrap">
+        <div class="do-loading" id="doLoading">⏳ LOADING DAILY OPERATIONS…</div>
+      </div>
 
-        <!-- ═══ HEADER (title + top stats + network gas + automation) ═══ -->
-        <div class="dm-header">
-          <div class="dm-header-left">
-            <h1 class="dm-title">Daily <span>Operations</span></h1>
-            <p class="dm-sub">Execute missions. Earn XP. Maximize your airdrop potential.</p>
-          </div>
-
-          <!-- Top stat strip (4 status counters) -->
-          <div class="dm-top-stats">
-            <div class="dm-ts orange">
-              <div class="dm-ts-icon">⏳</div>
-              <div class="dm-ts-body">
-                <div class="dm-ts-num" id="dmStatPending">0</div>
-                <div class="dm-ts-lbl">Pending</div>
-              </div>
-            </div>
-            <div class="dm-ts cyan">
-              <div class="dm-ts-icon">⚙️</div>
-              <div class="dm-ts-body">
-                <div class="dm-ts-num" id="dmStatInProgress">0</div>
-                <div class="dm-ts-lbl">In Progress</div>
-              </div>
-            </div>
-            <div class="dm-ts green">
-              <div class="dm-ts-icon">✓</div>
-              <div class="dm-ts-body">
-                <div class="dm-ts-num" id="dmStatCompleted">0</div>
-                <div class="dm-ts-lbl">Completed</div>
-              </div>
-            </div>
-            <div class="dm-ts red">
-              <div class="dm-ts-icon">🔥</div>
-              <div class="dm-ts-body">
-                <div class="dm-ts-num" id="dmStatExpiring">0</div>
-                <div class="dm-ts-lbl">Expiring Soon</div>
-              </div>
-            </div>
+      <!-- ═══ DAY 1 MISSION (empty state — hidden by default) ═══ -->
+      <div class="do-wrap" id="doDay1Wrap" style="display:none;">
+        <div class="do-greet">
+          <div>
+            <div class="do-greet-msg">Welcome to <span>DropElite</span></div>
+            <div class="do-greet-date" id="doDay1Date"></div>
           </div>
         </div>
-
-        <!-- ═══ MAIN 3-COLUMN GRID ═══ -->
-        <div class="dm-main-grid">
-
-          <!-- ═══ COLUMN 1 — MISSION PIPELINE (left sidebar) ═══ -->
-          <aside class="dm-pipeline">
-            <div class="dm-section-head">
-              <span class="dm-section-bar"></span>
-              <span class="dm-section-title">MISSION PIPELINE</span>
-            </div>
-
-            <!-- PENDING group (default expanded) -->
-            <div class="dm-group expanded" data-group="pending">
-              <button class="dm-group-head" onclick="dmToggleGroup(this)">
-                <span class="dm-group-icon">⏳</span>
-                <span class="dm-group-name">PENDING (<span id="dmGroupPendingCount">0</span>)</span>
-                <span class="dm-group-chevron">▾</span>
-              </button>
-              <div class="dm-group-body" id="dmGroupPending">
-                <div class="dm-no-data">Loading missions...</div>
-              </div>
-            </div>
-
-            <!-- IN PROGRESS group -->
-            <div class="dm-group" data-group="in_progress">
-              <button class="dm-group-head" onclick="dmToggleGroup(this)">
-                <span class="dm-group-icon">⚙️</span>
-                <span class="dm-group-name">IN PROGRESS (<span id="dmGroupProgressCount">0</span>)</span>
-                <span class="dm-group-chevron">▸</span>
-              </button>
-              <div class="dm-group-body" id="dmGroupProgress"></div>
-            </div>
-
-            <!-- COMPLETED group -->
-            <div class="dm-group" data-group="completed">
-              <button class="dm-group-head" onclick="dmToggleGroup(this)">
-                <span class="dm-group-icon">✓</span>
-                <span class="dm-group-name">COMPLETED (<span id="dmGroupCompletedCount">0</span>)</span>
-                <span class="dm-group-chevron">▸</span>
-              </button>
-              <div class="dm-group-body" id="dmGroupCompleted"></div>
-            </div>
-
-            <!-- EXPIRING SOON group -->
-            <div class="dm-group" data-group="expiring">
-              <button class="dm-group-head" onclick="dmToggleGroup(this)">
-                <span class="dm-group-icon">🔥</span>
-                <span class="dm-group-name">EXPIRING SOON (<span id="dmGroupExpiringCount">0</span>)</span>
-                <span class="dm-group-chevron">▸</span>
-              </button>
-              <div class="dm-group-body" id="dmGroupExpiring"></div>
-            </div>
-
-            <button class="dm-view-all-btn" onclick="dmExpandAll()">View All Missions ›</button>
-          </aside>
-
-          <!-- ═══ COLUMN 2 — MISSION DETAILS (center workspace) ═══ -->
-          <main class="dm-workspace-center">
-
-            <!-- Empty state (when nothing selected) -->
-            <div class="dm-empty-workspace" id="dmEmptyWorkspace">
-              <div class="dm-empty-icon">🎯</div>
-              <div class="dm-empty-title">Select a Mission</div>
-              <div class="dm-empty-sub">Click any mission from the pipeline on the left to begin.</div>
-            </div>
-
-            <!-- Detail view (populated when mission clicked) -->
-            <div class="dm-detail" id="dmDetail" style="display:none;">
-
-              <!-- Detail header -->
-              <div class="dm-detail-head">
-                <div class="dm-detail-tag">
-                  <span class="dm-tag-icon">⚡</span>
-                  <span class="dm-tag-text">MISSION DETAILS</span>
-                </div>
-                <div class="dm-detail-priority" id="dmDetailPriority">🔥 Priority</div>
-                <button class="dm-detail-close" onclick="dmCloseWorkspace()" title="Close">×</button>
-              </div>
-
-              <!-- Title row -->
-              <div class="dm-detail-title-row">
-                <div class="dm-detail-logo" id="dmDetailLogo">M</div>
-                <div class="dm-detail-title-block">
-                  <h2 class="dm-detail-title" id="dmDetailTitle">Mission Title</h2>
-                  <div class="dm-detail-tags" id="dmDetailTags"></div>
-                </div>
-                <div class="dm-detail-reward">
-                  <div class="dm-detail-xp" id="dmDetailXp">+250 XP</div>
-                  <div class="dm-detail-time-label">Estimated Time</div>
-                  <div class="dm-detail-time" id="dmDetailTime">5-8 min</div>
-                </div>
-              </div>
-
-              <!-- Description -->
-              <p class="dm-detail-desc" id="dmDetailDesc">Mission description appears here.</p>
-
-              <!-- 4 mini stats -->
-              <div class="dm-detail-mini-stats">
-                <div class="dm-mini-stat">
-                  <span class="dm-mini-icon green">📊</span>
-                  <div class="dm-mini-body">
-                    <div class="dm-mini-lbl">Difficulty</div>
-                    <div class="dm-mini-val green" id="dmStatDifficulty">Easy</div>
-                  </div>
-                </div>
-                <div class="dm-mini-stat">
-                  <span class="dm-mini-icon purple">🌐</span>
-                  <div class="dm-mini-body">
-                    <div class="dm-mini-lbl">Network</div>
-                    <div class="dm-mini-val" id="dmStatNetwork">—</div>
-                  </div>
-                </div>
-                <div class="dm-mini-stat">
-                  <span class="dm-mini-icon orange">⛽</span>
-                  <div class="dm-mini-body">
-                    <div class="dm-mini-lbl">Est. Time</div>
-                    <div class="dm-mini-val orange" id="dmStatGas">—</div>
-                  </div>
-                </div>
-                <div class="dm-mini-stat">
-                  <span class="dm-mini-icon pink">🎯</span>
-                  <div class="dm-mini-body">
-                    <div class="dm-mini-lbl">Reward Type</div>
-                    <div class="dm-mini-val pink" id="dmStatSuccess">XP + Airdrop</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- STEPS timeline -->
-              <div class="dm-steps-block">
-                <div class="dm-steps-head">
-                  <span class="dm-steps-title">STEPS</span>
-                  <span class="dm-steps-count" id="dmStepsCount">(0/0 COMPLETED)</span>
-                </div>
-                <div class="dm-steps-list" id="dmStepsList">
-                  <!-- Steps injected by JS -->
-                </div>
-              </div>
-
-              <!-- Requirements + Proof footer -->
-              <div class="dm-detail-foot">
-                <div class="dm-req-card">
-                  <div class="dm-req-lbl">REQUIREMENTS</div>
-                  <div class="dm-req-list" id="dmReqList">
-                    <div class="dm-req-item">
-                      <span class="dm-req-name">Active mission</span>
-                      <span class="dm-req-check">✓</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="dm-req-card">
-                  <div class="dm-req-lbl">PROOF OF COMPLETION</div>
-                  <div class="dm-req-list" id="dmProofList">
-                    <div class="dm-req-item">
-                      <span class="dm-req-name">Self-verify</span>
-                      <span class="dm-req-check">●</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Main action button -->
-              <button class="dm-detail-action" id="dmDetailAction" onclick="dmDetailStart()">
-                START MISSION →
-              </button>
-            </div>
-
-          </main>
-
-          <!-- ═══ COLUMN 3 — RIGHT SIDEBAR (Assistant + Timer + Wallet + Alerts + Quick Actions) ═══ -->
-          <aside class="dm-rightbar">
-
-            <!-- Mission Assistant -->
-            <div class="dm-rb-card dm-assistant">
-              <div class="dm-rb-head">
-                <span class="dm-rb-title">MISSION ASSISTANT</span>
-                <div class="dm-assistant-bot">🤖</div>
-              </div>
-              <div class="dm-assistant-text" id="dmAssistantText">
-                Select a mission from the pipeline to get tailored tips and guidance from the DropElite Assistant.
-              </div>
-              <ul class="dm-assistant-tips" id="dmAssistantTips">
-                <li class="dm-tip">Always use official protocol links</li>
-                <li class="dm-tip">Verify contracts before signing</li>
-                <li class="dm-tip">Keep some balance for gas fees</li>
-              </ul>
-            </div>
-
-            <!-- Timer -->
-            <div class="dm-rb-card dm-timer-card">
-              <div class="dm-rb-head">
-                <span class="dm-rb-title">TIMER</span>
-                <div class="dm-timer-controls">
-                  <button class="dm-tc-btn" onclick="dmTimerToggle()" id="dmTimerToggle" title="Play/Pause">▶</button>
-                  <button class="dm-tc-btn" onclick="dmTimerReset()" title="Reset">↺</button>
-                </div>
-              </div>
-              <div class="dm-timer-ring-wrap">
-                <svg class="dm-timer-svg" viewBox="0 0 100 100">
-                  <circle class="dm-timer-bg" cx="50" cy="50" r="44" />
-                  <circle class="dm-timer-fill" id="dmTimerRing" cx="50" cy="50" r="44" />
-                </svg>
-                <div class="dm-timer-center">
-                  <div class="dm-timer-display" id="dmTimerDisplay">00:00</div>
-                  <div class="dm-timer-sub">Estimated Time</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Network & Gas Overview -->
-            <div class="dm-rb-card dm-network">
-              <div class="dm-rb-head">
-                <span class="dm-rb-title">NETWORK & GAS</span>
-                <span class="dm-rb-badge">PHASE 3</span>
-              </div>
-              <div class="dm-network-list">
-                <div class="dm-net-row">
-                  <span class="dm-net-icon eth">◆</span>
-                  <span class="dm-net-name">Ethereum</span>
-                  <span class="dm-net-gas" id="dmGasEth">— Gwei</span>
-                  <span class="dm-net-status normal">—</span>
-                </div>
-                <div class="dm-net-row">
-                  <span class="dm-net-icon arb">◇</span>
-                  <span class="dm-net-name">Arbitrum</span>
-                  <span class="dm-net-gas" id="dmGasArb">— Gwei</span>
-                  <span class="dm-net-status low">—</span>
-                </div>
-                <div class="dm-net-row">
-                  <span class="dm-net-icon base">●</span>
-                  <span class="dm-net-name">Base</span>
-                  <span class="dm-net-gas" id="dmGasBase">— Gwei</span>
-                  <span class="dm-net-status low">—</span>
-                </div>
-                <div class="dm-net-row">
-                  <span class="dm-net-icon op">◉</span>
-                  <span class="dm-net-name">Optimism</span>
-                  <span class="dm-net-gas" id="dmGasOp">— Gwei</span>
-                  <span class="dm-net-status low">—</span>
-                </div>
-              </div>
-              <div class="dm-net-note">Live gas data coming in Phase 3</div>
-            </div>
-
-            <!-- Wallet Status -->
-            <div class="dm-rb-card dm-wallet-card">
-              <div class="dm-rb-head">
-                <span class="dm-rb-title">WALLET STATUS</span>
-              </div>
-              <div class="dm-wallet-body" id="dmWalletBody">
-                <div class="dm-wallet-row">
-                  <span class="dm-wallet-name" id="dmWalletName">No wallet selected</span>
-                  <span class="dm-wallet-status healthy">●</span>
-                </div>
-                <div class="dm-wallet-addr" id="dmWalletAddr">Add a wallet in Wallets tab</div>
-              </div>
-            </div>
-
-            <!-- Alerts -->
-            <div class="dm-rb-card dm-alerts-card">
-              <div class="dm-rb-head">
-                <span class="dm-rb-title">ALERTS</span>
-                <span class="dm-rb-badge red" id="dmAlertsBadge" style="display:none;">0</span>
-              </div>
-              <div class="dm-alerts-body" id="dmAlertsBody">
-                <div class="dm-no-alerts">No alerts. All systems operational.</div>
-              </div>
-            </div>
-
-            <!-- Quick Actions -->
-            <div class="dm-rb-card dm-quick-actions">
-              <div class="dm-rb-head">
-                <span class="dm-rb-title">QUICK ACTIONS</span>
-              </div>
-              <div class="dm-qa-grid">
-                <a class="dm-qa-btn" href="https://faucetlink.to/" target="_blank" rel="noopener" title="Faucets">
-                  <span class="dm-qa-icon">💧</span>
-                  <span class="dm-qa-lbl">Faucet</span>
-                </a>
-                <a class="dm-qa-btn" href="https://bridge.connext.network/" target="_blank" rel="noopener" title="Bridge">
-                  <span class="dm-qa-icon">🌉</span>
-                  <span class="dm-qa-lbl">Bridge</span>
-                </a>
-                <a class="dm-qa-btn" href="https://app.uniswap.org/" target="_blank" rel="noopener" title="Swap">
-                  <span class="dm-qa-icon">🔄</span>
-                  <span class="dm-qa-lbl">Swap</span>
-                </a>
-                <a class="dm-qa-btn" href="https://etherscan.io/" target="_blank" rel="noopener" title="Explorer">
-                  <span class="dm-qa-icon">🔍</span>
-                  <span class="dm-qa-lbl">Explorer</span>
-                </a>
-              </div>
-            </div>
-
-          </aside>
-
+        <div class="do-day1-card">
+          <div class="do-day1-emoji">🎯</div>
+          <div class="do-day1-title">Day 1 Mission</div>
+          <div class="do-day1-sub">Complete these 5 tasks to set up your farming HQ and start your streak</div>
+          <div class="do-day1-tasks" id="doDay1Tasks">
+            <!-- Populated by JS from platform_settings -->
+          </div>
         </div>
       </div>
+
+      <!-- ═══ MAIN DAILY OPS (shown for returning users) ═══ -->
+      <div class="do-wrap" id="doMainWrap" style="display:none;">
+
+        <!-- 1. GREETING -->
+        <div class="do-greet">
+          <div>
+            <div class="do-greet-msg" id="doGreetMsg">Good morning</div>
+            <div class="do-greet-date" id="doGreetDate"></div>
+          </div>
+        </div>
+
+        <!-- 2. FLASH OPPORTUNITIES -->
+        <div id="doFlashSection">
+          <div class="do-sec-head">
+            <span class="do-sec-icon">⚡</span>
+            <span class="do-sec-title">FLASH OPPORTUNITIES</span>
+            <span class="do-sec-badge pro">PRO</span>
+          </div>
+          <div class="do-flash-scroll" id="doFlashList">
+            <div class="do-flash-empty">No active flash opportunities right now. Check back soon!</div>
+          </div>
+        </div>
+
+        <!-- 3. TODAY'S ACTIONS -->
+        <div>
+          <div class="do-sec-head">
+            <span class="do-sec-icon">🎯</span>
+            <span class="do-sec-title">TODAY'S ACTIONS</span>
+          </div>
+          <div class="do-actions-list" id="doActionsList">
+            <!-- Populated by JS: up to 2 from tracked airdrops + 1 featured -->
+          </div>
+        </div>
+
+        <!-- 4. STREAK -->
+        <div>
+          <div class="do-sec-head">
+            <span class="do-sec-icon">🔥</span>
+            <span class="do-sec-title">YOUR STREAK</span>
+          </div>
+          <div class="do-streak-card" id="doStreakCard">
+            <div class="do-streak-fire">🔥</div>
+            <div class="do-streak-info">
+              <div class="do-streak-count"><span id="doStreakNum">0</span><small>DAY STREAK</small></div>
+              <div class="do-streak-next" id="doStreakNext">Complete an action today to start your streak!</div>
+              <div class="do-streak-bar-wrap">
+                <div class="do-streak-bar" id="doStreakBar" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="do-streak-badges" id="doStreakBadges"></div>
+          </div>
+        </div>
+
+        <!-- 5. THIS WEEK STATS -->
+        <div>
+          <div class="do-sec-head">
+            <span class="do-sec-icon">📊</span>
+            <span class="do-sec-title">THIS WEEK</span>
+          </div>
+          <div class="do-stats-grid">
+            <div class="do-stat-card">
+              <div class="do-stat-num gold" id="doStatTasks">0</div>
+              <div class="do-stat-lbl">Tasks Done</div>
+            </div>
+            <div class="do-stat-card">
+              <div class="do-stat-num cyan" id="doStatProjects">0</div>
+              <div class="do-stat-lbl">Projects Tracked</div>
+            </div>
+            <div class="do-stat-card">
+              <div class="do-stat-num purple" id="doStatStreak">0</div>
+              <div class="do-stat-lbl">Best Streak</div>
+            </div>
+            <div class="do-stat-card">
+              <div class="do-stat-num green" id="doStatFlash">0</div>
+              <div class="do-stat-lbl">Flash Claimed</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. UPCOMING DEADLINES -->
+        <div>
+          <div class="do-sec-head">
+            <span class="do-sec-icon">⏰</span>
+            <span class="do-sec-title">UPCOMING DEADLINES</span>
+          </div>
+          <div class="do-deadlines-list" id="doDeadlinesList">
+            <div class="do-dl-empty">No deadlines in the next 7 days</div>
+          </div>
+        </div>
+
+        <!-- 7. ADDED OVERNIGHT -->
+        <div id="doNewSection">
+          <div class="do-sec-head">
+            <span class="do-sec-icon">🆕</span>
+            <span class="do-sec-title">ADDED RECENTLY</span>
+          </div>
+          <div class="do-new-grid" id="doNewGrid">
+            <!-- Populated by JS: latest 3 admin_airdrops -->
+          </div>
+        </div>
+
+      </div>
+
     </section>
     <!-- END DAILY MISSIONS TAB CONTENT -->
 
@@ -25872,6 +26017,483 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 })();
 /* END DAILY MISSIONS TAB SCRIPT */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CHUNK 18B — DAILY OPERATIONS TAB SCRIPT (replaces old missions logic)
+   ─────────────────────────────────────────────────────────────────────────── */
+(function() {
+'use strict';
+
+let doLoaded = false;
+let doStreak = null;       // from user_streaks
+let doTodayTasks = [];     // from user_daily_tasks (today)
+let doFollowed = [];       // from user_followed_airdrops
+let doFlash = [];          // active flash airdrops
+let doSettings = {};       // platform_settings keyed by key
+let doRecentAirdrops = []; // latest admin_airdrops
+let doDeadlines = [];      // airdrops with upcoming deadlines
+let doIsDay1 = false;      // true if user hasn't done onboarding
+
+// ─── Helpers ───
+const $ = id => document.getElementById(id);
+function doEsc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+function doRelTime(dt) {
+  if (!dt) return '';
+  const diff = new Date(dt) - new Date();
+  if (diff < 0) return 'Expired';
+  const h = Math.floor(diff / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  if (h > 24) return Math.floor(h / 24) + 'd ' + (h % 24) + 'h';
+  if (h > 0) return h + 'h ' + m + 'm';
+  return m + 'm';
+}
+function doFmtDate(d) {
+  return new Date(d).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+}
+function doTodayUTC() {
+  const n = new Date();
+  return n.getUTCFullYear() + '-' + String(n.getUTCMonth() + 1).padStart(2, '0') + '-' + String(n.getUTCDate()).padStart(2, '0');
+}
+
+// ─── Greeting ───
+function doSetGreeting(name) {
+  const h = new Date().getHours();
+  let greeting = 'Good evening';
+  if (h < 12) greeting = 'Good morning';
+  else if (h < 17) greeting = 'Good afternoon';
+  const el = $('doGreetMsg');
+  if (el) el.innerHTML = greeting + (name ? ', <span>' + doEsc(name) + '</span>' : '');
+  const dateEl = $('doGreetDate');
+  if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+  const d1Date = $('doDay1Date');
+  if (d1Date) d1Date.textContent = dateEl ? dateEl.textContent : '';
+}
+
+// ─── Flash Opportunities ───
+function doRenderFlash() {
+  const el = $('doFlashList');
+  if (!el) return;
+  if (!doFlash.length) {
+    el.innerHTML = '<div class="do-flash-empty">No active flash opportunities right now. Check back soon!</div>';
+    return;
+  }
+  el.innerHTML = doFlash.map(f => `
+    <div class="do-flash-card">
+      <div class="do-flash-top">
+        <div class="do-flash-name">${doEsc(f.project_name || f.name)}</div>
+        <div class="do-flash-timer">⏱ ${doRelTime(f.flash_ends_at)}</div>
+      </div>
+      <div class="do-flash-desc">${doEsc((f.description || '').slice(0, 100))}</div>
+      <div class="do-flash-meta">
+        ${f.flash_spots_left != null ? '<span class="do-flash-spots">' + f.flash_spots_left + ' spots left</span>' : ''}
+        ${f.blockchain ? '<span>' + doEsc(f.blockchain) + '</span>' : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─── Today's Actions ───
+function doRenderActions() {
+  const el = $('doActionsList');
+  if (!el) return;
+  const items = [];
+
+  // Up to 2 from followed airdrops
+  const tracked = doFollowed.slice(0, 2);
+  tracked.forEach(fa => {
+    const a = fa.admin_airdrops || {};
+    const taskId = 'tracked_' + (a.id || fa.airdrop_id);
+    const done = doTodayTasks.some(t => t.task_id === taskId && t.completed);
+    items.push({ id: taskId, title: a.project_name || a.name || 'Tracked Airdrop', sub: a.blockchain || '', tag: 'tracked', done, type: 'daily', airdrop_id: a.id || fa.airdrop_id });
+  });
+
+  // 1 featured action from platform_settings
+  const feat = (doSettings.featured_action || {});
+  if (feat.enabled && feat.title) {
+    const done = doTodayTasks.some(t => t.task_id === 'featured' && t.completed);
+    items.push({ id: 'featured', title: feat.title, sub: feat.description || '', tag: 'featured', done, type: 'featured', link: feat.link });
+  }
+
+  // Fill remaining slots with tracked airdrops
+  if (items.length < 3 && doFollowed.length > 2) {
+    const extra = doFollowed.slice(2, 2 + (3 - items.length));
+    extra.forEach(fa => {
+      const a = fa.admin_airdrops || {};
+      const taskId = 'tracked_' + (a.id || fa.airdrop_id);
+      if (items.some(it => it.id === taskId)) return;
+      const done = doTodayTasks.some(t => t.task_id === taskId && t.completed);
+      items.push({ id: taskId, title: a.project_name || a.name || 'Tracked Airdrop', sub: a.blockchain || '', tag: 'tracked', done, type: 'daily', airdrop_id: a.id || fa.airdrop_id });
+    });
+  }
+
+  if (!items.length) {
+    el.innerHTML = '<div class="do-flash-empty">No actions yet. Follow some airdrops from the Airdrops Tracker to see tasks here.</div>';
+    return;
+  }
+
+  el.innerHTML = items.map(it => `
+    <div class="do-action-row${it.done ? ' done' : ''}" data-task-id="${doEsc(it.id)}" data-task-type="${doEsc(it.type)}" data-airdrop-id="${doEsc(it.airdrop_id || '')}">
+      <div class="do-action-check">${it.done ? '' : ''}</div>
+      <div class="do-action-body">
+        <div class="do-action-title">${doEsc(it.title)}</div>
+        <div class="do-action-sub">${doEsc(it.sub)}</div>
+      </div>
+      <div class="do-action-tag ${it.tag}">${it.tag === 'featured' ? '⭐ FEATURED' : '📡 TRACKED'}</div>
+    </div>
+  `).join('');
+
+  // Click to toggle
+  el.querySelectorAll('.do-action-row').forEach(row => {
+    row.addEventListener('click', async () => {
+      const tid = row.dataset.taskId;
+      const ttype = row.dataset.taskType;
+      const aid = row.dataset.airdropId || null;
+      const isDone = row.classList.contains('done');
+      if (isDone) {
+        const res = await window.API.uncompleteTask(tid);
+        if (res.ok) { row.classList.remove('done'); doRefreshStreakAfterAction(); }
+      } else {
+        const res = await window.API.completeTask(tid, ttype, aid);
+        if (res.ok) { row.classList.add('done'); doRefreshStreakAfterAction(); }
+      }
+    });
+  });
+}
+
+// ─── Streak ───
+function doRenderStreak() {
+  const el = $('doStreakNum');
+  if (!el) return;
+  const s = doStreak || {};
+  const current = s.current_streak || 0;
+  el.textContent = current;
+
+  // Find next milestone
+  const rewards = (doSettings.streak_rewards || {}).milestones || [];
+  const sortedMiles = rewards.slice().sort((a, b) => a.days - b.days);
+  const next = sortedMiles.find(m => m.days > current);
+  const nextEl = $('doStreakNext');
+  if (nextEl) {
+    if (next) {
+      nextEl.textContent = (next.days - current) + ' more days to unlock: ' + next.label;
+    } else if (current > 0) {
+      nextEl.textContent = 'All milestones unlocked! Keep going!';
+    } else {
+      nextEl.textContent = 'Complete an action today to start your streak!';
+    }
+  }
+
+  // Progress bar
+  const bar = $('doStreakBar');
+  if (bar && next) {
+    const prev = sortedMiles.filter(m => m.days <= current).pop();
+    const base = prev ? prev.days : 0;
+    const pct = Math.min(100, Math.round(((current - base) / (next.days - base)) * 100));
+    bar.style.width = pct + '%';
+  } else if (bar) {
+    bar.style.width = current > 0 ? '100%' : '0%';
+  }
+
+  // Badges
+  const badgesEl = $('doStreakBadges');
+  if (badgesEl) {
+    const earned = s.badges_earned || [];
+    const badgeMiles = sortedMiles.filter(m => m.type === 'badge');
+    badgesEl.innerHTML = badgeMiles.map(m => {
+      const isEarned = earned.includes(m.value);
+      return '<span class="do-badge' + (isEarned ? ' earned' : '') + '">' + doEsc(m.label) + '</span>';
+    }).join('');
+  }
+}
+
+async function doRefreshStreakAfterAction() {
+  // Re-fetch today's tasks and streak
+  doTodayTasks = await window.API.getMyDailyTasks(doTodayUTC());
+  const completedToday = doTodayTasks.filter(t => t.completed).length;
+
+  // Update streak if at least 1 task done today
+  if (completedToday > 0) {
+    doStreak = doStreak || {};
+    const lastDate = doStreak.last_active_date;
+    const today = doTodayUTC();
+    if (lastDate !== today) {
+      // New day — increment streak
+      const yesterday = new Date();
+      yesterday.setUTCDate(yesterday.getUTCDate() - 1);
+      const yStr = yesterday.toISOString().slice(0, 10);
+      let newStreak = (lastDate === yStr) ? (doStreak.current_streak || 0) + 1 : 1;
+      const longest = Math.max(newStreak, doStreak.longest_streak || 0);
+
+      // Check milestone badges
+      const rewards = (doSettings.streak_rewards || {}).milestones || [];
+      const badges = [...(doStreak.badges_earned || [])];
+      rewards.forEach(m => {
+        if (m.type === 'badge' && newStreak >= m.days && !badges.includes(m.value)) {
+          badges.push(m.value);
+        }
+      });
+
+      const res = await window.API.upsertMyStreak({
+        current_streak: newStreak,
+        longest_streak: longest,
+        last_active_date: today,
+        badges_earned: badges
+      });
+      if (res.ok) doStreak = res.data;
+    }
+  }
+  doRenderStreak();
+  doRenderWeekStats();
+}
+
+// ─── This Week Stats ───
+function doRenderWeekStats() {
+  const tasksEl = $('doStatTasks');
+  const projEl = $('doStatProjects');
+  const streakEl = $('doStatStreak');
+  const flashEl = $('doStatFlash');
+  if (tasksEl) tasksEl.textContent = doTodayTasks.filter(t => t.completed).length;
+  if (projEl) projEl.textContent = doFollowed.length;
+  if (streakEl) streakEl.textContent = doStreak ? (doStreak.longest_streak || 0) : 0;
+  if (flashEl) flashEl.textContent = doTodayTasks.filter(t => t.task_type === 'flash' && t.completed).length;
+}
+
+// ─── Upcoming Deadlines ───
+function doRenderDeadlines() {
+  const el = $('doDeadlinesList');
+  if (!el) return;
+  const now = new Date();
+  const week = new Date(now.getTime() + 7 * 86400000);
+  const upcoming = doDeadlines.filter(a => {
+    const d = new Date(a.snapshot_date || a.end_date || a.tge_date);
+    return d >= now && d <= week;
+  }).sort((a, b) => new Date(a.snapshot_date || a.end_date || a.tge_date) - new Date(b.snapshot_date || b.end_date || b.tge_date))
+    .slice(0, 6);
+
+  if (!upcoming.length) {
+    el.innerHTML = '<div class="do-dl-empty">No deadlines in the next 7 days</div>';
+    return;
+  }
+  el.innerHTML = upcoming.map(a => {
+    const dt = new Date(a.snapshot_date || a.end_date || a.tge_date);
+    const daysLeft = Math.ceil((dt - now) / 86400000);
+    const urgent = daysLeft <= 2;
+    const type = a.snapshot_date ? 'Snapshot' : a.tge_date ? 'TGE' : 'Deadline';
+    return `
+      <div class="do-dl-row">
+        <div class="do-dl-date${urgent ? ' urgent' : ''}">${doFmtDate(dt)}</div>
+        <div class="do-dl-name">${doEsc(a.project_name || a.name)}</div>
+        <div class="do-dl-type">${type}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ─── Added Recently ───
+function doRenderNew() {
+  const el = $('doNewGrid');
+  if (!el) return;
+  if (!doRecentAirdrops.length) {
+    el.innerHTML = '<div class="do-flash-empty">No new airdrops added recently.</div>';
+    return;
+  }
+  el.innerHTML = doRecentAirdrops.slice(0, 3).map(a => `
+    <div class="do-new-card">
+      <div class="do-new-name">${doEsc(a.project_name || a.name)}</div>
+      <div class="do-new-chain">${doEsc(a.blockchain || a.ecosystem || '')}</div>
+      <div class="do-new-desc">${doEsc((a.description || '').slice(0, 120))}</div>
+      <button class="do-new-follow" data-aid="${a.id}" onclick="doFollowNew(this)">+ FOLLOW</button>
+    </div>
+  `).join('');
+}
+
+// ─── Day 1 Mission ───
+function doRenderDay1() {
+  const el = $('doDay1Tasks');
+  if (!el) return;
+  const d1 = doSettings.day1_mission || {};
+  const tasks = d1.tasks || [];
+  const socials = doSettings.socials || {};
+
+  el.innerHTML = tasks.map(t => {
+    const done = doTodayTasks.some(tt => tt.task_id === t.id && tt.completed);
+    let link = '';
+    if (t.link_key && socials[t.link_key]) link = socials[t.link_key];
+    return `
+      <div class="do-day1-row${done ? ' done' : ''}" data-task-id="${doEsc(t.id)}" data-link="${doEsc(link)}">
+        <div class="do-action-check"></div>
+        <div class="do-action-body">
+          <div class="do-action-title">${doEsc(t.label)}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Click handlers
+  el.querySelectorAll('.do-day1-row').forEach(row => {
+    row.addEventListener('click', async () => {
+      const tid = row.dataset.taskId;
+      const link = row.dataset.link;
+      const isDone = row.classList.contains('done');
+
+      if (!isDone) {
+        // If it's a social link, open it
+        if (link) window.open(link, '_blank');
+        // If it's "add wallet", switch to wallets tab
+        if (tid === 'd1_add_wallet') {
+          const tabSwitcher = document.querySelector('[data-tab-target="wallets"]');
+          if (tabSwitcher) tabSwitcher.click();
+          return;
+        }
+
+        const res = await window.API.completeTask(tid, 'day1', null);
+        if (res.ok) {
+          row.classList.add('done');
+
+          // Check if all Day 1 tasks are done
+          const allRows = el.querySelectorAll('.do-day1-row');
+          const allDone = [...allRows].every(r => r.classList.contains('done'));
+          if (allDone) {
+            // Mark onboarding completed & switch to main view
+            try {
+              const sb = window.API._supa();
+              const user = await window.API.getCurrentUser();
+              if (sb && user) {
+                await sb.from('profiles').update({ onboarding_completed: true }).eq('id', user.id);
+              }
+            } catch (e) { console.error('onboarding flag:', e); }
+            doIsDay1 = false;
+            doShowMainView();
+            doRefreshStreakAfterAction();
+          }
+        }
+      }
+    });
+  });
+}
+
+// ─── View switching ───
+function doShowDay1() {
+  const loading = $('doLoading'); if (loading) loading.style.display = 'none';
+  const main = $('doMainWrap'); if (main) main.style.display = 'none';
+  const d1 = $('doDay1Wrap'); if (d1) d1.style.display = '';
+}
+function doShowMainView() {
+  const loading = $('doLoading'); if (loading) loading.style.display = 'none';
+  const d1 = $('doDay1Wrap'); if (d1) d1.style.display = 'none';
+  const main = $('doMainWrap'); if (main) main.style.display = '';
+}
+
+// ─── Follow from "Added Recently" ───
+window.doFollowNew = async function(btn) {
+  const aid = btn.dataset.aid;
+  if (!aid) return;
+  btn.disabled = true; btn.textContent = '⏳';
+  const res = await window.API.followAirdrop(aid);
+  if (res.ok) {
+    btn.textContent = '✓ FOLLOWED';
+    btn.style.color = 'var(--gold)';
+    btn.style.borderColor = 'rgba(245,200,66,0.3)';
+    // Refresh followed list
+    doFollowed = await window.API.getMyFollowedAirdrops();
+    doRenderActions();
+    doRenderWeekStats();
+  } else {
+    btn.textContent = '+ FOLLOW';
+    btn.disabled = false;
+  }
+};
+
+// ─── MAIN LOAD ───
+async function doLoadAll() {
+  if (doLoaded) return;
+  if (!window.API || !window.API.isLive()) return;
+
+  try {
+    // Parallel fetches
+    const [settingsRows, streak, todayTasks, followed, flash, profile] = await Promise.all([
+      window.API.getAllPlatformSettings(),
+      window.API.getMyStreak(),
+      window.API.getMyDailyTasks(doTodayUTC()),
+      window.API.getMyFollowedAirdrops(),
+      window.API.getActiveFlashAirdrops(),
+      window.API.getProfile()
+    ]);
+
+    // Parse settings
+    settingsRows.forEach(r => { doSettings[r.key] = r.value; });
+    doStreak = streak;
+    doTodayTasks = todayTasks || [];
+    doFollowed = followed || [];
+    doFlash = flash || [];
+
+    // Fetch recent airdrops + deadlines
+    const sb = window.API._supa();
+    if (sb) {
+      const { data: recent } = await sb.from('admin_airdrops')
+        .select('*')
+        .eq('visible_to_users', true)
+        .order('created_at', { ascending: false })
+        .limit(3);
+      doRecentAirdrops = recent || [];
+
+      const now = new Date().toISOString();
+      const weekLater = new Date(Date.now() + 7 * 86400000).toISOString();
+      const { data: deadlineData } = await sb.from('admin_airdrops')
+        .select('id,project_name,name,snapshot_date,end_date,tge_date,blockchain')
+        .eq('visible_to_users', true)
+        .or(`snapshot_date.gte.${now},end_date.gte.${now},tge_date.gte.${now}`)
+        .order('snapshot_date', { ascending: true })
+        .limit(20);
+      doDeadlines = deadlineData || [];
+    }
+
+    // Check Day 1 state
+    const onboarded = profile && profile.onboarding_completed;
+    doIsDay1 = !onboarded;
+
+    // Set greeting
+    const userName = profile ? profile.name : '';
+    doSetGreeting(userName);
+
+    // Render
+    if (doIsDay1) {
+      doRenderDay1();
+      doShowDay1();
+    } else {
+      doRenderFlash();
+      doRenderActions();
+      doRenderStreak();
+      doRenderWeekStats();
+      doRenderDeadlines();
+      doRenderNew();
+      doShowMainView();
+    }
+
+    doLoaded = true;
+
+  } catch (e) {
+    console.error('[do] load:', e);
+    const loading = $('doLoading');
+    if (loading) loading.textContent = '⚠ Failed to load — please refresh.';
+  }
+}
+
+// ─── Hook into tab switching ───
+document.addEventListener('DOMContentLoaded', function() {
+  const origSwitch = window.setActiveTab;
+  if (origSwitch) {
+    window.setActiveTab = function(tabName) {
+      origSwitch(tabName);
+      if (tabName === 'daily-missions' && !doLoaded) {
+        doLoadAll();
+      }
+    };
+  }
+});
+
+})();
+/* END DAILY OPERATIONS TAB SCRIPT */
 
 /* ═══════════════════════════════════════════════════════════════════════════
    START PROJECT INTELLIGENCE TAB SCRIPT (v2.0 NEW)
