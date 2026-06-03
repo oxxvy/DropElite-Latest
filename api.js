@@ -2205,6 +2205,161 @@
       return data || [];
     },
 
+    // ═══════════════════════════════════════════════════════════════════════
+    // CHUNK 18A — PLATFORM SETTINGS (key-value config)
+    // ═══════════════════════════════════════════════════════════════════════
+
+    async getPlatformSetting(key) {
+      if (!_live()) return null;
+      const { data, error } = await supa.from('platform_settings')
+        .select('*').eq('key', key).single();
+      if (error) { console.error('getPlatformSetting:', error); return null; }
+      return data;
+    },
+
+    async getAllPlatformSettings() {
+      if (!_live()) return [];
+      const { data, error } = await supa.from('platform_settings')
+        .select('*').order('key');
+      if (error) { console.error('getAllPlatformSettings:', error); return []; }
+      return data || [];
+    },
+
+    async savePlatformSetting(key, value) {
+      if (!_live()) return { ok: false, error: 'Offline' };
+      const user = await this.getCurrentUser();
+      const { data, error } = await supa.from('platform_settings')
+        .update({ value: value, updated_at: new Date().toISOString(), updated_by: user?.id })
+        .eq('key', key)
+        .select().single();
+      if (error) return { ok: false, error: error.message };
+      return { ok: true, data };
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // CHUNK 18A — USER STREAKS
+    // ═══════════════════════════════════════════════════════════════════════
+
+    async getMyStreak() {
+      if (!_live()) return null;
+      const user = await this.getCurrentUser();
+      if (!user) return null;
+      const { data, error } = await supa.from('user_streaks')
+        .select('*').eq('user_id', user.id).single();
+      if (error && error.code !== 'PGRST116') console.error('getMyStreak:', error);
+      return data || null;
+    },
+
+    async upsertMyStreak(updates) {
+      if (!_live()) return { ok: false, error: 'Offline' };
+      const user = await this.getCurrentUser();
+      if (!user) return { ok: false, error: 'Not logged in' };
+      const row = { ...updates, user_id: user.id, updated_at: new Date().toISOString() };
+      const { data, error } = await supa.from('user_streaks')
+        .upsert(row, { onConflict: 'user_id' }).select().single();
+      if (error) return { ok: false, error: error.message };
+      return { ok: true, data };
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // CHUNK 18A — USER DAILY TASKS
+    // ═══════════════════════════════════════════════════════════════════════
+
+    async getMyDailyTasks(dateStr) {
+      if (!_live()) return [];
+      const user = await this.getCurrentUser();
+      if (!user) return [];
+      const d = dateStr || _todayUTC();
+      const { data, error } = await supa.from('user_daily_tasks')
+        .select('*').eq('user_id', user.id).eq('task_date', d);
+      if (error) { console.error('getMyDailyTasks:', error); return []; }
+      return data || [];
+    },
+
+    async completeTask(taskId, taskType, airdropId) {
+      if (!_live()) return { ok: false, error: 'Offline' };
+      const user = await this.getCurrentUser();
+      if (!user) return { ok: false, error: 'Not logged in' };
+      const row = {
+        user_id: user.id,
+        task_date: _todayUTC(),
+        task_id: taskId,
+        task_type: taskType || 'daily',
+        airdrop_id: airdropId || null,
+        completed: true,
+        completed_at: new Date().toISOString()
+      };
+      const { data, error } = await supa.from('user_daily_tasks')
+        .upsert(row, { onConflict: 'user_id,task_date,task_id' }).select().single();
+      if (error) return { ok: false, error: error.message };
+      return { ok: true, data };
+    },
+
+    async uncompleteTask(taskId) {
+      if (!_live()) return { ok: false, error: 'Offline' };
+      const user = await this.getCurrentUser();
+      if (!user) return { ok: false, error: 'Not logged in' };
+      const { error } = await supa.from('user_daily_tasks')
+        .update({ completed: false, completed_at: null })
+        .eq('user_id', user.id).eq('task_date', _todayUTC()).eq('task_id', taskId);
+      if (error) return { ok: false, error: error.message };
+      return { ok: true };
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // CHUNK 18A — USER FOLLOWED AIRDROPS
+    // ═══════════════════════════════════════════════════════════════════════
+
+    async getMyFollowedAirdrops() {
+      if (!_live()) return [];
+      const user = await this.getCurrentUser();
+      if (!user) return [];
+      const { data, error } = await supa.from('user_followed_airdrops')
+        .select('*, admin_airdrops(*)')
+        .eq('user_id', user.id)
+        .order('followed_at', { ascending: false });
+      if (error) { console.error('getMyFollowedAirdrops:', error); return []; }
+      return data || [];
+    },
+
+    async followAirdrop(airdropId) {
+      if (!_live()) return { ok: false, error: 'Offline' };
+      const user = await this.getCurrentUser();
+      if (!user) return { ok: false, error: 'Not logged in' };
+      const { data, error } = await supa.from('user_followed_airdrops')
+        .upsert({ user_id: user.id, airdrop_id: airdropId }, { onConflict: 'user_id,airdrop_id' })
+        .select().single();
+      if (error) return { ok: false, error: error.message };
+      return { ok: true, data };
+    },
+
+    async unfollowAirdrop(airdropId) {
+      if (!_live()) return { ok: false, error: 'Offline' };
+      const user = await this.getCurrentUser();
+      if (!user) return { ok: false, error: 'Not logged in' };
+      const { error } = await supa.from('user_followed_airdrops')
+        .delete().eq('user_id', user.id).eq('airdrop_id', airdropId);
+      if (error) return { ok: false, error: error.message };
+      return { ok: true };
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // CHUNK 18A — FLASH OPPORTUNITIES (reads from admin_airdrops)
+    // ═══════════════════════════════════════════════════════════════════════
+
+    async getActiveFlashAirdrops() {
+      if (!_live()) return [];
+      const now = new Date().toISOString();
+      const { data, error } = await supa.from('admin_airdrops')
+        .select('*')
+        .eq('is_flash', true)
+        .eq('visible_to_users', true)
+        .gt('flash_ends_at', now)
+        .order('flash_ends_at', { ascending: true });
+      if (error) { console.error('getActiveFlashAirdrops:', error); return []; }
+      return data || [];
+    },
+
     // ───────────────────────────────────────────────────────────────────────
     // HELPER — Generate slug from project name
     // ───────────────────────────────────────────────────────────────────────
