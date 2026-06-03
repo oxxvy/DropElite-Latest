@@ -26407,46 +26407,51 @@ window.doFollowNew = async function(btn) {
 // ─── MAIN LOAD ───
 async function doLoadAll() {
   if (doLoaded) return;
-  if (!window.API || !window.API.isLive()) return;
+  if (!window.API || !window.API.isLive()) {
+    console.warn('[do] API not ready, retrying in 500ms');
+    setTimeout(doLoadAll, 500);
+    return;
+  }
 
   try {
-    // Parallel fetches
+    // Parallel fetches (each wrapped so one failure doesn't block all)
     const [settingsRows, streak, todayTasks, followed, flash, profile] = await Promise.all([
-      window.API.getAllPlatformSettings(),
-      window.API.getMyStreak(),
-      window.API.getMyDailyTasks(doTodayUTC()),
-      window.API.getMyFollowedAirdrops(),
-      window.API.getActiveFlashAirdrops(),
-      window.API.getProfile()
+      window.API.getAllPlatformSettings().catch(e => { console.error('[do] settings:', e); return []; }),
+      window.API.getMyStreak().catch(e => { console.error('[do] streak:', e); return null; }),
+      window.API.getMyDailyTasks(doTodayUTC()).catch(e => { console.error('[do] tasks:', e); return []; }),
+      window.API.getMyFollowedAirdrops().catch(e => { console.error('[do] followed:', e); return []; }),
+      window.API.getActiveFlashAirdrops().catch(e => { console.error('[do] flash:', e); return []; }),
+      window.API.getProfile().catch(e => { console.error('[do] profile:', e); return null; })
     ]);
 
     // Parse settings
-    settingsRows.forEach(r => { doSettings[r.key] = r.value; });
+    (settingsRows || []).forEach(r => { doSettings[r.key] = r.value; });
     doStreak = streak;
     doTodayTasks = todayTasks || [];
     doFollowed = followed || [];
     doFlash = flash || [];
 
     // Fetch recent airdrops + deadlines
-    const sb = window.API._supa();
-    if (sb) {
-      const { data: recent } = await sb.from('admin_airdrops')
-        .select('*')
-        .eq('visible_to_users', true)
-        .order('created_at', { ascending: false })
-        .limit(3);
-      doRecentAirdrops = recent || [];
+    try {
+      const sb = window.API._supa();
+      if (sb) {
+        const { data: recent } = await sb.from('admin_airdrops')
+          .select('*')
+          .eq('visible_to_users', true)
+          .order('created_at', { ascending: false })
+          .limit(3);
+        doRecentAirdrops = recent || [];
 
-      const now = new Date().toISOString();
-      const weekLater = new Date(Date.now() + 7 * 86400000).toISOString();
-      const { data: deadlineData } = await sb.from('admin_airdrops')
-        .select('id,project_name,name,snapshot_date,end_date,tge_date,blockchain')
-        .eq('visible_to_users', true)
-        .or(`snapshot_date.gte.${now},end_date.gte.${now},tge_date.gte.${now}`)
-        .order('snapshot_date', { ascending: true })
-        .limit(20);
-      doDeadlines = deadlineData || [];
-    }
+        const now = new Date().toISOString();
+        const { data: deadlineData } = await sb.from('admin_airdrops')
+          .select('id,project_name,name,snapshot_date,end_date,tge_date,blockchain')
+          .eq('visible_to_users', true)
+          .or(`snapshot_date.gte.${now},end_date.gte.${now},tge_date.gte.${now}`)
+          .order('snapshot_date', { ascending: true })
+          .limit(20);
+        doDeadlines = deadlineData || [];
+      }
+    } catch (e) { console.error('[do] recent/deadlines:', e); }
 
     // Check Day 1 state
     const onboarded = profile && profile.onboarding_completed;
@@ -26480,15 +26485,16 @@ async function doLoadAll() {
 }
 
 // ─── Hook into tab switching ───
+document.addEventListener('dropelite:tabchange', function(e) {
+  if (e.detail && e.detail.tabName === 'daily-missions' && !doLoaded) {
+    doLoadAll();
+  }
+});
+
+// Also fire on DOMContentLoaded if hash is already daily-missions
 document.addEventListener('DOMContentLoaded', function() {
-  const origSwitch = window.setActiveTab;
-  if (origSwitch) {
-    window.setActiveTab = function(tabName) {
-      origSwitch(tabName);
-      if (tabName === 'daily-missions' && !doLoaded) {
-        doLoadAll();
-      }
-    };
+  if (location.hash === '#daily-missions') {
+    setTimeout(doLoadAll, 300);
   }
 });
 
