@@ -855,6 +855,250 @@
 [data-theme="light"] .explorer-view {
   color: #0a0e1a;
 }
+[data-theme="light"] .explorer-view .exp-page {
+  --exp-gold: #c48a08; --exp-gold-bright: #e0a00a; --exp-gold-dim: #9a6e06;
+  --exp-gold-soft: rgba(196,138,8,0.10); --exp-gold-glow: rgba(196,138,8,0.25);
+  --exp-cyan: #007a90; --exp-cyan-soft: rgba(0,122,144,0.10); --exp-cyan-glow: rgba(0,122,144,0.22);
+  --exp-purple: #7040c0; --exp-purple-soft: rgba(112,64,192,0.10); --exp-purple-glow: rgba(112,64,192,0.22);
+  --exp-pink: #c4305a; --exp-pink-soft: rgba(196,48,90,0.10);
+  --exp-orange: #c06020; --exp-orange-soft: rgba(192,96,32,0.10);
+  --exp-green: #008a4a; --exp-green-soft: rgba(0,138,74,0.10); --exp-green-glow: rgba(0,138,74,0.22);
+  --exp-red: #c42838; --exp-red-soft: rgba(196,40,56,0.10);
+  --exp-text: #0a0e1a; --exp-text-dim: #3d4a65; --exp-text-muted: #6b7894;
+  --exp-bg-card: rgba(255,255,255,0.58);
+  --exp-bg-card-hi: rgba(255,255,255,0.75);
+  --exp-bg-card-dk: rgba(200,210,228,0.50);
+  --exp-border: rgba(10,14,30,0.12);
+  --exp-border-br: rgba(196,138,8,0.35);
+  color: #0a0e1a;
+}
+
+/* EXP: Header */
+[data-theme="light"] .explorer-view .exp-bc { color: #6b7894; }
+[data-theme="light"] .explorer-view .exp-bc-sep { color: var(--exp-gold); }
+[data-theme="light"] .explorer-view .exp-title { color: #0a0e1a; }
+[data-theme="light"] .explorer-view .exp-title span { color: var(--exp-gold); text-shadow: 0 0 14px rgba(196,138,8,0.22); }
+[data-theme="light"] .explorer-view .exp-sub { color: #3d4a65; }
+
+/* EXP: Chain picker bar */
+[data-theme="light"] .explorer-view .exp-chain-bar {
+  background: rgba(255,255,255,0.55);
+  border-color: rgba(10,14,30,0.10);
+  box-shadow: 0 2px 10px rgba(10,14,30,0.05);
+}
+[data-theme="light"] .explorer-view .exp-chain-label { color: #6b7894; }
+[data-theme="light"] .explorer-view .exp-chain-pill {
+  background: rgba(200,210,228,0.50);
+  border-color: rgba(10,14,30,0.10);
+  color: #3d4a65;
+}
+[data-theme="light"] .explorer-view .exp-chain-pill:hover {
+  background: rgba(255,255,255,0.65);
+  border-color: rgba(196,138,8,0.25);
+  color: #0a0e1a;
+}
+[data-theme="light"] .explorer-view .exp-chain-pill.active {
+  background: rgba(196,138,8,0.10);
+  border-color: var(--exp-gold);
+  color: #c48a08;
+  box-shadow: 0 2px 12px rgba(196,138,8,0.12);
+}
+[data-theme="light"] .explorer-view .exp-chain-pill .exp-pill-dot.active { box-shadow: 0 0 6px currentColor; }
+
+/* EXP: Chain hero card */
+[data-theme="light"] .explorer-view .exp-chain-hero {
+  background: linear-gradient(135deg, rgba(196,138,8,0.05) 0%, rgba(255,255,255,0.65) 30%, rgba(240,244,255,0.72) 100%);
+  border-color: rgba(196,138,8,0.20);
+  box-shadow: 0 4px 28px rgba(10,14,30,0.08), 0 0 40px rgba(196,138,8,0.04), inset 0 0 30px rgba(255,255,255,0.3);
+}
+[data-theme="light"] .explorer-view .exp-chain-name { color: #0a0e1a; }
+[data-theme="light"] .explorer-view .exp-chain-desc { color: #3d4a65; }
+
+/* EXP: Chain tags */
+[data-theme="light"] .explorer-view .exp-chain-tag {
+  background: rgba(200,210,228,0.55);
+  border-color: rgba(10,14,30,0.10);
+  color: #3d4a65;
+  box-shadow: 0 1px 4px rgba(10,14,30,0.04);
+}
+
+/* EXP: External buttons (CTA) */
+[data-theme="light"] .explorer-view .exp-external-btn {
+  background: rgba(255,255,255,0.55);
+  border-color: rgba(10,14,30,0.12);
+  color: #3d4a65;
+  box-shadow: 0 1px 6px rgba(10,14,30,0.05);
+}
+[data-theme="light"] .explorer-view .exp-external-btn:hover {
+  border-color: var(--exp-gold);
+  color: #c48a08;
+  background: rgba(196,138,8,0.06);
+  box-shadow: 0 3px 14px rgba(196,138,8,0.10);
+}
+
+/* EXP: Chain stat cards */
+[data-theme="light"] .explorer-view .exp-cstat {
+  background: rgba(255,255,255,0.55);
+  border-color: rgba(10,14,30,0.10);
+  box-shadow: 0 2px 10px rgba(10,14,30,0.05), inset 0 0 10px rgba(255,255,255,0.3);
+}
+[data-theme="light"] .explorer-view .exp-cstat:hover {
+  border-color: rgba(196,138,8,0.25);
+  box-shadow: 0 4px 16px rgba(10,14,30,0.08);
+}
+[data-theme="light"] .explorer-view .exp-cstat-lbl { color: #6b7894; }
+[data-theme="light"] .explorer-view .exp-cstat-val { color: #0a0e1a; }
+[data-theme="light"] .explorer-view .exp-cstat-val.cyan { color: #007a90; text-shadow: 0 0 10px rgba(0,122,144,0.18); }
+[data-theme="light"] .explorer-view .exp-cstat-val.green { color: #008a4a; text-shadow: 0 0 10px rgba(0,138,74,0.18); }
+[data-theme="light"] .explorer-view .exp-cstat-val.purple { color: #7040c0; text-shadow: 0 0 10px rgba(112,64,192,0.18); }
+[data-theme="light"] .explorer-view .exp-cstat-delta { color: #008a4a; }
+[data-theme="light"] .explorer-view .exp-cstat-delta.dim { color: #6b7894; }
+
+/* EXP: Edit chain button */
+[data-theme="light"] .explorer-view .exp-admin-edit {
+  background: rgba(255,255,255,0.50);
+  border-color: rgba(196,138,8,0.25);
+  color: #c48a08;
+}
+[data-theme="light"] .explorer-view .exp-admin-edit:hover {
+  background: rgba(196,138,8,0.08);
+  box-shadow: 0 2px 10px rgba(196,138,8,0.10);
+}
+
+/* EXP: Thesis card */
+[data-theme="light"] .explorer-view .exp-thesis-card {
+  background: rgba(255,255,255,0.58);
+  border-color: rgba(196,138,8,0.18);
+  box-shadow: 0 4px 24px rgba(10,14,30,0.07), inset 0 0 20px rgba(255,255,255,0.25);
+}
+[data-theme="light"] .explorer-view .exp-thesis-eyebrow { color: var(--exp-gold); }
+[data-theme="light"] .explorer-view .exp-thesis-title { color: #0a0e1a; }
+[data-theme="light"] .explorer-view .exp-thesis-title span { color: var(--exp-gold); }
+[data-theme="light"] .explorer-view .exp-thesis-meta { color: #6b7894; }
+
+/* EXP: Thesis score block */
+[data-theme="light"] .explorer-view .exp-thesis-score-block {
+  background: rgba(200,210,228,0.55);
+  border-color: rgba(10,14,30,0.10);
+  box-shadow: 0 2px 10px rgba(10,14,30,0.05);
+}
+[data-theme="light"] .explorer-view .exp-thesis-score-lbl { color: #6b7894; }
+[data-theme="light"] .explorer-view .exp-thesis-score-num { color: var(--exp-gold); text-shadow: 0 0 12px rgba(196,138,8,0.25); }
+[data-theme="light"] .explorer-view .exp-thesis-score-max { color: #6b7894; }
+[data-theme="light"] .explorer-view .exp-thesis-score-tag { color: #3d4a65; }
+
+/* EXP: Thesis bullets */
+[data-theme="light"] .explorer-view .exp-thesis-bullet {
+  background: rgba(255,255,255,0.50);
+  border-color: rgba(10,14,30,0.08);
+  box-shadow: 0 1px 6px rgba(10,14,30,0.04);
+}
+[data-theme="light"] .explorer-view .exp-thesis-bullet:hover {
+  border-color: rgba(196,138,8,0.22);
+  background: rgba(255,255,255,0.70);
+  box-shadow: 0 3px 14px rgba(10,14,30,0.06);
+}
+[data-theme="light"] .explorer-view .exp-bullet-title { color: #0a0e1a; }
+[data-theme="light"] .explorer-view .exp-bullet-text { color: #3d4a65; }
+
+/* EXP: Thesis footer */
+[data-theme="light"] .explorer-view .exp-thesis-footer { color: #6b7894; border-color: rgba(10,14,30,0.06); }
+[data-theme="light"] .explorer-view .exp-thesis-source { color: var(--exp-gold); }
+
+/* EXP: General cards (reputation, protocols, playbook) */
+[data-theme="light"] .explorer-view .exp-card {
+  background: rgba(255,255,255,0.58);
+  border-color: rgba(10,14,30,0.12);
+  box-shadow: 0 2px 14px rgba(10,14,30,0.06), inset 0 0 16px rgba(255,255,255,0.25);
+}
+[data-theme="light"] .explorer-view .exp-card-title { color: #3d4a65; }
+[data-theme="light"] .explorer-view .exp-card-title.gold { color: #c48a08; }
+[data-theme="light"] .explorer-view .exp-card-title.purple { color: #7040c0; }
+[data-theme="light"] .explorer-view .exp-card-action {
+  color: #3d4a65; border-color: rgba(10,14,30,0.10);
+  background: rgba(255,255,255,0.45);
+}
+[data-theme="light"] .explorer-view .exp-card-action:hover {
+  color: #c48a08; border-color: #c48a08; background: rgba(196,138,8,0.06);
+}
+[data-theme="light"] .explorer-view .exp-card-hint { color: #6b7894; }
+[data-theme="light"] .explorer-view .exp-sec-tag { background: rgba(10,14,30,0.05); color: #6b7894; border-color: rgba(10,14,30,0.08); }
+
+/* EXP: Reputation score bars */
+[data-theme="light"] .explorer-view .exp-wscore-num { color: #0a0e1a; }
+[data-theme="light"] .explorer-view .exp-wscore-max { color: #6b7894; }
+[data-theme="light"] .explorer-view .exp-wscore-tag { color: #3d4a65; }
+[data-theme="light"] .explorer-view .exp-wscore-percentile { color: #6b7894; }
+[data-theme="light"] .explorer-view .exp-wscore-bar-bg { background: rgba(10,14,30,0.08); }
+[data-theme="light"] .explorer-view .exp-wscore-row-name { color: #3d4a65; }
+[data-theme="light"] .explorer-view .exp-wscore-row-val { color: #0a0e1a; }
+
+/* EXP: Protocol grid */
+[data-theme="light"] .explorer-view .exp-protocol {
+  background: rgba(200,210,228,0.45);
+  border-color: rgba(10,14,30,0.08);
+  box-shadow: 0 1px 6px rgba(10,14,30,0.03);
+}
+[data-theme="light"] .explorer-view .exp-protocol:hover {
+  background: rgba(255,255,255,0.65);
+  border-color: rgba(196,138,8,0.22);
+  box-shadow: 0 3px 12px rgba(10,14,30,0.06);
+}
+[data-theme="light"] .explorer-view .exp-protocol-name { color: #0a0e1a; }
+[data-theme="light"] .explorer-view .exp-protocol-cat { color: #6b7894; }
+[data-theme="light"] .explorer-view .exp-protocol-interacted { color: #008a4a; }
+
+/* EXP: Playbook progress */
+[data-theme="light"] .explorer-view .exp-playbook-progress {
+  background: rgba(200,210,228,0.45);
+  border-color: rgba(10,14,30,0.08);
+}
+[data-theme="light"] .explorer-view .exp-playbook-pct-num { color: #0a0e1a; }
+[data-theme="light"] .explorer-view .exp-playbook-pct-lbl { color: #6b7894; }
+[data-theme="light"] .explorer-view .exp-playbook-est-val { color: var(--exp-gold); }
+[data-theme="light"] .explorer-view .exp-playbook-bar-bg { background: rgba(10,14,30,0.08); }
+
+/* EXP: Playbook steps */
+[data-theme="light"] .explorer-view .exp-step {
+  background: rgba(200,210,228,0.45);
+  border-color: rgba(10,14,30,0.06);
+}
+[data-theme="light"] .explorer-view .exp-step:hover {
+  background: rgba(255,255,255,0.65);
+  border-color: rgba(196,138,8,0.20);
+}
+[data-theme="light"] .explorer-view .exp-step-num {
+  background: rgba(196,138,8,0.10);
+  border-color: rgba(196,138,8,0.25);
+  color: #c48a08;
+}
+[data-theme="light"] .explorer-view .exp-step.done .exp-step-num {
+  background: rgba(0,138,74,0.10);
+  border-color: rgba(0,138,74,0.25);
+  color: #008a4a;
+}
+[data-theme="light"] .explorer-view .exp-step-title { color: #0a0e1a; }
+[data-theme="light"] .explorer-view .exp-step-meta { color: #6b7894; }
+
+/* EXP: Hidden opps section */
+[data-theme="light"] .explorer-view .exp-hidden-opps {
+  background: rgba(255,255,255,0.55);
+  border-color: rgba(10,14,30,0.10);
+  box-shadow: 0 2px 14px rgba(10,14,30,0.05);
+}
+[data-theme="light"] .explorer-view .exp-opp-item {
+  background: rgba(200,210,228,0.45);
+  border-color: rgba(10,14,30,0.08);
+}
+[data-theme="light"] .explorer-view .exp-opp-item:hover {
+  background: rgba(255,255,255,0.65);
+  border-color: rgba(196,138,8,0.22);
+}
+[data-theme="light"] .explorer-view .exp-opp-name { color: #0a0e1a; }
+[data-theme="light"] .explorer-view .exp-opp-desc { color: #3d4a65; }
+
+/* EXP: No data state */
+[data-theme="light"] .explorer-view .exp-no-data { color: #6b7894; }
 
 /* ─── REWARDS TAB ─── */
 [data-theme="light"] .rewards-view {
