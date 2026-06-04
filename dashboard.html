@@ -314,22 +314,257 @@
 /* ─── PROJECT INTEL TAB ─── */
 [data-theme="light"] .project-intel-view {
   --gold: #c48a08; --gold-bright: #e0a00a; --gold-dim: #9a6e06;
-  --gold-glow: rgba(196,138,8,0.22); --gold-soft: rgba(196,138,8,0.08);
-  --cyan: #007a90; --cyan-glow: rgba(0,122,144,0.18); --cyan-soft: rgba(0,122,144,0.06);
-  --purple: #7040c0; --purple-glow: rgba(112,64,192,0.18); --purple-soft: rgba(112,64,192,0.06);
-  --pink: #c4305a; --pink-glow: rgba(196,48,90,0.18); --pink-soft: rgba(196,48,90,0.06);
-  --orange: #c06020; --orange-soft: rgba(192,96,32,0.06);
-  --green: #008a4a; --green-glow: rgba(0,138,74,0.20); --green-soft: rgba(0,138,74,0.06);
+  --gold-glow: rgba(196,138,8,0.22); --gold-soft: rgba(196,138,8,0.10);
+  --cyan: #007a90; --cyan-glow: rgba(0,122,144,0.20); --cyan-soft: rgba(0,122,144,0.08);
+  --purple: #7040c0; --purple-glow: rgba(112,64,192,0.20); --purple-soft: rgba(112,64,192,0.08);
+  --pink: #c4305a; --pink-glow: rgba(196,48,90,0.20); --pink-soft: rgba(196,48,90,0.08);
+  --orange: #c06020; --orange-soft: rgba(192,96,32,0.08);
+  --green: #008a4a; --green-glow: rgba(0,138,74,0.22); --green-soft: rgba(0,138,74,0.08);
   --red: #c42838;
-  --pi-bg-card: rgba(255,255,255,0.55);
-  --pi-bg-hover: rgba(255,255,255,0.70);
-  --pi-border: rgba(10,14,30,0.10);
-  --pi-border-br: rgba(196,138,8,0.30);
+  --pi-bg-card: rgba(255,255,255,0.58);
+  --pi-bg-hover: rgba(255,255,255,0.78);
+  --pi-border: rgba(10,14,30,0.12);
+  --pi-border-br: rgba(196,138,8,0.35);
   --pi-text: #0a0e1a;
   --pi-text-dim: #3d4a65;
   --pi-text-muted: #6b7894;
   color: var(--pi-text);
 }
+
+/* PI: Hero section */
+[data-theme="light"] .project-intel-view .pi-breadcrumb { color: #6b7894; }
+[data-theme="light"] .project-intel-view .pi-breadcrumb span { color: var(--gold); }
+[data-theme="light"] .project-intel-view .pi-title { color: #0a0e1a; }
+[data-theme="light"] .project-intel-view .pi-title span { color: var(--gold); text-shadow: 0 0 14px rgba(196,138,8,0.22); }
+[data-theme="light"] .project-intel-view .pi-subtitle { color: #3d4a65; }
+
+/* PI: Hero stat cards */
+[data-theme="light"] .project-intel-view .pi-hero-stat {
+  background: rgba(255,255,255,0.60);
+  border-color: rgba(10,14,30,0.12);
+  box-shadow: 0 2px 10px rgba(10,14,30,0.06), inset 0 0 12px rgba(255,255,255,0.3);
+}
+[data-theme="light"] .project-intel-view .pi-hero-stat:hover {
+  border-color: rgba(196,138,8,0.30);
+  box-shadow: 0 4px 18px rgba(10,14,30,0.10);
+}
+[data-theme="light"] .project-intel-view .pi-hero-stat-label { color: #6b7894; }
+[data-theme="light"] .project-intel-view .pi-hero-stat-val.gold { color: #c48a08; text-shadow: 0 0 10px rgba(196,138,8,0.20); }
+[data-theme="light"] .project-intel-view .pi-hero-stat-val.cyan { color: #007a90; text-shadow: 0 0 10px rgba(0,122,144,0.18); }
+[data-theme="light"] .project-intel-view .pi-hero-stat-val.purple { color: #7040c0; text-shadow: 0 0 10px rgba(112,64,192,0.18); }
+
+/* PI: Filter tabs */
+[data-theme="light"] .project-intel-view .pi-tab {
+  border-color: rgba(10,14,30,0.10); color: #3d4a65;
+  background: rgba(255,255,255,0.40);
+}
+[data-theme="light"] .project-intel-view .pi-tab:hover {
+  color: #0a0e1a; border-color: rgba(196,138,8,0.25);
+  background: rgba(255,255,255,0.60);
+}
+[data-theme="light"] .project-intel-view .pi-tab.active {
+  color: #c48a08; border-color: #c48a08;
+  background: rgba(196,138,8,0.10);
+  box-shadow: 0 2px 12px rgba(196,138,8,0.12);
+}
+[data-theme="light"] .project-intel-view .pi-tab .pi-count {
+  background: rgba(10,14,30,0.06); color: #6b7894;
+}
+[data-theme="light"] .project-intel-view .pi-tab.active .pi-count {
+  background: rgba(196,138,8,0.15); color: #c48a08;
+}
+
+/* PI: Search input */
+[data-theme="light"] .project-intel-view .pi-search {
+  background: rgba(255,255,255,0.65);
+  border-color: rgba(10,14,30,0.12);
+  color: #0a0e1a;
+  box-shadow: 0 1px 6px rgba(10,14,30,0.04) inset;
+}
+[data-theme="light"] .project-intel-view .pi-search::placeholder { color: #8e9ab0; }
+[data-theme="light"] .project-intel-view .pi-search:focus {
+  border-color: #007a90;
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 0 0 3px rgba(0,122,144,0.10), 0 0 14px rgba(0,122,144,0.06);
+}
+
+/* PI: Grid header */
+[data-theme="light"] .project-intel-view .pi-grid-title { color: #3d4a65; }
+[data-theme="light"] .project-intel-view .pi-grid-meta { color: #6b7894; }
+
+/* PI: Project cards */
+[data-theme="light"] .project-intel-view .pi-card {
+  background: rgba(255,255,255,0.62);
+  border-color: rgba(10,14,30,0.10);
+  box-shadow: 0 2px 14px rgba(10,14,30,0.06), inset 0 0 16px rgba(255,255,255,0.3);
+}
+[data-theme="light"] .project-intel-view .pi-card:hover {
+  background: rgba(255,255,255,0.82);
+  border-color: rgba(196,138,8,0.30);
+  box-shadow: 0 8px 28px rgba(10,14,30,0.10), 0 0 24px rgba(196,138,8,0.06);
+}
+[data-theme="light"] .project-intel-view .pi-card-name { color: #0a0e1a; }
+[data-theme="light"] .project-intel-view .pi-card-subtitle { color: #3d4a65; }
+
+/* PI: Card logos */
+[data-theme="light"] .project-intel-view .c-purple .pi-logo { background: rgba(112,64,192,0.12); color: #7040c0; border-color: rgba(112,64,192,0.30); }
+[data-theme="light"] .project-intel-view .c-cyan .pi-logo { background: rgba(0,122,144,0.12); color: #007a90; border-color: rgba(0,122,144,0.30); }
+[data-theme="light"] .project-intel-view .c-gold .pi-logo { background: rgba(196,138,8,0.12); color: #c48a08; border-color: rgba(196,138,8,0.30); }
+[data-theme="light"] .project-intel-view .c-pink .pi-logo { background: rgba(196,48,90,0.12); color: #c4305a; border-color: rgba(196,48,90,0.30); }
+[data-theme="light"] .project-intel-view .c-orange .pi-logo { background: rgba(192,96,32,0.12); color: #c06020; border-color: rgba(192,96,32,0.30); }
+[data-theme="light"] .project-intel-view .c-green .pi-logo { background: rgba(0,138,74,0.12); color: #008a4a; border-color: rgba(0,138,74,0.30); }
+
+/* PI: Badges */
+[data-theme="light"] .project-intel-view .pi-badge { font-weight: 800; }
+[data-theme="light"] .project-intel-view .pi-badge.hottest { background: rgba(192,96,32,0.12); color: #c06020; border-color: rgba(192,96,32,0.30); }
+[data-theme="light"] .project-intel-view .pi-badge.new { background: rgba(0,138,74,0.12); color: #008a4a; border-color: rgba(0,138,74,0.30); }
+[data-theme="light"] .project-intel-view .pi-badge.low-gas { background: rgba(0,122,144,0.12); color: #007a90; border-color: rgba(0,122,144,0.30); }
+[data-theme="light"] .project-intel-view .pi-badge.trending { background: rgba(192,96,32,0.12); color: #c06020; border-color: rgba(192,96,32,0.30); }
+[data-theme="light"] .project-intel-view .pi-badge.whale { background: rgba(112,64,192,0.12); color: #7040c0; border-color: rgba(112,64,192,0.30); }
+[data-theme="light"] .project-intel-view .pi-badge.snapshot { background: rgba(196,40,56,0.12); color: #c42838; border-color: rgba(196,40,56,0.30); }
+[data-theme="light"] .project-intel-view .pi-badge.mainnet { background: rgba(0,138,74,0.12); color: #008a4a; border-color: rgba(0,138,74,0.30); }
+[data-theme="light"] .project-intel-view .pi-badge.testnet { background: rgba(192,96,32,0.12); color: #c06020; border-color: rgba(192,96,32,0.30); }
+[data-theme="light"] .project-intel-view .pi-badge.custom { background: rgba(196,138,8,0.12); color: #c48a08; border-color: rgba(196,138,8,0.30); }
+
+/* PI: Intel grid data cells */
+[data-theme="light"] .project-intel-view .pi-intel-label { color: #6b7894; }
+[data-theme="light"] .project-intel-view .pi-intel-val.gold { color: #c48a08; }
+[data-theme="light"] .project-intel-view .pi-intel-val.cyan { color: #007a90; }
+[data-theme="light"] .project-intel-view .pi-intel-val.purple { color: #7040c0; }
+[data-theme="light"] .project-intel-view .pi-intel-val.pink { color: #c4305a; }
+[data-theme="light"] .project-intel-view .pi-intel-val.green { color: #008a4a; }
+[data-theme="light"] .project-intel-view .pi-intel-val.red { color: #c42838; }
+[data-theme="light"] .project-intel-view .pi-intel-val.orange { color: #c06020; }
+[data-theme="light"] .project-intel-view .pi-intel-val.white { color: #0a0e1a; }
+
+/* PI: Tier chip */
+[data-theme="light"] .project-intel-view .pi-tier-chip {
+  box-shadow: 0 2px 8px rgba(10,14,30,0.06);
+}
+
+/* PI: Momentum bar */
+[data-theme="light"] .project-intel-view .pi-mom-label { color: #6b7894; }
+[data-theme="light"] .project-intel-view .pi-mom-bar { background: rgba(10,14,30,0.08); }
+[data-theme="light"] .project-intel-view .c-gold .pi-mom-score { color: #c48a08; }
+[data-theme="light"] .project-intel-view .c-cyan .pi-mom-score { color: #007a90; }
+[data-theme="light"] .project-intel-view .c-purple .pi-mom-score { color: #7040c0; }
+[data-theme="light"] .project-intel-view .c-pink .pi-mom-score { color: #c4305a; }
+[data-theme="light"] .project-intel-view .c-orange .pi-mom-score { color: #c06020; }
+[data-theme="light"] .project-intel-view .c-green .pi-mom-score { color: #008a4a; }
+
+/* PI: Completion bar */
+[data-theme="light"] .project-intel-view .pi-comp-label { color: #6b7894; }
+[data-theme="light"] .project-intel-view .pi-comp-pct { color: #0a0e1a; }
+[data-theme="light"] .project-intel-view .pi-comp-bar { background: rgba(10,14,30,0.08); }
+
+/* PI: Card action buttons */
+[data-theme="light"] .project-intel-view .pi-card-btn {
+  background: rgba(255,255,255,0.50);
+  border-color: rgba(10,14,30,0.10);
+  color: #3d4a65;
+  box-shadow: 0 1px 4px rgba(10,14,30,0.04);
+}
+[data-theme="light"] .project-intel-view .pi-card-btn:hover {
+  border-color: rgba(196,138,8,0.30); color: #0a0e1a;
+  background: rgba(255,255,255,0.70);
+  box-shadow: 0 3px 12px rgba(10,14,30,0.08);
+}
+[data-theme="light"] .project-intel-view .pi-card-btn.primary {
+  border-color: #007a90; color: #007a90;
+  background: rgba(0,122,144,0.08);
+}
+[data-theme="light"] .project-intel-view .pi-card-btn.primary:hover {
+  background: rgba(0,122,144,0.14);
+  box-shadow: 0 3px 14px rgba(0,122,144,0.12);
+}
+[data-theme="light"] .project-intel-view .pi-card-btn.boost {
+  border-color: #c48a08; color: #c48a08;
+  background: rgba(196,138,8,0.08);
+}
+[data-theme="light"] .project-intel-view .pi-card-btn.boost:hover {
+  background: rgba(196,138,8,0.14);
+  box-shadow: 0 3px 14px rgba(196,138,8,0.12);
+}
+
+/* PI: Empty state */
+[data-theme="light"] .project-intel-view .pi-empty {
+  background: rgba(10,14,30,0.03);
+  border-color: rgba(10,14,30,0.10);
+}
+[data-theme="light"] .project-intel-view .pi-empty-title { color: #3d4a65; }
+[data-theme="light"] .project-intel-view .pi-empty-sub { color: #6b7894; }
+
+/* PI: Detail view */
+[data-theme="light"] .project-intel-view .pi-back-btn {
+  color: #3d4a65; border-color: rgba(10,14,30,0.10);
+  background: rgba(255,255,255,0.50);
+}
+[data-theme="light"] .project-intel-view .pi-back-btn:hover {
+  color: var(--gold); border-color: var(--gold);
+  background: rgba(196,138,8,0.06);
+}
+[data-theme="light"] .project-intel-view .pi-detail-header {
+  background: rgba(255,255,255,0.55);
+  border-color: rgba(10,14,30,0.10);
+  box-shadow: 0 2px 14px rgba(10,14,30,0.06);
+}
+[data-theme="light"] .project-intel-view .pi-detail-name { color: #0a0e1a; }
+[data-theme="light"] .project-intel-view .pi-detail-tagline { color: #3d4a65; }
+
+/* PI: Detail quick stats */
+[data-theme="light"] .project-intel-view .pi-qs {
+  background: rgba(255,255,255,0.50);
+  border-color: rgba(10,14,30,0.08);
+  box-shadow: 0 1px 6px rgba(10,14,30,0.04);
+}
+[data-theme="light"] .project-intel-view .pi-qs-label { color: #6b7894; }
+[data-theme="light"] .project-intel-view .pi-qs-val { color: #0a0e1a; }
+
+/* PI: Detail blocks */
+[data-theme="light"] .project-intel-view .pi-block {
+  background: rgba(255,255,255,0.55);
+  border-color: rgba(10,14,30,0.10);
+  box-shadow: 0 2px 12px rgba(10,14,30,0.05);
+}
+[data-theme="light"] .project-intel-view .pi-block-title { color: #3d4a65; }
+[data-theme="light"] .project-intel-view .pi-block-title.cyan { color: #007a90; }
+[data-theme="light"] .project-intel-view .pi-about-text { color: #3d4a65; }
+
+/* PI: Progress bar in detail */
+[data-theme="light"] .project-intel-view .pi-pm-progress-label { color: #6b7894; }
+[data-theme="light"] .project-intel-view .pi-pm-progress-text { color: #0a0e1a; }
+[data-theme="light"] .project-intel-view .pi-pm-progress-bar { background: rgba(10,14,30,0.08); }
+
+/* PI: Mission tabs in detail */
+[data-theme="light"] .project-intel-view .pi-pm-tab {
+  background: rgba(255,255,255,0.40); border-color: rgba(10,14,30,0.10); color: #3d4a65;
+}
+[data-theme="light"] .project-intel-view .pi-pm-tab:hover { background: rgba(255,255,255,0.60); color: #0a0e1a; }
+[data-theme="light"] .project-intel-view .pi-pm-tab.active {
+  background: rgba(196,138,8,0.10); border-color: #c48a08; color: #c48a08;
+}
+
+/* PI: Mission items in detail */
+[data-theme="light"] .project-intel-view .pi-pm-item {
+  background: rgba(255,255,255,0.45);
+  border-color: rgba(10,14,30,0.08);
+  box-shadow: 0 1px 6px rgba(10,14,30,0.03);
+}
+[data-theme="light"] .project-intel-view .pi-pm-item:hover {
+  background: rgba(255,255,255,0.70);
+  border-color: rgba(196,138,8,0.22);
+  box-shadow: 0 3px 12px rgba(10,14,30,0.06);
+}
+[data-theme="light"] .project-intel-view .pi-pm-title { color: #0a0e1a; }
+[data-theme="light"] .project-intel-view .pi-pm-xp { color: var(--gold); }
+
+/* PI: Sidebar in detail */
+[data-theme="light"] .project-intel-view .pi-sidebar-card {
+  background: rgba(255,255,255,0.55);
+  border-color: rgba(10,14,30,0.10);
+  box-shadow: 0 2px 12px rgba(10,14,30,0.05);
+}
+[data-theme="light"] .project-intel-view .pi-sidebar-title { color: #3d4a65; }
 
 /* ─── AIRDROP TRACKER TAB ─── */
 [data-theme="light"] .airdrop-tracker-view {
