@@ -830,6 +830,177 @@
 [data-theme="light"] .airdrop-tracker-view .atv2-sb-item { color: #3d4a65; border-color: rgba(10,14,30,0.06); }
 [data-theme="light"] .airdrop-tracker-view .atv2-sb-item:hover { background: rgba(196,138,8,0.04); }
 
+/* AT: TABLE REFINEMENTS */
+[data-theme="light"] .airdrop-tracker-view .atv2-table tbody tr {
+  background: rgba(255,255,255,0.35);
+}
+[data-theme="light"] .airdrop-tracker-view .atv2-table tbody tr:nth-child(even) {
+  background: rgba(255,255,255,0.50);
+}
+[data-theme="light"] .airdrop-tracker-view .atv2-table tbody tr:hover {
+  background: rgba(196,138,8,0.06);
+  box-shadow: 0 2px 12px rgba(196,138,8,0.06);
+}
+[data-theme="light"] .airdrop-tracker-view .atv2-table td {
+  border-bottom: 1px solid rgba(10,14,30,0.06);
+}
+[data-theme="light"] .airdrop-tracker-view .atv2-table thead tr {
+  background: rgba(190,200,220,0.60);
+  border-bottom: 2px solid rgba(10,14,30,0.10);
+}
+[data-theme="light"] .airdrop-tracker-view .atv2-table th {
+  color: #3d4a65; font-weight: 800;
+}
+
+/* AT: Track button stronger */
+[data-theme="light"] .airdrop-tracker-view .atv2-track-btn {
+  background: rgba(196,138,8,0.10);
+  border: 1px solid rgba(196,138,8,0.35);
+  color: #c48a08;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(196,138,8,0.08);
+}
+[data-theme="light"] .airdrop-tracker-view .atv2-track-btn:hover {
+  background: rgba(196,138,8,0.18);
+  box-shadow: 0 3px 16px rgba(196,138,8,0.15);
+  transform: translateY(-1px);
+}
+
+/* AT: Score bar track visible */
+[data-theme="light"] .airdrop-tracker-view .atv2-score-bg,
+[data-theme="light"] .airdrop-tracker-view [class*="score-bar-bg"],
+[data-theme="light"] .airdrop-tracker-view [class*="bar-bg"] {
+  background: rgba(10,14,30,0.10);
+}
+
+/* AT: SIDEBAR — View Full Analysis */
+[data-theme="light"] .airdrop-tracker-view .atv2-view-analysis {
+  background: rgba(196,138,8,0.08);
+  border-color: rgba(196,138,8,0.30);
+  color: #c48a08;
+  box-shadow: 0 2px 8px rgba(196,138,8,0.06);
+}
+[data-theme="light"] .airdrop-tracker-view .atv2-view-analysis:hover {
+  background: rgba(196,138,8,0.16);
+  box-shadow: 0 3px 14px rgba(196,138,8,0.12);
+}
+
+/* AT: SIDEBAR — Side action buttons */
+[data-theme="light"] .airdrop-tracker-view .atv2-side-action {
+  color: #3d4a65;
+  border-color: rgba(10,14,30,0.12);
+  background: rgba(255,255,255,0.40);
+}
+[data-theme="light"] .airdrop-tracker-view .atv2-side-action:hover {
+  color: #c48a08; border-color: #c48a08; background: rgba(196,138,8,0.06);
+}
+
+/* AT: SIDEBAR — Filter group labels */
+[data-theme="light"] .airdrop-tracker-view .atv2-fg-lbl { color: #3d4a65; }
+[data-theme="light"] .airdrop-tracker-view .atv2-fg-all { color: #007a90; }
+
+/* AT: SIDEBAR — Chain pills in smart filters */
+[data-theme="light"] .airdrop-tracker-view .atv2-chain-pill {
+  background: rgba(10,14,30,0.06);
+  border-color: rgba(10,14,30,0.12);
+  color: #3d4a65;
+}
+[data-theme="light"] .airdrop-tracker-view .atv2-chain-pill:hover {
+  border-color: rgba(196,138,8,0.25);
+  background: rgba(255,255,255,0.55);
+}
+[data-theme="light"] .airdrop-tracker-view .atv2-chain-pill.active {
+  background: rgba(196,138,8,0.12);
+  border-color: #c48a08;
+  color: #c48a08;
+}
+
+/* AT: SIDEBAR — Momentum slider */
+[data-theme="light"] .airdrop-tracker-view .atv2-slider {
+  background: rgba(10,14,30,0.10);
+}
+[data-theme="light"] .airdrop-tracker-view .atv2-slider::-webkit-slider-thumb {
+  background: #c48a08;
+  box-shadow: 0 0 8px rgba(196,138,8,0.4);
+}
+[data-theme="light"] .airdrop-tracker-view .atv2-slider::-moz-range-thumb {
+  background: #c48a08;
+  box-shadow: 0 0 8px rgba(196,138,8,0.4);
+}
+[data-theme="light"] .airdrop-tracker-view .atv2-slider-vals { color: #6b7894; }
+[data-theme="light"] .airdrop-tracker-view #atv2ScoreVal { color: #3d4a65; }
+
+/* AT: SIDEBAR — Difficulty check buttons */
+[data-theme="light"] .airdrop-tracker-view .atv2-diff-check {
+  background: rgba(10,14,30,0.04);
+  border-color: rgba(10,14,30,0.10);
+  color: #6b7894;
+}
+[data-theme="light"] .airdrop-tracker-view .atv2-diff-check:hover {
+  background: rgba(255,255,255,0.55);
+  border-color: rgba(10,14,30,0.18);
+  color: #3d4a65;
+}
+[data-theme="light"] .airdrop-tracker-view .atv2-diff-check.on {
+  background: rgba(196,138,8,0.10);
+  border-color: #c48a08;
+  color: #c48a08;
+  font-weight: 800;
+}
+
+/* AT: SIDEBAR — Apply & Reset buttons */
+[data-theme="light"] .airdrop-tracker-view .atv2-apply-btn {
+  background: linear-gradient(135deg, #c48a08, #e0a00a);
+  color: #fff;
+  box-shadow: 0 3px 16px rgba(196,138,8,0.28);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.12);
+}
+[data-theme="light"] .airdrop-tracker-view .atv2-apply-btn:hover {
+  box-shadow: 0 5px 24px rgba(196,138,8,0.40);
+}
+[data-theme="light"] .airdrop-tracker-view .atv2-reset-btn {
+  background: rgba(255,255,255,0.55);
+  border-color: rgba(10,14,30,0.15);
+  color: #3d4a65;
+}
+[data-theme="light"] .airdrop-tracker-view .atv2-reset-btn:hover {
+  border-color: rgba(196,40,56,0.30);
+  color: #c42838;
+  background: rgba(196,40,56,0.06);
+}
+
+/* AT: SIDEBAR — Ecosystem Heatmap cells */
+[data-theme="light"] .airdrop-tracker-view .atv2-heat-cell {
+  background: rgba(255,255,255,0.45);
+  border-color: rgba(10,14,30,0.08);
+  box-shadow: 0 1px 6px rgba(10,14,30,0.04);
+}
+[data-theme="light"] .airdrop-tracker-view .atv2-heat-cell:hover {
+  background: rgba(255,255,255,0.70);
+  box-shadow: 0 3px 12px rgba(10,14,30,0.06);
+}
+[data-theme="light"] .airdrop-tracker-view .atv2-heat-name { color: #0a0e1a; }
+[data-theme="light"] .airdrop-tracker-view .atv2-heat-cell.hot { border-left-color: #c42838; }
+[data-theme="light"] .airdrop-tracker-view .atv2-heat-cell.hot .atv2-heat-tag { color: #c42838; }
+[data-theme="light"] .airdrop-tracker-view .atv2-heat-cell.veryhot { border-left-color: #c42838; background: linear-gradient(90deg, rgba(196,40,56,0.08), transparent); }
+[data-theme="light"] .airdrop-tracker-view .atv2-heat-cell.veryhot .atv2-heat-tag { color: #c42838; }
+[data-theme="light"] .airdrop-tracker-view .atv2-heat-cell.warm { border-left-color: #c06020; }
+[data-theme="light"] .airdrop-tracker-view .atv2-heat-cell.warm .atv2-heat-tag { color: #c06020; }
+[data-theme="light"] .airdrop-tracker-view .atv2-heat-cell.cool { border-left-color: #007a90; }
+[data-theme="light"] .airdrop-tracker-view .atv2-heat-cell.cool .atv2-heat-tag { color: #007a90; }
+[data-theme="light"] .airdrop-tracker-view .atv2-heat-cell.cold { border-left-color: #7040c0; }
+[data-theme="light"] .airdrop-tracker-view .atv2-heat-cell.cold .atv2-heat-tag { color: #7040c0; }
+
+/* AT: Sidebar no-data & pagination text */
+[data-theme="light"] .airdrop-tracker-view .atv2-no-data { color: #6b7894; }
+[data-theme="light"] .airdrop-tracker-view .atv2-side-title.gold { color: #c48a08; }
+[data-theme="light"] .airdrop-tracker-view .atv2-side-title.cyan { color: #007a90; }
+
+/* AT: Diff pills in table */
+[data-theme="light"] .airdrop-tracker-view .atv2-diff-pill.easy { background: rgba(0,138,74,0.14); color: #008a4a; font-weight: 800; }
+[data-theme="light"] .airdrop-tracker-view .atv2-diff-pill.medium { background: rgba(192,96,32,0.14); color: #c06020; font-weight: 800; }
+[data-theme="light"] .airdrop-tracker-view .atv2-diff-pill.hard { background: rgba(196,40,56,0.14); color: #c42838; font-weight: 800; }
+
 /* ─── WALLETS TAB ─── */
 [data-theme="light"] .wallets-view {
   --wlt-gold: #c48a08; --wlt-gold-dim: #9a6e06;
