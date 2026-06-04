@@ -494,6 +494,383 @@
     radial-gradient(ellipse 60% 40% at 80% 110%, rgba(0,122,144,0.04) 0%, transparent 60%);
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   PHASE 1 — PERFECTED: OVERVIEW + DAILY OPERATIONS
+═══════════════════════════════════════════════════════════════ */
+
+/* ─── OVERVIEW: SCOPED VARIABLE OVERRIDES ─── */
+[data-theme="light"] .overview-view {
+  --ov-gold: #c48a08; --ov-gold-bright: #e0a00a; --ov-gold-dim: #9a6e06;
+  --ov-gold-soft: rgba(196,138,8,0.10); --ov-gold-glow: rgba(196,138,8,0.25);
+  --ov-cyan: #007a90; --ov-cyan-soft: rgba(0,122,144,0.10); --ov-cyan-glow: rgba(0,122,144,0.22);
+  --ov-purple: #7040c0; --ov-purple-soft: rgba(112,64,192,0.10); --ov-purple-glow: rgba(112,64,192,0.22);
+  --ov-pink: #c4305a; --ov-pink-soft: rgba(196,48,90,0.10); --ov-pink-glow: rgba(196,48,90,0.22);
+  --ov-orange: #c06020; --ov-orange-soft: rgba(192,96,32,0.10);
+  --ov-green: #008a4a; --ov-green-soft: rgba(0,138,74,0.10); --ov-green-glow: rgba(0,138,74,0.22);
+  --ov-red: #c42838;
+  --ov-text: #0a0e1a; --ov-text-dim: #3d4a65; --ov-text-muted: #6b7894;
+  --ov-bg-card: rgba(255,255,255,0.55);
+  --ov-bg-card-hi: rgba(255,255,255,0.70);
+  --ov-border: rgba(10,14,30,0.10);
+  --ov-border-br: rgba(196,138,8,0.35);
+  color: var(--ov-text);
+}
+
+/* ─── OVERVIEW: HERO CARD ─── */
+[data-theme="light"] .overview-view .ov-hero {
+  background: linear-gradient(135deg, rgba(196,138,8,0.06) 0%, rgba(255,255,255,0.72) 35%, rgba(240,244,255,0.80) 100%);
+  border-color: rgba(196,138,8,0.22);
+  box-shadow: 0 4px 30px rgba(10,14,30,0.08), 0 0 40px rgba(196,138,8,0.04), inset 0 0 40px rgba(255,255,255,0.3);
+}
+[data-theme="light"] .overview-view .ov-hero-bg-globe { opacity: 0.4; }
+[data-theme="light"] .overview-view .ov-hero-bg-globe::before { border-color: rgba(196,138,8,0.15); }
+[data-theme="light"] .overview-view .ov-hero-bg-globe::after { border-color: rgba(0,122,144,0.12); }
+[data-theme="light"] .overview-view .ov-hero-title { color: #0a0e1a; }
+[data-theme="light"] .overview-view .ov-hero-title span { color: var(--ov-gold); text-shadow: 0 0 16px rgba(196,138,8,0.25); }
+[data-theme="light"] .overview-view .ov-hero-sub { color: #3d4a65; }
+[data-theme="light"] .overview-view .ov-hero-sub strong { color: #0a0e1a; }
+[data-theme="light"] .overview-view .ov-hero-tag {
+  color: #7040c0; background: rgba(112,64,192,0.10);
+  border-color: rgba(112,64,192,0.30); font-weight: 800;
+}
+
+/* ─── OVERVIEW: HERO STAT PILLS ─── */
+[data-theme="light"] .overview-view .ov-pill {
+  background: rgba(255,255,255,0.55);
+  border-color: rgba(10,14,30,0.10);
+  box-shadow: 0 2px 8px rgba(10,14,30,0.05), inset 0 0 12px rgba(255,255,255,0.3);
+}
+[data-theme="light"] .overview-view .ov-pill:hover {
+  border-color: rgba(196,138,8,0.30);
+  box-shadow: 0 4px 16px rgba(196,138,8,0.10);
+}
+[data-theme="light"] .overview-view .ov-pill-icon {
+  background: rgba(10,14,30,0.04);
+  border: 1px solid rgba(10,14,30,0.06);
+}
+[data-theme="light"] .overview-view .ov-pill.purple .ov-pill-icon { background: rgba(112,64,192,0.10); border-color: rgba(112,64,192,0.18); }
+[data-theme="light"] .overview-view .ov-pill.green  .ov-pill-icon { background: rgba(0,138,74,0.10); border-color: rgba(0,138,74,0.18); }
+[data-theme="light"] .overview-view .ov-pill.cyan   .ov-pill-icon { background: rgba(0,122,144,0.10); border-color: rgba(0,122,144,0.18); }
+[data-theme="light"] .overview-view .ov-pill.orange .ov-pill-icon { background: rgba(192,96,32,0.10); border-color: rgba(192,96,32,0.18); }
+[data-theme="light"] .overview-view .ov-pill-label { color: #6b7894; }
+[data-theme="light"] .overview-view .ov-pill.purple .ov-pill-val { color: #7040c0; }
+[data-theme="light"] .overview-view .ov-pill.green  .ov-pill-val { color: #008a4a; }
+[data-theme="light"] .overview-view .ov-pill.cyan   .ov-pill-val { color: #007a90; }
+[data-theme="light"] .overview-view .ov-pill.orange .ov-pill-val { color: #c06020; }
+
+/* ─── OVERVIEW: HERO CTA + SYSTEM RESET ─── */
+[data-theme="light"] .overview-view .ov-hero-cta {
+  background: linear-gradient(135deg, rgba(196,138,8,0.08), rgba(196,138,8,0.03));
+  border-color: rgba(196,138,8,0.30);
+  box-shadow: 0 2px 8px rgba(196,138,8,0.06);
+}
+[data-theme="light"] .overview-view .ov-hero-cta:hover {
+  background: linear-gradient(135deg, rgba(196,138,8,0.15), rgba(196,138,8,0.06));
+  box-shadow: 0 4px 20px rgba(196,138,8,0.15);
+}
+[data-theme="light"] .overview-view .ov-cta-lbl { color: #3d4a65; }
+[data-theme="light"] .overview-view .ov-cta-lbl span { color: #0a0e1a; }
+[data-theme="light"] .overview-view .ov-system-reset {
+  background: rgba(196,40,56,0.06);
+  border-color: rgba(196,40,56,0.22);
+  box-shadow: 0 2px 8px rgba(196,40,56,0.06);
+}
+
+/* ─── OVERVIEW: AI FARMING SCORE ─── */
+[data-theme="light"] .overview-view .ov-ai-score {
+  background: linear-gradient(180deg, rgba(196,138,8,0.06), rgba(112,64,192,0.06));
+  border-color: rgba(196,138,8,0.25);
+  box-shadow: 0 2px 16px rgba(10,14,30,0.06);
+}
+[data-theme="light"] .overview-view .ov-gauge-bg { stroke: rgba(10,14,30,0.08); }
+[data-theme="light"] .overview-view .ov-rank-name { color: #0a0e1a; }
+[data-theme="light"] .overview-view .ov-ai-pct { color: #3d4a65; }
+[data-theme="light"] .overview-view .ov-ai-pct span { color: var(--ov-gold); }
+[data-theme="light"] .overview-view .ov-ai-btn {
+  background: rgba(255,255,255,0.60);
+  border-color: rgba(10,14,30,0.12);
+  color: #3d4a65;
+  box-shadow: 0 1px 6px rgba(10,14,30,0.05);
+}
+[data-theme="light"] .overview-view .ov-ai-btn:hover { border-color: var(--ov-gold); color: var(--ov-gold); background: rgba(196,138,8,0.06); }
+
+/* ─── OVERVIEW: CARDS (ov-card base) ─── */
+[data-theme="light"] .overview-view .ov-card {
+  background: rgba(255,255,255,0.60);
+  border-color: rgba(10,14,30,0.10);
+  box-shadow: 0 2px 12px rgba(10,14,30,0.06), inset 0 0 16px rgba(255,255,255,0.35);
+}
+[data-theme="light"] .overview-view .ov-card:hover {
+  border-color: rgba(196,138,8,0.22);
+  box-shadow: 0 4px 20px rgba(10,14,30,0.08);
+}
+[data-theme="light"] .overview-view .ov-card-title.gold { color: var(--ov-gold); }
+[data-theme="light"] .overview-view .ov-card-title.cyan { color: var(--ov-cyan); }
+[data-theme="light"] .overview-view .ov-card-title.pink { color: var(--ov-pink); }
+[data-theme="light"] .overview-view .ov-card-title.purple { color: var(--ov-purple); }
+[data-theme="light"] .overview-view .ov-card-title.white { color: #0a0e1a; }
+[data-theme="light"] .overview-view .ov-link-btn {
+  border-color: rgba(10,14,30,0.10); color: #3d4a65;
+}
+[data-theme="light"] .overview-view .ov-link-btn:hover {
+  color: var(--ov-cyan); border-color: var(--ov-cyan); background: rgba(0,122,144,0.06);
+}
+
+/* ─── OVERVIEW: OPPORTUNITIES LIST ─── */
+[data-theme="light"] .overview-view .ov-opp-row {
+  background: rgba(255,255,255,0.55);
+  border-color: rgba(10,14,30,0.08);
+  box-shadow: 0 1px 6px rgba(10,14,30,0.04);
+}
+[data-theme="light"] .overview-view .ov-opp-row:hover {
+  border-color: rgba(196,138,8,0.25);
+  background: rgba(255,255,255,0.75);
+  box-shadow: 0 3px 14px rgba(196,138,8,0.08);
+}
+[data-theme="light"] .overview-view .ov-opp-title { color: #0a0e1a; }
+[data-theme="light"] .overview-view .ov-opp-tag.testnet { background: rgba(192,96,32,0.12); color: #c06020; }
+[data-theme="light"] .overview-view .ov-opp-tag.mainnet { background: rgba(0,138,74,0.12); color: #008a4a; }
+[data-theme="light"] .overview-view .ov-opp-tag.mission { background: rgba(0,122,144,0.12); color: #007a90; }
+[data-theme="light"] .overview-view .ov-opp-tag.high { background: rgba(196,138,8,0.12); color: #c48a08; }
+[data-theme="light"] .overview-view .ov-opp-tag.snapshot { background: rgba(196,48,90,0.12); color: #c4305a; }
+[data-theme="light"] .overview-view .ov-opp-rlbl { color: #6b7894; }
+[data-theme="light"] .overview-view .ov-opp-btn {
+  background: rgba(196,138,8,0.08); border-color: rgba(196,138,8,0.30);
+  box-shadow: 0 1px 6px rgba(196,138,8,0.06);
+}
+[data-theme="light"] .overview-view .ov-opp-btn:hover {
+  background: rgba(196,138,8,0.16); box-shadow: 0 3px 14px rgba(196,138,8,0.12);
+}
+
+/* ─── OVERVIEW: ECOSYSTEM HEATMAP ─── */
+[data-theme="light"] .overview-view .ov-hex-shape {
+  background: rgba(255,255,255,0.65);
+  box-shadow: 0 2px 8px rgba(10,14,30,0.06);
+}
+[data-theme="light"] .overview-view .ov-hex::before { background: rgba(10,14,30,0.10); }
+[data-theme="light"] .overview-view .ov-hex.heat-hot::before { background: rgba(196,40,56,0.50); }
+[data-theme="light"] .overview-view .ov-hex.heat-warm::before { background: rgba(192,96,32,0.45); }
+[data-theme="light"] .overview-view .ov-hex.heat-medium::before { background: rgba(196,138,8,0.45); }
+[data-theme="light"] .overview-view .ov-hex.heat-cool::before { background: rgba(0,122,144,0.35); }
+[data-theme="light"] .overview-view .ov-hex.heat-cold::before { background: rgba(112,64,192,0.35); }
+[data-theme="light"] .overview-view .ov-hex-name { color: #0a0e1a; }
+[data-theme="light"] .overview-view .ov-hex.heat-hot .ov-hex-score { color: #c42838; }
+[data-theme="light"] .overview-view .ov-hex.heat-warm .ov-hex-score { color: #c06020; }
+[data-theme="light"] .overview-view .ov-hex.heat-medium .ov-hex-score { color: #c48a08; }
+[data-theme="light"] .overview-view .ov-hex.heat-cool .ov-hex-score { color: #007a90; }
+[data-theme="light"] .overview-view .ov-hex.heat-cold .ov-hex-score { color: #7040c0; }
+
+/* ─── OVERVIEW: URGENT ALERTS ─── */
+[data-theme="light"] .overview-view .ov-alert-item {
+  background: rgba(255,255,255,0.55);
+  border-color: rgba(10,14,30,0.08);
+  box-shadow: 0 1px 6px rgba(10,14,30,0.04);
+}
+[data-theme="light"] .overview-view .ov-alert-item:hover {
+  border-color: rgba(10,14,30,0.15);
+  background: rgba(255,255,255,0.75);
+  box-shadow: 0 3px 12px rgba(10,14,30,0.08);
+}
+[data-theme="light"] .overview-view .ov-alert-item.good { border-left-color: #008a4a; }
+[data-theme="light"] .overview-view .ov-alert-item.warning { border-left-color: #c06020; }
+[data-theme="light"] .overview-view .ov-alert-item.info { border-left-color: #007a90; }
+[data-theme="light"] .overview-view .ov-alert-icon {
+  background: rgba(10,14,30,0.06);
+  border: 1px solid rgba(10,14,30,0.08);
+}
+[data-theme="light"] .overview-view .ov-alert-title { color: #0a0e1a; }
+[data-theme="light"] .overview-view .ov-alert-sub { color: #3d4a65; }
+[data-theme="light"] .overview-view .ov-no-data {
+  background: rgba(10,14,30,0.04);
+  border-color: rgba(10,14,30,0.10);
+  color: #6b7894;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DAILY OPERATIONS — HARDCODED BACKGROUND OVERRIDES
+═══════════════════════════════════════════════════════════ */
+[data-theme="light"] .daily-missions-view .bg-grid { opacity: 0.08; }
+[data-theme="light"] .daily-missions-view .bg-glow-1,
+[data-theme="light"] .daily-missions-view .bg-glow-2 { opacity: 0.3; }
+
+/* Topnav within Daily Ops */
+[data-theme="light"] .daily-missions-view .topnav {
+  background: rgba(215,222,235,0.80);
+  border-color: rgba(10,14,30,0.10);
+  backdrop-filter: blur(12px);
+}
+[data-theme="light"] .daily-missions-view .nav-pill { color: #3d4a65; }
+[data-theme="light"] .daily-missions-view .nav-pill:hover { color: #0a0e1a; background: rgba(255,255,255,0.45); }
+[data-theme="light"] .daily-missions-view .nav-pill.active {
+  color: #0a0e1a; background: rgba(196,138,8,0.12); border-color: rgba(196,138,8,0.40);
+}
+[data-theme="light"] .daily-missions-view .nav-wallet {
+  border-color: rgba(10,14,30,0.12); color: #3d4a65;
+  background: rgba(255,255,255,0.50);
+}
+
+/* Page header */
+[data-theme="light"] .daily-missions-view .page-hero { color: #0a0e1a; }
+[data-theme="light"] .daily-missions-view .page-hero h1 { color: #0a0e1a; }
+[data-theme="light"] .daily-missions-view .page-hero h1 span { color: var(--gold); text-shadow: 0 0 12px rgba(196,138,8,0.2); }
+[data-theme="light"] .daily-missions-view .page-hero p { color: #3d4a65; }
+
+/* Status filter buttons */
+[data-theme="light"] .daily-missions-view .hero-stats {
+  background: rgba(255,255,255,0.50);
+  border-color: rgba(10,14,30,0.08);
+  box-shadow: 0 2px 10px rgba(10,14,30,0.05);
+}
+[data-theme="light"] .daily-missions-view .hero-stat {
+  background: rgba(255,255,255,0.50);
+  border-color: rgba(10,14,30,0.08);
+  box-shadow: 0 1px 6px rgba(10,14,30,0.04);
+}
+[data-theme="light"] .daily-missions-view .hero-stat:hover {
+  border-color: rgba(196,138,8,0.25); background: rgba(255,255,255,0.70);
+}
+[data-theme="light"] .daily-missions-view .hero-stat-val { color: #0a0e1a; }
+[data-theme="light"] .daily-missions-view .hero-stat-label { color: #6b7894; }
+
+/* Mission Pipeline panel */
+[data-theme="light"] .daily-missions-view .pipeline-panel {
+  background: rgba(255,255,255,0.55);
+  border-color: rgba(10,14,30,0.10);
+  box-shadow: 0 2px 14px rgba(10,14,30,0.06);
+}
+[data-theme="light"] .daily-missions-view .pipeline-head { border-color: rgba(10,14,30,0.08); }
+[data-theme="light"] .daily-missions-view .pipeline-head .section-label { color: #3d4a65; }
+[data-theme="light"] .daily-missions-view .section-label { color: #3d4a65; }
+[data-theme="light"] .daily-missions-view .filter-select {
+  background: rgba(255,255,255,0.60); border-color: rgba(10,14,30,0.10); color: #0a0e1a;
+}
+
+/* Mission cards in pipeline */
+[data-theme="light"] .daily-missions-view .mission-card {
+  background: rgba(255,255,255,0.55);
+  border-color: rgba(10,14,30,0.08);
+  box-shadow: 0 1px 6px rgba(10,14,30,0.04);
+}
+[data-theme="light"] .daily-missions-view .mission-card:hover,
+[data-theme="light"] .daily-missions-view .mission-card.active {
+  border-color: rgba(196,138,8,0.30);
+  background: rgba(255,255,255,0.75);
+  box-shadow: 0 3px 16px rgba(196,138,8,0.10);
+}
+[data-theme="light"] .daily-missions-view .mission-card.active { border-left-color: var(--gold); }
+[data-theme="light"] .daily-missions-view .mc-name { color: #0a0e1a; }
+[data-theme="light"] .daily-missions-view .mc-project { color: #3d4a65; }
+[data-theme="light"] .daily-missions-view .mc-xp { color: var(--gold); }
+[data-theme="light"] .daily-missions-view .mc-logo {
+  box-shadow: 0 2px 6px rgba(10,14,30,0.08);
+}
+
+/* Mission Details panel */
+[data-theme="light"] .daily-missions-view .detail-panel {
+  background: rgba(255,255,255,0.55);
+  border-color: rgba(10,14,30,0.10);
+  box-shadow: 0 2px 14px rgba(10,14,30,0.06);
+}
+[data-theme="light"] .daily-missions-view .detail-head { border-color: rgba(10,14,30,0.08); }
+[data-theme="light"] .daily-missions-view .detail-head .section-label { color: var(--gold); }
+[data-theme="light"] .daily-missions-view .detail-title { color: #0a0e1a; }
+[data-theme="light"] .daily-missions-view .detail-project { color: #3d4a65; }
+[data-theme="light"] .daily-missions-view .detail-xp { color: var(--gold); text-shadow: 0 0 8px rgba(196,138,8,0.2); }
+[data-theme="light"] .daily-missions-view .detail-close { color: #6b7894; }
+[data-theme="light"] .daily-missions-view .detail-close:hover { color: #0a0e1a; }
+
+/* Detail description box */
+[data-theme="light"] .daily-missions-view .detail-desc {
+  background: rgba(10,14,30,0.03);
+  border-color: rgba(10,14,30,0.08);
+  color: #3d4a65;
+}
+
+/* Detail meta cards (Difficulty, Network, Time, Reward) */
+[data-theme="light"] .daily-missions-view .detail-meta-card {
+  background: rgba(255,255,255,0.50);
+  border-color: rgba(10,14,30,0.08);
+  box-shadow: 0 1px 6px rgba(10,14,30,0.04);
+}
+[data-theme="light"] .daily-missions-view .meta-label { color: #6b7894; }
+[data-theme="light"] .daily-missions-view .meta-value { color: #0a0e1a; }
+[data-theme="light"] .daily-missions-view .meta-icon {
+  background: rgba(10,14,30,0.04); border-color: rgba(10,14,30,0.06);
+}
+[data-theme="light"] .daily-missions-view .difficulty-badge { font-weight: 800; }
+
+/* Steps section */
+[data-theme="light"] .daily-missions-view .steps-section {
+  background: rgba(255,255,255,0.45);
+  border-color: rgba(10,14,30,0.08);
+  box-shadow: 0 1px 6px rgba(10,14,30,0.04);
+}
+[data-theme="light"] .daily-missions-view .step-item { border-color: rgba(10,14,30,0.06); }
+[data-theme="light"] .daily-missions-view .step-title { color: #0a0e1a; }
+[data-theme="light"] .daily-missions-view .step-desc { color: #3d4a65; }
+[data-theme="light"] .daily-missions-view .step-num {
+  background: rgba(196,138,8,0.10); border-color: rgba(196,138,8,0.25); color: var(--gold);
+}
+
+/* Mission Assistant panel (right) */
+[data-theme="light"] .daily-missions-view .assistant-panel {
+  background: rgba(255,255,255,0.55);
+  border-color: rgba(10,14,30,0.10);
+  box-shadow: 0 2px 14px rgba(10,14,30,0.06);
+}
+[data-theme="light"] .daily-missions-view .assistant-panel .section-label { color: #3d4a65; }
+[data-theme="light"] .daily-missions-view .assistant-tips li { color: #3d4a65; }
+[data-theme="light"] .daily-missions-view .assistant-tips li::before { color: var(--gold); }
+
+/* Timer section */
+[data-theme="light"] .daily-missions-view .timer-display {
+  background: rgba(255,255,255,0.50);
+  border-color: rgba(10,14,30,0.10);
+  box-shadow: 0 2px 10px rgba(10,14,30,0.05);
+  color: #007a90;
+}
+[data-theme="light"] .daily-missions-view .timer-label { color: var(--gold); }
+[data-theme="light"] .daily-missions-view .timer-sub { color: #6b7894; }
+[data-theme="light"] .daily-missions-view .timer-controls button {
+  background: rgba(255,255,255,0.50); border-color: rgba(10,14,30,0.10); color: #3d4a65;
+}
+[data-theme="light"] .daily-missions-view .timer-controls button:hover {
+  border-color: var(--gold); color: var(--gold);
+}
+
+/* Network & Gas section */
+[data-theme="light"] .daily-missions-view .gas-panel {
+  background: rgba(255,255,255,0.50);
+  border-color: rgba(10,14,30,0.10);
+  box-shadow: 0 2px 10px rgba(10,14,30,0.05);
+}
+[data-theme="light"] .daily-missions-view .gas-panel .section-label { color: #3d4a65; }
+[data-theme="light"] .daily-missions-view .gas-stat { color: #0a0e1a; }
+[data-theme="light"] .daily-missions-view .gas-label { color: #6b7894; }
+
+/* Countdown strip in hero */
+[data-theme="light"] .daily-missions-view .countdown-strip {
+  background: rgba(255,255,255,0.50);
+  border-color: rgba(10,14,30,0.08);
+  box-shadow: 0 1px 6px rgba(10,14,30,0.04);
+}
+[data-theme="light"] .daily-missions-view .countdown-label { color: #6b7894; }
+[data-theme="light"] .daily-missions-view .countdown-val { color: var(--gold); }
+
+/* Daily Ops: generic dark surface catches */
+[data-theme="light"] .daily-missions-view [class*="-panel"],
+[data-theme="light"] .daily-missions-view [class*="-card"] {
+  border-color: rgba(10,14,30,0.10);
+}
+
+/* Difficulty badge colors in light mode */
+[data-theme="light"] .daily-missions-view .diff-easy { background: rgba(0,138,74,0.12); color: #008a4a; border-color: rgba(0,138,74,0.25); }
+[data-theme="light"] .daily-missions-view .diff-medium { background: rgba(196,138,8,0.12); color: #c48a08; border-color: rgba(196,138,8,0.25); }
+[data-theme="light"] .daily-missions-view .diff-hard { background: rgba(196,40,56,0.12); color: #c42838; border-color: rgba(196,40,56,0.25); }
+
+/* Priority dot in daily ops */
+[data-theme="light"] .daily-missions-view .priority-dot.normal { background: #008a4a; box-shadow: 0 0 6px rgba(0,138,74,0.4); }
+
 .theme-toggle {
   background: var(--surface);
   border: 1px solid var(--border2);
