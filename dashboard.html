@@ -687,189 +687,245 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
-   DAILY OPERATIONS — HARDCODED BACKGROUND OVERRIDES
+   DAILY OPERATIONS — CORRECT dm-* VARIABLE + ELEMENT OVERRIDES
 ═══════════════════════════════════════════════════════════ */
+
+/* ─── DM: SCOPED dm-* VARIABLE OVERRIDES ─── */
+[data-theme="light"] .daily-missions-view {
+  --dm-gold: #c48a08; --dm-gold-bright: #e0a00a; --dm-gold-dim: #9a6e06;
+  --dm-gold-soft: rgba(196,138,8,0.10); --dm-gold-glow: rgba(196,138,8,0.28);
+  --dm-cyan: #007a90; --dm-cyan-soft: rgba(0,122,144,0.10); --dm-cyan-glow: rgba(0,122,144,0.22);
+  --dm-purple: #7040c0; --dm-purple-soft: rgba(112,64,192,0.10); --dm-purple-glow: rgba(112,64,192,0.22);
+  --dm-pink: #c4305a; --dm-pink-soft: rgba(196,48,90,0.10);
+  --dm-orange: #c06020; --dm-orange-soft: rgba(192,96,32,0.10);
+  --dm-green: #008a4a; --dm-green-soft: rgba(0,138,74,0.10); --dm-green-glow: rgba(0,138,74,0.22);
+  --dm-red: #c42838; --dm-red-soft: rgba(196,40,56,0.10);
+  --dm-text: #0a0e1a; --dm-text-dim: #3d4a65; --dm-text-muted: #6b7894;
+  --dm-bg-card: rgba(255,255,255,0.58);
+  --dm-bg-card-hi: rgba(255,255,255,0.75);
+  --dm-bg-card-dk: rgba(200,210,228,0.50);
+  --dm-border: rgba(10,14,30,0.12);
+  --dm-border-br: rgba(196,138,8,0.35);
+  color: #0a0e1a;
+}
+
+/* ─── DM: BACKGROUND EFFECTS ─── */
 [data-theme="light"] .daily-missions-view .bg-grid { opacity: 0.08; }
 [data-theme="light"] .daily-missions-view .bg-glow-1,
-[data-theme="light"] .daily-missions-view .bg-glow-2 { opacity: 0.3; }
+[data-theme="light"] .daily-missions-view .bg-glow-2 { opacity: 0.25; }
 
-/* Topnav within Daily Ops */
-[data-theme="light"] .daily-missions-view .topnav {
-  background: rgba(215,222,235,0.80);
+/* ─── DM: HEADER ─── */
+[data-theme="light"] .daily-missions-view .dm-title { color: #0a0e1a; }
+[data-theme="light"] .daily-missions-view .dm-title span { color: var(--dm-gold); text-shadow: 0 0 14px rgba(196,138,8,0.25); }
+[data-theme="light"] .daily-missions-view .dm-sub { color: #3d4a65; }
+
+/* ─── DM: TOP STAT COUNTERS ─── */
+[data-theme="light"] .daily-missions-view .dm-ts {
+  background: rgba(255,255,255,0.60);
   border-color: rgba(10,14,30,0.10);
-  backdrop-filter: blur(12px);
+  box-shadow: 0 2px 8px rgba(10,14,30,0.05), inset 0 0 10px rgba(255,255,255,0.3);
 }
-[data-theme="light"] .daily-missions-view .nav-pill { color: #3d4a65; }
-[data-theme="light"] .daily-missions-view .nav-pill:hover { color: #0a0e1a; background: rgba(255,255,255,0.45); }
-[data-theme="light"] .daily-missions-view .nav-pill.active {
-  color: #0a0e1a; background: rgba(196,138,8,0.12); border-color: rgba(196,138,8,0.40);
-}
-[data-theme="light"] .daily-missions-view .nav-wallet {
-  border-color: rgba(10,14,30,0.12); color: #3d4a65;
-  background: rgba(255,255,255,0.50);
-}
+[data-theme="light"] .daily-missions-view .dm-ts:hover { border-color: rgba(196,138,8,0.25); box-shadow: 0 3px 14px rgba(10,14,30,0.08); }
+[data-theme="light"] .daily-missions-view .dm-ts-num { color: #0a0e1a; }
+[data-theme="light"] .daily-missions-view .dm-ts-lbl { color: #6b7894; }
+[data-theme="light"] .daily-missions-view .dm-ts-icon { opacity: 0.8; }
 
-/* Page header */
-[data-theme="light"] .daily-missions-view .page-hero { color: #0a0e1a; }
-[data-theme="light"] .daily-missions-view .page-hero h1 { color: #0a0e1a; }
-[data-theme="light"] .daily-missions-view .page-hero h1 span { color: var(--gold); text-shadow: 0 0 12px rgba(196,138,8,0.2); }
-[data-theme="light"] .daily-missions-view .page-hero p { color: #3d4a65; }
-
-/* Status filter buttons */
-[data-theme="light"] .daily-missions-view .hero-stats {
-  background: rgba(255,255,255,0.50);
-  border-color: rgba(10,14,30,0.08);
-  box-shadow: 0 2px 10px rgba(10,14,30,0.05);
-}
-[data-theme="light"] .daily-missions-view .hero-stat {
-  background: rgba(255,255,255,0.50);
-  border-color: rgba(10,14,30,0.08);
-  box-shadow: 0 1px 6px rgba(10,14,30,0.04);
-}
-[data-theme="light"] .daily-missions-view .hero-stat:hover {
-  border-color: rgba(196,138,8,0.25); background: rgba(255,255,255,0.70);
-}
-[data-theme="light"] .daily-missions-view .hero-stat-val { color: #0a0e1a; }
-[data-theme="light"] .daily-missions-view .hero-stat-label { color: #6b7894; }
-
-/* Mission Pipeline panel */
-[data-theme="light"] .daily-missions-view .pipeline-panel {
+/* ─── DM: PIPELINE (left sidebar) ─── */
+[data-theme="light"] .daily-missions-view .dm-pipeline {
   background: rgba(255,255,255,0.55);
-  border-color: rgba(10,14,30,0.10);
-  box-shadow: 0 2px 14px rgba(10,14,30,0.06);
+  border-color: rgba(10,14,30,0.12);
+  box-shadow: 0 2px 14px rgba(10,14,30,0.06), inset 0 0 16px rgba(255,255,255,0.25);
 }
-[data-theme="light"] .daily-missions-view .pipeline-head { border-color: rgba(10,14,30,0.08); }
-[data-theme="light"] .daily-missions-view .pipeline-head .section-label { color: #3d4a65; }
-[data-theme="light"] .daily-missions-view .section-label { color: #3d4a65; }
-[data-theme="light"] .daily-missions-view .filter-select {
-  background: rgba(255,255,255,0.60); border-color: rgba(10,14,30,0.10); color: #0a0e1a;
-}
+[data-theme="light"] .daily-missions-view .dm-section-title { color: #3d4a65; }
+[data-theme="light"] .daily-missions-view .dm-section-bar { background: var(--dm-gold); }
 
-/* Mission cards in pipeline */
-[data-theme="light"] .daily-missions-view .mission-card {
-  background: rgba(255,255,255,0.55);
-  border-color: rgba(10,14,30,0.08);
-  box-shadow: 0 1px 6px rgba(10,14,30,0.04);
-}
-[data-theme="light"] .daily-missions-view .mission-card:hover,
-[data-theme="light"] .daily-missions-view .mission-card.active {
-  border-color: rgba(196,138,8,0.30);
-  background: rgba(255,255,255,0.75);
-  box-shadow: 0 3px 16px rgba(196,138,8,0.10);
-}
-[data-theme="light"] .daily-missions-view .mission-card.active { border-left-color: var(--gold); }
-[data-theme="light"] .daily-missions-view .mc-name { color: #0a0e1a; }
-[data-theme="light"] .daily-missions-view .mc-project { color: #3d4a65; }
-[data-theme="light"] .daily-missions-view .mc-xp { color: var(--gold); }
-[data-theme="light"] .daily-missions-view .mc-logo {
-  box-shadow: 0 2px 6px rgba(10,14,30,0.08);
-}
-
-/* Mission Details panel */
-[data-theme="light"] .daily-missions-view .detail-panel {
-  background: rgba(255,255,255,0.55);
-  border-color: rgba(10,14,30,0.10);
-  box-shadow: 0 2px 14px rgba(10,14,30,0.06);
-}
-[data-theme="light"] .daily-missions-view .detail-head { border-color: rgba(10,14,30,0.08); }
-[data-theme="light"] .daily-missions-view .detail-head .section-label { color: var(--gold); }
-[data-theme="light"] .daily-missions-view .detail-title { color: #0a0e1a; }
-[data-theme="light"] .daily-missions-view .detail-project { color: #3d4a65; }
-[data-theme="light"] .daily-missions-view .detail-xp { color: var(--gold); text-shadow: 0 0 8px rgba(196,138,8,0.2); }
-[data-theme="light"] .daily-missions-view .detail-close { color: #6b7894; }
-[data-theme="light"] .daily-missions-view .detail-close:hover { color: #0a0e1a; }
-
-/* Detail description box */
-[data-theme="light"] .daily-missions-view .detail-desc {
-  background: rgba(10,14,30,0.03);
-  border-color: rgba(10,14,30,0.08);
+/* Group headers */
+[data-theme="light"] .daily-missions-view .dm-group-head {
   color: #3d4a65;
 }
+[data-theme="light"] .daily-missions-view .dm-group-head:hover { background: rgba(196,138,8,0.06); }
+[data-theme="light"] .daily-missions-view .dm-group-name { color: #3d4a65; }
 
-/* Detail meta cards (Difficulty, Network, Time, Reward) */
-[data-theme="light"] .daily-missions-view .detail-meta-card {
+/* Pipeline mission cards (dm-pmc) */
+[data-theme="light"] .daily-missions-view .dm-pmc {
   background: rgba(255,255,255,0.50);
-  border-color: rgba(10,14,30,0.08);
+  border-color: rgba(10,14,30,0.10);
   box-shadow: 0 1px 6px rgba(10,14,30,0.04);
 }
-[data-theme="light"] .daily-missions-view .meta-label { color: #6b7894; }
-[data-theme="light"] .daily-missions-view .meta-value { color: #0a0e1a; }
-[data-theme="light"] .daily-missions-view .meta-icon {
-  background: rgba(10,14,30,0.04); border-color: rgba(10,14,30,0.06);
+[data-theme="light"] .daily-missions-view .dm-pmc:hover {
+  background: rgba(255,255,255,0.80);
+  border-color: rgba(196,138,8,0.30);
+  box-shadow: 0 3px 14px rgba(196,138,8,0.10);
 }
-[data-theme="light"] .daily-missions-view .difficulty-badge { font-weight: 800; }
+[data-theme="light"] .daily-missions-view .dm-pmc.selected {
+  border-color: var(--dm-gold);
+  background: linear-gradient(135deg, rgba(196,138,8,0.10), rgba(255,255,255,0.70));
+  box-shadow: 0 2px 16px rgba(196,138,8,0.14);
+}
+[data-theme="light"] .daily-missions-view .dm-pmc-title { color: #0a0e1a; }
+[data-theme="light"] .daily-missions-view .dm-pmc-tag { color: #3d4a65; background: rgba(10,14,30,0.06); }
+[data-theme="light"] .daily-missions-view .dm-pmc-xp { color: var(--dm-gold); }
+[data-theme="light"] .daily-missions-view .dm-pmc-diff.diff-easy { background: rgba(0,138,74,0.12); color: #008a4a; }
+[data-theme="light"] .daily-missions-view .dm-pmc-diff.diff-medium { background: rgba(192,96,32,0.12); color: #c06020; }
+[data-theme="light"] .daily-missions-view .dm-pmc-diff.diff-hard { background: rgba(196,40,56,0.12); color: #c42838; }
 
-/* Steps section */
-[data-theme="light"] .daily-missions-view .steps-section {
-  background: rgba(255,255,255,0.45);
-  border-color: rgba(10,14,30,0.08);
-  box-shadow: 0 1px 6px rgba(10,14,30,0.04);
+/* View All Missions button */
+[data-theme="light"] .daily-missions-view .dm-view-all-btn {
+  background: rgba(196,138,8,0.06);
+  border-color: rgba(196,138,8,0.25);
+  color: var(--dm-gold);
 }
-[data-theme="light"] .daily-missions-view .step-item { border-color: rgba(10,14,30,0.06); }
-[data-theme="light"] .daily-missions-view .step-title { color: #0a0e1a; }
-[data-theme="light"] .daily-missions-view .step-desc { color: #3d4a65; }
-[data-theme="light"] .daily-missions-view .step-num {
-  background: rgba(196,138,8,0.10); border-color: rgba(196,138,8,0.25); color: var(--gold);
+[data-theme="light"] .daily-missions-view .dm-view-all-btn:hover {
+  background: rgba(196,138,8,0.14);
+  box-shadow: 0 2px 12px rgba(196,138,8,0.10);
 }
+[data-theme="light"] .daily-missions-view .dm-no-data { color: #6b7894; background: rgba(10,14,30,0.03); }
 
-/* Mission Assistant panel (right) */
-[data-theme="light"] .daily-missions-view .assistant-panel {
+/* ─── DM: CENTER WORKSPACE ─── */
+[data-theme="light"] .daily-missions-view .dm-workspace-center {
   background: rgba(255,255,255,0.55);
-  border-color: rgba(10,14,30,0.10);
-  box-shadow: 0 2px 14px rgba(10,14,30,0.06);
+  border-color: rgba(10,14,30,0.12);
+  box-shadow: 0 2px 16px rgba(10,14,30,0.06), inset 0 0 20px rgba(255,255,255,0.25);
 }
-[data-theme="light"] .daily-missions-view .assistant-panel .section-label { color: #3d4a65; }
-[data-theme="light"] .daily-missions-view .assistant-tips li { color: #3d4a65; }
-[data-theme="light"] .daily-missions-view .assistant-tips li::before { color: var(--gold); }
 
-/* Timer section */
-[data-theme="light"] .daily-missions-view .timer-display {
+/* Empty state */
+[data-theme="light"] .daily-missions-view .dm-empty-icon { opacity: 0.6; }
+[data-theme="light"] .daily-missions-view .dm-empty-title { color: #3d4a65; }
+[data-theme="light"] .daily-missions-view .dm-empty-sub { color: #6b7894; }
+
+/* Detail head */
+[data-theme="light"] .daily-missions-view .dm-detail-tag { color: var(--dm-gold); }
+[data-theme="light"] .daily-missions-view .dm-tag-text { color: var(--dm-gold); }
+[data-theme="light"] .daily-missions-view .dm-detail-close { color: #6b7894; }
+[data-theme="light"] .daily-missions-view .dm-detail-close:hover { color: #0a0e1a; }
+
+/* Detail title row */
+[data-theme="light"] .daily-missions-view .dm-detail-title { color: #0a0e1a; }
+[data-theme="light"] .daily-missions-view .dm-detail-tags span { color: #3d4a65; }
+[data-theme="light"] .daily-missions-view .dm-detail-xp { color: var(--dm-gold); text-shadow: 0 0 10px rgba(196,138,8,0.2); }
+[data-theme="light"] .daily-missions-view .dm-detail-time-label { color: #6b7894; }
+[data-theme="light"] .daily-missions-view .dm-detail-time { color: #3d4a65; }
+[data-theme="light"] .daily-missions-view .dm-detail-priority { color: var(--dm-orange); }
+
+/* Description box */
+[data-theme="light"] .daily-missions-view .dm-detail-desc {
+  background: rgba(200,210,228,0.45);
+  color: #3d4a65;
+  border-left-color: var(--dm-cyan);
+}
+
+/* Mini stat cards */
+[data-theme="light"] .daily-missions-view .dm-mini-stat {
   background: rgba(255,255,255,0.50);
   border-color: rgba(10,14,30,0.10);
-  box-shadow: 0 2px 10px rgba(10,14,30,0.05);
-  color: #007a90;
+  box-shadow: 0 1px 6px rgba(10,14,30,0.04);
 }
-[data-theme="light"] .daily-missions-view .timer-label { color: var(--gold); }
-[data-theme="light"] .daily-missions-view .timer-sub { color: #6b7894; }
-[data-theme="light"] .daily-missions-view .timer-controls button {
+[data-theme="light"] .daily-missions-view .dm-mini-lbl { color: #6b7894; }
+[data-theme="light"] .daily-missions-view .dm-mini-val { color: #0a0e1a; }
+[data-theme="light"] .daily-missions-view .dm-mini-val.green { color: #008a4a; }
+[data-theme="light"] .daily-missions-view .dm-mini-val.orange { color: #c06020; }
+[data-theme="light"] .daily-missions-view .dm-mini-val.pink { color: #c4305a; }
+[data-theme="light"] .daily-missions-view .dm-mini-icon {
+  background: rgba(10,14,30,0.04);
+  border-color: rgba(10,14,30,0.08);
+}
+[data-theme="light"] .daily-missions-view .dm-mini-icon.green { background: rgba(0,138,74,0.10); }
+[data-theme="light"] .daily-missions-view .dm-mini-icon.purple { background: rgba(112,64,192,0.10); }
+[data-theme="light"] .daily-missions-view .dm-mini-icon.orange { background: rgba(192,96,32,0.10); }
+[data-theme="light"] .daily-missions-view .dm-mini-icon.pink { background: rgba(196,48,90,0.10); }
+
+/* Steps block */
+[data-theme="light"] .daily-missions-view .dm-steps-block {
+  background: rgba(200,210,228,0.40);
+  border: 1px solid rgba(10,14,30,0.08);
+  box-shadow: 0 1px 6px rgba(10,14,30,0.03);
+}
+[data-theme="light"] .daily-missions-view .dm-steps-title { color: #3d4a65; }
+[data-theme="light"] .daily-missions-view .dm-steps-count { color: #6b7894; }
+[data-theme="light"] .daily-missions-view .dm-step-num {
+  background: rgba(196,138,8,0.10); border-color: rgba(196,138,8,0.25); color: var(--dm-gold);
+}
+[data-theme="light"] .daily-missions-view .dm-step-title { color: #0a0e1a; }
+[data-theme="light"] .daily-missions-view .dm-step-desc { color: #3d4a65; }
+[data-theme="light"] .daily-missions-view .dm-step { border-color: rgba(10,14,30,0.06); }
+
+/* Requirements & Proof cards */
+[data-theme="light"] .daily-missions-view .dm-req-card {
+  background: rgba(200,210,228,0.45);
+  border-color: rgba(10,14,30,0.10);
+}
+[data-theme="light"] .daily-missions-view .dm-req-lbl { color: #6b7894; }
+[data-theme="light"] .daily-missions-view .dm-req-name { color: #3d4a65; }
+[data-theme="light"] .daily-missions-view .dm-req-check { color: var(--dm-green); }
+
+/* START MISSION button */
+[data-theme="light"] .daily-missions-view .dm-detail-action {
+  background: linear-gradient(135deg, #c48a08, #e0a00a);
+  color: #fff;
+  box-shadow: 0 3px 18px rgba(196,138,8,0.30);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+[data-theme="light"] .daily-missions-view .dm-detail-action:hover {
+  box-shadow: 0 5px 26px rgba(196,138,8,0.45);
+}
+[data-theme="light"] .daily-missions-view .dm-detail-action.done {
+  background: linear-gradient(135deg, #008a4a, #00b060);
+}
+
+/* ─── DM: RIGHT SIDEBAR CARDS ─── */
+[data-theme="light"] .daily-missions-view .dm-rb-card {
+  background: rgba(255,255,255,0.58);
+  border-color: rgba(10,14,30,0.12);
+  box-shadow: 0 2px 12px rgba(10,14,30,0.05), inset 0 0 14px rgba(255,255,255,0.25);
+}
+[data-theme="light"] .daily-missions-view .dm-rb-title { color: var(--dm-gold); }
+[data-theme="light"] .daily-missions-view .dm-rb-badge {
+  color: #6b7894;
+  background: rgba(10,14,30,0.06);
+  border-color: rgba(10,14,30,0.10);
+}
+
+/* Mission Assistant */
+[data-theme="light"] .daily-missions-view .dm-assistant-text { color: #3d4a65; }
+[data-theme="light"] .daily-missions-view .dm-tip { color: #3d4a65; }
+[data-theme="light"] .daily-missions-view .dm-tip::marker { color: var(--dm-gold); }
+
+/* Timer */
+[data-theme="light"] .daily-missions-view .dm-timer-bg { stroke: rgba(10,14,30,0.08); }
+[data-theme="light"] .daily-missions-view .dm-timer-display { color: #007a90; }
+[data-theme="light"] .daily-missions-view .dm-timer-sub { color: #6b7894; }
+[data-theme="light"] .daily-missions-view .dm-tc-btn {
   background: rgba(255,255,255,0.50); border-color: rgba(10,14,30,0.10); color: #3d4a65;
 }
-[data-theme="light"] .daily-missions-view .timer-controls button:hover {
-  border-color: var(--gold); color: var(--gold);
-}
+[data-theme="light"] .daily-missions-view .dm-tc-btn:hover { border-color: var(--dm-gold); color: var(--dm-gold); }
 
-/* Network & Gas section */
-[data-theme="light"] .daily-missions-view .gas-panel {
+/* Network & Gas */
+[data-theme="light"] .daily-missions-view .dm-net-name { color: #0a0e1a; }
+[data-theme="light"] .daily-missions-view .dm-net-gas { color: #3d4a65; }
+[data-theme="light"] .daily-missions-view .dm-net-row { border-color: rgba(10,14,30,0.06); }
+[data-theme="light"] .daily-missions-view .dm-net-note { color: #6b7894; }
+
+/* Wallet Status */
+[data-theme="light"] .daily-missions-view .dm-wallet-name { color: #0a0e1a; }
+[data-theme="light"] .daily-missions-view .dm-wallet-addr { color: #6b7894; }
+
+/* Alerts */
+[data-theme="light"] .daily-missions-view .dm-no-alerts { color: var(--dm-green); }
+
+/* Quick Actions */
+[data-theme="light"] .daily-missions-view .dm-qa-btn {
   background: rgba(255,255,255,0.50);
   border-color: rgba(10,14,30,0.10);
-  box-shadow: 0 2px 10px rgba(10,14,30,0.05);
-}
-[data-theme="light"] .daily-missions-view .gas-panel .section-label { color: #3d4a65; }
-[data-theme="light"] .daily-missions-view .gas-stat { color: #0a0e1a; }
-[data-theme="light"] .daily-missions-view .gas-label { color: #6b7894; }
-
-/* Countdown strip in hero */
-[data-theme="light"] .daily-missions-view .countdown-strip {
-  background: rgba(255,255,255,0.50);
-  border-color: rgba(10,14,30,0.08);
+  color: #3d4a65;
   box-shadow: 0 1px 6px rgba(10,14,30,0.04);
 }
-[data-theme="light"] .daily-missions-view .countdown-label { color: #6b7894; }
-[data-theme="light"] .daily-missions-view .countdown-val { color: var(--gold); }
-
-/* Daily Ops: generic dark surface catches */
-[data-theme="light"] .daily-missions-view [class*="-panel"],
-[data-theme="light"] .daily-missions-view [class*="-card"] {
-  border-color: rgba(10,14,30,0.10);
+[data-theme="light"] .daily-missions-view .dm-qa-btn:hover {
+  border-color: rgba(196,138,8,0.25);
+  background: rgba(255,255,255,0.75);
+  box-shadow: 0 3px 14px rgba(196,138,8,0.08);
+  color: var(--dm-gold);
 }
-
-/* Difficulty badge colors in light mode */
-[data-theme="light"] .daily-missions-view .diff-easy { background: rgba(0,138,74,0.12); color: #008a4a; border-color: rgba(0,138,74,0.25); }
-[data-theme="light"] .daily-missions-view .diff-medium { background: rgba(196,138,8,0.12); color: #c48a08; border-color: rgba(196,138,8,0.25); }
-[data-theme="light"] .daily-missions-view .diff-hard { background: rgba(196,40,56,0.12); color: #c42838; border-color: rgba(196,40,56,0.25); }
-
-/* Priority dot in daily ops */
-[data-theme="light"] .daily-missions-view .priority-dot.normal { background: #008a4a; box-shadow: 0 0 6px rgba(0,138,74,0.4); }
+[data-theme="light"] .daily-missions-view .dm-qa-label { color: #3d4a65; }
 
 .theme-toggle {
   background: var(--surface);
