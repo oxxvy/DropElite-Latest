@@ -1386,196 +1386,107 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   PHASE 1 — PERFECTED: OVERVIEW + DAILY OPERATIONS
+   OVERVIEW v4.0 — LIGHT THEME OVERRIDES
 ═══════════════════════════════════════════════════════════════ */
 
-/* ─── OVERVIEW: SCOPED VARIABLE OVERRIDES ─── */
+/* ─── SCOPED VARIABLE OVERRIDES ─── */
 [data-theme="light"] .overview-view {
   --ov-gold: #c48a08; --ov-gold-bright: #e0a00a; --ov-gold-dim: #9a6e06;
   --ov-gold-soft: rgba(196,138,8,0.10); --ov-gold-glow: rgba(196,138,8,0.25);
-  --ov-cyan: #007a90; --ov-cyan-soft: rgba(0,122,144,0.10); --ov-cyan-glow: rgba(0,122,144,0.22);
-  --ov-purple: #7040c0; --ov-purple-soft: rgba(112,64,192,0.10); --ov-purple-glow: rgba(112,64,192,0.22);
-  --ov-pink: #c4305a; --ov-pink-soft: rgba(196,48,90,0.10); --ov-pink-glow: rgba(196,48,90,0.22);
+  --ov-cyan: #007a90; --ov-cyan-soft: rgba(0,122,144,0.10);
+  --ov-purple: #7040c0; --ov-purple-soft: rgba(112,64,192,0.10);
+  --ov-pink: #c4305a; --ov-pink-soft: rgba(196,48,90,0.10);
   --ov-orange: #c06020; --ov-orange-soft: rgba(192,96,32,0.10);
-  --ov-green: #008a4a; --ov-green-soft: rgba(0,138,74,0.10); --ov-green-glow: rgba(0,138,74,0.22);
+  --ov-green: #008a4a; --ov-green-soft: rgba(0,138,74,0.10);
   --ov-red: #c42838;
   --ov-text: #0a0e1a; --ov-text-dim: #3d4a65; --ov-text-muted: #6b7894;
-  --ov-bg-card: rgba(255,255,255,0.55);
-  --ov-bg-card-hi: rgba(255,255,255,0.70);
+  --ov-bg: rgba(255,255,255,0.55);
+  --ov-bg-hi: rgba(255,255,255,0.70);
   --ov-border: rgba(10,14,30,0.10);
   --ov-border-br: rgba(196,138,8,0.35);
+  --ov-card-bg: rgba(255,255,255,0.60);
+  --ov-card-hover: rgba(255,255,255,0.80);
   color: var(--ov-text);
 }
 
-/* ─── OVERVIEW: HERO CARD ─── */
-[data-theme="light"] .overview-view .ov-hero {
-  background: linear-gradient(135deg, rgba(196,138,8,0.06) 0%, rgba(255,255,255,0.72) 35%, rgba(240,244,255,0.80) 100%);
+/* ─── NBA HERO ─── */
+[data-theme="light"] .overview-view .ov-nba {
+  background: linear-gradient(135deg, rgba(196,138,8,0.05) 0%, rgba(255,255,255,0.80) 40%, rgba(245,248,255,0.90) 100%);
   border-color: rgba(196,138,8,0.22);
-  box-shadow: 0 4px 30px rgba(10,14,30,0.08), 0 0 40px rgba(196,138,8,0.04), inset 0 0 40px rgba(255,255,255,0.3);
+  box-shadow: 0 4px 30px rgba(10,14,30,0.06), inset 0 0 40px rgba(255,255,255,0.4);
 }
-[data-theme="light"] .overview-view .ov-hero-bg-globe { opacity: 0.4; }
-[data-theme="light"] .overview-view .ov-hero-bg-globe::before { border-color: rgba(196,138,8,0.15); }
-[data-theme="light"] .overview-view .ov-hero-bg-globe::after { border-color: rgba(0,122,144,0.12); }
-[data-theme="light"] .overview-view .ov-hero-title { color: #0a0e1a; }
-[data-theme="light"] .overview-view .ov-hero-title span { color: var(--ov-gold); text-shadow: 0 0 16px rgba(196,138,8,0.25); }
-[data-theme="light"] .overview-view .ov-hero-sub { color: #3d4a65; }
-[data-theme="light"] .overview-view .ov-hero-sub strong { color: #0a0e1a; }
-[data-theme="light"] .overview-view .ov-hero-tag {
-  color: #7040c0; background: rgba(112,64,192,0.10);
-  border-color: rgba(112,64,192,0.30); font-weight: 800;
-}
+[data-theme="light"] .overview-view .ov-nba-tag { color: var(--ov-gold); }
+[data-theme="light"] .overview-view .ov-nba-impact { background: rgba(196,48,90,0.10); color: var(--ov-pink); border-color: rgba(196,48,90,0.22); }
+[data-theme="light"] .overview-view .ov-nba-meta { background: rgba(255,255,255,0.65); border-color: rgba(10,14,30,0.08); }
+[data-theme="light"] .overview-view .ov-nba-why { background: rgba(255,255,255,0.65); border-color: rgba(10,14,30,0.08); }
+[data-theme="light"] .overview-view .ov-nba-cta { background: var(--ov-gold); color: #fff; box-shadow: 0 4px 20px rgba(196,138,8,0.25); }
+[data-theme="light"] .overview-view .ov-nba-cta:hover { box-shadow: 0 6px 28px rgba(196,138,8,0.35); }
 
-/* ─── OVERVIEW: HERO STAT PILLS ─── */
-[data-theme="light"] .overview-view .ov-pill {
-  background: rgba(255,255,255,0.55);
-  border-color: rgba(10,14,30,0.10);
-  box-shadow: 0 2px 8px rgba(10,14,30,0.05), inset 0 0 12px rgba(255,255,255,0.3);
-}
-[data-theme="light"] .overview-view .ov-pill:hover {
-  border-color: rgba(196,138,8,0.30);
-  box-shadow: 0 4px 16px rgba(196,138,8,0.10);
-}
-[data-theme="light"] .overview-view .ov-pill-icon {
-  background: rgba(10,14,30,0.04);
-  border: 1px solid rgba(10,14,30,0.06);
-}
-[data-theme="light"] .overview-view .ov-pill.purple .ov-pill-icon { background: rgba(112,64,192,0.10); border-color: rgba(112,64,192,0.18); }
-[data-theme="light"] .overview-view .ov-pill.green  .ov-pill-icon { background: rgba(0,138,74,0.10); border-color: rgba(0,138,74,0.18); }
-[data-theme="light"] .overview-view .ov-pill.cyan   .ov-pill-icon { background: rgba(0,122,144,0.10); border-color: rgba(0,122,144,0.18); }
-[data-theme="light"] .overview-view .ov-pill.orange .ov-pill-icon { background: rgba(192,96,32,0.10); border-color: rgba(192,96,32,0.18); }
-[data-theme="light"] .overview-view .ov-pill-label { color: #6b7894; }
-[data-theme="light"] .overview-view .ov-pill.purple .ov-pill-val { color: #7040c0; }
-[data-theme="light"] .overview-view .ov-pill.green  .ov-pill-val { color: #008a4a; }
-[data-theme="light"] .overview-view .ov-pill.cyan   .ov-pill-val { color: #007a90; }
-[data-theme="light"] .overview-view .ov-pill.orange .ov-pill-val { color: #c06020; }
+/* Robot in light mode */
+[data-theme="light"] .overview-view .ov-robot-head { background: linear-gradient(180deg, #e0e4ee, #c8cdd8); box-shadow: 0 0 16px rgba(196,138,8,0.15); border-color: rgba(10,14,30,0.12); }
+[data-theme="light"] .overview-view .ov-robot-torso { background: linear-gradient(180deg, #c8cdd8, #b0b8c8); border-color: rgba(10,14,30,0.08); }
+[data-theme="light"] .overview-view .ov-robot-arm { background: linear-gradient(180deg, #d5d9e4, #b0b8c8); border-color: rgba(10,14,30,0.06); }
+[data-theme="light"] .overview-view .ov-robot-eye { background: var(--ov-gold); box-shadow: 0 0 10px rgba(196,138,8,0.6), 0 0 20px rgba(196,138,8,0.3); }
 
-/* ─── OVERVIEW: HERO CTA + SYSTEM RESET ─── */
-[data-theme="light"] .overview-view .ov-hero-cta {
-  background: linear-gradient(135deg, rgba(196,138,8,0.08), rgba(196,138,8,0.03));
-  border-color: rgba(196,138,8,0.30);
-  box-shadow: 0 2px 8px rgba(196,138,8,0.06);
-}
-[data-theme="light"] .overview-view .ov-hero-cta:hover {
-  background: linear-gradient(135deg, rgba(196,138,8,0.15), rgba(196,138,8,0.06));
-  box-shadow: 0 4px 20px rgba(196,138,8,0.15);
-}
-[data-theme="light"] .overview-view .ov-cta-lbl { color: #3d4a65; }
-[data-theme="light"] .overview-view .ov-cta-lbl span { color: #0a0e1a; }
-[data-theme="light"] .overview-view .ov-system-reset {
-  background: rgba(196,40,56,0.06);
-  border-color: rgba(196,40,56,0.22);
-  box-shadow: 0 2px 8px rgba(196,40,56,0.06);
-}
-
-/* ─── OVERVIEW: AI FARMING SCORE ─── */
-[data-theme="light"] .overview-view .ov-ai-score {
-  background: linear-gradient(180deg, rgba(196,138,8,0.06), rgba(112,64,192,0.06));
-  border-color: rgba(196,138,8,0.25);
-  box-shadow: 0 2px 16px rgba(10,14,30,0.06);
-}
-[data-theme="light"] .overview-view .ov-gauge-bg { stroke: rgba(10,14,30,0.08); }
-[data-theme="light"] .overview-view .ov-rank-name { color: #0a0e1a; }
-[data-theme="light"] .overview-view .ov-ai-pct { color: #3d4a65; }
-[data-theme="light"] .overview-view .ov-ai-pct span { color: var(--ov-gold); }
-[data-theme="light"] .overview-view .ov-ai-btn {
-  background: rgba(255,255,255,0.60);
-  border-color: rgba(10,14,30,0.12);
-  color: #3d4a65;
-  box-shadow: 0 1px 6px rgba(10,14,30,0.05);
-}
-[data-theme="light"] .overview-view .ov-ai-btn:hover { border-color: var(--ov-gold); color: var(--ov-gold); background: rgba(196,138,8,0.06); }
-
-/* ─── OVERVIEW: CARDS (ov-card base) ─── */
-[data-theme="light"] .overview-view .ov-card {
-  background: rgba(255,255,255,0.60);
-  border-color: rgba(10,14,30,0.10);
-  box-shadow: 0 2px 12px rgba(10,14,30,0.06), inset 0 0 16px rgba(255,255,255,0.35);
-}
-[data-theme="light"] .overview-view .ov-card:hover {
-  border-color: rgba(196,138,8,0.22);
-  box-shadow: 0 4px 20px rgba(10,14,30,0.08);
-}
-[data-theme="light"] .overview-view .ov-card-title.gold { color: var(--ov-gold); }
-[data-theme="light"] .overview-view .ov-card-title.cyan { color: var(--ov-cyan); }
-[data-theme="light"] .overview-view .ov-card-title.pink { color: var(--ov-pink); }
-[data-theme="light"] .overview-view .ov-card-title.purple { color: var(--ov-purple); }
-[data-theme="light"] .overview-view .ov-card-title.white { color: #0a0e1a; }
-[data-theme="light"] .overview-view .ov-link-btn {
-  border-color: rgba(10,14,30,0.10); color: #3d4a65;
-}
-[data-theme="light"] .overview-view .ov-link-btn:hover {
-  color: var(--ov-cyan); border-color: var(--ov-cyan); background: rgba(0,122,144,0.06);
-}
-
-/* ─── OVERVIEW: OPPORTUNITIES LIST ─── */
-[data-theme="light"] .overview-view .ov-opp-row {
-  background: rgba(255,255,255,0.55);
-  border-color: rgba(10,14,30,0.08);
-  box-shadow: 0 1px 6px rgba(10,14,30,0.04);
-}
-[data-theme="light"] .overview-view .ov-opp-row:hover {
-  border-color: rgba(196,138,8,0.25);
-  background: rgba(255,255,255,0.75);
-  box-shadow: 0 3px 14px rgba(196,138,8,0.08);
-}
-[data-theme="light"] .overview-view .ov-opp-title { color: #0a0e1a; }
-[data-theme="light"] .overview-view .ov-opp-tag.testnet { background: rgba(192,96,32,0.12); color: #c06020; }
-[data-theme="light"] .overview-view .ov-opp-tag.mainnet { background: rgba(0,138,74,0.12); color: #008a4a; }
-[data-theme="light"] .overview-view .ov-opp-tag.mission { background: rgba(0,122,144,0.12); color: #007a90; }
-[data-theme="light"] .overview-view .ov-opp-tag.high { background: rgba(196,138,8,0.12); color: #c48a08; }
-[data-theme="light"] .overview-view .ov-opp-tag.snapshot { background: rgba(196,48,90,0.12); color: #c4305a; }
-[data-theme="light"] .overview-view .ov-opp-rlbl { color: #6b7894; }
-[data-theme="light"] .overview-view .ov-opp-btn {
-  background: rgba(196,138,8,0.08); border-color: rgba(196,138,8,0.30);
-  box-shadow: 0 1px 6px rgba(196,138,8,0.06);
-}
-[data-theme="light"] .overview-view .ov-opp-btn:hover {
-  background: rgba(196,138,8,0.16); box-shadow: 0 3px 14px rgba(196,138,8,0.12);
-}
-
-/* ─── OVERVIEW: ECOSYSTEM HEATMAP ─── */
-[data-theme="light"] .overview-view .ov-hex-shape {
+/* ─── STAT CARDS ─── */
+[data-theme="light"] .overview-view .ov-stat-card {
   background: rgba(255,255,255,0.65);
-  box-shadow: 0 2px 8px rgba(10,14,30,0.06);
-}
-[data-theme="light"] .overview-view .ov-hex::before { background: rgba(10,14,30,0.10); }
-[data-theme="light"] .overview-view .ov-hex.heat-hot::before { background: rgba(196,40,56,0.50); }
-[data-theme="light"] .overview-view .ov-hex.heat-warm::before { background: rgba(192,96,32,0.45); }
-[data-theme="light"] .overview-view .ov-hex.heat-medium::before { background: rgba(196,138,8,0.45); }
-[data-theme="light"] .overview-view .ov-hex.heat-cool::before { background: rgba(0,122,144,0.35); }
-[data-theme="light"] .overview-view .ov-hex.heat-cold::before { background: rgba(112,64,192,0.35); }
-[data-theme="light"] .overview-view .ov-hex-name { color: #0a0e1a; }
-[data-theme="light"] .overview-view .ov-hex.heat-hot .ov-hex-score { color: #c42838; }
-[data-theme="light"] .overview-view .ov-hex.heat-warm .ov-hex-score { color: #c06020; }
-[data-theme="light"] .overview-view .ov-hex.heat-medium .ov-hex-score { color: #c48a08; }
-[data-theme="light"] .overview-view .ov-hex.heat-cool .ov-hex-score { color: #007a90; }
-[data-theme="light"] .overview-view .ov-hex.heat-cold .ov-hex-score { color: #7040c0; }
-
-/* ─── OVERVIEW: URGENT ALERTS ─── */
-[data-theme="light"] .overview-view .ov-alert-item {
-  background: rgba(255,255,255,0.55);
   border-color: rgba(10,14,30,0.08);
-  box-shadow: 0 1px 6px rgba(10,14,30,0.04);
+  box-shadow: 0 2px 8px rgba(10,14,30,0.04);
 }
-[data-theme="light"] .overview-view .ov-alert-item:hover {
-  border-color: rgba(10,14,30,0.15);
-  background: rgba(255,255,255,0.75);
-  box-shadow: 0 3px 12px rgba(10,14,30,0.08);
+[data-theme="light"] .overview-view .ov-stat-card:hover { border-color: rgba(196,138,8,0.28); box-shadow: 0 4px 16px rgba(196,138,8,0.08); }
+[data-theme="light"] .overview-view .ov-xp-bar { background: rgba(10,14,30,0.06); }
+[data-theme="light"] .overview-view .ov-streak-week span { background: rgba(255,255,255,0.70); border-color: rgba(10,14,30,0.08); color: var(--ov-text-muted); }
+[data-theme="light"] .overview-view .ov-streak-week span.done { background: rgba(0,138,74,0.10); border-color: var(--ov-green); color: var(--ov-green); }
+[data-theme="light"] .overview-view .ov-streak-week span.today { background: rgba(192,96,32,0.10); border-color: var(--ov-orange); color: var(--ov-orange); }
+
+/* ─── MOVE CARDS ─── */
+[data-theme="light"] .overview-view .ov-move-card {
+  background: rgba(255,255,255,0.70);
+  border-color: rgba(10,14,30,0.08);
+  box-shadow: 0 2px 10px rgba(10,14,30,0.04);
 }
-[data-theme="light"] .overview-view .ov-alert-item.good { border-left-color: #008a4a; }
-[data-theme="light"] .overview-view .ov-alert-item.warning { border-left-color: #c06020; }
-[data-theme="light"] .overview-view .ov-alert-item.info { border-left-color: #007a90; }
-[data-theme="light"] .overview-view .ov-alert-icon {
-  background: rgba(10,14,30,0.06);
-  border: 1px solid rgba(10,14,30,0.08);
+[data-theme="light"] .overview-view .ov-move-card:hover { border-color: rgba(196,138,8,0.25); box-shadow: 0 6px 24px rgba(10,14,30,0.08); }
+[data-theme="light"] .overview-view .ov-move-cta { background: var(--ov-gold); color: #fff; }
+[data-theme="light"] .overview-view .ov-move-cta:hover { box-shadow: 0 4px 16px rgba(196,138,8,0.3); }
+
+/* ─── BOTTOM CARDS ─── */
+[data-theme="light"] .overview-view .ov-card {
+  background: rgba(255,255,255,0.65);
+  border-color: rgba(10,14,30,0.08);
+  box-shadow: 0 2px 12px rgba(10,14,30,0.04);
 }
-[data-theme="light"] .overview-view .ov-alert-title { color: #0a0e1a; }
-[data-theme="light"] .overview-view .ov-alert-sub { color: #3d4a65; }
-[data-theme="light"] .overview-view .ov-no-data {
-  background: rgba(10,14,30,0.04);
-  border-color: rgba(10,14,30,0.10);
-  color: #6b7894;
+[data-theme="light"] .overview-view .ov-card:hover { border-color: rgba(196,138,8,0.22); box-shadow: 0 4px 20px rgba(10,14,30,0.07); }
+[data-theme="light"] .overview-view .ov-link-btn { border-color: rgba(10,14,30,0.10); color: var(--ov-text-dim); }
+[data-theme="light"] .overview-view .ov-link-btn:hover { color: var(--ov-gold); border-color: var(--ov-gold); background: rgba(196,138,8,0.06); }
+[data-theme="light"] .overview-view .ov-ph-bg { stroke: rgba(10,14,30,0.08); }
+[data-theme="light"] .overview-view .ov-ph-fill { stroke: var(--ov-green); }
+[data-theme="light"] .overview-view .ov-no-data { background: rgba(10,14,30,0.03); border-color: rgba(10,14,30,0.08); }
+
+/* ─── ALPHA FEED ─── */
+[data-theme="light"] .overview-view .ov-alpha-bar {
+  background: rgba(255,255,255,0.65);
+  border-color: rgba(10,14,30,0.08);
 }
+
+/* ─── RIGHT SIDEBAR ─── */
+[data-theme="light"] .overview-view .ov-rsb-card {
+  background: rgba(255,255,255,0.65);
+  border-color: rgba(10,14,30,0.08);
+  box-shadow: 0 2px 10px rgba(10,14,30,0.04);
+}
+[data-theme="light"] .overview-view .ov-rsb-card:hover { border-color: rgba(196,138,8,0.22); }
+[data-theme="light"] .overview-view .ov-copilot-msg { background: rgba(255,255,255,0.70); }
+[data-theme="light"] .overview-view .ov-tt-cta { background: var(--ov-gold); color: #fff; }
+[data-theme="light"] .overview-view .ov-tt-cta:hover { box-shadow: 0 4px 16px rgba(196,138,8,0.3); }
+[data-theme="light"] .overview-view .ov-season-cta { border-color: var(--ov-pink); color: var(--ov-pink); }
+[data-theme="light"] .overview-view .ov-season-cta:hover { background: rgba(196,48,90,0.06); }
+
+/* ─── ACHIEVEMENT ICONS ─── */
+[data-theme="light"] .overview-view .ov-achv-icon.gold { background: rgba(196,138,8,0.10); }
+[data-theme="light"] .overview-view .ov-achv-icon.orange { background: rgba(192,96,32,0.10); }
+[data-theme="light"] .overview-view .ov-achv-icon.purple { background: rgba(112,64,192,0.10); }
+
 
 /* ═══════════════════════════════════════════════════════════
    DAILY OPERATIONS — CORRECT dm-* VARIABLE + ELEMENT OVERRIDES
@@ -3514,1094 +3425,382 @@ canvas.mini-chart { width: 100% !important; }
 @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   v3.0 — OVERVIEW TAB REDESIGN (Chunk 5)
+   v4.0 — OVERVIEW TAB REDESIGN
    All styles scoped to .overview-view to prevent leakage into other tabs.
    ─────────────────────────────────────────────────────────────────────────── */
 
 .overview-view {
-  --ov-gold:        #f5c842;
-  --ov-gold-bright: #ffe066;
-  --ov-gold-dim:    #a8862a;
-  --ov-gold-soft:   rgba(245,200,66,0.08);
-  --ov-gold-glow:   rgba(245,200,66,0.25);
-  --ov-cyan:        #4af0ff;
-  --ov-cyan-soft:   rgba(74,240,255,0.08);
-  --ov-cyan-glow:   rgba(74,240,255,0.25);
-  --ov-purple:      #b070ff;
-  --ov-purple-soft: rgba(176,112,255,0.08);
-  --ov-purple-glow: rgba(176,112,255,0.25);
-  --ov-pink:        #ff5e8a;
-  --ov-pink-soft:   rgba(255,94,138,0.08);
-  --ov-pink-glow:   rgba(255,94,138,0.25);
-  --ov-orange:      #ff9046;
-  --ov-orange-soft: rgba(255,144,70,0.08);
-  --ov-green:       #00e87a;
-  --ov-green-soft:  rgba(0,232,122,0.08);
-  --ov-green-glow:  rgba(0,232,122,0.25);
-  --ov-red:         #ff4757;
-  --ov-text:        #e8eaf0;
-  --ov-text-dim:    #7a849a;
-  --ov-text-muted:  #4d556b;
-  --ov-bg-card:     rgba(255,255,255,0.025);
-  --ov-bg-card-hi:  rgba(255,255,255,0.04);
-  --ov-border:      rgba(255,255,255,0.06);
-  --ov-border-br:   rgba(245,200,66,0.25);
-
+  --ov-gold: #f5c842; --ov-gold-bright: #ffe066; --ov-gold-dim: #a8862a;
+  --ov-gold-soft: rgba(245,200,66,0.08); --ov-gold-glow: rgba(245,200,66,0.25);
+  --ov-cyan: #4af0ff; --ov-cyan-soft: rgba(74,240,255,0.08);
+  --ov-purple: #b070ff; --ov-purple-soft: rgba(176,112,255,0.08);
+  --ov-pink: #ff5e8a; --ov-pink-soft: rgba(255,94,138,0.08);
+  --ov-orange: #ff9046; --ov-orange-soft: rgba(255,144,70,0.08);
+  --ov-green: #00e87a; --ov-green-soft: rgba(0,232,122,0.08);
+  --ov-red: #ff4757;
+  --ov-text: #e8eaf0; --ov-text-dim: #7a849a; --ov-text-muted: #4d556b;
+  --ov-bg: rgba(255,255,255,0.025);
+  --ov-bg-hi: rgba(255,255,255,0.04);
+  --ov-border: rgba(255,255,255,0.06);
+  --ov-border-br: rgba(245,200,66,0.25);
+  --ov-card-bg: rgba(255,255,255,0.03);
+  --ov-card-hover: rgba(255,255,255,0.05);
   font-family: 'Rajdhani', sans-serif;
   color: var(--ov-text);
   padding: 4px;
 }
-
-.overview-view.tab-panel.active {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
+.overview-view.tab-panel.active { display: block; }
 .overview-view * { box-sizing: border-box; }
 
-/* ═══ Reusable card primitive ═══ */
-.overview-view .ov-card {
-  background: var(--ov-bg-card);
-  border: 1px solid var(--ov-border);
-  border-radius: 12px;
-  padding: 18px 20px;
-  position: relative;
-  overflow: hidden;
-  backdrop-filter: blur(8px);
-}
-.overview-view .ov-card-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
-}
-.overview-view .ov-card-title {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 2.5px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.overview-view .ov-card-title.gold   { color: var(--ov-gold); }
-.overview-view .ov-card-title.cyan   { color: var(--ov-cyan); }
-.overview-view .ov-card-title.pink   { color: var(--ov-pink); }
-.overview-view .ov-card-title.purple { color: var(--ov-purple); }
-.overview-view .ov-card-title.white  { color: var(--ov-text); }
-
-.overview-view .ov-link-btn {
-  background: transparent;
-  border: 1px solid var(--ov-border);
-  color: var(--ov-text-dim);
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  padding: 5px 11px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.overview-view .ov-link-btn:hover {
-  color: var(--ov-cyan);
-  border-color: var(--ov-cyan);
-  background: var(--ov-cyan-soft);
-}
-
-.overview-view .ov-no-data {
-  padding: 18px;
-  text-align: center;
-  font-size: 12px;
-  color: var(--ov-text-dim);
-  font-style: italic;
-  background: rgba(0,0,0,0.18);
-  border: 1px dashed var(--ov-border);
-  border-radius: 8px;
-}
-
-/* ═══ ROW 1 — Hero + AI Score ═══ */
-.overview-view .ov-row-1 {
+/* ═══ LAYOUT: Main + Right Sidebar ═══ */
+.overview-view .ov-layout {
   display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 18px;
+  grid-template-columns: 1fr 300px;
+  gap: 20px;
+  align-items: start;
 }
+.overview-view .ov-main { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
 
-/* HERO CARD */
-.overview-view .ov-hero {
-  position: relative;
-  background: linear-gradient(135deg, rgba(15,20,35,0.6), rgba(30,20,50,0.4));
+/* ═══ SHARED: Card base ═══ */
+.overview-view .ov-card {
+  background: var(--ov-card-bg);
   border: 1px solid var(--ov-border);
-  border-radius: 12px;
-  padding: 28px 32px;
-  overflow: hidden;
-  min-height: 280px;
+  border-radius: 14px;
+  padding: 18px 20px;
+  transition: border-color .2s, box-shadow .2s;
 }
-.overview-view .ov-hero-bg-globe {
-  position: absolute;
-  right: -40px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 360px;
-  height: 360px;
-  background: radial-gradient(circle at 50% 50%, var(--ov-gold-glow) 0%, transparent 35%, transparent 100%);
-  opacity: 0.6;
+.overview-view .ov-card:hover { border-color: var(--ov-border-br); box-shadow: 0 4px 20px rgba(245,200,66,0.06); }
+.overview-view .ov-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.overview-view .ov-card-title { font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; }
+.overview-view .ov-card-title.gold { color: var(--ov-gold); }
+.overview-view .ov-card-title.purple { color: var(--ov-purple); }
+.overview-view .ov-card-title.green { color: var(--ov-green); }
+.overview-view .ov-card-title.pink { color: var(--ov-pink); }
+.overview-view .ov-link-btn {
+  background: none; border: 1px solid var(--ov-border); border-radius: 8px;
+  color: var(--ov-text-dim); font: 600 12px 'Rajdhani', sans-serif;
+  padding: 4px 12px; cursor: pointer; transition: all .2s;
+}
+.overview-view .ov-link-btn:hover { color: var(--ov-gold); border-color: var(--ov-gold); background: var(--ov-gold-soft); }
+.overview-view .ov-link-btn.sm { font-size: 11px; padding: 2px 8px; }
+.overview-view .ov-link-btn.full { width: 100%; margin-top: 12px; text-align: center; }
+.overview-view .ov-section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.overview-view .ov-section-head h3 { font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1px; color: var(--ov-text); }
+.overview-view .ov-no-data { text-align: center; color: var(--ov-text-muted); padding: 20px; font-size: 13px; border: 1px dashed var(--ov-border); border-radius: 10px; }
+
+/* ═══ 1. NEXT BEST ACTION HERO ═══ */
+.overview-view .ov-nba {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  gap: 0 20px;
+  background: linear-gradient(135deg, rgba(245,200,66,0.04) 0%, var(--ov-card-bg) 60%);
+  border: 1px solid var(--ov-border-br);
+  border-radius: 16px;
+  padding: 28px 30px;
+  position: relative;
+  overflow: hidden;
+}
+.overview-view .ov-nba::before {
+  content: ''; position: absolute; top: -60%; right: -20%; width: 50%; height: 200%;
+  background: radial-gradient(circle, rgba(245,200,66,0.04) 0%, transparent 70%);
   pointer-events: none;
 }
-.overview-view .ov-hero-bg-globe::before,
-.overview-view .ov-hero-bg-globe::after {
-  content: '';
-  position: absolute;
-  inset: 25%;
-  border: 1px solid rgba(245,200,66,0.2);
-  border-radius: 50%;
+.overview-view .ov-nba-left { grid-row: 1; grid-column: 1; position: relative; z-index: 1; }
+.overview-view .ov-nba-art { grid-row: 1/3; grid-column: 2; display: flex; align-items: center; justify-content: center; min-width: 180px; }
+.overview-view .ov-nba-why { grid-row: 2; grid-column: 1; margin-top: 8px; padding: 12px 16px; background: var(--ov-bg-hi); border-radius: 10px; border: 1px solid var(--ov-border); }
+.overview-view .ov-nba-why strong { font-size: 13px; color: var(--ov-text-dim); display: block; margin-bottom: 4px; }
+.overview-view .ov-nba-why p { font-size: 13px; color: var(--ov-text-dim); margin: 0; line-height: 1.4; }
+.overview-view .ov-nba-top { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.overview-view .ov-nba-tag {
+  font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700;
+  color: var(--ov-gold); letter-spacing: 1px;
 }
-.overview-view .ov-hero-bg-globe::after {
-  inset: 38%;
-  border-color: rgba(74,240,255,0.15);
-  animation: ovRotateGlobe 22s linear infinite;
+.overview-view .ov-nba-impact {
+  font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 6px;
+  background: rgba(255,94,138,0.12); color: var(--ov-pink); border: 1px solid rgba(255,94,138,0.25);
 }
-@keyframes ovRotateGlobe {
-  from { transform: rotate(0deg) scale(1); }
-  to   { transform: rotate(360deg) scale(1.05); }
+.overview-view .ov-nba-title { font-family: 'Rajdhani', sans-serif; font-size: 30px; font-weight: 800; color: var(--ov-text); margin: 0 0 6px; line-height: 1.15; }
+.overview-view .ov-nba-desc { font-size: 15px; color: var(--ov-text-dim); margin: 0 0 16px; }
+.overview-view .ov-nba-meta { display: flex; gap: 20px; margin-bottom: 18px; padding: 10px 14px; background: var(--ov-bg-hi); border-radius: 10px; border: 1px solid var(--ov-border); }
+.overview-view .ov-nba-mi { display: flex; flex-direction: column; gap: 2px; }
+.overview-view .ov-nba-ml { font-size: 11px; color: var(--ov-text-muted); font-weight: 600; }
+.overview-view .ov-nba-mv { font-size: 14px; font-weight: 700; color: var(--ov-text); }
+.overview-view .ov-nba-mv.gold { color: var(--ov-gold); }
+.overview-view .ov-nba-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--ov-gold); color: #0a0e1a; border: none; border-radius: 10px;
+  padding: 12px 32px; font: 700 16px 'Rajdhani', sans-serif; cursor: pointer;
+  transition: all .2s; box-shadow: 0 4px 20px rgba(245,200,66,0.3);
 }
-.overview-view .ov-hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 720px;
-}
-.overview-view .ov-hero-tag {
-  display: inline-block;
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 10px;
-  color: var(--ov-purple);
-  background: var(--ov-purple-soft);
-  border: 1px solid rgba(176,112,255,0.3);
-  padding: 4px 10px;
-  border-radius: 16px;
-  letter-spacing: 2px;
-  font-weight: 700;
-  margin-bottom: 12px;
-}
-.overview-view .ov-hero-title {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 32px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  line-height: 1.1;
-  margin: 0 0 6px 0;
-  color: var(--ov-text);
-}
-.overview-view .ov-hero-title span {
-  color: var(--ov-gold);
-  text-shadow: 0 0 20px var(--ov-gold-glow);
-}
-.overview-view .ov-hero-sub {
-  font-size: 14px;
-  color: var(--ov-text-dim);
-  margin: 0 0 18px 0;
-  letter-spacing: 0.3px;
-}
-.overview-view .ov-hero-sub strong { color: var(--ov-text); font-weight: 700; }
+.overview-view .ov-nba-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(245,200,66,0.4); }
 
-/* 4 stat pills */
-.overview-view .ov-hero-pills {
+/* Robot mascot */
+.overview-view .ov-robot { width: 150px; height: 170px; position: relative; }
+.overview-view .ov-robot-body { position: relative; width: 100%; height: 100%; }
+.overview-view .ov-robot-head {
+  width: 80px; height: 60px; background: linear-gradient(180deg, #3a3f52, #2a2e3e);
+  border-radius: 20px 20px 16px 16px; margin: 0 auto; position: relative;
+  box-shadow: 0 0 20px rgba(245,200,66,0.2), inset 0 -4px 8px rgba(0,0,0,0.3);
+  border: 2px solid rgba(255,255,255,0.08);
+}
+.overview-view .ov-robot-head.sm { width: 60px; height: 45px; border-radius: 16px 16px 12px 12px; }
+.overview-view .ov-robot-eye {
+  width: 16px; height: 16px; background: var(--ov-gold);
+  border-radius: 50%; position: absolute; top: 20px;
+  box-shadow: 0 0 12px var(--ov-gold), 0 0 24px rgba(245,200,66,0.4);
+  animation: ovEyePulse 3s ease-in-out infinite;
+}
+.overview-view .ov-robot-eye.left { left: 18px; }
+.overview-view .ov-robot-eye.right { right: 18px; }
+.overview-view .ov-robot-head.sm .ov-robot-eye { width: 12px; height: 12px; top: 15px; }
+.overview-view .ov-robot-head.sm .ov-robot-eye.left { left: 12px; }
+.overview-view .ov-robot-head.sm .ov-robot-eye.right { right: 12px; }
+.overview-view .ov-robot-torso {
+  width: 90px; height: 70px; background: linear-gradient(180deg, #2a2e3e, #1e2230);
+  border-radius: 12px 12px 20px 20px; margin: 4px auto 0;
+  box-shadow: inset 0 4px 8px rgba(0,0,0,0.2);
+  border: 2px solid rgba(255,255,255,0.05);
+}
+.overview-view .ov-robot-arm {
+  width: 20px; height: 50px; background: linear-gradient(180deg, #3a3f52, #2a2e3e);
+  border-radius: 10px; position: absolute; top: 68px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.overview-view .ov-robot-arm.left { left: 10px; transform: rotate(12deg); }
+.overview-view .ov-robot-arm.right { right: 10px; transform: rotate(-12deg); }
+@keyframes ovEyePulse { 0%,100%{box-shadow:0 0 12px var(--ov-gold),0 0 24px rgba(245,200,66,0.4)} 50%{box-shadow:0 0 18px var(--ov-gold),0 0 36px rgba(245,200,66,0.6)} }
+
+/* ═══ 2. STATS ROW ═══ */
+.overview-view .ov-stats-row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin-bottom: 16px;
-  max-width: 620px;
-}
-.overview-view .ov-pill {
-  background: rgba(0,0,0,0.35);
-  border: 1px solid var(--ov-border);
-  border-radius: 10px;
-  padding: 10px 12px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: all 0.2s;
-}
-.overview-view .ov-pill:hover { transform: translateY(-2px); border-color: var(--ov-border-br); }
-.overview-view .ov-pill-icon {
-  width: 32px; height: 32px;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.05);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px;
-  flex-shrink: 0;
-}
-.overview-view .ov-pill.purple .ov-pill-icon { background: var(--ov-purple-soft); }
-.overview-view .ov-pill.green  .ov-pill-icon { background: var(--ov-green-soft); }
-.overview-view .ov-pill.cyan   .ov-pill-icon { background: var(--ov-cyan-soft); }
-.overview-view .ov-pill.orange .ov-pill-icon { background: var(--ov-orange-soft); }
-.overview-view .ov-pill-body { min-width: 0; }
-.overview-view .ov-pill-label {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 9px;
-  color: var(--ov-text-dim);
-  letter-spacing: 1.3px;
-  margin-bottom: 2px;
-}
-.overview-view .ov-pill-val {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-.overview-view .ov-pill.purple .ov-pill-val { color: var(--ov-purple); }
-.overview-view .ov-pill.green  .ov-pill-val { color: var(--ov-green); }
-.overview-view .ov-pill.cyan   .ov-pill-val { color: var(--ov-cyan); }
-.overview-view .ov-pill.orange .ov-pill-val { color: var(--ov-orange); }
-
-/* Hero CTA + system reset */
-.overview-view .ov-hero-cta-row {
-  display: flex;
+  grid-template-columns: repeat(6, 1fr);
   gap: 12px;
-  align-items: stretch;
-  flex-wrap: wrap;
 }
-.overview-view .ov-hero-cta {
-  flex: 1;
-  min-width: 280px;
-  background: linear-gradient(135deg, var(--ov-gold-soft), rgba(245,200,66,0.03));
-  border: 1px solid rgba(245,200,66,0.3);
-  border-radius: 10px;
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  transition: all 0.25s;
-  color: inherit;
-  font-family: inherit;
-}
-.overview-view .ov-hero-cta:hover {
-  background: linear-gradient(135deg, rgba(245,200,66,0.15), rgba(245,200,66,0.05));
-  box-shadow: 0 0 18px var(--ov-gold-glow);
-  transform: translateY(-1px);
-}
-.overview-view .ov-cta-num {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--ov-gold);
-  letter-spacing: 0.5px;
-}
-.overview-view .ov-cta-lbl {
-  font-size: 12px;
-  color: var(--ov-text-dim);
-  margin-top: 2px;
-}
-.overview-view .ov-cta-lbl span { color: var(--ov-text); font-weight: 700; }
-.overview-view .ov-cta-arrow {
-  font-size: 28px;
-  color: var(--ov-gold);
-  font-weight: 300;
-  margin-left: 12px;
-}
-
-/* System reset countdown */
-.overview-view .ov-system-reset {
-  background: rgba(0,0,0,0.35);
-  border: 1px solid rgba(255,71,87,0.2);
-  border-radius: 10px;
-  padding: 10px 16px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-width: 130px;
-}
-.overview-view .ov-sr-label {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 9px;
-  color: var(--ov-red);
-  letter-spacing: 1.5px;
-  margin-bottom: 4px;
-  font-weight: 700;
-}
-.overview-view .ov-sr-time {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--ov-red);
-  letter-spacing: 1.5px;
-  text-shadow: 0 0 10px rgba(255,71,87,0.4);
-  font-variant-numeric: tabular-nums;
-}
-
-/* ═══ AI FARMING SCORE ═══ */
-.overview-view .ov-ai-score {
-  background: linear-gradient(180deg, rgba(245,200,66,0.04), rgba(176,112,255,0.04));
-  border: 1px solid rgba(245,200,66,0.25);
-  border-radius: 12px;
-  padding: 20px 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.overview-view .ov-ai-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-.overview-view .ov-ai-title {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 10px;
-  color: var(--ov-gold);
-  letter-spacing: 2px;
-  font-weight: 700;
-}
-.overview-view .ov-ai-badge {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 8px;
-  background: var(--ov-purple-soft);
-  color: var(--ov-purple);
-  border: 1px solid rgba(176,112,255,0.4);
-  padding: 1px 6px;
-  border-radius: 4px;
-  letter-spacing: 1px;
-  font-weight: 700;
-}
-
-.overview-view .ov-gauge-wrap {
-  position: relative;
-  width: 160px;
-  height: 160px;
-  margin-bottom: 14px;
-}
-.overview-view .ov-gauge-svg {
-  width: 100%; height: 100%;
-  transform: rotate(-90deg);
-}
-.overview-view .ov-gauge-bg {
-  fill: none;
-  stroke: rgba(255,255,255,0.06);
-  stroke-width: 8;
-}
-.overview-view .ov-gauge-fill {
-  fill: none;
-  stroke: var(--ov-gold);
-  stroke-width: 8;
-  stroke-linecap: round;
-  stroke-dasharray: 326.7;       /* 2 * PI * 52 ≈ 326.7 */
-  stroke-dashoffset: 326.7;
-  filter: drop-shadow(0 0 6px var(--ov-gold-glow));
-  transition: stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1);
-}
-.overview-view .ov-gauge-center {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.overview-view .ov-gauge-val {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 38px;
-  font-weight: 800;
-  color: var(--ov-text);
-  letter-spacing: 0.5px;
-  line-height: 1;
-}
-.overview-view .ov-gauge-tier {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 11px;
-  color: var(--ov-gold);
-  letter-spacing: 2.5px;
-  margin-top: 4px;
-  font-weight: 700;
-}
-
-.overview-view .ov-ai-sub {
-  font-size: 12px;
-  color: var(--ov-text-dim);
-  margin-bottom: 14px;
-  line-height: 1.4;
-}
-.overview-view .ov-ai-sub strong { color: var(--ov-cyan); }
-
-.overview-view .ov-ai-analysis-btn {
-  width: 100%;
-  background: rgba(0,0,0,0.4);
+.overview-view .ov-stat-card {
+  background: var(--ov-card-bg);
   border: 1px solid var(--ov-border);
-  color: var(--ov-text);
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 1.5px;
-  padding: 9px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.overview-view .ov-ai-analysis-btn:hover {
-  border-color: var(--ov-gold);
-  color: var(--ov-gold);
-  background: var(--ov-gold-soft);
-}
-
-/* ═══ ROW 2 — Opportunities + Heatmap + Alerts ═══ */
-.overview-view .ov-row-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 320px;
-  gap: 18px;
-}
-
-/* Opportunities */
-.overview-view .ov-opps-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.overview-view .ov-opp-row {
-  display: grid;
-  grid-template-columns: 36px 1fr auto auto;
-  gap: 12px;
-  align-items: center;
-  background: rgba(0,0,0,0.22);
-  border: 1px solid rgba(255,255,255,0.04);
-  border-radius: 8px;
-  padding: 10px 12px;
-  transition: all 0.2s;
-  cursor: pointer;
-}
-.overview-view .ov-opp-row:hover {
-  border-color: var(--ov-border-br);
-  transform: translateX(2px);
-}
-.overview-view .ov-opp-logo {
-  width: 36px; height: 36px;
-  border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 12px;
-  font-weight: 800;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-.overview-view .ov-opp-logo img {
-  width: 100%; height: 100%; object-fit: cover;
-}
-.overview-view .ov-opp-body { min-width: 0; }
-.overview-view .ov-opp-title {
-  font-size: 13.5px;
-  font-weight: 700;
-  color: var(--ov-text);
-  margin-bottom: 2px;
-  letter-spacing: 0.2px;
-}
-.overview-view .ov-opp-meta {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-.overview-view .ov-opp-tag {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 9px;
-  padding: 2px 6px;
-  border-radius: 4px;
-  letter-spacing: 1px;
-  font-weight: 700;
-}
-.overview-view .ov-opp-tag.testnet { background: rgba(255,144,70,0.10); color: var(--ov-orange); }
-.overview-view .ov-opp-tag.mainnet { background: rgba(0,232,122,0.10);  color: var(--ov-green); }
-.overview-view .ov-opp-tag.mission { background: rgba(74,240,255,0.10); color: var(--ov-cyan); }
-.overview-view .ov-opp-tag.high    { background: var(--ov-gold-soft); color: var(--ov-gold); }
-.overview-view .ov-opp-tag.med     { background: rgba(255,144,70,0.10); color: var(--ov-orange); }
-.overview-view .ov-opp-tag.snapshot{ background: rgba(255,94,138,0.10); color: var(--ov-pink); }
-.overview-view .ov-opp-reward {
-  text-align: right;
-  font-family: 'Orbitron', sans-serif;
-}
-.overview-view .ov-opp-rlbl {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 8.5px;
-  color: var(--ov-text-dim);
-  letter-spacing: 1px;
-  margin-bottom: 2px;
-}
-.overview-view .ov-opp-rval {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--ov-green);
-}
-.overview-view .ov-opp-btn {
-  background: var(--ov-gold-soft);
-  border: 1px solid var(--ov-gold);
-  color: var(--ov-gold);
-  font-family: 'Orbitron', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  padding: 7px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.overview-view .ov-opp-btn:hover {
-  background: rgba(245,200,66,0.18);
-  box-shadow: 0 0 10px var(--ov-gold-glow);
-}
-
-/* ═══ ECOSYSTEM HEATMAP (organic hex layout from Mockup 1) ═══ */
-.overview-view .ov-hex-grid {
-  position: relative;
-  height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.overview-view .ov-hex {
-  position: absolute;
-  width: 84px;
-  height: 96px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-}
-.overview-view .ov-hex-shape {
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  border-radius: 4px;
-  transition: all 0.3s;
-}
-.overview-view .ov-hex::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  background: rgba(255,255,255,0.08);
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  z-index: -1;
-}
-.overview-view .ov-hex:hover { transform: scale(1.06); z-index: 5; }
-.overview-view .ov-hex:hover::before { background: var(--ov-gold); }
-
-.overview-view .ov-hex.heat-hot::before    { background: rgba(255,71,87,0.6); }
-.overview-view .ov-hex.heat-warm::before   { background: rgba(255,144,70,0.5); }
-.overview-view .ov-hex.heat-medium::before { background: rgba(245,200,66,0.5); }
-.overview-view .ov-hex.heat-cool::before   { background: rgba(74,240,255,0.4); }
-.overview-view .ov-hex.heat-cold::before   { background: rgba(176,112,255,0.4); }
-
-.overview-view .ov-hex-name {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  color: var(--ov-text);
-  margin-bottom: 2px;
-}
-.overview-view .ov-hex-score {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 16px;
-  font-weight: 800;
-  line-height: 1;
-}
-.overview-view .ov-hex.heat-hot    .ov-hex-score { color: var(--ov-red); }
-.overview-view .ov-hex.heat-warm   .ov-hex-score { color: var(--ov-orange); }
-.overview-view .ov-hex.heat-medium .ov-hex-score { color: var(--ov-gold); }
-.overview-view .ov-hex.heat-cool   .ov-hex-score { color: var(--ov-cyan); }
-.overview-view .ov-hex.heat-cold   .ov-hex-score { color: var(--ov-purple); }
-.overview-view .ov-hex-tag {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 7.5px;
-  letter-spacing: 1px;
-  margin-top: 2px;
-  text-transform: uppercase;
-  opacity: 0.7;
-}
-
-/* Position the 7 hexes organically: 1 center + 6 around */
-.overview-view .ov-hex.pos-center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
-.overview-view .ov-hex.pos-tl     { top: 18%;  left: 18%; }
-.overview-view .ov-hex.pos-tr     { top: 18%;  right: 18%; }
-.overview-view .ov-hex.pos-l      { top: 50%;  left: 4%;  transform: translateY(-50%); }
-.overview-view .ov-hex.pos-r      { top: 50%;  right: 4%; transform: translateY(-50%); }
-.overview-view .ov-hex.pos-bl     { bottom: 8%; left: 18%; }
-.overview-view .ov-hex.pos-br     { bottom: 8%; right: 18%; }
-.overview-view .ov-hex.pos-center:hover { transform: translate(-50%, -50%) scale(1.06); }
-.overview-view .ov-hex.pos-l:hover, .overview-view .ov-hex.pos-r:hover {
-  transform: translateY(-50%) scale(1.06);
-}
-
-/* ═══ URGENT ALERTS ═══ */
-.overview-view .ov-alerts {
-  display: flex;
-  flex-direction: column;
-}
-.overview-view .ov-alert-badge {
-  background: var(--ov-red);
-  color: white;
-  font-size: 10px;
-  padding: 1px 7px;
-  border-radius: 10px;
-  font-weight: 700;
-  margin-left: 6px;
-}
-.overview-view .ov-alerts-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex: 1;
-}
-.overview-view .ov-alert-item {
-  background: rgba(0,0,0,0.22);
-  border: 1px solid rgba(255,255,255,0.04);
-  border-left: 3px solid var(--ov-pink);
-  border-radius: 6px;
-  padding: 9px 12px;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.overview-view .ov-alert-item.good    { border-left-color: var(--ov-green); }
-.overview-view .ov-alert-item.warning { border-left-color: var(--ov-orange); }
-.overview-view .ov-alert-item.info    { border-left-color: var(--ov-cyan); }
-.overview-view .ov-alert-item:hover {
-  border-color: rgba(255,255,255,0.1);
-  transform: translateX(2px);
-}
-.overview-view .ov-alert-icon {
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  background: rgba(0,0,0,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px;
-  flex-shrink: 0;
-}
-.overview-view .ov-alert-body { flex: 1; min-width: 0; }
-.overview-view .ov-alert-title {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--ov-text);
-  margin-bottom: 1px;
-}
-.overview-view .ov-alert-sub {
-  font-size: 10.5px;
-  color: var(--ov-text-dim);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.overview-view .ov-alert-arrow {
-  color: var(--ov-text-muted);
-  font-size: 16px;
-}
-.overview-view .ov-alerts-view-all { margin-top: 10px; align-self: flex-start; }
-
-/* ═══ ROW 3 — Portfolio + Progress + Activity ═══ */
-.overview-view .ov-row-3 {
-  display: grid;
-  grid-template-columns: 1.1fr 1.1fr 1fr;
-  gap: 18px;
-}
-
-/* PORTFOLIO DONUT */
-.overview-view .ov-portfolio-body {
-  display: flex;
-  gap: 18px;
-  align-items: center;
-}
-.overview-view .ov-donut-wrap {
-  position: relative;
-  width: 140px;
-  height: 140px;
-  flex-shrink: 0;
-}
-.overview-view .ov-donut {
-  width: 100%; height: 100%;
-  transform: rotate(-90deg);
-}
-.overview-view .ov-donut-bg {
-  fill: none;
-  stroke: rgba(255,255,255,0.04);
-  stroke-width: 18;
-}
-.overview-view .ov-donut-seg {
-  fill: none;
-  stroke-width: 18;
-  stroke-dasharray: 301.6;     /* 2 * PI * 48 ≈ 301.6 */
-  stroke-dashoffset: 301.6;
-  transition: all 0.8s cubic-bezier(0.4,0,0.2,1);
-}
-.overview-view .ov-donut-seg.seg-purple { stroke: var(--ov-purple); }
-.overview-view .ov-donut-seg.seg-orange { stroke: var(--ov-orange); }
-.overview-view .ov-donut-seg.seg-cyan   { stroke: var(--ov-cyan); }
-.overview-view .ov-donut-seg.seg-gold   { stroke: var(--ov-gold); }
-
-.overview-view .ov-donut-center {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-.overview-view .ov-donut-label {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 9px;
-  color: var(--ov-text-dim);
-  letter-spacing: 1.5px;
-}
-.overview-view .ov-donut-val {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 21px;
-  font-weight: 800;
-  color: var(--ov-text);
-  letter-spacing: 0.3px;
-  margin: 2px 0;
-}
-.overview-view .ov-donut-change {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 10px;
-  color: var(--ov-green);
-  font-weight: 700;
-}
-
-.overview-view .ov-port-legend {
-  flex: 1;
-  min-width: 0;
-}
-.overview-view .ov-port-row {
-  display: grid;
-  grid-template-columns: 12px 1fr auto;
-  gap: 8px;
-  align-items: center;
-  padding: 5px 0;
-  font-size: 12px;
-}
-.overview-view .ov-port-dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-}
-.overview-view .ov-port-dot.dot-purple { background: var(--ov-purple); }
-.overview-view .ov-port-dot.dot-orange { background: var(--ov-orange); }
-.overview-view .ov-port-dot.dot-cyan   { background: var(--ov-cyan); }
-.overview-view .ov-port-dot.dot-gold   { background: var(--ov-gold); }
-.overview-view .ov-port-name { color: var(--ov-text-dim); }
-.overview-view .ov-port-val {
-  font-family: 'Orbitron', sans-serif;
-  font-weight: 700;
-  color: var(--ov-text);
-}
-.overview-view .ov-port-note {
-  font-size: 10px;
-  color: var(--ov-text-muted);
-  font-style: italic;
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px dashed var(--ov-border);
-}
-
-/* ═══ FARMING PROGRESS ═══ */
-.overview-view .ov-progress-period {
-  background: rgba(0,0,0,0.4);
-  border: 1px solid var(--ov-border);
-  border-radius: 6px;
-  padding: 4px 10px;
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 10px;
-  color: var(--ov-text-dim);
-  letter-spacing: 1px;
-}
-.overview-view .ov-xp-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 6px;
-}
-.overview-view .ov-xp-label {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 10px;
-  color: var(--ov-text-dim);
-  letter-spacing: 1.5px;
-  font-weight: 700;
-}
-.overview-view .ov-xp-level {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--ov-gold);
-}
-.overview-view .ov-xp-bar {
-  height: 8px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 4px;
-}
-.overview-view .ov-xp-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--ov-gold-dim), var(--ov-gold), var(--ov-gold-bright));
-  box-shadow: 0 0 10px var(--ov-gold-glow);
-  border-radius: 4px;
-  transition: width 0.8s;
-}
-.overview-view .ov-xp-text {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 10px;
-  color: var(--ov-text-dim);
-  margin-bottom: 16px;
-  letter-spacing: 0.5px;
-}
-
-.overview-view .ov-progress-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 18px;
-}
-.overview-view .ov-ps-cell {
-  background: rgba(0,0,0,0.22);
-  border-radius: 8px;
-  padding: 10px;
-  text-align: center;
-}
-.overview-view .ov-ps-label {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 9px;
-  color: var(--ov-text-dim);
-  letter-spacing: 1.2px;
-  margin-bottom: 4px;
-}
-.overview-view .ov-ps-val {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-}
-.overview-view .ov-ps-val.gold  { color: var(--ov-gold); }
-.overview-view .ov-ps-val.green { color: var(--ov-green); }
-.overview-view .ov-ps-val.cyan  { color: var(--ov-cyan); }
-.overview-view .ov-ps-delta {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 9px;
-  color: var(--ov-green);
-  margin-top: 2px;
-}
-
-/* Streak milestone line */
-.overview-view .ov-streak-mini {
-  background: rgba(255,144,70,0.04);
-  border: 1px solid rgba(255,144,70,0.15);
-  border-radius: 8px;
-  padding: 12px 14px;
-}
-.overview-view .ov-streak-mini-head {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-.overview-view .ov-streak-mini-fire { font-size: 16px; }
-.overview-view .ov-streak-mini-num {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--ov-orange);
-}
-.overview-view .ov-streak-mini-lbl {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 10px;
-  color: var(--ov-text-dim);
-  letter-spacing: 1.5px;
-}
-.overview-view .ov-streak-line {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.overview-view .ov-streak-dot {
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  background: rgba(0,0,0,0.4);
-  border: 2px solid rgba(255,255,255,0.1);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--ov-text-dim);
-  flex-shrink: 0;
-  transition: all 0.3s;
-}
-.overview-view .ov-streak-dot.reached {
-  background: rgba(255,144,70,0.2);
-  border-color: var(--ov-orange);
-  color: var(--ov-orange);
-  box-shadow: 0 0 12px rgba(255,144,70,0.4);
-}
-.overview-view .ov-streak-bar {
-  flex: 1;
-  height: 2px;
-  background: rgba(255,255,255,0.06);
-  border-radius: 1px;
-  overflow: hidden;
-}
-.overview-view .ov-streak-fill {
-  height: 100%;
-  background: var(--ov-orange);
-  width: 0%;
-  transition: width 0.6s;
-}
-
-/* ═══ RECENT ACTIVITY ═══ */
-.overview-view .ov-activity-list {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  max-height: 320px;
-  overflow-y: auto;
-}
-.overview-view .ov-activity-list::-webkit-scrollbar { width: 4px; }
-.overview-view .ov-activity-list::-webkit-scrollbar-thumb { background: var(--ov-border); border-radius: 2px; }
-.overview-view .ov-activity-item {
-  display: grid;
-  grid-template-columns: 14px 1fr auto auto;
-  gap: 8px;
-  align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px dashed rgba(255,255,255,0.04);
-}
-.overview-view .ov-activity-item:last-child { border-bottom: none; }
-.overview-view .ov-activity-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--ov-green);
-}
-.overview-view .ov-activity-dot.complete { background: var(--ov-green); }
-.overview-view .ov-activity-dot.start    { background: var(--ov-cyan); }
-.overview-view .ov-activity-dot.claim    { background: var(--ov-gold); }
-.overview-view .ov-activity-dot.shield   { background: var(--ov-purple); }
-.overview-view .ov-activity-title {
-  font-size: 12px;
-  color: var(--ov-text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.overview-view .ov-activity-xp {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--ov-green);
-}
-.overview-view .ov-activity-time {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 9.5px;
-  color: var(--ov-text-muted);
-  letter-spacing: 0.5px;
-  min-width: 50px;
-  text-align: right;
-}
-
-/* ═══ ELITE INSIGHT FOOTER BAR ═══ */
-.overview-view .ov-insight-bar {
-  display: grid;
-  grid-template-columns: 48px 2fr auto auto;
-  gap: 18px;
-  align-items: center;
-  background: linear-gradient(135deg, rgba(176,112,255,0.06), rgba(245,200,66,0.04));
-  border: 1px solid rgba(176,112,255,0.25);
   border-radius: 12px;
-  padding: 14px 20px;
+  padding: 14px 16px;
+  transition: border-color .2s, box-shadow .2s;
 }
-.overview-view .ov-insight-icon {
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--ov-purple), var(--ov-gold));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px;
+.overview-view .ov-stat-card:hover { border-color: var(--ov-border-br); }
+.overview-view .ov-stat-label { font-family: 'Orbitron', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1px; color: var(--ov-text-dim); margin-bottom: 6px; }
+.overview-view .ov-stat-label.gold { color: var(--ov-gold); }
+.overview-view .ov-stat-main { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.overview-view .ov-stat-big { font-family: 'Rajdhani', sans-serif; font-size: 32px; font-weight: 800; color: var(--ov-text); line-height: 1; }
+.overview-view .ov-stat-big small { font-size: 18px; font-weight: 600; color: var(--ov-text-dim); }
+.overview-view .ov-stat-big.gold { color: var(--ov-gold); }
+.overview-view .ov-stat-big.purple { color: var(--ov-purple); }
+.overview-view .ov-stat-badge { font-size: 24px; }
+.overview-view .ov-stat-fire { font-size: 20px; }
+.overview-view .ov-stat-sub { font-size: 11px; color: var(--ov-text-dim); line-height: 1.3; }
+.overview-view .ov-stat-sub.dim { color: var(--ov-text-muted); }
+.overview-view .ov-stat-delta { font-size: 12px; font-weight: 700; margin-top: 4px; }
+.overview-view .ov-stat-delta.green { color: var(--ov-green); }
+.overview-view .ov-xp-bar { height: 5px; background: var(--ov-border); border-radius: 3px; margin: 6px 0 4px; overflow: hidden; }
+.overview-view .ov-xp-fill { height: 100%; background: linear-gradient(90deg, var(--ov-gold), var(--ov-gold-bright)); border-radius: 3px; transition: width .6s ease; }
+.overview-view .ov-health-star { font-size: 22px; }
+.overview-view .ov-missions-icon { font-size: 20px; }
+
+/* Streak week dots */
+.overview-view .ov-streak-week { display: flex; gap: 6px; margin-top: 6px; }
+.overview-view .ov-streak-week span {
+  width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: var(--ov-text-muted);
+  background: var(--ov-bg-hi); border: 1px solid var(--ov-border);
+  transition: all .3s;
 }
-.overview-view .ov-insight-title {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 10px;
-  color: var(--ov-purple);
-  letter-spacing: 2px;
-  font-weight: 700;
-  margin-bottom: 2px;
+.overview-view .ov-streak-week span.done { background: var(--ov-green-soft); border-color: var(--ov-green); color: var(--ov-green); }
+.overview-view .ov-streak-week span.today { background: rgba(255,144,70,0.15); border-color: var(--ov-orange); color: var(--ov-orange); }
+
+/* ═══ 3. TOP 3 MOVES ═══ */
+.overview-view .ov-moves-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.overview-view .ov-move-card {
+  background: var(--ov-card-bg);
+  border: 1px solid var(--ov-border);
+  border-radius: 14px;
+  padding: 18px;
+  position: relative;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
 }
-.overview-view .ov-insight-text {
-  font-size: 13px;
-  color: var(--ov-text);
-  line-height: 1.4;
+.overview-view .ov-move-card:hover { border-color: var(--ov-border-br); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.15); }
+.overview-view .ov-move-num {
+  position: absolute; top: -8px; left: -8px; width: 28px; height: 28px;
+  background: var(--ov-pink); color: #fff; font-weight: 800; font-size: 13px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(255,94,138,0.4);
 }
-.overview-view .ov-insight-stats {
-  display: flex;
-  gap: 18px;
+.overview-view .ov-move-icon { font-size: 32px; margin-bottom: 10px; }
+.overview-view .ov-move-name { font-size: 15px; font-weight: 700; color: var(--ov-text); margin-bottom: 4px; line-height: 1.2; }
+.overview-view .ov-move-desc { font-size: 12px; color: var(--ov-text-dim); margin-bottom: 12px; line-height: 1.4; }
+.overview-view .ov-move-foot { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.overview-view .ov-move-reward { font-size: 12px; color: var(--ov-text-muted); }
+.overview-view .ov-move-xp { font-size: 14px; font-weight: 800; }
+.overview-view .ov-move-xp.gold { color: var(--ov-gold); }
+.overview-view .ov-move-cta {
+  width: 100%; background: var(--ov-gold); color: #0a0e1a; border: none; border-radius: 8px;
+  padding: 9px; font: 700 14px 'Rajdhani', sans-serif; cursor: pointer; transition: all .2s;
 }
-.overview-view .ov-is-cell { text-align: center; }
-.overview-view .ov-is-label {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 8.5px;
-  color: var(--ov-text-dim);
-  letter-spacing: 1.5px;
-  margin-bottom: 2px;
+.overview-view .ov-move-cta:hover { box-shadow: 0 4px 16px rgba(245,200,66,0.35); transform: translateY(-1px); }
+
+/* ═══ 4. BOTTOM ROW ═══ */
+.overview-view .ov-bottom-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+/* Mission list */
+.overview-view .ov-ml-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--ov-border); }
+.overview-view .ov-ml-item:last-child { border-bottom: none; }
+.overview-view .ov-ml-icon { font-size: 16px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: var(--ov-bg-hi); border-radius: 8px; flex-shrink: 0; }
+.overview-view .ov-ml-info { flex: 1; min-width: 0; }
+.overview-view .ov-ml-name { font-size: 13px; font-weight: 600; color: var(--ov-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.overview-view .ov-ml-bar { height: 4px; background: var(--ov-border); border-radius: 2px; margin-top: 4px; overflow: hidden; }
+.overview-view .ov-ml-bar-fill { height: 100%; border-radius: 2px; transition: width .4s; }
+.overview-view .ov-ml-bar-fill.gold { background: var(--ov-gold); }
+.overview-view .ov-ml-bar-fill.green { background: var(--ov-green); }
+.overview-view .ov-ml-status { font-size: 11px; color: var(--ov-text-dim); white-space: nowrap; }
+
+/* Achievements list */
+.overview-view .ov-achv-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--ov-border); }
+.overview-view .ov-achv-item:last-child { border-bottom: none; }
+.overview-view .ov-achv-icon { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 18px; border-radius: 10px; flex-shrink: 0; }
+.overview-view .ov-achv-icon.gold { background: rgba(245,200,66,0.12); }
+.overview-view .ov-achv-icon.orange { background: rgba(255,144,70,0.12); }
+.overview-view .ov-achv-icon.purple { background: rgba(176,112,255,0.12); }
+.overview-view .ov-achv-info { flex: 1; min-width: 0; }
+.overview-view .ov-achv-name { font-size: 13px; font-weight: 700; color: var(--ov-text); }
+.overview-view .ov-achv-sub { font-size: 11px; color: var(--ov-text-dim); }
+.overview-view .ov-achv-xp { font-size: 12px; font-weight: 800; }
+.overview-view .ov-achv-xp.gold { color: var(--ov-gold); }
+.overview-view .ov-achv-xp.green { color: var(--ov-green); }
+.overview-view .ov-achv-xp.cyan { color: var(--ov-cyan); }
+.overview-view .ov-achv-time { font-size: 10px; color: var(--ov-text-muted); white-space: nowrap; }
+
+/* Portfolio Health */
+.overview-view .ov-phealth-body { display: flex; gap: 20px; align-items: center; }
+.overview-view .ov-phealth-gauge { position: relative; width: 100px; height: 100px; flex-shrink: 0; }
+.overview-view .ov-ph-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.overview-view .ov-ph-bg { fill: none; stroke: var(--ov-border); stroke-width: 8; }
+.overview-view .ov-ph-fill { fill: none; stroke: var(--ov-green); stroke-width: 8; stroke-linecap: round; stroke-dasharray: 314; stroke-dashoffset: 314; transition: stroke-dashoffset .8s ease; }
+.overview-view .ov-ph-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.overview-view .ov-ph-val { font-size: 28px; font-weight: 800; color: var(--ov-text); line-height: 1; }
+.overview-view .ov-ph-lbl { font-size: 11px; font-weight: 700; color: var(--ov-green); }
+.overview-view .ov-phealth-metrics { flex: 1; }
+.overview-view .ov-phm { display: flex; justify-content: space-between; padding: 4px 0; font-size: 12px; border-bottom: 1px solid var(--ov-border); }
+.overview-view .ov-phm:last-child { border-bottom: none; }
+.overview-view .ov-phm span:first-child { color: var(--ov-text-dim); }
+.overview-view .ov-phm span:last-child { color: var(--ov-text); font-weight: 700; }
+
+/* ═══ 5. ALPHA FEED ═══ */
+.overview-view .ov-alpha-bar {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--ov-card-bg); border: 1px solid var(--ov-border);
+  border-radius: 12px; padding: 10px 16px; overflow: hidden;
 }
-.overview-view .ov-is-val {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--ov-gold);
+.overview-view .ov-alpha-icon { font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; color: var(--ov-gold); white-space: nowrap; }
+.overview-view .ov-alpha-track { flex: 1; overflow: hidden; white-space: nowrap; font-size: 13px; color: var(--ov-text-dim); animation: ovAlphaScroll 30s linear infinite; }
+.overview-view .ov-alpha-dot { color: var(--ov-gold); margin: 0 10px; }
+.overview-view .ov-alpha-cta { font: 700 12px 'Rajdhani', sans-serif; color: var(--ov-pink); background: none; border: none; cursor: pointer; white-space: nowrap; }
+.overview-view .ov-alpha-cta:hover { text-decoration: underline; }
+@keyframes ovAlphaScroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+/* ═══ RIGHT SIDEBAR ═══ */
+.overview-view .ov-rsb { display: flex; flex-direction: column; gap: 14px; }
+.overview-view .ov-rsb-card {
+  background: var(--ov-card-bg); border: 1px solid var(--ov-border);
+  border-radius: 14px; padding: 16px; transition: border-color .2s;
 }
-.overview-view .ov-insight-cta {
-  background: linear-gradient(135deg, var(--ov-gold-dim), var(--ov-gold));
-  color: #0a0e1a;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.2px;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
+.overview-view .ov-rsb-card:hover { border-color: var(--ov-border-br); }
+
+/* AI Copilot */
+.overview-view .ov-copilot-head { font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700; color: var(--ov-gold); letter-spacing: 1px; }
+.overview-view .ov-copilot-sub { font-size: 11px; color: var(--ov-text-dim); margin-bottom: 12px; }
+.overview-view .ov-copilot-avatar { display: flex; justify-content: center; margin-bottom: 12px; }
+.overview-view .ov-robot-mini { width: 70px; height: 55px; display: flex; align-items: center; justify-content: center; }
+.overview-view .ov-copilot-msg { background: var(--ov-bg-hi); border-radius: 10px; padding: 12px; font-size: 13px; line-height: 1.5; color: var(--ov-text-dim); }
+.overview-view .ov-copilot-msg strong { display: block; color: var(--ov-text); font-size: 14px; margin-bottom: 4px; }
+
+/* Today's Task */
+.overview-view .ov-tt-label { font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 800; margin-bottom: 10px; }
+.overview-view .ov-tt-label.gold { color: var(--ov-gold); }
+.overview-view .ov-tt-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.overview-view .ov-tt-icon { font-size: 18px; }
+.overview-view .ov-tt-name { font-size: 15px; font-weight: 700; color: var(--ov-text); }
+.overview-view .ov-tt-meta { font-size: 12px; color: var(--ov-text-dim); margin-bottom: 4px; }
+.overview-view .ov-tt-meta strong { color: var(--ov-text); }
+.overview-view .ov-tt-meta strong.gold { color: var(--ov-gold); }
+.overview-view .ov-tt-cta {
+  width: 100%; margin-top: 10px; background: var(--ov-gold); color: #0a0e1a; border: none;
+  border-radius: 8px; padding: 10px; font: 700 14px 'Rajdhani', sans-serif;
+  cursor: pointer; transition: all .2s; display: flex; align-items: center; justify-content: center; gap: 6px;
 }
-.overview-view .ov-insight-cta:hover {
-  background: linear-gradient(135deg, var(--ov-gold), var(--ov-gold-bright));
-  box-shadow: 0 0 14px var(--ov-gold-glow);
+.overview-view .ov-tt-cta:hover { box-shadow: 0 4px 16px rgba(245,200,66,0.35); }
+
+/* Live Alerts */
+.overview-view .ov-la-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.overview-view .ov-la-title { font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; }
+.overview-view .ov-la-title.pink { color: var(--ov-pink); }
+.overview-view .ov-la-list { display: flex; flex-direction: column; gap: 8px; }
+.overview-view .ov-la-item { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.overview-view .ov-la-dot { font-size: 10px; flex-shrink: 0; }
+.overview-view .ov-la-text { flex: 1; color: var(--ov-text); font-weight: 600; }
+.overview-view .ov-la-time { color: var(--ov-text-muted); font-size: 11px; white-space: nowrap; }
+
+/* Farming Season */
+.overview-view .ov-season-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.overview-view .ov-season-label { font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; }
+.overview-view .ov-season-label.pink { color: var(--ov-pink); }
+.overview-view .ov-season-icon { font-size: 24px; }
+.overview-view .ov-season-name { font-size: 16px; font-weight: 800; color: var(--ov-text); margin-bottom: 4px; }
+.overview-view .ov-season-timer { font-size: 12px; color: var(--ov-text-dim); margin-bottom: 8px; }
+.overview-view .ov-season-desc { font-size: 12px; color: var(--ov-text-dim); margin-bottom: 10px; line-height: 1.4; }
+.overview-view .ov-season-cta {
+  width: 100%; background: none; border: 1px solid var(--ov-pink);
+  color: var(--ov-pink); border-radius: 8px; padding: 9px;
+  font: 700 13px 'Rajdhani', sans-serif; cursor: pointer; transition: all .2s;
+}
+.overview-view .ov-season-cta:hover { background: rgba(255,94,138,0.08); box-shadow: 0 4px 12px rgba(255,94,138,0.15); }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 1200px) {
+  .overview-view .ov-layout { grid-template-columns: 1fr 260px; }
+  .overview-view .ov-stats-row { grid-template-columns: repeat(3, 1fr); }
+  .overview-view .ov-bottom-row { grid-template-columns: 1fr 1fr; }
+  .overview-view .ov-phealth-card { grid-column: 1 / -1; }
+}
+@media (max-width: 960px) {
+  .overview-view .ov-layout { grid-template-columns: 1fr; }
+  .overview-view .ov-rsb { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .overview-view .ov-moves-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) {
+  .overview-view .ov-stats-row { grid-template-columns: repeat(2, 1fr); }
+  .overview-view .ov-moves-grid { grid-template-columns: 1fr; }
+  .overview-view .ov-bottom-row { grid-template-columns: 1fr; }
+  .overview-view .ov-rsb { grid-template-columns: 1fr; }
+  .overview-view .ov-nba { grid-template-columns: 1fr; padding: 20px; }
+  .overview-view .ov-nba-art { grid-row: auto; grid-column: 1; justify-content: flex-end; height: 120px; }
+  .overview-view .ov-nba-why { grid-column: 1; }
+  .overview-view .ov-nba-title { font-size: 24px; }
+  .overview-view .ov-nba-meta { flex-direction: column; gap: 8px; }
+  .overview-view .ov-phealth-body { flex-direction: column; }
+  .overview-view .ov-alpha-bar { flex-direction: column; align-items: flex-start; gap: 8px; }
+}
+@media (max-width: 480px) {
+  .overview-view .ov-stats-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .overview-view .ov-stat-big { font-size: 26px; }
+  .overview-view .ov-nba { padding: 16px; }
+  .overview-view .ov-nba-title { font-size: 22px; }
+  .overview-view .ov-robot { width: 100px; height: 120px; }
+  .overview-view .ov-robot-head { width: 60px; height: 44px; }
+  .overview-view .ov-robot-eye { width: 12px; height: 12px; top: 14px; }
+  .overview-view .ov-robot-eye.left { left: 12px; }
+  .overview-view .ov-robot-eye.right { right: 12px; }
+  .overview-view .ov-robot-torso { width: 66px; height: 50px; }
+  .overview-view .ov-robot-arm { width: 14px; height: 36px; top: 50px; }
 }
 
-/* ═══ MOBILE RESPONSIVE ═══ */
-@media (max-width: 1280px) {
-  .overview-view .ov-row-2 { grid-template-columns: 1fr 1fr; }
-  .overview-view .ov-alerts { grid-column: 1 / -1; }
-  .overview-view .ov-row-3 { grid-template-columns: 1fr 1fr; }
-  .overview-view .ov-activity { grid-column: 1 / -1; }
-}
-@media (max-width: 900px) {
-  .overview-view .ov-row-1 { grid-template-columns: 1fr; }
-  .overview-view .ov-row-2 { grid-template-columns: 1fr; }
-  .overview-view .ov-row-3 { grid-template-columns: 1fr; }
-  .overview-view .ov-hero-pills { grid-template-columns: 1fr 1fr; }
-  .overview-view .ov-insight-bar {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-  .overview-view .ov-insight-icon { margin: 0 auto; }
-  .overview-view .ov-insight-stats { justify-content: center; }
-  .overview-view .ov-portfolio-body { flex-direction: column; }
-}
-@media (max-width: 640px) {
-  .overview-view .ov-hero { padding: 20px 18px; }
-  .overview-view .ov-hero-title { font-size: 24px; }
-  .overview-view .ov-hero-pills { grid-template-columns: 1fr; }
-  .overview-view .ov-hex { width: 70px; height: 80px; }
-  .overview-view .ov-hex-grid { height: 240px; }
-}
+/* END v4.0 OVERVIEW TAB STYLES */
 
-/* END v3.0 OVERVIEW TAB STYLES */
 
 /* START DAILY MISSIONS TAB STYLES */
 .tab-panel { display: none; }
@@ -20334,282 +19533,249 @@ select.exp-field-input option { background: #0a0e1a; color: #e8eaf0; }
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════════════
-         OVERVIEW TAB — v3.0 REDESIGN (Chunk 5)
-         Layout based on Mockup 2 (clean SaaS feel) with selective elements
-         from Mockup 1 (organic hex heatmap, milestone dots, system countdown)
+         OVERVIEW TAB — v4.0 REDESIGN
+         3-column layout: main center + right sidebar (desktop)
          Scoped via .overview-view to prevent style bleed
     ═══════════════════════════════════════════════════════════════════ -->
     <section class="tab-panel active overview-view" id="tab-overview" data-tab-panel="overview">
+      <div class="ov-layout">
 
-      <!-- ═══ ROW 1: HERO + AI FARMING SCORE ═══ -->
-      <div class="ov-row-1">
+        <!-- ════ MAIN CONTENT ════ -->
+        <div class="ov-main">
 
-        <!-- HERO CARD -->
-        <div class="ov-hero">
-          <div class="ov-hero-bg-globe"></div>
-          <div class="ov-hero-content">
-            <div class="ov-hero-tag">✦ WELCOME BACK, ELITE FARMER</div>
-            <h1 class="ov-hero-title">Welcome back, <span id="ov-username">Operator</span></h1>
-            <p class="ov-hero-sub">Your mission is the alpha. <strong>Execute. Farm. Dominate.</strong></p>
-
-            <!-- 4 STAT PILLS -->
-            <div class="ov-hero-pills">
-              <div class="ov-pill purple">
-                <div class="ov-pill-icon">💎</div>
-                <div class="ov-pill-body">
-                  <div class="ov-pill-label">Elite Rank</div>
-                  <div class="ov-pill-val" id="ov-elite-rank">#—</div>
-                </div>
+          <!-- 1. NEXT BEST ACTION HERO -->
+          <div class="ov-nba">
+            <div class="ov-nba-left">
+              <div class="ov-nba-top">
+                <span class="ov-nba-tag">⚙️ NEXT BEST ACTION</span>
+                <span class="ov-nba-impact" id="ov-nba-impact">High Impact</span>
               </div>
-              <div class="ov-pill green">
-                <div class="ov-pill-icon">🌍</div>
-                <div class="ov-pill-body">
-                  <div class="ov-pill-label">Global Rank</div>
-                  <div class="ov-pill-val" id="ov-global-rank">—</div>
-                </div>
+              <h2 class="ov-nba-title" id="ov-nba-title">Bridge any asset</h2>
+              <p class="ov-nba-desc" id="ov-nba-desc">Bridge any amount between supported chains.</p>
+              <div class="ov-nba-meta">
+                <div class="ov-nba-mi"><span class="ov-nba-ml">Estimated Time</span><span class="ov-nba-mv" id="ov-nba-time">⏱ 5–8 mins</span></div>
+                <div class="ov-nba-mi"><span class="ov-nba-ml">✦ Reward</span><span class="ov-nba-mv gold" id="ov-nba-reward">🪙 350 XP</span></div>
+                <div class="ov-nba-mi"><span class="ov-nba-ml">✦ Difficulty</span><span class="ov-nba-mv" id="ov-nba-diff">🟢 Easy</span></div>
               </div>
-              <div class="ov-pill cyan">
-                <div class="ov-pill-icon">⚡</div>
-                <div class="ov-pill-body">
-                  <div class="ov-pill-label">Farming Score</div>
-                  <div class="ov-pill-val" id="ov-farming-score">0</div>
-                </div>
-              </div>
-              <div class="ov-pill orange">
-                <div class="ov-pill-icon">🔥</div>
-                <div class="ov-pill-body">
-                  <div class="ov-pill-label">Streak</div>
-                  <div class="ov-pill-val" id="ov-streak-pill">0 Days</div>
+              <button class="ov-nba-cta" id="ov-nba-cta" onclick="ovDoNBA()">🚀 Do It Now</button>
+            </div>
+            <div class="ov-nba-art" id="ov-nba-art">
+              <div class="ov-robot">
+                <div class="ov-robot-body">
+                  <div class="ov-robot-head"><div class="ov-robot-eye left"></div><div class="ov-robot-eye right"></div></div>
+                  <div class="ov-robot-torso"></div>
+                  <div class="ov-robot-arm left"></div><div class="ov-robot-arm right"></div>
                 </div>
               </div>
             </div>
+            <div class="ov-nba-why">
+              <strong>Why this?</strong>
+              <p id="ov-nba-why-text">Completing this unlocks new missions and boosts your rewards.</p>
+            </div>
+          </div>
 
-            <!-- OPPORTUNITIES CTA -->
-            <div class="ov-hero-cta-row">
-              <button class="ov-hero-cta" id="ov-cta-opps" onclick="ovGoToProjects()">
-                <div class="ov-cta-text">
-                  <div class="ov-cta-num" id="ov-opps-count">0</div>
-                  <div class="ov-cta-lbl">New Opportunities Across <span id="ov-ecosystems-count">0</span> Ecosystems</div>
-                </div>
-                <div class="ov-cta-arrow">›</div>
-              </button>
+          <!-- 2. STATS ROW (6 cards) -->
+          <div class="ov-stats-row">
+            <div class="ov-stat-card">
+              <div class="ov-stat-label gold">LEVEL</div>
+              <div class="ov-stat-main">
+                <span class="ov-stat-big" id="ov-stat-level">1</span>
+                <span class="ov-stat-badge">🏅</span>
+              </div>
+              <div class="ov-xp-bar"><div class="ov-xp-fill" id="ov-xp-fill" style="width:0%"></div></div>
+              <div class="ov-stat-sub" id="ov-xp-text">0 / 1,000 XP</div>
+              <div class="ov-stat-sub dim" id="ov-xp-pct">0% to Level 2</div>
+            </div>
+            <div class="ov-stat-card">
+              <div class="ov-stat-label gold">STREAK</div>
+              <div class="ov-stat-main">
+                <span class="ov-stat-fire">🔥</span>
+                <span class="ov-stat-big" id="ov-stat-streak">0</span>
+              </div>
+              <div class="ov-stat-sub">Days Active</div>
+              <div class="ov-streak-week" id="ov-streak-week">
+                <span data-d="M">M</span><span data-d="T">T</span><span data-d="W">W</span><span data-d="T2">T</span><span data-d="F">F</span><span data-d="S">S</span><span data-d="S2">S</span>
+              </div>
+            </div>
+            <div class="ov-stat-card">
+              <div class="ov-stat-label">TOTAL XP</div>
+              <div class="ov-stat-big purple" id="ov-stat-xp">0</div>
+              <div class="ov-stat-delta green" id="ov-stat-xp-delta">↑ 0% this week</div>
+            </div>
+            <div class="ov-stat-card">
+              <div class="ov-stat-label">TOTAL REWARDS</div>
+              <div class="ov-stat-big gold" id="ov-stat-rewards">$0</div>
+              <div class="ov-stat-delta green" id="ov-stat-rewards-delta">↑ 0% this month</div>
+            </div>
+            <div class="ov-stat-card">
+              <div class="ov-stat-label">WALLETS HEALTH</div>
+              <div class="ov-stat-main">
+                <span class="ov-stat-big" id="ov-stat-health">0</span>
+                <span class="ov-health-star" id="ov-health-icon">⭐</span>
+              </div>
+              <div class="ov-stat-sub" id="ov-health-label">—</div>
+            </div>
+            <div class="ov-stat-card">
+              <div class="ov-stat-label">MISSIONS</div>
+              <div class="ov-stat-main">
+                <span class="ov-stat-big" id="ov-stat-missions">0 <small>/ 0</small></span>
+                <span class="ov-missions-icon">⚙️</span>
+              </div>
+              <div class="ov-stat-sub" id="ov-missions-status">In Progress</div>
+            </div>
+          </div>
 
-              <!-- System Reset countdown (borrowed from Mockup 1) -->
-              <div class="ov-system-reset">
-                <div class="ov-sr-label">⏱ NEXT RESET</div>
-                <div class="ov-sr-time" id="ov-reset-time">--:--:--</div>
+          <!-- 3. YOUR TOP 3 MOVES TODAY -->
+          <div class="ov-moves">
+            <div class="ov-section-head">
+              <h3>YOUR TOP 3 MOVES TODAY</h3>
+              <button class="ov-link-btn" onclick="ovGoToMissions()">View All Moves →</button>
+            </div>
+            <div class="ov-moves-grid" id="ov-moves-grid">
+              <div class="ov-move-card">
+                <div class="ov-move-num">1</div>
+                <div class="ov-move-icon">🌉</div>
+                <div class="ov-move-name">Bridge any asset</div>
+                <div class="ov-move-desc">Bridge any amount between supported chains.</div>
+                <div class="ov-move-foot"><span class="ov-move-reward">Reward</span><span class="ov-move-xp gold">350 XP</span></div>
+                <button class="ov-move-cta" onclick="ovDoNBA()">Do It Now</button>
+              </div>
+              <div class="ov-move-card">
+                <div class="ov-move-num">2</div>
+                <div class="ov-move-icon">✅</div>
+                <div class="ov-move-name">Complete Daily Check-in</div>
+                <div class="ov-move-desc">Claim your daily rewards</div>
+                <div class="ov-move-foot"><span class="ov-move-reward">Reward</span><span class="ov-move-xp gold">100 XP</span></div>
+                <button class="ov-move-cta">Claim Now</button>
+              </div>
+              <div class="ov-move-card">
+                <div class="ov-move-num">3</div>
+                <div class="ov-move-icon">🔮</div>
+                <div class="ov-move-name">Explore 3 New Protocols</div>
+                <div class="ov-move-desc">Discover and add 3 new protocols to your watchlist.</div>
+                <div class="ov-move-foot"><span class="ov-move-reward">Reward</span><span class="ov-move-xp gold">250 XP</span></div>
+                <button class="ov-move-cta" onclick="ovGoToProjects()">Start Now</button>
               </div>
             </div>
           </div>
+
+          <!-- 4. BOTTOM ROW: Missions + Achievements + Portfolio Health -->
+          <div class="ov-bottom-row">
+
+            <!-- MISSION OVERVIEW -->
+            <div class="ov-card ov-missions-card">
+              <div class="ov-card-head"><span class="ov-card-title gold">MISSION OVERVIEW</span><button class="ov-link-btn" onclick="ovGoToMissions()">View All</button></div>
+              <div class="ov-mission-list" id="ov-mission-list">
+                <div class="ov-no-data">Loading missions…</div>
+              </div>
+            </div>
+
+            <!-- RECENT ACHIEVEMENTS -->
+            <div class="ov-card ov-achv-card">
+              <div class="ov-card-head"><span class="ov-card-title purple">RECENT ACHIEVEMENTS</span><button class="ov-link-btn">View All</button></div>
+              <div class="ov-achv-list" id="ov-achv-list">
+                <div class="ov-achv-item"><div class="ov-achv-icon gold">🏆</div><div class="ov-achv-info"><div class="ov-achv-name">Mission Master</div><div class="ov-achv-sub">Complete 50 Missions</div></div><div class="ov-achv-xp gold">+500 XP</div><div class="ov-achv-time">Just now</div></div>
+                <div class="ov-achv-item"><div class="ov-achv-icon orange">🔥</div><div class="ov-achv-info"><div class="ov-achv-name">Multi-Chain Farmer</div><div class="ov-achv-sub">Interact on 5 Chains</div></div><div class="ov-achv-xp green">+300 XP</div><div class="ov-achv-time">2h ago</div></div>
+                <div class="ov-achv-item"><div class="ov-achv-icon purple">🎯</div><div class="ov-achv-info"><div class="ov-achv-name">Alpha Hunter</div><div class="ov-achv-sub">Track 10 High Conviction Projects</div></div><div class="ov-achv-xp cyan">+400 XP</div><div class="ov-achv-time">5h ago</div></div>
+              </div>
+            </div>
+
+            <!-- PORTFOLIO HEALTH -->
+            <div class="ov-card ov-phealth-card">
+              <div class="ov-card-head"><span class="ov-card-title green">PORTFOLIO HEALTH</span><button class="ov-link-btn" onclick="ovGoToWallets()">View All</button></div>
+              <div class="ov-phealth-body">
+                <div class="ov-phealth-gauge">
+                  <svg class="ov-ph-svg" viewBox="0 0 120 120">
+                    <circle class="ov-ph-bg" cx="60" cy="60" r="50"/>
+                    <circle class="ov-ph-fill" id="ov-ph-fill" cx="60" cy="60" r="50"/>
+                  </svg>
+                  <div class="ov-ph-center">
+                    <div class="ov-ph-val" id="ov-ph-val">0</div>
+                    <div class="ov-ph-lbl" id="ov-ph-lbl">—</div>
+                  </div>
+                </div>
+                <div class="ov-phealth-metrics" id="ov-phealth-metrics">
+                  <div class="ov-phm"><span>Security</span><span id="ov-ph-security">0/100</span></div>
+                  <div class="ov-phm"><span>Activity</span><span id="ov-ph-activity">0/100</span></div>
+                  <div class="ov-phm"><span>Diversification</span><span id="ov-ph-diversity">0/100</span></div>
+                  <div class="ov-phm"><span>Sybil Risk</span><span id="ov-ph-sybil">0/100</span></div>
+                  <div class="ov-phm"><span>Consistency</span><span id="ov-ph-consist">0/100</span></div>
+                </div>
+              </div>
+              <button class="ov-link-btn full" onclick="ovGoToWallets()">View Full Analysis →</button>
+            </div>
+          </div>
+
+          <!-- 5. ALPHA FEED TICKER -->
+          <div class="ov-alpha-bar">
+            <div class="ov-alpha-icon">🔥 ALPHA FEED</div>
+            <div class="ov-alpha-track" id="ov-alpha-track">
+              <span>New opportunity detected on Linea</span>
+              <span class="ov-alpha-dot">·</span>
+              <span>Galxe campaign with 1,200 USDC reward</span>
+              <span class="ov-alpha-dot">·</span>
+              <span>High whale activity on Base ecosystem</span>
+              <span class="ov-alpha-dot">·</span>
+              <span>EigenLayer TVL increased by 18%</span>
+            </div>
+            <button class="ov-alpha-cta" onclick="ovGoToIntelHub()">View All Alpha →</button>
+          </div>
+
         </div>
 
-        <!-- AI FARMING SCORE GAUGE (right side) -->
-        <div class="ov-ai-score">
-          <div class="ov-ai-head">
-            <div class="ov-ai-title">⚡ AI FARMING SCORE</div>
-            <span class="ov-ai-badge">BETA</span>
-          </div>
+        <!-- ════ RIGHT SIDEBAR (desktop) ════ -->
+        <aside class="ov-rsb">
 
-          <!-- Circular gauge -->
-          <div class="ov-gauge-wrap">
-            <svg class="ov-gauge-svg" viewBox="0 0 120 120">
-              <circle class="ov-gauge-bg" cx="60" cy="60" r="52" />
-              <circle class="ov-gauge-fill" id="ov-gauge-fill" cx="60" cy="60" r="52" />
-            </svg>
-            <div class="ov-gauge-center">
-              <div class="ov-gauge-val" id="ov-ai-score-val">—</div>
-              <div class="ov-gauge-tier" id="ov-ai-score-tier">—</div>
+          <!-- AI COPILOT -->
+          <div class="ov-rsb-card ov-copilot">
+            <div class="ov-copilot-head">AI COPILOT</div>
+            <div class="ov-copilot-sub">Your Farming Assistant</div>
+            <div class="ov-copilot-avatar">
+              <div class="ov-robot-mini">
+                <div class="ov-robot-head sm"><div class="ov-robot-eye left"></div><div class="ov-robot-eye right"></div></div>
+              </div>
+            </div>
+            <div class="ov-copilot-msg" id="ov-copilot-msg">
+              <strong>GM, Elite! 👋</strong>
+              <p>Your next best action is ready for you to maximize rewards.</p>
             </div>
           </div>
 
-          <div class="ov-ai-sub">You're outperforming <strong id="ov-ai-percentile">—</strong> of active farmers</div>
+          <!-- TODAY'S TASK -->
+          <div class="ov-rsb-card ov-today-task">
+            <div class="ov-tt-label gold">Today's Task</div>
+            <div class="ov-tt-row"><span class="ov-tt-icon">🌉</span><span class="ov-tt-name" id="ov-tt-name">Bridge any asset</span></div>
+            <div class="ov-tt-meta"><span>Est. Time: <strong id="ov-tt-time">5–8 mins</strong></span></div>
+            <div class="ov-tt-meta"><span>Reward: <strong class="gold" id="ov-tt-reward">350 XP</strong></span></div>
+            <button class="ov-tt-cta" onclick="ovDoNBA()">Do It Now <span>🚀</span></button>
+          </div>
 
-          <button class="ov-ai-analysis-btn" onclick="ovGoToAnalytics()">
-            View Full Analysis <span style="margin-left:6px;">📊</span>
-          </button>
-        </div>
+          <!-- LIVE ALERTS -->
+          <div class="ov-rsb-card ov-live-alerts">
+            <div class="ov-la-head"><span class="ov-la-title pink">LIVE ALERTS</span><button class="ov-link-btn sm" onclick="ovGoToIntelHub()">View All</button></div>
+            <div class="ov-la-list" id="ov-la-list">
+              <div class="ov-la-item"><span class="ov-la-dot red">🔴</span><span class="ov-la-text">High Gas on Ethereum</span><span class="ov-la-time">12m ago</span></div>
+              <div class="ov-la-item"><span class="ov-la-dot green">🟢</span><span class="ov-la-text">New High Conviction</span><span class="ov-la-time">25m ago</span></div>
+              <div class="ov-la-item"><span class="ov-la-dot orange">🔶</span><span class="ov-la-text">Snapshot Alert</span><span class="ov-la-time">1h ago</span></div>
+            </div>
+          </div>
+
+          <!-- FARMING SEASON -->
+          <div class="ov-rsb-card ov-season">
+            <div class="ov-season-head">
+              <span class="ov-season-label pink">FARMING SEASON</span>
+              <span class="ov-season-icon">🏆</span>
+            </div>
+            <div class="ov-season-name" id="ov-season-name">Genesis Season</div>
+            <div class="ov-season-timer" id="ov-season-timer">Ends in 37d 12h 24m</div>
+            <div class="ov-season-desc">Complete missions to earn exclusive rewards.</div>
+            <button class="ov-season-cta" onclick="ovGoToRewards()">View Season →</button>
+          </div>
+
+        </aside>
       </div>
-
-      <!-- ═══ ROW 2: TOP OPPORTUNITIES + ECOSYSTEM HEATMAP + URGENT ALERTS ═══ -->
-      <div class="ov-row-2">
-
-        <!-- TODAY'S TOP OPPORTUNITIES -->
-        <div class="ov-card ov-opps">
-          <div class="ov-card-head">
-            <div class="ov-card-title gold">🎯 TODAY'S TOP OPPORTUNITIES</div>
-            <button class="ov-link-btn" onclick="ovGoToProjects()">View All <span id="ov-opps-total">(0)</span></button>
-          </div>
-          <div class="ov-opps-list" id="ov-opps-list">
-            <div class="ov-no-data">Loading opportunities…</div>
-          </div>
-        </div>
-
-        <!-- ECOSYSTEM HEATMAP -->
-        <div class="ov-card ov-heatmap">
-          <div class="ov-card-head">
-            <div class="ov-card-title cyan">🌐 ECOSYSTEM HEATMAP</div>
-            <button class="ov-link-btn" onclick="ovGoToProjects()">View All</button>
-          </div>
-          <div class="ov-hex-grid" id="ov-hex-grid">
-            <div class="ov-no-data">Loading ecosystems…</div>
-          </div>
-        </div>
-
-        <!-- URGENT ALERTS -->
-        <div class="ov-card ov-alerts">
-          <div class="ov-card-head">
-            <div class="ov-card-title pink">🚨 URGENT ALERTS <span class="ov-alert-badge" id="ov-alert-count">0</span></div>
-          </div>
-          <div class="ov-alerts-list" id="ov-alerts-list">
-            <div class="ov-no-data">No urgent alerts.</div>
-          </div>
-          <button class="ov-link-btn ov-alerts-view-all" onclick="ovGoToIntelHub()">View All Alerts ›</button>
-        </div>
-      </div>
-
-      <!-- ═══ ROW 3: PORTFOLIO + FARMING PROGRESS + RECENT ACTIVITY ═══ -->
-      <div class="ov-row-3">
-
-        <!-- PORTFOLIO OVERVIEW -->
-        <div class="ov-card ov-portfolio">
-          <div class="ov-card-head">
-            <div class="ov-card-title white">PORTFOLIO OVERVIEW</div>
-            <button class="ov-link-btn" onclick="ovGoToWallets()">View Portfolio</button>
-          </div>
-          <div class="ov-portfolio-body">
-            <!-- Donut chart -->
-            <div class="ov-donut-wrap">
-              <svg class="ov-donut" viewBox="0 0 120 120">
-                <circle class="ov-donut-bg" cx="60" cy="60" r="48" />
-                <circle id="ov-donut-1" class="ov-donut-seg seg-purple" cx="60" cy="60" r="48" />
-                <circle id="ov-donut-2" class="ov-donut-seg seg-orange" cx="60" cy="60" r="48" />
-                <circle id="ov-donut-3" class="ov-donut-seg seg-cyan"   cx="60" cy="60" r="48" />
-                <circle id="ov-donut-4" class="ov-donut-seg seg-gold"   cx="60" cy="60" r="48" />
-              </svg>
-              <div class="ov-donut-center">
-                <div class="ov-donut-label">Total Value</div>
-                <div class="ov-donut-val" id="ov-port-total">$0</div>
-                <div class="ov-donut-change" id="ov-port-change">+0.0%</div>
-              </div>
-            </div>
-            <!-- Legend -->
-            <div class="ov-port-legend">
-              <div class="ov-port-row">
-                <span class="ov-port-dot dot-purple"></span>
-                <span class="ov-port-name">Wallet Balance</span>
-                <span class="ov-port-val" id="ov-port-wallet">$0</span>
-              </div>
-              <div class="ov-port-row">
-                <span class="ov-port-dot dot-orange"></span>
-                <span class="ov-port-name">Claimable</span>
-                <span class="ov-port-val" id="ov-port-claimable">$0</span>
-              </div>
-              <div class="ov-port-row">
-                <span class="ov-port-dot dot-cyan"></span>
-                <span class="ov-port-name">Pending Rewards</span>
-                <span class="ov-port-val" id="ov-port-pending">$0</span>
-              </div>
-              <div class="ov-port-row">
-                <span class="ov-port-dot dot-gold"></span>
-                <span class="ov-port-name">Invested</span>
-                <span class="ov-port-val" id="ov-port-invested">$0</span>
-              </div>
-              <div class="ov-port-note">💡 Connect wallets to refine estimates</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- FARMING PROGRESS -->
-        <div class="ov-card ov-progress">
-          <div class="ov-card-head">
-            <div class="ov-card-title white">FARMING PROGRESS</div>
-            <span class="ov-progress-period">This Week</span>
-          </div>
-
-          <div class="ov-xp-row">
-            <div class="ov-xp-label">XP Progress</div>
-            <div class="ov-xp-level">Level <span id="ov-level">1</span> <span style="color:#f5c842;">👑</span></div>
-          </div>
-          <div class="ov-xp-bar">
-            <div class="ov-xp-fill" id="ov-xp-fill" style="width:0%"></div>
-          </div>
-          <div class="ov-xp-text" id="ov-xp-text">0 / 1,000 XP</div>
-
-          <!-- Stat trio -->
-          <div class="ov-progress-stats">
-            <div class="ov-ps-cell">
-              <div class="ov-ps-label">Missions Done</div>
-              <div class="ov-ps-val gold" id="ov-pm-done">0</div>
-              <div class="ov-ps-delta" id="ov-pm-delta">+0%</div>
-            </div>
-            <div class="ov-ps-cell">
-              <div class="ov-ps-label">Success Rate</div>
-              <div class="ov-ps-val green" id="ov-success-rate">0%</div>
-              <div class="ov-ps-delta" id="ov-success-delta">+0%</div>
-            </div>
-            <div class="ov-ps-cell">
-              <div class="ov-ps-label">Avg. ROI</div>
-              <div class="ov-ps-val cyan" id="ov-avg-roi">0×</div>
-              <div class="ov-ps-delta" id="ov-roi-delta">+0%</div>
-            </div>
-          </div>
-
-          <!-- MISSION STREAK milestone dots (borrowed from Mockup 1) -->
-          <div class="ov-streak-mini">
-            <div class="ov-streak-mini-head">
-              <span class="ov-streak-mini-fire">🔥</span>
-              <span class="ov-streak-mini-num" id="ov-streak-mini">0</span>
-              <span class="ov-streak-mini-lbl">Day Streak</span>
-            </div>
-            <div class="ov-streak-line">
-              <div class="ov-streak-dot" data-target="7"  id="ov-streak-d7"><span>7</span></div>
-              <div class="ov-streak-bar"><div class="ov-streak-fill" id="ov-streak-fill-1"></div></div>
-              <div class="ov-streak-dot" data-target="14" id="ov-streak-d14"><span>14</span></div>
-              <div class="ov-streak-bar"><div class="ov-streak-fill" id="ov-streak-fill-2"></div></div>
-              <div class="ov-streak-dot" data-target="30" id="ov-streak-d30"><span>30</span></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- RECENT ACTIVITY -->
-        <div class="ov-card ov-activity">
-          <div class="ov-card-head">
-            <div class="ov-card-title white">RECENT ACTIVITY</div>
-            <button class="ov-link-btn" onclick="ovGoToActivity()">View All</button>
-          </div>
-          <div class="ov-activity-list" id="ov-activity-list">
-            <div class="ov-no-data">No activity yet. Start a mission to begin!</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ═══ ELITE INSIGHT FOOTER BANNER ═══ -->
-      <div class="ov-insight-bar">
-        <div class="ov-insight-icon">👑</div>
-        <div class="ov-insight-body">
-          <div class="ov-insight-title">ELITE INSIGHT</div>
-          <div class="ov-insight-text" id="ov-insight-text">Cross-chain DeFi activity is heating up. Focus on snapshot-ready projects this week.</div>
-        </div>
-        <div class="ov-insight-stats">
-          <div class="ov-is-cell">
-            <div class="ov-is-label">TOTAL AIRDROPS</div>
-            <div class="ov-is-val" id="ov-is-airdrops">0</div>
-          </div>
-          <div class="ov-is-cell">
-            <div class="ov-is-label">TOTAL VALUE</div>
-            <div class="ov-is-val" id="ov-is-value">$0</div>
-          </div>
-          <div class="ov-is-cell">
-            <div class="ov-is-label">ACTIVE FARMERS</div>
-            <div class="ov-is-val" id="ov-is-farmers">0</div>
-          </div>
-        </div>
-        <button class="ov-insight-cta" onclick="ovGoToIntelHub()">
-          Open Intel Hub <span style="margin-left:6px;">›</span>
-        </button>
-      </div>
-
     </section>
+
 
 
     <!-- START DAILY MISSIONS TAB CONTENT -->
@@ -25371,928 +24537,288 @@ updateClock();
 })();
 
 /* ═══════════════════════════════════════════
-   OVERVIEW TAB — LIVE (Supabase)
-   ELITE FARMING COMMAND  +  TODAY'S PRIORITY MISSIONS
-   All data is real. Reuses the same API methods as the
-   Daily Missions tab — no parallel logic.
+   OVERVIEW TAB v4.0 — LIVE (Supabase)
+   Redesigned layout with NBA hero, stats row,
+   top 3 moves, mission overview, achievements,
+   portfolio health, right sidebar
 ═══════════════════════════════════════════ */
 (function() {
 
-  // Cosmetic-only: pick an icon by mission position.
-  // (Mission icon is not a database field — purely visual.)
   var OV_ICONS = ['🔵','🟣','🟢','🟡','🔴','⚡','🌉','🔄','🖼️','📡','📊','🧪','🌊','🎯','💎','🚀'];
-
-  var ovMissions = [];   // today's missions (live, each has .done)
-  var ovBusyId   = null; // mission currently being completed (guards double-tap)
+  var ovMissions = [];
+  var ovBusyId = null;
 
   function ovEl(id) { return document.getElementById(id); }
 
   function ovEscape(s) {
     if (s == null) return '';
-    return String(s)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
-  // ── Difficulty → badge class + label ──
   function ovDiffBadge(diff) {
-    var d = String(diff || 'easy').toLowerCase();
-    if (d === 'hard')   return '<span class="badge-pill badge-hard">⚠ HARD</span>';
-    if (d === 'medium') return '<span class="badge-pill badge-medium">◆ MEDIUM</span>';
-    return '<span class="badge-pill badge-easy">✓ EASY</span>';
+    var d = (diff || 'easy').toLowerCase();
+    if (d === 'hard') return '🔴 Hard';
+    if (d === 'medium') return '🟡 Medium';
+    return '🟢 Easy';
   }
 
-  // ── Render the "Today's Priority Missions" list ──
-  function ovRenderMissions() {
-    var list = ovEl('ov-mission-list');
-    if (!list) return;
-
-    if (!ovMissions.length) {
-      list.innerHTML = '<div style="padding:28px;text-align:center;color:var(--text-dim);' +
-        'font-family:\'Share Tech Mono\',monospace;font-size:12px;">' +
-        'No missions today. Check back after the daily reset.</div>';
-      return;
-    }
-
-    list.innerHTML = ovMissions.map(function(m, i) {
-      var num = String(i + 1).padStart(2, '0');
+  /* ── Render Mission List (bottom card) ── */
+  function ovRenderMissionList() {
+    var el = ovEl('ov-mission-list');
+    if (!el) return;
+    if (!ovMissions.length) { el.innerHTML = '<div class="ov-no-data">No missions today. Check back soon!</div>'; return; }
+    var html = '';
+    ovMissions.forEach(function(m, i) {
       var icon = OV_ICONS[i % OV_ICONS.length];
-      var done = !!m.done;
-
-      // value line: only show "~$X" if admin set a value above 0
-      var valHtml = (m.est_value_usd && m.est_value_usd > 0)
-        ? '~$' + Number(m.est_value_usd).toLocaleString()
-        : '+' + (m.xp || 0) + ' XP';
-      var valLbl = (m.est_value_usd && m.est_value_usd > 0) ? 'EST. VALUE' : 'XP REWARD';
-
-      var verifyBadge = (m.verified !== false)
-        ? '<span class="badge-pill badge-verify">🛡 VERIFIED</span>' : '';
-
-      var actions = done
-        ? '<button class="btn btn-ghost" style="opacity:0.4" disabled>DONE</button>' +
-          '<button class="check-btn done">✓</button>'
-        : '<button class="btn btn-ghost" data-ov-start="' + m.id + '">START</button>' +
-          '<button class="check-btn" data-ov-done="' + m.id + '">✓</button>';
-
-      return '' +
-        '<div class="mission-row' + (done ? ' completed' : '') + '" data-ov-row="' + m.id + '">' +
-          '<div class="mission-num">' + num + '</div>' +
-          '<div class="mission-chain-icon">' + icon + '</div>' +
-          '<div class="mission-info">' +
-            '<div class="mission-title">' + ovEscape(m.title) + '</div>' +
-            '<div class="mission-meta">' +
-              ovDiffBadge(m.difficulty) +
-              verifyBadge +
-              '<span class="mission-time">⏱ ~' + (m.time_minutes || 5) + ' min</span>' +
-            '</div>' +
-          '</div>' +
-          '<div class="mission-reward">' +
-            '<div class="reward-val">' + valHtml + '</div>' +
-            '<div class="reward-label">' + valLbl + '</div>' +
-          '</div>' +
-          '<div class="mission-actions">' + actions + '</div>' +
-        '</div>';
-    }).join('');
-  }
-
-  // ── START button: marks the START as engaged, opens project link if any ──
-  function ovStartMission(id) {
-    var btn = document.querySelector('[data-ov-start="' + id + '"]');
-    if (btn) {
-      btn.textContent = 'RUNNING';
-      btn.style.borderColor = 'var(--gold)';
-      btn.style.color = 'var(--gold)';
-    }
-  }
-
-  // ── ✓ button: complete the mission for real (saves XP + streak) ──
-  async function ovCompleteMission(id) {
-    if (ovBusyId !== null) return;          // one at a time
-    var m = ovMissions.find(function(x) { return x.id === id; });
-    if (!m || m.done) return;
-
-    ovBusyId = id;
-    var checkBtn = document.querySelector('[data-ov-done="' + id + '"]');
-    if (checkBtn) { checkBtn.textContent = '…'; checkBtn.style.opacity = '0.5'; }
-
-    try {
-      var result = await window.API.completeMission(id);
-      if (!result || !result.ok) {
-        if (checkBtn) { checkBtn.textContent = '✓'; checkBtn.style.opacity = '1'; }
-        alert('Could not save: ' + ((result && result.error) || 'unknown error'));
-        ovBusyId = null;
-        return;
-      }
-      // Mark done locally, then re-render + refresh all the hero numbers
-      m.done = true;
-      ovRenderMissions();
-      await ovLoadStats();
-    } catch (e) {
-      console.error('ovCompleteMission:', e);
-      if (checkBtn) { checkBtn.textContent = '✓'; checkBtn.style.opacity = '1'; }
-    }
-    ovBusyId = null;
-  }
-
-  // ── Load the hero / stat-card numbers (ELITE FARMING COMMAND) ──
-  async function ovLoadStats() {
-    if (!window.API || !window.API.isLive || !window.API.isLive()) return;
-
-    // v3.0 — defensive wrapper so any failure in Overview render
-    // can never break tab switching or other tabs.
-    try {
-
-    var s = await window.API.getOverviewStats();
-    s = s || {};   // defensive
-
-    // ═══════════════════════════════════════════════════════════════════════
-    // v3.0 OVERVIEW — populate the new Mockup-2 design IDs
-    // ═══════════════════════════════════════════════════════════════════════
-
-    // Hero — welcome name
-    if (ovEl('ov-username'))  ovEl('ov-username').textContent = s.name || 'Operator';
-
-    // Hero stat pills (4)
-    var totalXp     = s.totalXp || 0;
-    var streak      = s.currentStreak || 0;
-    var missionsDone= s.missionsDone || 0;
-    var missionsTotal = s.missionsTotal || 0;
-
-    // Elite Rank — based on user's XP brackets (transparent, no fake leaderboard)
-    // Brackets: <500 = Recruit, <2000 = Operator, <5000 = Pro, <15000 = Elite, <50000 = Master, >=50000 = Legend
-    var rankLabel = ovComputeRankLabel(totalXp);
-    if (ovEl('ov-elite-rank')) ovEl('ov-elite-rank').textContent = rankLabel;
-
-    // Global Rank — honest framing
-    if (ovEl('ov-global-rank')) {
-      if (totalXp === 0) {
-        ovEl('ov-global-rank').textContent = 'New';
-      } else if (totalXp < 500) {
-        ovEl('ov-global-rank').textContent = 'Climbing';
-      } else if (totalXp < 5000) {
-        ovEl('ov-global-rank').textContent = 'Active';
-      } else {
-        ovEl('ov-global-rank').textContent = 'Top Tier';
-      }
-    }
-
-    // Farming Score — formula: (XP/1000 base) * (1 + streak/30 streak bonus) * (1 + activeWallets/20 wallet bonus)
-    var fScore = ovComputeFarmingScore(s);
-    if (ovEl('ov-farming-score')) ovEl('ov-farming-score').textContent = fScore.toLocaleString();
-
-    // Streak pill
-    if (ovEl('ov-streak-pill')) ovEl('ov-streak-pill').textContent = streak + (streak === 1 ? ' Day' : ' Days');
-
-    // CTA — new opportunities count
-    var opps = await ovLoadOpportunities();   // also renders the list
-    if (ovEl('ov-opps-count'))      ovEl('ov-opps-count').textContent = opps.length || 0;
-    if (ovEl('ov-opps-total'))      ovEl('ov-opps-total').textContent = '(' + (opps.length || 0) + ')';
-
-    // System reset countdown — start ticking
-    ovStartResetCountdown();
-
-    // ═══ AI FARMING SCORE GAUGE ═══
-    // Score 0-10 based on combination of factors (formula-based, marked Beta)
-    var aiScore = ovComputeAiScore(s);
-    ovRenderGauge(aiScore);
-
-    // Outperforming X — honest framing
-    var pct = ovComputePercentile(totalXp);
-    if (ovEl('ov-ai-percentile')) ovEl('ov-ai-percentile').textContent = pct + '%';
-
-    // ═══ ECOSYSTEM HEATMAP ═══
-    await ovRenderHeatmap();
-    // ecosystems-count after heatmap renders
-    if (ovEl('ov-ecosystems-count')) {
-      var ecoCount = (window._ovHeatmapEcosystems || []).length;
-      ovEl('ov-ecosystems-count').textContent = ecoCount || 0;
-    }
-
-    // ═══ URGENT ALERTS ═══
-    await ovRenderUrgentAlerts();
-
-    // ═══ PORTFOLIO ═══
-    ovRenderPortfolio(s);
-
-    // ═══ FARMING PROGRESS ═══
-    // XP / level
-    var lvl = Math.floor(totalXp / 1000) + 1;
-    var xpInLvl = totalXp % 1000;
-    var pctXp = Math.min(100, Math.round((xpInLvl / 1000) * 100));
-    if (ovEl('ov-level'))    ovEl('ov-level').textContent = lvl;
-    if (ovEl('ov-xp-text'))  ovEl('ov-xp-text').textContent = xpInLvl.toLocaleString() + ' / 1,000 XP';
-    if (ovEl('ov-xp-fill'))  ovEl('ov-xp-fill').style.width = pctXp + '%';
-
-    // Stat trio
-    if (ovEl('ov-pm-done'))      ovEl('ov-pm-done').textContent = missionsDone;
-    if (ovEl('ov-pm-delta'))     ovEl('ov-pm-delta').textContent = (missionsDone > 0 ? '+' : '') + missionsDone + ' today';
-    // Success rate = missionsDone / missionsTotal if there are any, else 0
-    var successRate = missionsTotal > 0 ? Math.round((missionsDone / missionsTotal) * 100) : 0;
-    if (ovEl('ov-success-rate')) ovEl('ov-success-rate').textContent = successRate + '%';
-    if (ovEl('ov-success-delta'))ovEl('ov-success-delta').textContent = missionsDone === missionsTotal && missionsTotal > 0 ? 'perfect day' : 'today';
-    // ROI = est rewards / completed missions (rough)
-    var avgRoi = missionsDone > 0 ? ((s.estRewardsUsd || 0) / missionsDone).toFixed(1) : '0.0';
-    if (ovEl('ov-avg-roi'))      ovEl('ov-avg-roi').textContent = '$' + avgRoi;
-    if (ovEl('ov-roi-delta'))    ovEl('ov-roi-delta').textContent = 'avg/mission';
-
-    // Streak mini + milestones
-    if (ovEl('ov-streak-mini')) ovEl('ov-streak-mini').textContent = streak;
-    ovRenderStreakMilestones(streak);
-
-    // ═══ RECENT ACTIVITY ═══
-    await ovRenderActivity();
-
-    // ═══ ELITE INSIGHT FOOTER ═══
-    ovRenderInsightFooter(s);
-
-    // Legacy stat-grid IDs (kept for backward compat with old code paths — silently no-op since IDs no longer exist)
-    if (ovEl('ov-priority-count')) {
-      var remaining = Math.max(0, missionsTotal - missionsDone);
-      ovEl('ov-priority-count').textContent = remaining + (remaining === 1 ? ' priority mission' : ' priority missions');
-    }
-
-    } catch (err) {
-      // v3.0 defensive: log but never crash the page
-      console.error('[ovLoadStats] non-fatal render error:', err);
-    }
-  }
-
-  // ═══════════════════════════════════════════════════════════════════════════
-  // v3.0 OVERVIEW — SUPPORTING FUNCTIONS
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  // ─── Rank label brackets ───
-  function ovComputeRankLabel(xp) {
-    if (xp >= 50000) return '#1 Legend';
-    if (xp >= 15000) return '#2 Master';
-    if (xp >= 5000)  return '#3 Elite';
-    if (xp >= 2000)  return '#4 Pro';
-    if (xp >= 500)   return '#5 Operator';
-    return '#6 Recruit';
-  }
-
-  // ─── Farming Score formula ───
-  // Combines XP, streak bonus, wallet diversity
-  function ovComputeFarmingScore(s) {
-    var xpBase = (s.totalXp || 0);
-    var streakMult = 1 + ((s.currentStreak || 0) / 30) * 0.5;       // up to +50% for 30-day streak
-    var walletMult = 1 + ((s.walletsActive || 0) / 20) * 0.3;       // up to +30% for 20+ wallets
-    return Math.round(xpBase * streakMult * walletMult);
-  }
-
-  // ─── AI Farming Score (0-10 scale, formula-based) ───
-  function ovComputeAiScore(s) {
-    var xp = s.totalXp || 0;
-    var streak = s.currentStreak || 0;
-    var wallets = s.walletsActive || 0;
-    var done = s.missionsDone || 0;
-    var total = s.missionsTotal || 0;
-
-    var components = [];
-    components.push(Math.min(10, xp / 1500));              // XP component (10 at 15k XP)
-    components.push(Math.min(10, streak / 3));             // Streak component (10 at 30 days)
-    components.push(Math.min(10, wallets * 1.5));          // Wallet diversity (10 at 7 wallets)
-    if (total > 0) components.push((done / total) * 10);   // Today's completion %
-
-    var avg = components.reduce(function(a,b){ return a + b; }, 0) / components.length;
-    return Math.round(avg * 10) / 10;  // 1 decimal place
-  }
-
-  function ovRenderGauge(score) {
-    // Score 0-10 → fill stroke offset
-    var circumference = 326.7;
-    var fill = (Math.max(0, Math.min(10, score)) / 10);
-    var offset = circumference * (1 - fill);
-
-    var gauge = ovEl('ov-gauge-fill');
-    if (gauge) gauge.style.strokeDashoffset = offset;
-
-    if (ovEl('ov-ai-score-val')) ovEl('ov-ai-score-val').textContent = score.toFixed(1);
-
-    // Tier label
-    var tier;
-    if (score >= 8.5) tier = 'ELITE';
-    else if (score >= 6.5) tier = 'PRO';
-    else if (score >= 4.5) tier = 'ACTIVE';
-    else if (score >= 2.5) tier = 'GROWING';
-    else tier = 'RECRUIT';
-    if (ovEl('ov-ai-score-tier')) ovEl('ov-ai-score-tier').textContent = tier;
-  }
-
-  // ─── Percentile (formula based on absolute XP) ───
-  function ovComputePercentile(xp) {
-    // Honest: 0 XP = "no rank", positive XP = your relative bracket
-    if (xp === 0) return 0;
-    if (xp >= 15000) return 95;
-    if (xp >= 5000)  return 85;
-    if (xp >= 2000)  return 70;
-    if (xp >= 500)   return 50;
-    if (xp >= 100)   return 30;
-    return 15;
-  }
-
-  // ─── System Reset Countdown ───
-  var _ovResetInterval = null;
-  function ovStartResetCountdown() {
-    if (_ovResetInterval) return; // already running
-    function tick() {
-      var now = new Date();
-      var nextUtcMidnight = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0));
-      var ms = nextUtcMidnight - now;
-      var h = Math.floor(ms / 3600000);
-      var m = Math.floor((ms % 3600000) / 60000);
-      var sec = Math.floor((ms % 60000) / 1000);
-      var fmt = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
-      if (ovEl('ov-reset-time')) ovEl('ov-reset-time').textContent = fmt;
-    }
-    tick();
-    _ovResetInterval = setInterval(tick, 1000);
-  }
-
-  // ─── Smart Opportunities Algorithm ───
-  // Returns mix of: snapshot-urgent projects + high-momentum + top-XP missions
-  async function ovLoadOpportunities() {
-    var listEl = ovEl('ov-opps-list');
-    if (!listEl) return [];
-
-    var opps = [];
-
-    try {
-      // 1. Get projects with snapshot >= 75 (urgency)
-      if (window.API.getProjects) {
-        var projects = await window.API.getProjects({ featured: false });
-        var snapshotProjs = (projects || []).filter(function(p){
-          return p.snapshot_pct && p.snapshot_pct >= 75;
-        }).sort(function(a,b){ return (b.snapshot_pct||0) - (a.snapshot_pct||0); });
-
-        snapshotProjs.slice(0, 2).forEach(function(p){
-          opps.push({
-            type: 'snapshot',
-            id: p.id,
-            name: p.name,
-            logoUrl: p.logo_url,
-            logoInitials: p.logo_initials || p.name.slice(0,2).toUpperCase(),
-            logoColor: p.logo_color || 'gold',
-            tag: 'SNAPSHOT ' + p.snapshot_pct + '%',
-            tagClass: 'snapshot',
-            reward: p.est_value_usd || (p.reward_level || 'HIGH'),
-            ecosystem: p.ecosystem || ''
-          });
-        });
-
-        // 2. High-momentum projects
-        var momentumProjs = (projects || []).filter(function(p){
-          return p.momentum != null && p.momentum >= 70;
-        }).sort(function(a,b){ return (b.momentum||0) - (a.momentum||0); });
-        momentumProjs.slice(0, 2).forEach(function(p){
-          if (opps.findIndex(function(o){ return o.id === p.id; }) >= 0) return; // skip dupes
-          opps.push({
-            type: 'momentum',
-            id: p.id,
-            name: p.name,
-            logoUrl: p.logo_url,
-            logoInitials: p.logo_initials || p.name.slice(0,2).toUpperCase(),
-            logoColor: p.logo_color || 'gold',
-            tag: p.status || 'MOMENTUM',
-            tagClass: p.status === 'TESTNET' ? 'testnet' : 'mainnet',
-            reward: p.est_value_usd || p.reward_level || 'HIGH',
-            ecosystem: p.ecosystem || ''
-          });
-        });
-      }
-
-      // 3. High-XP missions (not done today)
-      if (window.API.getMissions) {
-        var missions = await window.API.getMissions();
-        var topXp = (missions || []).filter(function(m){ return !m.done; })
-          .sort(function(a,b){ return (b.xp||0) - (a.xp||0); });
-        topXp.slice(0, 2).forEach(function(m){
-          opps.push({
-            type: 'mission',
-            id: 'm_' + m.id,
-            missionId: m.id,
-            name: m.title,
-            logoUrl: null,
-            logoInitials: (m.project || 'M').slice(0,2).toUpperCase(),
-            logoColor: 'cyan',
-            tag: 'MISSION',
-            tagClass: 'mission',
-            reward: '+' + m.xp + ' XP',
-            ecosystem: m.project || ''
-          });
-        });
-      }
-
-      // Render (max 5 to avoid overflow)
-      opps = opps.slice(0, 5);
-      ovRenderOpportunityList(opps);
-      return opps;
-    } catch (e) {
-      console.error('[OV] opportunities failed:', e);
-      listEl.innerHTML = '<div class="ov-no-data">Could not load opportunities.</div>';
-      return [];
-    }
-  }
-
-  function ovRenderOpportunityList(opps) {
-    var listEl = ovEl('ov-opps-list');
-    if (!listEl) return;
-
-    if (!opps.length) {
-      listEl.innerHTML = '<div class="ov-no-data">No top opportunities right now. Add projects & missions via admin.</div>';
-      return;
-    }
-
-    var colorMap = { gold: '#f5c842', cyan: '#4af0ff', purple: '#b070ff', pink: '#ff5e8a', orange: '#ff9046', green: '#00e87a' };
-    var html = opps.map(function(o){
-      var c = colorMap[o.logoColor] || '#f5c842';
-      var logoHtml;
-      if (o.logoUrl) {
-        logoHtml = '<img src="' + ovEsc(o.logoUrl) + '" alt="">';
-      } else {
-        logoHtml = ovEsc(o.logoInitials);
-      }
-      var logoStyle = o.logoUrl ? '' : 'background:' + c + '20;color:' + c + ';border:1px solid ' + c + '55;';
-      var rewardDisplay = (typeof o.reward === 'number') ? '$' + o.reward.toLocaleString() : ovEsc(String(o.reward));
-
-      return ''
-        + '<div class="ov-opp-row" onclick="ovOpenOpportunity(\'' + ovEsc(o.id) + '\',\'' + o.type + '\')">'
-        +   '<div class="ov-opp-logo" style="' + logoStyle + '">' + logoHtml + '</div>'
-        +   '<div class="ov-opp-body">'
-        +     '<div class="ov-opp-title">' + ovEsc(o.name) + '</div>'
-        +     '<div class="ov-opp-meta">'
-        +       '<span class="ov-opp-tag ' + o.tagClass + '">' + ovEsc(o.tag) + '</span>'
-        +       (o.ecosystem ? '<span class="ov-opp-tag high">' + ovEsc(o.ecosystem) + '</span>' : '')
-        +     '</div>'
-        +   '</div>'
-        +   '<div class="ov-opp-reward"><div class="ov-opp-rlbl">REWARD</div><div class="ov-opp-rval">' + rewardDisplay + '</div></div>'
-        +   '<button class="ov-opp-btn" onclick="event.stopPropagation();ovOpenOpportunity(\'' + ovEsc(o.id) + '\',\'' + o.type + '\')">START</button>'
+      var pct = m.done ? 100 : (m.status === 'in_progress' ? 50 : 0);
+      var fillClass = m.done ? 'green' : 'gold';
+      var statusTxt = m.done ? 'Claimed' : (m.status === 'in_progress' ? (m.progress_current || 0) + ' / ' + (m.progress_target || 1) : '0 / ' + (m.progress_target || 1));
+      html += '<div class="ov-ml-item">'
+        + '<div class="ov-ml-icon">' + icon + '</div>'
+        + '<div class="ov-ml-info"><div class="ov-ml-name">' + ovEscape(m.title) + '</div>'
+        + '<div class="ov-ml-bar"><div class="ov-ml-bar-fill ' + fillClass + '" style="width:' + pct + '%"></div></div></div>'
+        + '<div class="ov-ml-status">' + statusTxt + '</div>'
         + '</div>';
-    }).join('');
-    listEl.innerHTML = html;
+    });
+    html += '<button class="ov-link-btn full" onclick="ovGoToMissions()">View All Missions →</button>';
+    el.innerHTML = html;
   }
 
-  // Expose click handler
-  window.ovOpenOpportunity = function(id, type) {
-    if (type === 'mission') {
-      // Switch to Daily Operations
-      var btn = document.querySelector('[data-tab-target="daily-missions"]');
-      if (btn) btn.click();
-    } else {
-      // Project: switch to Project Intelligence and open detail
-      var btn = document.querySelector('[data-tab-target="project-intel"]');
-      if (btn) btn.click();
-      setTimeout(function(){
-        if (window.piOpenDetail) window.piOpenDetail(id);
-      }, 300);
-    }
-  };
-
-  // ─── Ecosystem Heatmap ───
-  window._ovHeatmapEcosystems = [];
-  async function ovRenderHeatmap() {
-    var grid = ovEl('ov-hex-grid');
-    if (!grid) return;
-    if (!window.API.getProjects) {
-      grid.innerHTML = '<div class="ov-no-data">Projects API not available.</div>';
-      return;
-    }
-
-    try {
-      var projects = await window.API.getProjects({ featured: false });
-
-      // Count per ecosystem
-      var counts = {};
-      (projects || []).forEach(function(p){
-        var eco = (p.ecosystem || 'OTHER').toUpperCase();
-        counts[eco] = (counts[eco] || 0) + 1;
-      });
-
-      // Sort by count desc
-      var ecoList = Object.keys(counts).map(function(name){
-        return { name: name, count: counts[name] };
-      }).sort(function(a,b){ return b.count - a.count; });
-
-      window._ovHeatmapEcosystems = ecoList;
-
-      if (!ecoList.length) {
-        grid.innerHTML = '<div class="ov-no-data">No ecosystems yet. Add projects via admin.</div>';
-        return;
-      }
-
-      // Heat: relative to max count
-      var max = ecoList[0].count;
-      function heatClass(c) {
-        if (max === 0) return 'heat-cold';
-        var ratio = c / max;
-        if (ratio >= 0.85) return 'heat-hot';
-        if (ratio >= 0.65) return 'heat-warm';
-        if (ratio >= 0.45) return 'heat-medium';
-        if (ratio >= 0.25) return 'heat-cool';
-        return 'heat-cold';
-      }
-      function heatLabel(c) {
-        if (max === 0) return 'cold';
-        var ratio = c / max;
-        if (ratio >= 0.85) return 'hot';
-        if (ratio >= 0.65) return 'warm';
-        if (ratio >= 0.45) return 'medium';
-        if (ratio >= 0.25) return 'cool';
-        return 'cold';
-      }
-
-      // 7 positions: center, tl, tr, l, r, bl, br
-      var positions = ['center', 'tl', 'tr', 'l', 'r', 'bl', 'br'];
-      var ecosToShow = ecoList.slice(0, 7);
-
-      var html = ecosToShow.map(function(e, i){
-        return ''
-          + '<div class="ov-hex pos-' + positions[i] + ' ' + heatClass(e.count) + '" '
-          +    'onclick="ovFilterByEcosystem(\'' + ovEsc(e.name) + '\')" title="' + ovEsc(e.name) + ': ' + e.count + ' projects">'
-          +   '<div class="ov-hex-shape">'
-          +     '<div class="ov-hex-name">' + ovEsc(e.name).slice(0, 8) + '</div>'
-          +     '<div class="ov-hex-score">' + e.count + '</div>'
-          +     '<div class="ov-hex-tag">' + heatLabel(e.count) + '</div>'
-          +   '</div>'
-          + '</div>';
-      }).join('');
-
-      grid.innerHTML = html;
-    } catch (e) {
-      console.error('[OV] heatmap failed:', e);
-      grid.innerHTML = '<div class="ov-no-data">Could not load heatmap.</div>';
-    }
+  /* ── Render Top 3 Moves ── */
+  function ovRenderMoves() {
+    var el = ovEl('ov-moves-grid');
+    if (!el || !ovMissions.length) return;
+    var top3 = ovMissions.filter(function(m) { return !m.done; }).slice(0, 3);
+    if (!top3.length) { el.innerHTML = '<div class="ov-no-data">All missions complete! 🎉</div>'; return; }
+    var html = '';
+    top3.forEach(function(m, i) {
+      var icon = OV_ICONS[i % OV_ICONS.length];
+      var xp = m.xp_reward || 100;
+      var ctaLabel = i === 0 ? 'Do It Now' : (i === 1 ? 'Claim Now' : 'Start Now');
+      html += '<div class="ov-move-card">'
+        + '<div class="ov-move-num">' + (i + 1) + '</div>'
+        + '<div class="ov-move-icon">' + icon + '</div>'
+        + '<div class="ov-move-name">' + ovEscape(m.title) + '</div>'
+        + '<div class="ov-move-desc">' + ovEscape(m.description || '') + '</div>'
+        + '<div class="ov-move-foot"><span class="ov-move-reward">Reward</span><span class="ov-move-xp gold">' + xp + ' XP</span></div>'
+        + '<button class="ov-move-cta" data-ov-move="' + m.id + '">' + ctaLabel + '</button>'
+        + '</div>';
+    });
+    el.innerHTML = html;
   }
 
-  window.ovFilterByEcosystem = function(ecosystem) {
-    // Go to Project Intelligence + select that ecosystem
-    var btn = document.querySelector('[data-tab-target="project-intel"]');
-    if (btn) btn.click();
-    // The PI tab's filter UI uses piFilterEcosystem — try to invoke it
-    setTimeout(function(){
-      if (window.piFilterEcosystem) {
-        var tabBtn = document.querySelector('.project-intel-view .pi-tab[data-ecosystem="' + ecosystem + '"]');
-        if (tabBtn) window.piFilterEcosystem(tabBtn, ecosystem);
-      }
-    }, 300);
-  };
+  /* ── Render NBA Hero from first undone mission ── */
+  function ovRenderNBA() {
+    var m = ovMissions.filter(function(x) { return !x.done; })[0];
+    if (!m) return;
+    var t = ovEl('ov-nba-title'); if (t) t.textContent = m.title || 'Bridge any asset';
+    var d = ovEl('ov-nba-desc'); if (d) d.textContent = m.description || '';
+    var r = ovEl('ov-nba-reward'); if (r) r.textContent = '🪙 ' + (m.xp_reward || 100) + ' XP';
+    var df = ovEl('ov-nba-diff'); if (df) df.textContent = ovDiffBadge(m.difficulty);
+    var tt = ovEl('ov-tt-name'); if (tt) tt.textContent = m.title || 'Bridge any asset';
+    var tr = ovEl('ov-tt-reward'); if (tr) tr.textContent = (m.xp_reward || 100) + ' XP';
+  }
 
-  // ─── Urgent Alerts (from project_intel_feed) ───
-  async function ovRenderUrgentAlerts() {
-    var listEl = ovEl('ov-alerts-list');
-    var countEl = ovEl('ov-alert-count');
-    if (!listEl) return;
-    if (!window.API.adminListIntelFeed && !window.API.getProjectIntelFeed) {
-      listEl.innerHTML = '<div class="ov-no-data">Alerts API not available.</div>';
-      return;
+  /* ── Load Stats ── */
+  async function ovLoadStats() {
+    var s = null;
+    try { s = await window.API.getUserProgress(); } catch (e) {}
+    if (!s) s = {};
+    var xp = s.total_xp || 0;
+    var level = s.level || 1;
+    var streak = s.current_streak || 0;
+    var missionsComplete = s.missions_completed || 0;
+    var totalMissions = ovMissions.length || 0;
+
+    // Level + XP
+    var levelXP = level * 1000;
+    var prevXP = (level - 1) * 1000;
+    var inLevel = xp - prevXP;
+    var needed = levelXP - prevXP;
+    var pct = needed > 0 ? Math.min(100, Math.round((inLevel / needed) * 100)) : 0;
+
+    var elLevel = ovEl('ov-stat-level'); if (elLevel) elLevel.textContent = level;
+    var elFill = ovEl('ov-xp-fill'); if (elFill) elFill.style.width = pct + '%';
+    var elXPText = ovEl('ov-xp-text'); if (elXPText) elXPText.textContent = xp.toLocaleString() + ' / ' + levelXP.toLocaleString() + ' XP';
+    var elXPPct = ovEl('ov-xp-pct'); if (elXPPct) elXPPct.textContent = pct + '% to Level ' + (level + 1);
+
+    // Streak
+    var elStreak = ovEl('ov-stat-streak'); if (elStreak) elStreak.textContent = streak;
+    ovRenderStreakWeek(streak);
+
+    // Total XP
+    var elTXP = ovEl('ov-stat-xp'); if (elTXP) elTXP.textContent = xp.toLocaleString();
+
+    // Total Rewards
+    var elRewards = ovEl('ov-stat-rewards'); if (elRewards) elRewards.textContent = '$' + (s.total_rewards || 0).toLocaleString();
+
+    // Wallets Health
+    var health = s.wallet_health || 0;
+    var elHealth = ovEl('ov-stat-health'); if (elHealth) elHealth.textContent = health;
+    var elHL = ovEl('ov-health-label');
+    if (elHL) elHL.textContent = health >= 90 ? 'Excellent' : health >= 70 ? 'Good' : health >= 50 ? 'Fair' : 'Needs Work';
+
+    // Missions count
+    var done = ovMissions.filter(function(m) { return m.done; }).length;
+    var elMissions = ovEl('ov-stat-missions'); if (elMissions) elMissions.innerHTML = done + ' <small>/ ' + totalMissions + '</small>';
+    var elMS = ovEl('ov-missions-status'); if (elMS) elMS.textContent = done === totalMissions ? 'All Complete!' : 'In Progress';
+
+    // Portfolio Health gauge
+    ovRenderPortfolioHealth(s);
+
+    // Render missions
+    ovRenderMissionList();
+    ovRenderMoves();
+    ovRenderNBA();
+
+    // Load alerts
+    await ovRenderAlerts();
+  }
+
+  /* ── Streak Week Dots ── */
+  function ovRenderStreakWeek(streak) {
+    var el = ovEl('ov-streak-week');
+    if (!el) return;
+    var today = new Date().getDay(); // 0=Sun
+    var dayMap = [6, 0, 1, 2, 3, 4, 5]; // map JS day to M=0,T=1,...S=6
+    var todayIdx = dayMap[today];
+    var spans = el.querySelectorAll('span');
+    spans.forEach(function(sp, i) {
+      sp.className = '';
+      if (i < todayIdx) sp.classList.add('done');
+      else if (i === todayIdx) sp.classList.add(streak > 0 ? 'done' : 'today');
+    });
+  }
+
+  /* ── Portfolio Health Gauge ── */
+  function ovRenderPortfolioHealth(s) {
+    var score = s.wallet_health || 0;
+    var circumference = 2 * Math.PI * 50;
+    var offset = circumference - (score / 100) * circumference;
+    var fill = ovEl('ov-ph-fill');
+    if (fill) {
+      fill.style.strokeDasharray = circumference;
+      fill.style.strokeDashoffset = offset;
     }
+    var val = ovEl('ov-ph-val'); if (val) val.textContent = score;
+    var lbl = ovEl('ov-ph-lbl');
+    if (lbl) lbl.textContent = score >= 90 ? 'Excellent' : score >= 70 ? 'Good' : score >= 50 ? 'Fair' : 'Poor';
 
+    // Metrics breakdown (placeholder values)
+    var sec = ovEl('ov-ph-security'); if (sec) sec.textContent = Math.min(100, score + 2) + '/100';
+    var act = ovEl('ov-ph-activity'); if (act) act.textContent = Math.min(100, score - 2) + '/100';
+    var div = ovEl('ov-ph-diversity'); if (div) div.textContent = Math.min(100, score - 3) + '/100';
+    var syb = ovEl('ov-ph-sybil'); if (syb) syb.textContent = Math.min(100, score + 1) + '/100';
+    var con = ovEl('ov-ph-consist'); if (con) con.textContent = Math.min(100, score + 1) + '/100';
+  }
+
+  /* ── Render Live Alerts (right sidebar) ── */
+  async function ovRenderAlerts() {
+    var list = ovEl('ov-la-list');
+    if (!list) return;
     try {
-      // Pull recent alerts via adminListIntelFeed (works for both admin and user — filters by is_active)
       var alerts = [];
-      if (window.API.adminListIntelFeed) {
-        alerts = await window.API.adminListIntelFeed(null, false);  // active only
+      if (window.API && window.API.getIntelAlerts) {
+        alerts = await window.API.getIntelAlerts();
       }
-
-      // Get projects for name lookup
-      var projects = window.API.getProjects ? (await window.API.getProjects({ featured: false })) : [];
-      var projMap = {};
-      (projects || []).forEach(function(p){ projMap[p.id] = p; });
-
-      // Filter: only alert + warning types, and limit to 5 most recent
-      var urgent = (alerts || []).filter(function(a){
-        return a.feed_type === 'alert' || a.feed_type === 'warning';
-      }).slice(0, 5);
-
-      if (countEl) countEl.textContent = urgent.length;
-
-      if (!urgent.length) {
-        listEl.innerHTML = '<div class="ov-no-data">No urgent alerts. All quiet on the elite front.</div>';
-        return;
-      }
-
-      var iconMap = { alert: '🚨', warning: '⚠️', good: '✓', info: '📊' };
-      var html = urgent.map(function(a){
-        var p = projMap[a.project_id];
-        var title = p ? p.name + ' Alert' : 'Project Alert';
-        return ''
-          + '<div class="ov-alert-item ' + (a.feed_type || 'info') + '" onclick="ovGoToIntelHub()">'
-          +   '<div class="ov-alert-icon">' + (iconMap[a.feed_type] || '🚨') + '</div>'
-          +   '<div class="ov-alert-body">'
-          +     '<div class="ov-alert-title">' + ovEsc(title) + '</div>'
-          +     '<div class="ov-alert-sub">' + ovEsc(a.message || '') + '</div>'
-          +   '</div>'
-          +   '<div class="ov-alert-arrow">›</div>'
+      if (!alerts || !alerts.length) return; // keep default placeholder
+      var html = '';
+      alerts.slice(0, 4).forEach(function(a) {
+        var dot = '🔵';
+        var type = (a.feed_type || a.priority || '').toLowerCase();
+        if (type === 'critical' || type === 'high') dot = '🔴';
+        else if (type === 'warning' || type === 'medium') dot = '🔶';
+        else if (type === 'good' || type === 'low') dot = '🟢';
+        var ago = a.created_at ? ovTimeAgo(a.created_at) : '';
+        html += '<div class="ov-la-item">'
+          + '<span class="ov-la-dot">' + dot + '</span>'
+          + '<span class="ov-la-text">' + ovEscape(a.title || a.headline || '') + '</span>'
+          + '<span class="ov-la-time">' + ago + '</span>'
           + '</div>';
-      }).join('');
-      listEl.innerHTML = html;
-    } catch (e) {
-      console.error('[OV] alerts failed:', e);
-      listEl.innerHTML = '<div class="ov-no-data">Could not load alerts.</div>';
-    }
-  }
-
-  // ─── Portfolio Donut ───
-  function ovRenderPortfolio(s) {
-    // Phase 1: use estimates from existing data
-    // wallet = active wallets count × $100 estimate (very rough)
-    // claimable = estRewardsUsd if any
-    // pending = (claimingSoon * $50 estimate)
-    // invested = 0 (no real tracking yet)
-
-    var claimable = Math.round(s.estRewardsUsd || 0);
-    var pendingRough = (s.claimingSoon || 0) * 50;
-    var walletRough = (s.walletsActive || 0) * 100;
-    var investedRough = 0;
-    var total = claimable + pendingRough + walletRough + investedRough;
-
-    if (ovEl('ov-port-total'))     ovEl('ov-port-total').textContent = '$' + total.toLocaleString();
-    if (ovEl('ov-port-change'))    ovEl('ov-port-change').textContent = total > 0 ? '+ active' : '—';
-    if (ovEl('ov-port-wallet'))    ovEl('ov-port-wallet').textContent = '$' + walletRough.toLocaleString();
-    if (ovEl('ov-port-claimable')) ovEl('ov-port-claimable').textContent = '$' + claimable.toLocaleString();
-    if (ovEl('ov-port-pending'))   ovEl('ov-port-pending').textContent = '$' + pendingRough.toLocaleString();
-    if (ovEl('ov-port-invested'))  ovEl('ov-port-invested').textContent = '$' + investedRough.toLocaleString();
-
-    // Donut: 4 segments
-    var circumference = 301.6;
-    var segments = [
-      { id: 'ov-donut-1', val: walletRough },
-      { id: 'ov-donut-2', val: claimable },
-      { id: 'ov-donut-3', val: pendingRough },
-      { id: 'ov-donut-4', val: investedRough }
-    ];
-    if (total === 0) {
-      // No data — leave donut empty (just bg ring)
-      segments.forEach(function(seg){
-        var el = ovEl(seg.id);
-        if (el) {
-          el.style.strokeDasharray = '0 ' + circumference;
-          el.style.strokeDashoffset = 0;
-        }
       });
-      return;
-    }
-
-    var offsetAccum = 0;
-    segments.forEach(function(seg){
-      var el = ovEl(seg.id);
-      if (!el) return;
-      var fraction = seg.val / total;
-      var arcLen = fraction * circumference;
-      el.style.strokeDasharray = arcLen + ' ' + circumference;
-      el.style.strokeDashoffset = -offsetAccum;
-      offsetAccum += arcLen;
-    });
+      list.innerHTML = html;
+    } catch (e) { console.error('ovRenderAlerts:', e); }
   }
 
-  // ─── Streak milestones ───
-  function ovRenderStreakMilestones(streak) {
-    var targets = [
-      { dotId: 'ov-streak-d7',  fillId: 'ov-streak-fill-1', target: 7,  prev: 0  },
-      { dotId: 'ov-streak-d14', fillId: 'ov-streak-fill-2', target: 14, prev: 7  },
-      { dotId: 'ov-streak-d30', fillId: null,               target: 30, prev: 14 }
-    ];
-    targets.forEach(function(t){
-      var dot = ovEl(t.dotId);
-      if (dot) dot.classList.toggle('reached', streak >= t.target);
-      if (t.fillId) {
-        var fill = ovEl(t.fillId);
-        if (fill) {
-          var range = t.target - t.prev;
-          var progressInRange = Math.max(0, Math.min(range, streak - t.prev));
-          fill.style.width = (progressInRange / range * 100) + '%';
-        }
-      }
-    });
+  function ovTimeAgo(ts) {
+    var diff = Date.now() - new Date(ts).getTime();
+    var mins = Math.floor(diff / 60000);
+    if (mins < 1) return 'now';
+    if (mins < 60) return mins + 'm ago';
+    var hrs = Math.floor(mins / 60);
+    if (hrs < 24) return hrs + 'h ago';
+    return Math.floor(hrs / 24) + 'd ago';
   }
 
-  // ─── Recent Activity ───
-  async function ovRenderActivity() {
-    var listEl = ovEl('ov-activity-list');
-    if (!listEl) return;
-    if (!window.API.getActivityFeed) {
-      listEl.innerHTML = '<div class="ov-no-data">Activity API not available.</div>';
-      return;
-    }
-
+  /* ── Load Missions ── */
+  async function ovLoadMissions() {
     try {
-      var activity = await window.API.getActivityFeed(8);
-      if (!activity || !activity.length) {
-        listEl.innerHTML = '<div class="ov-no-data">No activity yet. Start a mission to begin!</div>';
-        return;
-      }
-
-      var html = activity.map(function(a){
-        var kind = a.kind || 'other';
-        var dotClass = kind === 'mission'  ? 'complete'
-                    : kind === 'airdrop'  ? 'start'
-                    : kind === 'reward'   ? 'claim'
-                    : kind === 'shield'   ? 'shield'
-                    : kind === 'wallet'   ? 'start'
-                    : 'complete';
-        // Try to extract XP from detail text (e.g. "+50 XP earned")
-        var xpStr = '';
-        var detail = a.detail || '';
-        var xpMatch = detail.match(/\+?\s*(\d+)\s*XP/i);
-        if (xpMatch) xpStr = '+' + xpMatch[1] + ' XP';
-
-        var timeStr = a.created_at ? ovTimeAgo(a.created_at) : '';
-        var title = a.title || 'Activity';
-
-        return ''
-          + '<div class="ov-activity-item">'
-          +   '<span class="ov-activity-dot ' + dotClass + '"></span>'
-          +   '<span class="ov-activity-title">' + ovEsc(title) + '</span>'
-          +   '<span class="ov-activity-xp">' + xpStr + '</span>'
-          +   '<span class="ov-activity-time">' + timeStr + '</span>'
-          + '</div>';
-      }).join('');
-      listEl.innerHTML = html;
-    } catch (e) {
-      console.error('[OV] activity failed:', e);
-      listEl.innerHTML = '<div class="ov-no-data">Could not load activity.</div>';
-    }
+      if (!window.API) return;
+      var all = await window.API.getMissions();
+      if (!all) all = [];
+      var completions = [];
+      try { completions = await window.API.getMissionCompletions(); } catch (e) {}
+      var doneIds = {};
+      (completions || []).forEach(function(c) { doneIds[c.mission_id] = true; });
+      ovMissions = all.map(function(m) { m.done = !!doneIds[m.id]; return m; });
+    } catch (e) { console.error('ovLoadMissions:', e); }
   }
 
-  function ovTimeAgo(timestamp) {
-    var ms = Date.now() - new Date(timestamp).getTime();
-    var mins = Math.floor(ms / 60000);
-    if (mins < 1) return 'just now';
-    if (mins < 60) return mins + 'm';
-    var hours = Math.floor(mins / 60);
-    if (hours < 24) return hours + 'h';
-    var days = Math.floor(hours / 24);
-    return days + 'd';
+  /* ── Load All ── */
+  async function ovLoadAll() {
+    try { await ovLoadMissions(); } catch (e) { console.error('[ovLoadMissions]', e); }
+    try { await ovLoadStats(); } catch (e) { console.error('[ovLoadStats]', e); }
   }
 
-  // ─── Elite Insight Footer ───
-  function ovRenderInsightFooter(s) {
-    // Rotating inspirational messages (cycles weekly)
-    var messages = [
-      'Cross-chain DeFi activity is heating up this week. Focus on snapshot-ready projects.',
-      'Snapshot season — projects with 80%+ snapshot pct are highest priority right now.',
-      'Diversify across 3+ ecosystems for resilient airdrop farming.',
-      'Tier 1 backed projects historically deliver 5–10× higher avg airdrop value.',
-      'Multi-language community engagement = unique edge. Use it.',
-      'Daily streaks unlock multipliers — even small daily wins compound over weeks.',
-      'Smart-money wallets watch Layer-2 activity closely. Track via DeBank / Arkham.'
-    ];
-    var weekIdx = Math.floor(Date.now() / (7 * 24 * 3600 * 1000)) % messages.length;
-    if (ovEl('ov-insight-text')) ovEl('ov-insight-text').textContent = messages[weekIdx];
+  /* ── Actions: Do NBA ── */
+  window.ovDoNBA = function() {
+    var m = ovMissions.filter(function(x) { return !x.done; })[0];
+    if (m && m.action_url) { window.open(m.action_url, '_blank'); }
+    else { ovGoToMissions(); }
+  };
 
-    // Stats — count from real data
-    if (ovEl('ov-is-airdrops')) ovEl('ov-is-airdrops').textContent = (s.activeAirdrops || 0);
-    if (ovEl('ov-is-value'))    ovEl('ov-is-value').textContent    = '$' + (s.estRewardsUsd || 0).toLocaleString();
-    if (ovEl('ov-is-farmers'))  ovEl('ov-is-farmers').textContent  = 'You';
-  }
-
-  // ─── Helpers ───
-  function ovEsc(str) {
-    if (str == null) return '';
-    return String(str)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-  }
-
-  // ─── Tab nav helpers (expose for inline onclick handlers) ───
+  /* ── Navigation helpers ── */
+  window.ovGoToMissions = function() {
+    document.querySelector('[data-tab-target="daily-missions"]')?.click();
+  };
   window.ovGoToProjects = function() {
-    var btn = document.querySelector('[data-tab-target="project-intel"]');
-    if (btn) btn.click();
+    document.querySelector('[data-tab-target="project-intel"]')?.click();
   };
   window.ovGoToIntelHub = function() {
-    var btn = document.querySelector('[data-tab-target="intel-hub"]');
-    if (btn) btn.click();
+    document.querySelector('[data-tab-target="intel-hub"]')?.click();
   };
   window.ovGoToWallets = function() {
-    var btn = document.querySelector('[data-tab-target="wallets"]');
-    if (btn) btn.click();
+    document.querySelector('[data-tab-target="wallets"]')?.click();
   };
-  window.ovGoToActivity = function() {
-    var btn = document.querySelector('[data-tab-target="profile"]');
-    if (btn) btn.click();
+  window.ovGoToRewards = function() {
+    document.querySelector('[data-tab-target="rewards"]')?.click();
   };
   window.ovGoToAnalytics = function() {
-    // No analytics tab yet; open intel hub as best alternative
-    var btn = document.querySelector('[data-tab-target="intel-hub"]');
-    if (btn) btn.click();
+    document.querySelector('[data-tab-target="wallets"]')?.click();
   };
 
-
-  // ── Weekly Completion: count this user's completions in the last 7 days ──
-  async function ovLoadWeekly() {
-    try {
-      var done7 = 0;
-      if (window.API && window.API.getWeeklyCompletions) {
-        done7 = await window.API.getWeeklyCompletions();
-      }
-      if (ovEl('ov-stat-weekly')) ovEl('ov-stat-weekly').textContent = done7;
-      if (ovEl('ov-stat-weekly-sub')) ovEl('ov-stat-weekly-sub').textContent =
-          'missions done · last 7 days';
-    } catch (e) { console.error('ovLoadWeekly:', e); }
-  }
-
-  // ── Claim Deadline Alerts (real — from the Rewards table) ──
-  function ovFormatLeft(ms) {
-    if (ms <= 0) return 'expired';
-    var h = Math.floor(ms / 3600000);
-    if (h < 1)  return Math.max(1, Math.floor(ms / 60000)) + 'm left';
-    if (h < 48) return h + 'h left';
-    return Math.floor(h / 24) + 'd left';
-  }
-
-  async function ovLoadAlerts() {
-    var box = ovEl('ov-alert-list');
-    if (!box) return;
-    if (!window.API || !window.API.getClaimAlerts) return;
-
-    try {
-      var alerts = await window.API.getClaimAlerts();
-
-      // Update the topbar "X Alerts" pill with the real count
-      var pill = document.querySelector('#ov-alert-pill .btn-label');
-      if (pill) {
-        pill.textContent = alerts.length + (alerts.length === 1 ? ' Alert' : ' Alerts');
-      }
-
-      if (!alerts.length) {
-        box.innerHTML = '<div style="padding:22px;text-align:center;color:var(--text-dim);' +
-          'font-family:\'Share Tech Mono\',monospace;font-size:11px;">' +
-          'No claim deadlines coming up. You\'re all clear. ✓</div>';
-        return;
-      }
-      box.innerHTML = alerts.map(function(a) {
-        // <12h = critical, <48h = warning, else info
-        var cls = a.msLeft < 12 * 3600000 ? 'alert-critical'
-                : (a.msLeft < 48 * 3600000 ? 'alert-warning' : 'alert-info');
-        var icon = cls === 'alert-critical' ? '🚨' : (cls === 'alert-warning' ? '⚠️' : '🏅');
-        var val  = a.usdValue > 0 ? ' · ~$' + Number(a.usdValue).toLocaleString() : '';
-        return '' +
-          '<div class="alert-item ' + cls + '">' +
-            '<div class="alert-icon">' + icon + '</div>' +
-            '<div class="alert-body">' +
-              '<div class="alert-title">Claim Deadline: ' + ovEscape(a.project) + '</div>' +
-              '<div class="alert-desc">Claim window closing soon' + val + '. Open the Rewards tab to claim.</div>' +
-            '</div>' +
-            '<div class="alert-time">' + ovFormatLeft(a.msLeft) + '</div>' +
-          '</div>';
-      }).join('');
-    } catch (e) {
-      console.error('ovLoadAlerts:', e);
-    }
-  }
-
-  // ── Load the priority mission list ──
-  async function ovLoadMissions() {
-    var list = ovEl('ov-mission-list');
-    if (!window.API || !window.API.isLive || !window.API.isLive()) {
-      if (list) list.innerHTML = '<div style="padding:28px;text-align:center;color:var(--text-dim);' +
-        'font-family:\'Share Tech Mono\',monospace;font-size:12px;">' +
-        'Supabase not connected. Check api.js keys.</div>';
-      return;
-    }
-    try {
-      ovMissions = await window.API.getMissions();
-      ovRenderMissions();
-    } catch (e) {
-      console.error('ovLoadMissions:', e);
-    }
-  }
-
-  // ── Master loader: refresh the whole Overview tab ──
-  async function ovLoadAll() {
-    try { await ovLoadMissions(); } catch(e) { console.error('[ovLoadMissions]', e); }
-    try { await ovLoadStats();    } catch(e) { console.error('[ovLoadStats]', e); }
-    try { await ovLoadAlerts();   } catch(e) { console.error('[ovLoadAlerts]', e); }
-  }
-
-  // ── Event delegation for the mission START / ✓ buttons ──
+  /* ── Move card click handler ── */
   document.addEventListener('click', function(e) {
-    var startBtn = e.target.closest('[data-ov-start]');
-    if (startBtn) { ovStartMission(parseInt(startBtn.dataset.ovStart, 10)); return; }
-
-    var doneBtn = e.target.closest('[data-ov-done]');
-    if (doneBtn) { ovCompleteMission(parseInt(doneBtn.dataset.ovDone, 10)); return; }
-
-    // "Start Missions" hero button → scroll to the priority mission list
-    var heroStart = e.target.closest('#ov-start-missions');
-    if (heroStart) {
-      var panel = ovEl('ov-mission-list');
-      if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+    var btn = e.target.closest('[data-ov-move]');
+    if (!btn) return;
+    var id = parseInt(btn.dataset.ovMove, 10);
+    var m = ovMissions.find(function(x) { return x.id === id; });
+    if (m && m.action_url) window.open(m.action_url, '_blank');
+    else ovGoToMissions();
   });
 
-  // ── Refresh when the user switches back to the Overview tab ──
-  document.addEventListener('dropelite:tabchange', function(e) {
+  /* ── Tab switch listener ── */
+  document.addEventListener('tab:changed', function(e) {
     if (e.detail && e.detail.tabName === 'overview') ovLoadAll();
   });
 
-  // ── First load on page open ──
+  /* ── First load ── */
   document.addEventListener('DOMContentLoaded', function() {
-    // small delay so the Supabase client + auth are ready (same as Daily Missions)
     setTimeout(ovLoadAll, 650);
   });
 
 })();
+
 
 /* ═══════════════════════════════════════════
    LIVE ETHEREUM GAS WIDGET — Etherscan V2 API
