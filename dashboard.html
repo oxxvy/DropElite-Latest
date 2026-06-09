@@ -1422,11 +1422,9 @@
 [data-theme="light"] .overview-view .ov-nba-cta { background: var(--ov-gold); color: #fff; box-shadow: 0 4px 20px rgba(196,138,8,0.25); }
 [data-theme="light"] .overview-view .ov-nba-cta:hover { box-shadow: 0 6px 28px rgba(196,138,8,0.35); }
 
-/* Robot in light mode */
-[data-theme="light"] .overview-view .ov-robot-head { background: linear-gradient(180deg, #e0e4ee, #c8cdd8); box-shadow: 0 0 16px rgba(196,138,8,0.15); border-color: rgba(10,14,30,0.12); }
-[data-theme="light"] .overview-view .ov-robot-torso { background: linear-gradient(180deg, #c8cdd8, #b0b8c8); border-color: rgba(10,14,30,0.08); }
-[data-theme="light"] .overview-view .ov-robot-arm { background: linear-gradient(180deg, #d5d9e4, #b0b8c8); border-color: rgba(10,14,30,0.06); }
-[data-theme="light"] .overview-view .ov-robot-eye { background: var(--ov-gold); box-shadow: 0 0 10px rgba(196,138,8,0.6), 0 0 20px rgba(196,138,8,0.3); }
+/* Robot SVG in light mode */
+[data-theme="light"] .overview-view .ov-robot-svg { filter: drop-shadow(0 4px 16px rgba(196,138,8,0.12)); }
+[data-theme="light"] .overview-view .ov-robot-mini-svg { filter: drop-shadow(0 2px 8px rgba(196,138,8,0.15)); }
 
 /* ─── STAT CARDS ─── */
 [data-theme="light"] .overview-view .ov-stat-card {
@@ -3443,8 +3441,8 @@ canvas.mini-chart { width: 100% !important; }
   --ov-bg-hi: rgba(255,255,255,0.04);
   --ov-border: rgba(255,255,255,0.06);
   --ov-border-br: rgba(245,200,66,0.25);
-  --ov-card-bg: rgba(255,255,255,0.03);
-  --ov-card-hover: rgba(255,255,255,0.05);
+  --ov-card-bg: rgba(255,255,255,0.04);
+  --ov-card-hover: rgba(255,255,255,0.07);
   font-family: 'Rajdhani', sans-serif;
   color: var(--ov-text);
   padding: 4px;
@@ -3468,8 +3466,10 @@ canvas.mini-chart { width: 100% !important; }
   border-radius: 14px;
   padding: 18px 20px;
   transition: border-color .2s, box-shadow .2s;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.03);
 }
-.overview-view .ov-card:hover { border-color: var(--ov-border-br); box-shadow: 0 4px 20px rgba(245,200,66,0.06); }
+.overview-view .ov-card:hover { border-color: var(--ov-border-br); box-shadow: 0 4px 24px rgba(245,200,66,0.08), 0 2px 12px rgba(0,0,0,0.2); }
 .overview-view .ov-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
 .overview-view .ov-card-title { font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; }
 .overview-view .ov-card-title.gold { color: var(--ov-gold); }
@@ -3494,12 +3494,14 @@ canvas.mini-chart { width: 100% !important; }
   grid-template-columns: 1fr auto;
   grid-template-rows: auto auto;
   gap: 0 20px;
-  background: linear-gradient(135deg, rgba(245,200,66,0.04) 0%, var(--ov-card-bg) 60%);
-  border: 1px solid var(--ov-border-br);
+  background: linear-gradient(135deg, rgba(245,200,66,0.06) 0%, rgba(20,24,40,0.95) 50%, rgba(10,14,30,0.98) 100%);
+  border: 1px solid rgba(245,200,66,0.18);
   border-radius: 16px;
   padding: 28px 30px;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.25), 0 0 60px rgba(245,200,66,0.04), inset 0 1px 0 rgba(255,255,255,0.04);
+  backdrop-filter: blur(16px);
 }
 .overview-view .ov-nba::before {
   content: ''; position: absolute; top: -60%; right: -20%; width: 50%; height: 200%;
@@ -3507,8 +3509,8 @@ canvas.mini-chart { width: 100% !important; }
   pointer-events: none;
 }
 .overview-view .ov-nba-left { grid-row: 1; grid-column: 1; position: relative; z-index: 1; }
-.overview-view .ov-nba-art { grid-row: 1/3; grid-column: 2; display: flex; align-items: center; justify-content: center; min-width: 180px; }
-.overview-view .ov-nba-why { grid-row: 2; grid-column: 1; margin-top: 8px; padding: 12px 16px; background: var(--ov-bg-hi); border-radius: 10px; border: 1px solid var(--ov-border); }
+.overview-view .ov-nba-art { grid-row: 1/3; grid-column: 2; display: flex; align-items: center; justify-content: center; min-width: 200px; padding: 0 10px; }
+.overview-view .ov-nba-why { grid-row: 2; grid-column: 1; margin-top: 10px; padding: 14px 18px; background: rgba(255,255,255,0.03); border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); backdrop-filter: blur(8px); }
 .overview-view .ov-nba-why strong { font-size: 13px; color: var(--ov-text-dim); display: block; margin-bottom: 4px; }
 .overview-view .ov-nba-why p { font-size: 13px; color: var(--ov-text-dim); margin: 0; line-height: 1.4; }
 .overview-view .ov-nba-top { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
@@ -3522,7 +3524,7 @@ canvas.mini-chart { width: 100% !important; }
 }
 .overview-view .ov-nba-title { font-family: 'Rajdhani', sans-serif; font-size: 30px; font-weight: 800; color: var(--ov-text); margin: 0 0 6px; line-height: 1.15; }
 .overview-view .ov-nba-desc { font-size: 15px; color: var(--ov-text-dim); margin: 0 0 16px; }
-.overview-view .ov-nba-meta { display: flex; gap: 20px; margin-bottom: 18px; padding: 10px 14px; background: var(--ov-bg-hi); border-radius: 10px; border: 1px solid var(--ov-border); }
+.overview-view .ov-nba-meta { display: flex; gap: 24px; margin-bottom: 18px; padding: 12px 16px; background: rgba(255,255,255,0.03); border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); backdrop-filter: blur(8px); }
 .overview-view .ov-nba-mi { display: flex; flex-direction: column; gap: 2px; }
 .overview-view .ov-nba-ml { font-size: 11px; color: var(--ov-text-muted); font-weight: 600; }
 .overview-view .ov-nba-mv { font-size: 14px; font-weight: 700; color: var(--ov-text); }
@@ -3535,41 +3537,10 @@ canvas.mini-chart { width: 100% !important; }
 }
 .overview-view .ov-nba-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(245,200,66,0.4); }
 
-/* Robot mascot */
-.overview-view .ov-robot { width: 150px; height: 170px; position: relative; }
-.overview-view .ov-robot-body { position: relative; width: 100%; height: 100%; }
-.overview-view .ov-robot-head {
-  width: 80px; height: 60px; background: linear-gradient(180deg, #3a3f52, #2a2e3e);
-  border-radius: 20px 20px 16px 16px; margin: 0 auto; position: relative;
-  box-shadow: 0 0 20px rgba(245,200,66,0.2), inset 0 -4px 8px rgba(0,0,0,0.3);
-  border: 2px solid rgba(255,255,255,0.08);
-}
-.overview-view .ov-robot-head.sm { width: 60px; height: 45px; border-radius: 16px 16px 12px 12px; }
-.overview-view .ov-robot-eye {
-  width: 16px; height: 16px; background: var(--ov-gold);
-  border-radius: 50%; position: absolute; top: 20px;
-  box-shadow: 0 0 12px var(--ov-gold), 0 0 24px rgba(245,200,66,0.4);
-  animation: ovEyePulse 3s ease-in-out infinite;
-}
-.overview-view .ov-robot-eye.left { left: 18px; }
-.overview-view .ov-robot-eye.right { right: 18px; }
-.overview-view .ov-robot-head.sm .ov-robot-eye { width: 12px; height: 12px; top: 15px; }
-.overview-view .ov-robot-head.sm .ov-robot-eye.left { left: 12px; }
-.overview-view .ov-robot-head.sm .ov-robot-eye.right { right: 12px; }
-.overview-view .ov-robot-torso {
-  width: 90px; height: 70px; background: linear-gradient(180deg, #2a2e3e, #1e2230);
-  border-radius: 12px 12px 20px 20px; margin: 4px auto 0;
-  box-shadow: inset 0 4px 8px rgba(0,0,0,0.2);
-  border: 2px solid rgba(255,255,255,0.05);
-}
-.overview-view .ov-robot-arm {
-  width: 20px; height: 50px; background: linear-gradient(180deg, #3a3f52, #2a2e3e);
-  border-radius: 10px; position: absolute; top: 68px;
-  border: 1px solid rgba(255,255,255,0.05);
-}
-.overview-view .ov-robot-arm.left { left: 10px; transform: rotate(12deg); }
-.overview-view .ov-robot-arm.right { right: 10px; transform: rotate(-12deg); }
-@keyframes ovEyePulse { 0%,100%{box-shadow:0 0 12px var(--ov-gold),0 0 24px rgba(245,200,66,0.4)} 50%{box-shadow:0 0 18px var(--ov-gold),0 0 36px rgba(245,200,66,0.6)} }
+/* Robot SVG mascot */
+.overview-view .ov-robot-svg { width: 200px; height: 240px; filter: drop-shadow(0 4px 20px rgba(245,200,66,0.15)); }
+.overview-view .ov-robot-mini-svg { width: 80px; height: 80px; display: block; margin: 0 auto; filter: drop-shadow(0 2px 10px rgba(245,200,66,0.2)); }
+@keyframes ovEyePulse { 0%,100%{opacity:0.95} 50%{opacity:0.55} }
 
 /* ═══ 2. STATS ROW ═══ */
 .overview-view .ov-stats-row {
@@ -3581,10 +3552,12 @@ canvas.mini-chart { width: 100% !important; }
   background: var(--ov-card-bg);
   border: 1px solid var(--ov-border);
   border-radius: 12px;
-  padding: 14px 16px;
+  padding: 16px 18px;
   transition: border-color .2s, box-shadow .2s;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.03);
 }
-.overview-view .ov-stat-card:hover { border-color: var(--ov-border-br); }
+.overview-view .ov-stat-card:hover { border-color: var(--ov-border-br); box-shadow: 0 4px 20px rgba(245,200,66,0.08), 0 2px 10px rgba(0,0,0,0.2); }
 .overview-view .ov-stat-label { font-family: 'Orbitron', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1px; color: var(--ov-text-dim); margin-bottom: 6px; }
 .overview-view .ov-stat-label.gold { color: var(--ov-gold); }
 .overview-view .ov-stat-main { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
@@ -3620,18 +3593,25 @@ canvas.mini-chart { width: 100% !important; }
   background: var(--ov-card-bg);
   border: 1px solid var(--ov-border);
   border-radius: 14px;
-  padding: 18px;
+  padding: 20px;
   position: relative;
   transition: border-color .2s, box-shadow .2s, transform .2s;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.03);
 }
-.overview-view .ov-move-card:hover { border-color: var(--ov-border-br); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.15); }
+.overview-view .ov-move-card:hover { border-color: var(--ov-border-br); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.25), 0 0 20px rgba(245,200,66,0.06); }
 .overview-view .ov-move-num {
   position: absolute; top: -8px; left: -8px; width: 28px; height: 28px;
   background: var(--ov-pink); color: #fff; font-weight: 800; font-size: 13px;
   border-radius: 50%; display: flex; align-items: center; justify-content: center;
   box-shadow: 0 2px 8px rgba(255,94,138,0.4);
 }
-.overview-view .ov-move-icon { font-size: 32px; margin-bottom: 10px; }
+.overview-view .ov-move-icon {
+  font-size: 28px; margin-bottom: 12px; width: 48px; height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.05); border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.06);
+}
 .overview-view .ov-move-name { font-size: 15px; font-weight: 700; color: var(--ov-text); margin-bottom: 4px; line-height: 1.2; }
 .overview-view .ov-move-desc { font-size: 12px; color: var(--ov-text-dim); margin-bottom: 12px; line-height: 1.4; }
 .overview-view .ov-move-foot { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
@@ -3679,8 +3659,8 @@ canvas.mini-chart { width: 100% !important; }
 .overview-view .ov-phealth-body { display: flex; gap: 20px; align-items: center; }
 .overview-view .ov-phealth-gauge { position: relative; width: 100px; height: 100px; flex-shrink: 0; }
 .overview-view .ov-ph-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-.overview-view .ov-ph-bg { fill: none; stroke: var(--ov-border); stroke-width: 8; }
-.overview-view .ov-ph-fill { fill: none; stroke: var(--ov-green); stroke-width: 8; stroke-linecap: round; stroke-dasharray: 314; stroke-dashoffset: 314; transition: stroke-dashoffset .8s ease; }
+.overview-view .ov-ph-bg { fill: none; stroke: rgba(255,255,255,0.08); stroke-width: 10; }
+.overview-view .ov-ph-fill { fill: none; stroke: var(--ov-green); stroke-width: 10; stroke-linecap: round; stroke-dasharray: 314; stroke-dashoffset: 314; transition: stroke-dashoffset .8s ease; filter: drop-shadow(0 0 6px rgba(0,232,122,0.4)); }
 .overview-view .ov-ph-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 .overview-view .ov-ph-val { font-size: 28px; font-weight: 800; color: var(--ov-text); line-height: 1; }
 .overview-view .ov-ph-lbl { font-size: 11px; font-weight: 700; color: var(--ov-green); }
@@ -3695,6 +3675,8 @@ canvas.mini-chart { width: 100% !important; }
   display: flex; align-items: center; gap: 14px;
   background: var(--ov-card-bg); border: 1px solid var(--ov-border);
   border-radius: 12px; padding: 10px 16px; overflow: hidden;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.12);
 }
 .overview-view .ov-alpha-icon { font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; color: var(--ov-gold); white-space: nowrap; }
 .overview-view .ov-alpha-track { flex: 1; overflow: hidden; white-space: nowrap; font-size: 13px; color: var(--ov-text-dim); animation: ovAlphaScroll 30s linear infinite; }
@@ -3707,16 +3689,17 @@ canvas.mini-chart { width: 100% !important; }
 .overview-view .ov-rsb { display: flex; flex-direction: column; gap: 14px; }
 .overview-view .ov-rsb-card {
   background: var(--ov-card-bg); border: 1px solid var(--ov-border);
-  border-radius: 14px; padding: 16px; transition: border-color .2s;
+  border-radius: 14px; padding: 18px; transition: border-color .2s, box-shadow .2s;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.03);
 }
 .overview-view .ov-rsb-card:hover { border-color: var(--ov-border-br); }
 
 /* AI Copilot */
 .overview-view .ov-copilot-head { font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700; color: var(--ov-gold); letter-spacing: 1px; }
 .overview-view .ov-copilot-sub { font-size: 11px; color: var(--ov-text-dim); margin-bottom: 12px; }
-.overview-view .ov-copilot-avatar { display: flex; justify-content: center; margin-bottom: 12px; }
-.overview-view .ov-robot-mini { width: 70px; height: 55px; display: flex; align-items: center; justify-content: center; }
-.overview-view .ov-copilot-msg { background: var(--ov-bg-hi); border-radius: 10px; padding: 12px; font-size: 13px; line-height: 1.5; color: var(--ov-text-dim); }
+.overview-view .ov-copilot-avatar { display: flex; justify-content: center; margin-bottom: 14px; }
+.overview-view .ov-copilot-msg { background: rgba(255,255,255,0.03); border-radius: 10px; padding: 14px; font-size: 13px; line-height: 1.5; color: var(--ov-text-dim); border: 1px solid rgba(255,255,255,0.04); }
 .overview-view .ov-copilot-msg strong { display: block; color: var(--ov-text); font-size: 14px; margin-bottom: 4px; }
 
 /* Today's Task */
@@ -3778,7 +3761,8 @@ canvas.mini-chart { width: 100% !important; }
   .overview-view .ov-bottom-row { grid-template-columns: 1fr; }
   .overview-view .ov-rsb { grid-template-columns: 1fr; }
   .overview-view .ov-nba { grid-template-columns: 1fr; padding: 20px; }
-  .overview-view .ov-nba-art { grid-row: auto; grid-column: 1; justify-content: flex-end; height: 120px; }
+  .overview-view .ov-nba-art { grid-row: auto; grid-column: 1; justify-content: flex-end; height: 140px; }
+  .overview-view .ov-robot-svg { width: 140px; height: 170px; }
   .overview-view .ov-nba-why { grid-column: 1; }
   .overview-view .ov-nba-title { font-size: 24px; }
   .overview-view .ov-nba-meta { flex-direction: column; gap: 8px; }
@@ -3790,13 +3774,7 @@ canvas.mini-chart { width: 100% !important; }
   .overview-view .ov-stat-big { font-size: 26px; }
   .overview-view .ov-nba { padding: 16px; }
   .overview-view .ov-nba-title { font-size: 22px; }
-  .overview-view .ov-robot { width: 100px; height: 120px; }
-  .overview-view .ov-robot-head { width: 60px; height: 44px; }
-  .overview-view .ov-robot-eye { width: 12px; height: 12px; top: 14px; }
-  .overview-view .ov-robot-eye.left { left: 12px; }
-  .overview-view .ov-robot-eye.right { right: 12px; }
-  .overview-view .ov-robot-torso { width: 66px; height: 50px; }
-  .overview-view .ov-robot-arm { width: 14px; height: 36px; top: 50px; }
+  .overview-view .ov-robot-svg { width: 120px; height: 140px; }
 }
 
 /* END v4.0 OVERVIEW TAB STYLES */
@@ -19560,13 +19538,53 @@ select.exp-field-input option { background: #0a0e1a; color: #e8eaf0; }
               <button class="ov-nba-cta" id="ov-nba-cta" onclick="ovDoNBA()">🚀 Do It Now</button>
             </div>
             <div class="ov-nba-art" id="ov-nba-art">
-              <div class="ov-robot">
-                <div class="ov-robot-body">
-                  <div class="ov-robot-head"><div class="ov-robot-eye left"></div><div class="ov-robot-eye right"></div></div>
-                  <div class="ov-robot-torso"></div>
-                  <div class="ov-robot-arm left"></div><div class="ov-robot-arm right"></div>
-                </div>
-              </div>
+              <svg class="ov-robot-svg" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Ambient glow -->
+                <defs>
+                  <radialGradient id="ovRobotGlow" cx="100" cy="120" r="100" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="var(--ov-gold)" stop-opacity="0.15"/>
+                    <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+                  </radialGradient>
+                  <linearGradient id="ovHood" x1="100" y1="20" x2="100" y2="130" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#2a2e3e"/>
+                    <stop offset="100%" stop-color="#1a1d28"/>
+                  </linearGradient>
+                  <linearGradient id="ovBody" x1="100" y1="120" x2="100" y2="220" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#22263a"/>
+                    <stop offset="100%" stop-color="#161929"/>
+                  </linearGradient>
+                  <filter id="ovEyeGlow">
+                    <feGaussianBlur stdDeviation="4" result="blur"/>
+                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                  </filter>
+                </defs>
+                <circle cx="100" cy="120" r="95" fill="url(#ovRobotGlow)"/>
+                <!-- Hood/Cloak -->
+                <path d="M50 85 C50 45, 150 45, 150 85 L155 130 C155 145, 45 145, 45 130 Z" fill="url(#ovHood)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                <path d="M55 82 C55 52, 145 52, 145 82 L148 120 C148 128, 52 128, 52 120 Z" fill="#2d3148" opacity="0.6"/>
+                <!-- Face plate -->
+                <rect x="62" y="70" width="76" height="50" rx="18" fill="#1e2130" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+                <!-- Eyes -->
+                <circle cx="82" cy="95" r="9" fill="#f5c842" filter="url(#ovEyeGlow)" opacity="0.95">
+                  <animate attributeName="opacity" values="0.95;0.6;0.95" dur="3s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="118" cy="95" r="9" fill="#f5c842" filter="url(#ovEyeGlow)" opacity="0.95">
+                  <animate attributeName="opacity" values="0.95;0.6;0.95" dur="3s" repeatCount="indefinite" begin="0.15s"/>
+                </circle>
+                <circle cx="82" cy="95" r="4" fill="#fff" opacity="0.4"/>
+                <circle cx="118" cy="95" r="4" fill="#fff" opacity="0.4"/>
+                <!-- Body -->
+                <path d="M60 135 L60 200 C60 215, 140 215, 140 200 L140 135 C140 130, 60 130, 60 135Z" fill="url(#ovBody)" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                <!-- Chest detail -->
+                <rect x="85" y="148" width="30" height="4" rx="2" fill="var(--ov-gold)" opacity="0.3"/>
+                <rect x="90" y="158" width="20" height="3" rx="1.5" fill="var(--ov-cyan)" opacity="0.2"/>
+                <!-- Arms -->
+                <path d="M58 140 L38 175 C35 182, 42 186, 46 180 L60 155" fill="#252840" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+                <path d="M142 140 L162 170 C165 176, 162 182, 156 178 L142 155" fill="#252840" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+                <!-- Right hand thumbs up -->
+                <circle cx="160" cy="166" r="8" fill="#2d3148" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                <rect x="157" y="148" width="6" height="14" rx="3" fill="#2d3148" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              </svg>
             </div>
             <div class="ov-nba-why">
               <strong>Why this?</strong>
@@ -19731,9 +19749,16 @@ select.exp-field-input option { background: #0a0e1a; color: #e8eaf0; }
             <div class="ov-copilot-head">AI COPILOT</div>
             <div class="ov-copilot-sub">Your Farming Assistant</div>
             <div class="ov-copilot-avatar">
-              <div class="ov-robot-mini">
-                <div class="ov-robot-head sm"><div class="ov-robot-eye left"></div><div class="ov-robot-eye right"></div></div>
-              </div>
+              <svg class="ov-robot-mini-svg" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs><filter id="ovMiniGlow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+                <rect x="14" y="16" width="52" height="38" rx="14" fill="#1e2130" stroke="rgba(255,255,255,0.08)" stroke-width="1.2"/>
+                <circle cx="32" cy="35" r="6" fill="#f5c842" filter="url(#ovMiniGlow)"><animate attributeName="opacity" values="1;0.5;1" dur="3s" repeatCount="indefinite"/></circle>
+                <circle cx="48" cy="35" r="6" fill="#f5c842" filter="url(#ovMiniGlow)"><animate attributeName="opacity" values="1;0.5;1" dur="3s" repeatCount="indefinite" begin="0.15s"/></circle>
+                <circle cx="32" cy="35" r="2.5" fill="#fff" opacity="0.35"/>
+                <circle cx="48" cy="35" r="2.5" fill="#fff" opacity="0.35"/>
+                <rect x="24" y="58" width="32" height="16" rx="6" fill="#1a1d28" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                <rect x="33" y="62" width="14" height="2.5" rx="1" fill="var(--ov-gold)" opacity="0.3"/>
+              </svg>
             </div>
             <div class="ov-copilot-msg" id="ov-copilot-msg">
               <strong>GM, Elite! 👋</strong>
