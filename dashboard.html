@@ -5808,11 +5808,12 @@ canvas.mini-chart { width: 100% !important; }
   border-left: 1px solid var(--wlt-border-hi);
   z-index: 9999;
   transform: translateX(100%);
-  transition: transform 0.3s ease-out;
+  transition: transform 0.3s ease-out, visibility 0s linear 0.3s;
   display: flex; flex-direction: column;
   box-shadow: -8px 0 40px rgba(0,0,0,0.5);
+  visibility: hidden;
 }
-.wallets-view .wlt-panel.open { transform: translateX(0); }
+.wallets-view .wlt-panel.open { transform: translateX(0); visibility: visible; transition: transform 0.3s ease-out; }
 .wallets-view .wlt-panel-head {
   padding: 18px 24px;
   border-bottom: 1px solid var(--wlt-border);
@@ -14717,6 +14718,7 @@ select.exp-field-input option { background: #0a0e1a; color: #e8eaf0; }
          ─────────────────────────────────────────────────────────────── -->
     <!-- START WALLETS TAB CONTENT -->
     <section class="tab-panel wallets-view" id="tab-wallets" data-tab-panel="wallets">
+    <!-- BUILD: wallets-v5.1-panelfix -->
     <!-- ═══════════════════════════════════════════════════════════════
          WALLETS v4.3 — Intelligence Terminal (Chunk 11)
     <div class="wlt-page">
