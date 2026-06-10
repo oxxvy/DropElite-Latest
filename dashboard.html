@@ -15397,376 +15397,755 @@ select.exp-field-input option { background: #0a0e1a; color: #e8eaf0; }
          CLAIMS & REWARDS v4 (Chunk 13)
          ═══════════════════════════════════════════════════════════════ -->
     <section class="tab-panel rewards-view" id="tab-rewards" data-tab-panel="rewards">
-    <div class="cr-page">
+    <style>
+    /* ═══ CLAIMS & REWARDS v2 — scoped .rewards-view .crx-* ═══ */
+    .rewards-view .crx-wrap{ display:grid; grid-template-columns:1fr 300px; gap:18px; align-items:start; }
+    .rewards-view .crx-main{ display:flex; flex-direction:column; gap:18px; min-width:0; }
+    .rewards-view .crx-right{ display:flex; flex-direction:column; gap:18px; position:sticky; top:80px; }
 
-      <!-- HEADER -->
-      <div class="cr-head">
-        <div class="cr-head-left">
-          <div class="cr-bc">DROP ELITE<span>/</span>CLAIMS & REWARDS</div>
-          <h1 class="cr-title">
-            <span class="cr-title-icon">💰</span>
-            Claims <em>&</em> Rewards
-          </h1>
-          <p class="cr-sub">Track, claim and maximize all your airdrop rewards in one place. Each reward links back to projects from your Airdrops Tracker.</p>
+    .rewards-view .crx-card{
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:18px; padding:20px;
+      backdrop-filter:blur(8px); position:relative; overflow:hidden;
+    }
+    .rewards-view .crx-card::before{
+      content:''; position:absolute; top:0; left:0; right:0; height:1px;
+      background:linear-gradient(90deg,transparent,var(--gold),transparent); opacity:.5;
+    }
+
+    /* ═══ KPI ROW ═══ */
+    .rewards-view .crx-kpis{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+    .rewards-view .crx-kpi{
+      background:var(--surface); border:1px solid var(--border2);
+      border-radius:14px; padding:16px; transition:.25s; position:relative; overflow:hidden;
+    }
+    .rewards-view .crx-kpi:hover{ border-color:var(--gold); transform:translateY(-2px); }
+    .rewards-view .crx-kpi.gold-hi{ border-color:var(--gold); box-shadow:0 0 20px var(--gold-glow); }
+    .rewards-view .crx-kpi-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:10px; }
+    .rewards-view .crx-kpi-lbl{ font-family:'Orbitron',sans-serif; font-size:10px; color:var(--text-dim); letter-spacing:1px; line-height:1.3; }
+    .rewards-view .crx-kpi.gold-hi .crx-kpi-lbl{ color:var(--gold); }
+    .rewards-view .crx-kpi-ic{
+      width:32px; height:32px; border-radius:8px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:16px; flex-shrink:0;
+      background:var(--surface2); border:1px solid var(--border2);
+    }
+    .rewards-view .crx-kpi-ic.green{ background:var(--green-glow); border-color:var(--green); color:var(--green); }
+    .rewards-view .crx-kpi-ic.gold{ background:var(--gold-glow); border-color:var(--gold); color:var(--gold); }
+    .rewards-view .crx-kpi-ic.cyan{ background:rgba(74,240,255,0.10); border-color:var(--blue); color:var(--blue); }
+    .rewards-view .crx-kpi-ic.purple{ background:rgba(155,126,224,0.12); border-color:#9b7ee0; color:#9b7ee0; }
+    .rewards-view .crx-kpi-val{
+      font-family:'Orbitron',sans-serif; font-size:24px; font-weight:800;
+      color:var(--text); line-height:1; margin-bottom:6px;
+    }
+    .rewards-view .crx-kpi.gold-hi .crx-kpi-val{ color:var(--gold); text-shadow:0 0 14px var(--gold-glow); }
+    .rewards-view .crx-kpi-sub{ font-size:11px; color:var(--text-dim); }
+    .rewards-view .crx-kpi-sub.green{ color:var(--green); }
+    .rewards-view .crx-spark{ width:60px; height:24px; margin-top:4px; }
+
+    /* ═══ HERO ═══ */
+    .rewards-view .crx-hero{
+      background:linear-gradient(135deg, var(--surface), var(--gold-glow2));
+      border:1px solid var(--gold); border-radius:18px;
+      box-shadow:0 0 30px var(--gold-glow);
+      padding:24px; display:grid; grid-template-columns:1fr auto; gap:20px;
+      align-items:center; position:relative; overflow:hidden;
+    }
+    .rewards-view .crx-hero::before{
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(circle at 80% 50%, var(--gold-glow), transparent 60%);
+      pointer-events:none;
+    }
+    .rewards-view .crx-hero-left{ position:relative; z-index:1; }
+    .rewards-view .crx-hero-title{
+      display:flex; align-items:center; gap:10px;
+      font-family:'Orbitron',sans-serif; font-size:22px; font-weight:800;
+      color:var(--gold); letter-spacing:.5px; margin-bottom:6px;
+      text-shadow:0 0 16px var(--gold-glow);
+    }
+    .rewards-view .crx-hero-title .em{ font-size:24px; filter:drop-shadow(0 0 8px var(--gold-glow)); }
+    .rewards-view .crx-hero-sub{ font-size:13px; color:var(--text-dim); margin-bottom:18px; }
+
+    .rewards-view .crx-hero-row{ display:flex; gap:30px; align-items:center; margin-bottom:20px; flex-wrap:wrap; }
+    .rewards-view .crx-hero-val-block{ display:flex; flex-direction:column; gap:4px; }
+    .rewards-view .crx-hero-val-lbl{ font-size:11px; color:var(--text-dim); letter-spacing:.5px; }
+    .rewards-view .crx-hero-val{
+      font-family:'Orbitron',sans-serif; font-size:38px; font-weight:900;
+      color:var(--text); line-height:1;
+    }
+    .rewards-view .crx-opps{
+      display:inline-block; background:var(--green-glow); color:var(--green);
+      border:1px solid rgba(0,232,122,0.30); padding:4px 12px; border-radius:12px;
+      font-size:12px; font-weight:600; margin-top:6px;
+    }
+    [data-theme="light"] .rewards-view .crx-opps{ border-color:rgba(0,138,74,0.35); }
+
+    .rewards-view .crx-countdown{ display:flex; flex-direction:column; gap:6px; }
+    .rewards-view .crx-cd-lbl{ font-size:11px; color:var(--text-dim); letter-spacing:.5px; text-align:center; }
+    .rewards-view .crx-cd-grid{ display:flex; gap:8px; align-items:center; }
+    .rewards-view .crx-cd-cell{
+      background:var(--surface2); border:1px solid var(--border);
+      border-radius:8px; padding:8px 12px; min-width:54px; text-align:center;
+    }
+    .rewards-view .crx-cd-num{ font-family:'Orbitron',sans-serif; font-size:22px; font-weight:800; color:var(--text); }
+    .rewards-view .crx-cd-unit{ font-size:9px; color:var(--text-dim); letter-spacing:.8px; }
+    .rewards-view .crx-cd-sep{ color:var(--gold); font-family:'Orbitron',sans-serif; font-size:20px; font-weight:700; }
+
+    .rewards-view .crx-hero-btns{ display:flex; gap:12px; position:relative; z-index:1; }
+    .rewards-view .crx-btn-gold{
+      flex:1; padding:14px 22px; border:none; border-radius:10px;
+      background:linear-gradient(135deg,var(--gold),var(--gold-dim));
+      color:#0a0e1a; font-family:'Orbitron',sans-serif; font-weight:700;
+      font-size:14px; letter-spacing:.5px; cursor:pointer; transition:.2s;
+      display:flex; align-items:center; justify-content:center; gap:8px;
+    }
+    .rewards-view .crx-btn-gold:hover{ transform:translateY(-1px); box-shadow:0 8px 22px var(--gold-glow); }
+    .rewards-view .crx-btn-ghost{
+      flex:1; padding:14px 22px; border:1px solid var(--border);
+      border-radius:10px; background:transparent; color:var(--text);
+      font-family:'Orbitron',sans-serif; font-weight:600; font-size:13px;
+      letter-spacing:.5px; cursor:pointer; transition:.2s;
+    }
+    .rewards-view .crx-btn-ghost:hover{ border-color:var(--gold); color:var(--gold); }
+
+    .rewards-view .crx-chest{
+      width:240px; height:200px; position:relative; flex-shrink:0;
+      display:flex; align-items:center; justify-content:center;
+      font-size:140px; filter:drop-shadow(0 12px 30px var(--gold-glow));
+      z-index:1;
+    }
+    .rewards-view .crx-chest .conf{
+      position:absolute; font-size:14px;
+      animation:crxFloat 3s ease-in-out infinite;
+    }
+    @keyframes crxFloat{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+    .rewards-view .crx-chest .c1{ top:10%; left:5%; color:#ec4899; animation-delay:0s; }
+    .rewards-view .crx-chest .c2{ top:5%; right:15%; color:var(--blue); animation-delay:.5s; }
+    .rewards-view .crx-chest .c3{ top:25%; right:5%; color:#9b7ee0; animation-delay:1s; }
+    .rewards-view .crx-chest .c4{ bottom:15%; left:10%; color:var(--green); animation-delay:1.5s; }
+
+    /* ═══ SECTION HEAD ═══ */
+    .rewards-view .crx-sec-head{ display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+    .rewards-view .crx-sec-title{
+      font-family:'Orbitron',sans-serif; font-size:14px; font-weight:700;
+      color:var(--gold); letter-spacing:1.5px;
+    }
+    .rewards-view .crx-sec-count{ font-size:13px; color:var(--text-dim); font-weight:500; }
+
+    /* ═══ CLAIMABLE GRID ═══ */
+    .rewards-view .crx-claim-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+    .rewards-view .crx-claim{
+      background:var(--surface); border:1px solid var(--border2);
+      border-radius:14px; padding:18px;
+      display:flex; flex-direction:column; gap:12px; transition:.25s;
+    }
+    .rewards-view .crx-claim:hover{ border-color:var(--gold); transform:translateY(-2px); box-shadow:0 8px 20px var(--gold-glow); }
+    .rewards-view .crx-claim-top{ display:flex; align-items:center; gap:12px; }
+    .rewards-view .crx-claim-logo{
+      width:42px; height:42px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Orbitron',sans-serif; font-weight:900; font-size:16px;
+      flex-shrink:0; border:1px solid var(--border2);
+    }
+    .rewards-view .crx-claim-logo.lz{ background:#0f0f14; color:#fff; }
+    [data-theme="light"] .rewards-view .crx-claim-logo.lz{ background:#1a1a22; }
+    .rewards-view .crx-claim-logo.mn{ background:linear-gradient(135deg,#9b7ee0,#5a2ea6); color:#fff; font-size:22px; }
+    .rewards-view .crx-claim-logo.pf{ background:linear-gradient(135deg,#9b7ee0,#0a0e1a); color:#fff; }
+    .rewards-view .crx-claim-info{ flex:1; min-width:0; }
+    .rewards-view .crx-claim-name{ display:flex; align-items:center; gap:6px; font-family:'Orbitron',sans-serif; font-size:14px; font-weight:700; color:var(--text); margin-bottom:3px; }
+    .rewards-view .crx-claim-tags{ display:flex; gap:6px; flex-wrap:wrap; }
+    .rewards-view .crx-tag{
+      font-size:10px; padding:2px 8px; border-radius:10px; font-weight:600; letter-spacing:.2px;
+    }
+    .rewards-view .crx-tag.high{ background:var(--gold-glow); color:var(--gold); border:1px solid var(--gold); }
+    .rewards-view .crx-tag.new{ background:var(--green-glow); color:var(--green); border:1px solid rgba(0,232,122,0.30); }
+    [data-theme="light"] .rewards-view .crx-tag.new{ border-color:rgba(0,138,74,0.35); }
+    .rewards-view .crx-claim-tkr{ font-size:11px; color:var(--text-dim); letter-spacing:.5px; }
+    .rewards-view .crx-claim-type{ font-size:12px; color:var(--text-dim); }
+    .rewards-view .crx-claim-vals{ display:flex; justify-content:space-between; align-items:baseline; }
+    .rewards-view .crx-claim-val{
+      font-family:'Orbitron',sans-serif; font-size:22px; font-weight:800; color:var(--text);
+    }
+    .rewards-view .crx-claim-tokens{ font-size:11px; color:var(--text-dim); }
+    .rewards-view .crx-claim-btn{
+      width:100%; padding:11px; border:none; border-radius:8px;
+      background:linear-gradient(135deg,var(--gold),var(--gold-dim));
+      color:#0a0e1a; font-family:'Orbitron',sans-serif; font-weight:700;
+      font-size:13px; letter-spacing:.3px; cursor:pointer; transition:.2s;
+      display:flex; align-items:center; justify-content:center; gap:6px;
+    }
+    .rewards-view .crx-claim-btn:hover{ transform:translateY(-1px); box-shadow:0 6px 18px var(--gold-glow); }
+
+    .rewards-view .crx-viewall-link{
+      text-align:center; padding:12px; font-size:13px; color:var(--gold);
+      cursor:pointer; font-weight:600;
+    }
+    .rewards-view .crx-viewall-link:hover{ text-decoration:underline; }
+
+    /* ═══ PORTFOLIO + FORECAST ROW ═══ */
+    .rewards-view .crx-split{ display:grid; grid-template-columns:1.4fr 1fr; gap:18px; }
+
+    .rewards-view .crx-portfolio-title{
+      font-family:'Orbitron',sans-serif; font-size:13px; font-weight:700;
+      color:var(--gold); letter-spacing:1.2px; margin-bottom:14px;
+    }
+    .rewards-view .crx-portfolio-body{ display:grid; grid-template-columns:1fr 1.2fr; gap:18px; align-items:center; }
+    .rewards-view .crx-donut-wrap{ position:relative; display:flex; align-items:center; justify-content:center; }
+    .rewards-view .crx-donut{ width:170px; height:170px; }
+    .rewards-view .crx-donut-center{ position:absolute; text-align:center; }
+    .rewards-view .crx-donut-val{ font-family:'Orbitron',sans-serif; font-size:20px; font-weight:800; color:var(--text); }
+    .rewards-view .crx-donut-lbl{ font-size:10px; color:var(--text-dim); letter-spacing:.5px; }
+
+    .rewards-view .crx-chains-list{ display:flex; flex-direction:column; gap:8px; }
+    .rewards-view .crx-chain-row{ display:flex; align-items:center; gap:10px; font-size:12px; }
+    .rewards-view .crx-chain-dot{ width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+    .rewards-view .crx-chain-name{ flex:1; color:var(--text); }
+    .rewards-view .crx-chain-pct{ color:var(--text-dim); font-family:'Share Tech Mono',monospace; }
+    .rewards-view .crx-chain-amt{ color:var(--text); font-family:'Share Tech Mono',monospace; min-width:60px; text-align:right; }
+
+    .rewards-view .crx-cats{ margin-top:18px; padding-top:14px; border-top:1px solid var(--border2); }
+    .rewards-view .crx-cats-title{ font-size:12px; color:var(--text-dim); margin-bottom:8px; }
+    .rewards-view .crx-cat-row{ display:flex; align-items:center; gap:8px; font-size:12px; padding:5px 0; }
+    .rewards-view .crx-cat-ic{ width:18px; height:18px; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:10px; flex-shrink:0; background:var(--surface2); border:1px solid var(--border2); }
+    .rewards-view .crx-cat-name{ flex:1; color:var(--text); }
+    .rewards-view .crx-cat-pct{ color:var(--text-dim); font-family:'Share Tech Mono',monospace; }
+    .rewards-view .crx-cat-amt{ color:var(--text); font-family:'Share Tech Mono',monospace; min-width:65px; text-align:right; }
+    .rewards-view .crx-cat-total{ display:flex; justify-content:space-between; padding-top:8px; margin-top:6px; border-top:1px solid var(--border2); font-size:13px; font-weight:700; }
+
+    /* FORECAST */
+    .rewards-view .crx-fc-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+    .rewards-view .crx-fc-select{
+      background:var(--surface2); border:1px solid var(--border2);
+      color:var(--text); padding:4px 10px; border-radius:8px; font-size:11px;
+      cursor:pointer; font-family:'Rajdhani',sans-serif;
+    }
+    .rewards-view .crx-fc-val{
+      font-family:'Orbitron',sans-serif; font-size:30px; font-weight:800;
+      color:var(--text); margin-bottom:2px;
+    }
+    .rewards-view .crx-fc-sub{ font-size:11px; color:var(--text-dim); margin-bottom:2px; }
+    .rewards-view .crx-fc-delta{ font-size:12px; color:var(--green); font-weight:600; margin-bottom:14px; }
+    .rewards-view .crx-fc-bars{ display:flex; gap:6px; align-items:flex-end; height:130px; padding:0 4px; }
+    .rewards-view .crx-fc-bar{ flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; }
+    .rewards-view .crx-fc-bar-val{ font-size:9px; color:var(--text-dim); font-family:'Share Tech Mono',monospace; }
+    .rewards-view .crx-fc-bar-fill{
+      width:100%; background:linear-gradient(180deg, var(--green), rgba(0,232,122,0.4));
+      border-radius:6px 6px 0 0; box-shadow:0 0 12px var(--green-glow);
+    }
+    [data-theme="light"] .rewards-view .crx-fc-bar-fill{ background:linear-gradient(180deg, var(--green), rgba(0,138,74,0.4)); }
+    .rewards-view .crx-fc-bar-lbl{ font-size:10px; color:var(--text-dim); }
+    .rewards-view .crx-fc-link{ text-align:center; padding-top:12px; font-size:12px; color:var(--gold); cursor:pointer; font-weight:600; }
+    .rewards-view .crx-fc-link:hover{ text-decoration:underline; }
+
+    /* ═══ CLAIM HISTORY ═══ */
+    .rewards-view .crx-hist-title{
+      font-family:'Orbitron',sans-serif; font-size:13px; font-weight:700;
+      color:var(--gold); letter-spacing:1.2px; margin-bottom:14px;
+    }
+    .rewards-view .crx-table{ width:100%; border-collapse:collapse; }
+    .rewards-view .crx-table th{
+      text-align:left; padding:10px 8px; font-size:10px;
+      font-family:'Orbitron',sans-serif; color:var(--text-dim);
+      letter-spacing:1px; border-bottom:1px solid var(--border2); font-weight:600;
+    }
+    .rewards-view .crx-table td{
+      padding:14px 8px; font-size:13px; color:var(--text);
+      border-bottom:1px solid var(--border2);
+    }
+    .rewards-view .crx-table tr:last-child td{ border-bottom:none; }
+    .rewards-view .crx-table tr:hover td{ background:var(--surface2); }
+    .rewards-view .crx-th-proj{ display:flex; align-items:center; gap:8px; }
+    .rewards-view .crx-th-logo{
+      width:24px; height:24px; border-radius:50%;
+      background:var(--surface2); border:1px solid var(--border2);
+      display:flex; align-items:center; justify-content:center; font-size:11px;
+      flex-shrink:0;
+    }
+    .rewards-view .crx-th-tkr{ font-size:9px; padding:2px 6px; border-radius:6px; background:var(--surface2); color:var(--text-dim); font-family:'Share Tech Mono',monospace; }
+    .rewards-view .crx-th-chain{ display:flex; align-items:center; gap:6px; font-size:12px; }
+    .rewards-view .crx-th-chain-dot{ width:10px; height:10px; border-radius:50%; }
+    .rewards-view .crx-th-hash{ color:var(--blue); font-family:'Share Tech Mono',monospace; cursor:pointer; display:flex; align-items:center; gap:4px; }
+    .rewards-view .crx-th-hash:hover{ text-decoration:underline; }
+
+    /* ═══ RIGHT PANEL ═══ */
+    .rewards-view .crx-rsec{
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:14px; padding:16px;
+    }
+    .rewards-view .crx-rsec-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+    .rewards-view .crx-rsec-title{
+      font-family:'Orbitron',sans-serif; font-size:12px; font-weight:700;
+      color:var(--gold); letter-spacing:1.2px;
+    }
+    .rewards-view .crx-rsec-link{ font-size:11px; color:var(--gold); cursor:pointer; font-weight:600; }
+
+    .rewards-view .crx-ach{ display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--border2); }
+    .rewards-view .crx-ach:last-child{ border-bottom:none; }
+    .rewards-view .crx-ach-ic{
+      width:36px; height:36px; border-radius:8px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:16px; flex-shrink:0;
+    }
+    .rewards-view .crx-ach-ic.purple{ background:rgba(155,126,224,0.15); border:1px solid #9b7ee0; color:#9b7ee0; }
+    .rewards-view .crx-ach-ic.cyan{ background:rgba(74,240,255,0.10); border:1px solid var(--blue); color:var(--blue); }
+    .rewards-view .crx-ach-ic.orange{ background:rgba(255,140,66,0.12); border:1px solid var(--orange); color:var(--orange); }
+    .rewards-view .crx-ach-ic.green{ background:var(--green-glow); border:1px solid var(--green); color:var(--green); }
+    .rewards-view .crx-ach-ic.gold{ background:var(--gold-glow); border:1px solid var(--gold); color:var(--gold); }
+    .rewards-view .crx-ach-info{ flex:1; min-width:0; }
+    .rewards-view .crx-ach-name{ font-size:12px; font-weight:700; color:var(--text); margin-bottom:2px; }
+    .rewards-view .crx-ach-desc{ font-size:10px; color:var(--text-dim); margin-bottom:6px; }
+    .rewards-view .crx-ach-bar{ height:4px; background:var(--surface2); border-radius:2px; overflow:hidden; }
+    .rewards-view .crx-ach-bar .fill{ height:100%; border-radius:2px; }
+    .rewards-view .crx-ach-bar .fill.purple{ background:linear-gradient(90deg,#5a2ea6,#9b7ee0); }
+    .rewards-view .crx-ach-bar .fill.cyan{ background:linear-gradient(90deg,#007a90,var(--blue)); }
+    .rewards-view .crx-ach-bar .fill.orange{ background:linear-gradient(90deg,#c06020,var(--orange)); }
+    .rewards-view .crx-ach-bar .fill.green{ background:linear-gradient(90deg,#008a4a,var(--green)); }
+    .rewards-view .crx-ach-bar .fill.gold{ background:linear-gradient(90deg,var(--gold-dim),var(--gold)); }
+    .rewards-view .crx-ach-pct{ font-size:11px; color:var(--text-dim); font-family:'Share Tech Mono',monospace; min-width:35px; text-align:right; }
+
+    .rewards-view .crx-mile{
+      background:linear-gradient(135deg, rgba(155,126,224,0.10), var(--surface));
+      border:1px solid #9b7ee0; border-radius:14px; padding:18px;
+      position:relative; overflow:hidden;
+    }
+    .rewards-view .crx-mile-top{ display:flex; align-items:center; gap:14px; margin-bottom:14px; }
+    .rewards-view .crx-mile-gem{
+      width:60px; height:60px; border-radius:14px;
+      background:linear-gradient(135deg,#9b7ee0,#5a2ea6);
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Orbitron',sans-serif; font-size:24px; font-weight:900; color:#fff;
+      box-shadow:0 0 20px rgba(155,126,224,0.5);
+      clip-path:polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    }
+    .rewards-view .crx-mile-info{ flex:1; }
+    .rewards-view .crx-mile-lvl{ font-family:'Orbitron',sans-serif; font-size:20px; font-weight:800; color:var(--text); }
+    .rewards-view .crx-mile-name{ font-size:12px; color:var(--text-dim); margin-top:2px; }
+    .rewards-view .crx-mile-xp-bar{ height:5px; background:var(--surface2); border-radius:3px; overflow:hidden; margin-bottom:6px; }
+    .rewards-view .crx-mile-xp-bar .fill{ height:100%; background:linear-gradient(90deg,var(--gold-dim),var(--gold)); border-radius:3px; box-shadow:0 0 8px var(--gold-glow); }
+    .rewards-view .crx-mile-xp{ font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--text-dim); }
+    .rewards-view .crx-mile-pct{ font-size:11px; color:var(--gold); margin-top:2px; }
+
+    .rewards-view .crx-rewards-title{
+      font-family:'Orbitron',sans-serif; font-size:12px; font-weight:700;
+      color:var(--gold); letter-spacing:1.2px; margin-bottom:14px;
+    }
+    .rewards-view .crx-perk{ display:flex; align-items:center; gap:10px; padding:8px 0; font-size:12px; color:var(--text); }
+    .rewards-view .crx-perk-ic{ width:22px; height:22px; border-radius:6px; background:var(--surface2); display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; }
+    .rewards-view .crx-perk-ic.green{ background:var(--green-glow); color:var(--green); }
+    .rewards-view .crx-perk-ic.purple{ background:rgba(155,126,224,0.15); color:#9b7ee0; }
+    .rewards-view .crx-perk-ic.cyan{ background:rgba(74,240,255,0.10); color:var(--blue); }
+    .rewards-view .crx-perk-ic.gold{ background:var(--gold-glow); color:var(--gold); }
+
+    .rewards-view .crx-perks-cd{ display:flex; gap:8px; margin:14px 0; }
+    .rewards-view .crx-perks-cd-cell{
+      flex:1; background:var(--surface2); border:1px solid var(--border2);
+      border-radius:8px; padding:8px; text-align:center;
+    }
+    .rewards-view .crx-perks-cd-num{ font-family:'Orbitron',sans-serif; font-size:18px; font-weight:800; color:var(--text); }
+    .rewards-view .crx-perks-cd-u{ font-size:9px; color:var(--text-dim); letter-spacing:.8px; }
+
+    .rewards-view .crx-perks-btn{
+      width:100%; padding:11px; border:none; border-radius:8px;
+      background:linear-gradient(135deg,var(--gold),var(--gold-dim));
+      color:#0a0e1a; font-family:'Orbitron',sans-serif; font-weight:700;
+      font-size:12px; letter-spacing:.3px; cursor:pointer; transition:.2s;
+      display:flex; align-items:center; justify-content:center; gap:6px;
+    }
+    .rewards-view .crx-perks-btn:hover{ transform:translateY(-1px); box-shadow:0 6px 18px var(--gold-glow); }
+
+    .rewards-view .crx-gift{
+      position:absolute; right:-10px; top:50%; transform:translateY(-50%);
+      font-size:60px; opacity:.25; filter:drop-shadow(0 0 12px #9b7ee0);
+      pointer-events:none;
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width:1180px){
+      .rewards-view .crx-wrap{ grid-template-columns:1fr; }
+      .rewards-view .crx-right{ position:static; }
+      .rewards-view .crx-kpis{ grid-template-columns:repeat(2,1fr); }
+      .rewards-view .crx-split{ grid-template-columns:1fr; }
+    }
+    @media (max-width:820px){
+      .rewards-view .crx-claim-grid{ grid-template-columns:1fr; }
+      .rewards-view .crx-portfolio-body{ grid-template-columns:1fr; }
+      .rewards-view .crx-hero{ grid-template-columns:1fr; }
+      .rewards-view .crx-chest{ width:100%; height:140px; font-size:100px; }
+      .rewards-view .crx-hero-val{ font-size:30px; }
+      .rewards-view .crx-card{ padding:16px; }
+      .rewards-view .crx-table{ font-size:11px; }
+      .rewards-view .crx-table th,
+      .rewards-view .crx-table td{ padding:8px 4px; }
+    }
+    </style>
+
+    <div class="crx-wrap">
+
+      <!-- ═══ MAIN ═══ -->
+      <div class="crx-main">
+
+        <!-- KPI ROW -->
+        <div class="crx-kpis">
+          <div class="crx-kpi">
+            <div class="crx-kpi-head">
+              <span class="crx-kpi-lbl">TOTAL REWARDS · ALL TIME</span>
+              <span class="crx-kpi-ic purple">📈</span>
+            </div>
+            <div class="crx-kpi-val">$24,680</div>
+            <div class="crx-kpi-sub green">+18.6% vs last 30d</div>
+            <svg class="crx-spark" viewBox="0 0 60 24"><polyline fill="none" stroke="#9b7ee0" stroke-width="1.5" points="0,20 8,18 16,15 24,17 32,12 40,8 48,10 60,3"/></svg>
+          </div>
+
+          <div class="crx-kpi gold-hi">
+            <div class="crx-kpi-head">
+              <span class="crx-kpi-lbl">CLAIMABLE NOW</span>
+              <span class="crx-kpi-ic green">🎁</span>
+            </div>
+            <div class="crx-kpi-val">$1,248</div>
+            <div class="crx-kpi-sub">3 opportunities</div>
+          </div>
+
+          <div class="crx-kpi">
+            <div class="crx-kpi-head">
+              <span class="crx-kpi-lbl">PENDING REWARDS</span>
+              <span class="crx-kpi-ic gold">⏳</span>
+            </div>
+            <div class="crx-kpi-val">$8,450</div>
+            <div class="crx-kpi-sub">12 airdrops</div>
+          </div>
+
+          <div class="crx-kpi">
+            <div class="crx-kpi-head">
+              <span class="crx-kpi-lbl">EST. FUTURE VALUE</span>
+              <span class="crx-kpi-ic cyan">⏱</span>
+            </div>
+            <div class="crx-kpi-val">$15,720</div>
+            <div class="crx-kpi-sub">Next 6 months</div>
+          </div>
         </div>
-      </div>
 
-      <!-- 4 KPI cards -->
-      <div class="cr-kpis">
-        <div class="cr-kpi alltime">
-          <div class="cr-kpi-head">
-            <span class="cr-kpi-lbl">TOTAL REWARDS · ALL TIME</span>
-            <span class="cr-kpi-icon purple">💎</span>
-          </div>
-          <div class="cr-kpi-val" id="crKpiTotal">$0</div>
-          <div class="cr-kpi-foot">
-            <span class="cr-kpi-delta" id="crKpiTotalDelta">—</span>
-            <svg class="cr-kpi-spark" viewBox="0 0 60 20"><polyline fill="none" stroke="var(--purple)" stroke-width="1.5" points="0,15 10,12 20,13 30,8 40,9 50,5 60,3"/></svg>
-          </div>
-        </div>
-        <div class="cr-kpi claimed">
-          <div class="cr-kpi-head">
-            <span class="cr-kpi-lbl">CLAIMED · ALL TIME</span>
-            <span class="cr-kpi-icon green">✓</span>
-          </div>
-          <div class="cr-kpi-val green" id="crKpiClaimed">$0</div>
-          <div class="cr-kpi-foot">
-            <span class="cr-kpi-delta" id="crKpiClaimedDelta">—</span>
-            <svg class="cr-kpi-spark" viewBox="0 0 60 20"><polyline fill="none" stroke="var(--green)" stroke-width="1.5" points="0,17 10,14 20,12 30,10 40,7 50,5 60,2"/></svg>
-          </div>
-        </div>
-        <div class="cr-kpi pending">
-          <div class="cr-kpi-head">
-            <span class="cr-kpi-lbl">PENDING VALUE</span>
-            <span class="cr-kpi-icon gold">⏳</span>
-          </div>
-          <div class="cr-kpi-val gold" id="crKpiPending">$0</div>
-          <div class="cr-kpi-foot">
-            <span class="cr-kpi-delta" id="crKpiPendingDelta">—</span>
-            <svg class="cr-kpi-spark" viewBox="0 0 60 20"><polyline fill="none" stroke="var(--gold)" stroke-width="1.5" points="0,14 10,11 20,13 30,9 40,8 50,6 60,4"/></svg>
-          </div>
-        </div>
-        <div class="cr-kpi missed">
-          <div class="cr-kpi-head">
-            <span class="cr-kpi-lbl">MISSED REWARDS</span>
-            <span class="cr-kpi-icon red">⚠</span>
-          </div>
-          <div class="cr-kpi-val" id="crKpiMissed">$0</div>
-          <div class="cr-kpi-foot">
-            <span class="cr-kpi-delta down" id="crKpiMissedDelta">—</span>
-            <svg class="cr-kpi-spark" viewBox="0 0 60 20"><polyline fill="none" stroke="var(--red)" stroke-width="1.5" points="0,5 10,8 20,7 30,11 40,10 50,13 60,15"/></svg>
-          </div>
-        </div>
-      </div>
+        <!-- HERO -->
+        <div class="crx-hero">
+          <div class="crx-hero-left">
+            <div class="crx-hero-title">
+              <span class="em">🎉</span> YOU HAVE 3 REWARDS READY!
+            </div>
+            <div class="crx-hero-sub">Claim now and keep your momentum going.</div>
 
-      <!-- MAIN GRID -->
-      <div class="cr-main">
-
-        <div>
-
-          <!-- Row 2: 3 cards -->
-          <div class="cr-row-3">
-
-            <!-- Rewards Overview (donut) -->
-            <div class="cr-card">
-              <div class="cr-card-head">
-                <div class="cr-card-title">📊 REWARDS OVERVIEW</div>
+            <div class="crx-hero-row">
+              <div class="crx-hero-val-block">
+                <span class="crx-hero-val-lbl">Total Value</span>
+                <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                  <span class="crx-hero-val">$1,248</span>
+                  <span class="crx-opps">3 Opportunities</span>
+                </div>
               </div>
-              <div class="cr-overview-inner">
-                <div class="cr-donut">
-                  <svg viewBox="0 0 100 100" id="crDonutSvg">
-                    <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="12"/>
-                    <circle id="crArcGold" cx="50" cy="50" r="42" fill="none" stroke="var(--gold)" stroke-width="12" stroke-dasharray="0 263.9" stroke-dashoffset="0"/>
-                    <circle id="crArcPurple" cx="50" cy="50" r="42" fill="none" stroke="var(--purple)" stroke-width="12" stroke-dasharray="0 263.9" stroke-dashoffset="0"/>
-                    <circle id="crArcCyan" cx="50" cy="50" r="42" fill="none" stroke="var(--cyan)" stroke-width="12" stroke-dasharray="0 263.9" stroke-dashoffset="0"/>
-                    <circle id="crArcRed" cx="50" cy="50" r="42" fill="none" stroke="var(--red)" stroke-width="12" stroke-dasharray="0 263.9" stroke-dashoffset="0"/>
-                  </svg>
-                  <div class="cr-donut-center">
-                    <div class="cr-donut-val" id="crDonutVal">$0</div>
-                    <div class="cr-donut-lbl">TOTAL VALUE</div>
-                    <div class="cr-donut-delta" id="crDonutDelta">↗ +0%</div>
+
+              <div class="crx-countdown">
+                <span class="crx-cd-lbl">Next Reward In</span>
+                <div class="crx-cd-grid">
+                  <div class="crx-cd-cell"><div class="crx-cd-num">14</div><div class="crx-cd-unit">HRS</div></div>
+                  <span class="crx-cd-sep">:</span>
+                  <div class="crx-cd-cell"><div class="crx-cd-num">32</div><div class="crx-cd-unit">MINS</div></div>
+                  <span class="crx-cd-sep">:</span>
+                  <div class="crx-cd-cell"><div class="crx-cd-num">18</div><div class="crx-cd-unit">SECS</div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="crx-hero-btns">
+              <button class="crx-btn-gold">⚡ Claim All $1,248</button>
+              <button class="crx-btn-ghost">Claim Selected (0)</button>
+            </div>
+          </div>
+
+          <div class="crx-chest">
+            🪙
+            <span class="conf c1">✦</span>
+            <span class="conf c2">✦</span>
+            <span class="conf c3">★</span>
+            <span class="conf c4">✦</span>
+          </div>
+        </div>
+
+        <!-- CLAIMABLE REWARDS -->
+        <div class="crx-card">
+          <div class="crx-sec-head">
+            <span class="crx-sec-title">CLAIMABLE REWARDS</span>
+            <span class="crx-sec-count">(3)</span>
+          </div>
+          <div class="crx-claim-grid">
+            <div class="crx-claim">
+              <div class="crx-claim-top">
+                <div class="crx-claim-logo lz">○</div>
+                <div class="crx-claim-info">
+                  <div class="crx-claim-name">LayerZero</div>
+                  <div class="crx-claim-tags">
+                    <span class="crx-claim-tkr">ZRO</span>
+                    <span class="crx-tag high">High</span>
+                    <span class="crx-tag new">New</span>
                   </div>
                 </div>
-                <div class="cr-legend">
-                  <div class="cr-legend-row">
-                    <span class="cr-legend-dot" style="background:var(--gold)"></span>
-                    <span class="cr-legend-name">CLAIMABLE NOW</span>
-                    <span class="cr-legend-val gold" id="crLegClaimable">$0</span>
-                  </div>
-                  <div class="cr-legend-row">
-                    <span class="cr-legend-dot" style="background:var(--purple)"></span>
-                    <span class="cr-legend-name">PENDING / UPCOMING</span>
-                    <span class="cr-legend-val" id="crLegPending">$0</span>
-                  </div>
-                  <div class="cr-legend-row">
-                    <span class="cr-legend-dot" style="background:var(--cyan)"></span>
-                    <span class="cr-legend-name">VESTING</span>
-                    <span class="cr-legend-val cyan" id="crLegVesting">$0</span>
-                  </div>
-                  <div class="cr-legend-row">
-                    <span class="cr-legend-dot" style="background:var(--green)"></span>
-                    <span class="cr-legend-name">CLAIMED · ALL TIME</span>
-                    <span class="cr-legend-val green" id="crLegClaimed">$0</span>
-                  </div>
-                  <div class="cr-legend-row">
-                    <span class="cr-legend-dot" style="background:var(--red)"></span>
-                    <span class="cr-legend-name">MISSED</span>
-                    <span class="cr-legend-val red" id="crLegMissed">$0</span>
+              </div>
+              <div class="crx-claim-type">Season 1 Airdrop</div>
+              <div class="crx-claim-vals">
+                <span class="crx-claim-val">$892</span>
+                <span class="crx-claim-tokens">~1,280 ZRO</span>
+              </div>
+              <button class="crx-claim-btn">Claim Now →</button>
+            </div>
+
+            <div class="crx-claim">
+              <div class="crx-claim-top">
+                <div class="crx-claim-logo mn">◇</div>
+                <div class="crx-claim-info">
+                  <div class="crx-claim-name">Monad</div>
+                  <div class="crx-claim-tags">
+                    <span class="crx-claim-tkr">MON</span>
+                    <span class="crx-tag new">New</span>
                   </div>
                 </div>
               </div>
+              <div class="crx-claim-type">Testnet Airdrop</div>
+              <div class="crx-claim-vals">
+                <span class="crx-claim-val">$256</span>
+                <span class="crx-claim-tokens">~340 MON</span>
+              </div>
+              <button class="crx-claim-btn">Claim Now →</button>
             </div>
 
-            <!-- Top Reward Categories -->
-            <div class="cr-card">
-              <div class="cr-card-head">
-                <div class="cr-card-title">🏷 TOP REWARD CATEGORIES</div>
-                <button class="cr-view-all">View All →</button>
+            <div class="crx-claim">
+              <div class="crx-claim-top">
+                <div class="crx-claim-logo pf">P</div>
+                <div class="crx-claim-info">
+                  <div class="crx-claim-name">Puffer Finance</div>
+                  <div class="crx-claim-tags">
+                    <span class="crx-claim-tkr">PUFFER</span>
+                    <span class="crx-tag new">New</span>
+                  </div>
+                </div>
               </div>
-              <div class="cr-cat-list" id="crCatList">
-                <div class="cr-table-empty" style="padding:20px">Add rewards to see breakdown.</div>
+              <div class="crx-claim-type">Liquid Restaking Airdrop</div>
+              <div class="crx-claim-vals">
+                <span class="crx-claim-val">$100</span>
+                <span class="crx-claim-tokens">~2,100 PUFFER</span>
               </div>
-            </div>
-
-            <!-- Best Performing Ecosystems -->
-            <div class="cr-card">
-              <div class="cr-card-head">
-                <div class="cr-card-title">🌐 BEST PERFORMING ECOSYSTEMS</div>
-                <button class="cr-view-all">View All →</button>
-              </div>
-              <div class="cr-eco-list" id="crEcoList">
-                <div class="cr-table-empty" style="padding:20px">Add rewards to see ranking.</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Rewards Table -->
-          <div class="cr-table-wrap">
-            <div class="cr-tabs-row">
-              <div class="cr-tabs" id="crTabs">
-                <button class="cr-tab active" data-status="claimable">⚡ CLAIMABLE <span class="cr-tab-count" id="crCntClaimable">0</span></button>
-                <button class="cr-tab" data-status="pending">⏳ PENDING <span class="cr-tab-count" id="crCntPending">0</span></button>
-                <button class="cr-tab" data-status="vesting">🔒 VESTING <span class="cr-tab-count" id="crCntVesting">0</span></button>
-                <button class="cr-tab" data-status="claimed">✓ CLAIMED <span class="cr-tab-count" id="crCntClaimed">0</span></button>
-                <button class="cr-tab" data-status="missed">⚠ MISSED <span class="cr-tab-count" id="crCntMissed">0</span></button>
-              </div>
-              <div class="cr-table-actions">
-                <button class="cr-add-reward" id="crAddRewardBtn">+ LOG REWARD</button>
-              </div>
-            </div>
-
-            <table class="cr-table" id="crTable">
-              <thead>
-                <tr>
-                  <th>PROJECT</th>
-                  <th>TYPE</th>
-                  <th>AMOUNT</th>
-                  <th>VALUE (USD)</th>
-                  <th>ELIGIBILITY</th>
-                  <th>AVAILABLE</th>
-                  <th class="right">ACTION</th>
-                </tr>
-              </thead>
-              <tbody id="crTableBody">
-                <tr><td colspan="7" class="cr-table-empty">Loading rewards…</td></tr>
-              </tbody>
-            </table>
-            <div class="cr-table-foot" id="crTableFoot" style="display:none;">
-              <a href="#" id="crViewAllLink">View All →</a>
+              <button class="crx-claim-btn">Claim Now →</button>
             </div>
           </div>
-
+          <div class="crx-viewall-link">View All Claimable Opportunities →</div>
         </div>
 
-        <!-- ─── RIGHT RAIL ─── -->
-        <div class="cr-rail">
-
-          <!-- ACTION CENTER -->
-          <div class="cr-rail-card cr-action-center">
-            <div class="cr-rail-head">
-              <div class="cr-rail-title">🚨 ACTION CENTER</div>
-            </div>
-            <div id="crActionList">
-              <div class="cr-action-item opportunity">
-                <span class="cr-action-icon">👋</span>
-                <div class="cr-action-body">
-                  <div class="cr-action-title">Welcome to your <b class="green">money-making system</b></div>
-                  <div class="cr-action-sub">Log your first reward to unlock action insights</div>
-                  <button class="cr-action-btn green" id="crActionFirstBtn">+ ADD REWARD</button>
+        <!-- PORTFOLIO + FORECAST -->
+        <div class="crx-split">
+          <!-- PORTFOLIO -->
+          <div class="crx-card">
+            <div class="crx-portfolio-title">REWARDS PORTFOLIO</div>
+            <div class="crx-portfolio-body">
+              <div class="crx-donut-wrap">
+                <svg class="crx-donut" viewBox="0 0 42 42">
+                  <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="var(--surface2)" stroke-width="6"/>
+                  <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#3b82f6" stroke-width="6" stroke-dasharray="39.2 100" stroke-dashoffset="25" transform="rotate(-90 21 21)"/>
+                  <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#ec4899" stroke-width="6" stroke-dasharray="18.6 100" stroke-dashoffset="-14.2" transform="rotate(-90 21 21)"/>
+                  <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#10b981" stroke-width="6" stroke-dasharray="15.8 100" stroke-dashoffset="-32.8" transform="rotate(-90 21 21)"/>
+                  <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#06b6d4" stroke-width="6" stroke-dasharray="9.6 100" stroke-dashoffset="-48.6" transform="rotate(-90 21 21)"/>
+                  <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#f59e0b" stroke-width="6" stroke-dasharray="6.1 100" stroke-dashoffset="-58.2" transform="rotate(-90 21 21)"/>
+                  <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#a78bfa" stroke-width="6" stroke-dasharray="10.7 100" stroke-dashoffset="-64.3" transform="rotate(-90 21 21)"/>
+                </svg>
+                <div class="crx-donut-center">
+                  <div class="crx-donut-val">$24,680</div>
+                  <div class="crx-donut-lbl">Total Value</div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <!-- BEST NET PROFIT -->
-          <div class="cr-rail-card">
-            <div class="cr-rail-head">
-              <div class="cr-rail-title">💸 BEST NET PROFIT</div>
-            </div>
-            <div id="crBestNetList">
-              <div class="cr-table-empty" style="padding:14px">No claimable rewards yet.</div>
-            </div>
-          </div>
-
-          <!-- UPCOMING CLAIMS -->
-          <div class="cr-rail-card">
-            <div class="cr-rail-head">
-              <div class="cr-rail-title">📅 UPCOMING CLAIMS</div>
-            </div>
-            <div id="crTimelineList">
-              <div class="cr-table-empty" style="padding:14px">No upcoming claims.</div>
-            </div>
-          </div>
-
-          <!-- PERFORMANCE -->
-          <div class="cr-rail-card">
-            <div class="cr-rail-head">
-              <div class="cr-rail-title">📈 PERFORMANCE</div>
-              <select class="cr-perf-select" id="crPerfRange">
-                <option value="month">This Month</option>
-                <option value="30d">Last 30 days</option>
-                <option value="all">All time</option>
-              </select>
-            </div>
-            <div class="cr-perf-row">
-              <div>
-                <div class="cr-perf-lbl">CLAIMED THIS MONTH</div>
-                <div class="cr-perf-val" id="crPerfTotal">$0</div>
-                <div class="cr-perf-delta" id="crPerfTotalDelta">—</div>
-              </div>
-              <div>
-                <div class="cr-perf-lbl">TOTAL CLAIMS</div>
-                <div class="cr-perf-val" id="crPerfCount">0</div>
-                <div class="cr-perf-delta" id="crPerfCountDelta">—</div>
+              <div class="crx-chains-list">
+                <div class="crx-chain-row"><div class="crx-chain-dot" style="background:#3b82f6"></div><span class="crx-chain-name">Ethereum</span><span class="crx-chain-pct">39.2%</span><span class="crx-chain-amt">$9,420</span></div>
+                <div class="crx-chain-row"><div class="crx-chain-dot" style="background:#ec4899"></div><span class="crx-chain-name">Arbitrum</span><span class="crx-chain-pct">18.6%</span><span class="crx-chain-amt">$4,460</span></div>
+                <div class="crx-chain-row"><div class="crx-chain-dot" style="background:#10b981"></div><span class="crx-chain-name">Solana</span><span class="crx-chain-pct">15.8%</span><span class="crx-chain-amt">$3,890</span></div>
+                <div class="crx-chain-row"><div class="crx-chain-dot" style="background:#06b6d4"></div><span class="crx-chain-name">Base</span><span class="crx-chain-pct">9.6%</span><span class="crx-chain-amt">$2,370</span></div>
+                <div class="crx-chain-row"><div class="crx-chain-dot" style="background:#f59e0b"></div><span class="crx-chain-name">Polygon</span><span class="crx-chain-pct">6.1%</span><span class="crx-chain-amt">$1,510</span></div>
+                <div class="crx-chain-row"><div class="crx-chain-dot" style="background:#a78bfa"></div><span class="crx-chain-name">Others</span><span class="crx-chain-pct">10.7%</span><span class="crx-chain-amt">$2,630</span></div>
               </div>
             </div>
-            <svg class="cr-perf-chart" viewBox="0 0 300 75" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="crPerfGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="var(--purple)" stop-opacity="0.4"/>
-                  <stop offset="100%" stop-color="var(--purple)" stop-opacity="0"/>
-                </linearGradient>
-              </defs>
-              <path id="crPerfArea" d="M 0,55 L 30,52 L 60,48 L 90,45 L 120,42 L 150,38 L 180,34 L 210,28 L 240,22 L 270,18 L 300,12 L 300,75 L 0,75 Z" fill="url(#crPerfGrad)"/>
-              <polyline id="crPerfLine" points="0,55 30,52 60,48 90,45 120,42 150,38 180,34 210,28 240,22 270,18 300,12" fill="none" stroke="var(--purple)" stroke-width="1.8"/>
-            </svg>
+
+            <div class="crx-cats">
+              <div class="crx-cats-title">Top Reward Categories</div>
+              <div class="crx-cat-row"><div class="crx-cat-ic" style="background:rgba(245,158,11,0.15);color:#f59e0b;">🪙</div><span class="crx-cat-name">Token Rewards</span><span class="crx-cat-pct">55.7%</span><span class="crx-cat-amt">$14,250</span></div>
+              <div class="crx-cat-row"><div class="crx-cat-ic" style="background:rgba(155,126,224,0.15);color:#9b7ee0;">🖼</div><span class="crx-cat-name">NFT Rewards</span><span class="crx-cat-pct">14.0%</span><span class="crx-cat-amt">$3,450</span></div>
+              <div class="crx-cat-row"><div class="crx-cat-ic" style="background:rgba(74,240,255,0.10);color:var(--blue);">⊙</div><span class="crx-cat-name">Points</span><span class="crx-cat-pct">12.1%</span><span class="crx-cat-amt">$2,930</span></div>
+              <div class="crx-cat-row"><div class="crx-cat-ic" style="background:var(--green-glow);color:var(--green);">⏏</div><span class="crx-cat-name">Future Allocations</span><span class="crx-cat-pct">12.2%</span><span class="crx-cat-amt">$3,020</span></div>
+              <div class="crx-cat-row"><div class="crx-cat-ic" style="background:rgba(255,71,87,0.12);color:var(--red);">⛽</div><span class="crx-cat-name">Gas Rebates</span><span class="crx-cat-pct">4.0%</span><span class="crx-cat-amt">$1,030</span></div>
+              <div class="crx-cat-total"><span>Total</span><span class="crx-cat-amt">$24,680</span></div>
+            </div>
           </div>
 
+          <!-- FORECAST -->
+          <div class="crx-card">
+            <div class="crx-fc-head">
+              <div class="crx-portfolio-title" style="margin:0;">REWARDS FORECAST</div>
+              <select class="crx-fc-select"><option>6 Months</option><option>3 Months</option><option>1 Year</option></select>
+            </div>
+            <div class="crx-fc-sub">Estimated Total Value</div>
+            <div class="crx-fc-val">$15,720</div>
+            <div class="crx-fc-delta">+23.4% vs last 30d</div>
+
+            <div class="crx-fc-bars">
+              <div class="crx-fc-bar"><span class="crx-fc-bar-val">$1.2K</span><div class="crx-fc-bar-fill" style="height:35%"></div><span class="crx-fc-bar-lbl">May</span></div>
+              <div class="crx-fc-bar"><span class="crx-fc-bar-val">$2.4K</span><div class="crx-fc-bar-fill" style="height:55%"></div><span class="crx-fc-bar-lbl">Jun</span></div>
+              <div class="crx-fc-bar"><span class="crx-fc-bar-val">$2.7K</span><div class="crx-fc-bar-fill" style="height:62%"></div><span class="crx-fc-bar-lbl">Jul</span></div>
+              <div class="crx-fc-bar"><span class="crx-fc-bar-val">$3.1K</span><div class="crx-fc-bar-fill" style="height:72%"></div><span class="crx-fc-bar-lbl">Aug</span></div>
+              <div class="crx-fc-bar"><span class="crx-fc-bar-val">$3.6K</span><div class="crx-fc-bar-fill" style="height:88%"></div><span class="crx-fc-bar-lbl">Sep</span></div>
+              <div class="crx-fc-bar"><span class="crx-fc-bar-val">$2.7K</span><div class="crx-fc-bar-fill" style="height:62%"></div><span class="crx-fc-bar-lbl">Oct</span></div>
+            </div>
+            <div class="crx-fc-link">View Full Forecast →</div>
+          </div>
+        </div>
+
+        <!-- CLAIM HISTORY -->
+        <div class="crx-card">
+          <div class="crx-hist-title">CLAIM HISTORY</div>
+          <table class="crx-table">
+            <thead>
+              <tr><th>PROJECT</th><th>REWARD</th><th>VALUE</th><th>CLAIMED ON</th><th>TYPE</th><th>CHAIN</th><th>TX HASH</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="crx-th-proj"><div class="crx-th-logo">⬢</div>Starknet <span class="crx-th-tkr">STRK</span></div></td>
+                <td>1,250 STRK</td>
+                <td>$1,850</td>
+                <td>May 18, 2025</td>
+                <td>Airdrop</td>
+                <td><div class="crx-th-chain"><div class="crx-th-chain-dot" style="background:#3b82f6"></div>Ethereum</div></td>
+                <td><span class="crx-th-hash">0x8a71...3c2d ↗</span></td>
+              </tr>
+              <tr>
+                <td><div class="crx-th-proj"><div class="crx-th-logo">Z</div>ZetaChain <span class="crx-th-tkr">ZETA</span></div></td>
+                <td>2,100 ZETA</td>
+                <td>$1,320</td>
+                <td>May 15, 2025</td>
+                <td>Airdrop</td>
+                <td><div class="crx-th-chain"><div class="crx-th-chain-dot" style="background:#10b981"></div>ZetaChain</div></td>
+                <td><span class="crx-th-hash">0xc2be...91af ↗</span></td>
+              </tr>
+              <tr>
+                <td><div class="crx-th-proj"><div class="crx-th-logo">⊙</div>Orbit Protocol <span class="crx-th-tkr">ORBIT</span></div></td>
+                <td>3,500 ORBIT</td>
+                <td>$890</td>
+                <td>May 10, 2025</td>
+                <td>Reward</td>
+                <td><div class="crx-th-chain"><div class="crx-th-chain-dot" style="background:#06b6d4"></div>Base</div></td>
+                <td><span class="crx-th-hash">0x3c6d...7f21 ↗</span></td>
+              </tr>
+              <tr>
+                <td><div class="crx-th-proj"><div class="crx-th-logo">P</div>Particle Network <span class="crx-th-tkr">PARTI</span></div></td>
+                <td>2,000 PARTI</td>
+                <td>$540</td>
+                <td>May 6, 2025</td>
+                <td>Airdrop</td>
+                <td><div class="crx-th-chain"><div class="crx-th-chain-dot" style="background:#f59e0b"></div>Polygon</div></td>
+                <td><span class="crx-th-hash">0x1a2b...4d6e ↗</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="crx-viewall-link">View All Claim History →</div>
         </div>
 
       </div>
 
-      <!-- ─── ADD / EDIT REWARD MODAL ─── -->
-      <div class="cr-modal-overlay" id="crModal">
-        <div class="cr-modal">
-          <div class="cr-modal-head">
-            <div class="cr-modal-title" id="crModalTitle">Log Reward</div>
-            <button class="cr-modal-close" id="crModalClose">×</button>
+      <!-- ═══ RIGHT ═══ -->
+      <div class="crx-right">
+
+        <!-- ACHIEVEMENTS -->
+        <div class="crx-rsec">
+          <div class="crx-rsec-head">
+            <span class="crx-rsec-title">ACHIEVEMENTS</span>
+            <span class="crx-rsec-link">View All →</span>
           </div>
-          <div class="cr-modal-body">
-            <input type="hidden" id="crfId">
-
-            <div class="cr-field">
-              <label>PROJECT NAME *</label>
-              <input type="text" class="cr-input" id="crfProjectName" placeholder="e.g. Monad Testnet">
+          <div class="crx-ach">
+            <div class="crx-ach-ic purple">⬢</div>
+            <div class="crx-ach-info">
+              <div class="crx-ach-name">Airdrop Hunter</div>
+              <div class="crx-ach-desc">Claim 10 airdrops</div>
+              <div class="crx-ach-bar"><div class="fill purple" style="width:80%"></div></div>
             </div>
-
-            <div class="cr-field-row">
-              <div class="cr-field">
-                <label>REWARD TYPE</label>
-                <select class="cr-select" id="crfRewardType">
-                  <option value="token">Token</option>
-                  <option value="nft">NFT</option>
-                  <option value="points">Points</option>
-                  <option value="role">Role / Access</option>
-                </select>
-              </div>
-              <div class="cr-field">
-                <label>STATUS</label>
-                <select class="cr-select" id="crfStatus">
-                  <option value="claimable">Claimable</option>
-                  <option value="pending">Pending</option>
-                  <option value="vesting">Vesting</option>
-                  <option value="claimed">Claimed</option>
-                  <option value="missed">Missed</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="cr-field-row">
-              <div class="cr-field">
-                <label>TOKEN SYMBOL</label>
-                <input type="text" class="cr-input" id="crfTokenSymbol" placeholder="MON, PUFFER, ZETA…">
-              </div>
-              <div class="cr-field">
-                <label>AMOUNT</label>
-                <input type="number" step="any" class="cr-input" id="crfAmount" placeholder="2450">
-              </div>
-            </div>
-
-            <div class="cr-field-row">
-              <div class="cr-field">
-                <label>TOKEN PRICE (USD)</label>
-                <input type="number" step="any" class="cr-input" id="crfPrice" placeholder="0.50">
-              </div>
-              <div class="cr-field">
-                <label>USD VALUE (AUTO)</label>
-                <input type="number" step="any" class="cr-input" id="crfUsdValue" placeholder="auto-calculated">
-              </div>
-            </div>
-
-            <div class="cr-field-row">
-              <div class="cr-field">
-                <label>ECOSYSTEM / CHAIN</label>
-                <input type="text" class="cr-input" id="crfEcosystem" placeholder="Ethereum, Solana, Base…">
-              </div>
-              <div class="cr-field">
-                <label>ELIGIBILITY</label>
-                <select class="cr-select" id="crfEligibility">
-                  <option value="eligible">✓ Eligible</option>
-                  <option value="pending_check">⏳ Pending check</option>
-                  <option value="ineligible">✗ Ineligible</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="cr-field-row">
-              <div class="cr-field">
-                <label>AVAILABLE DATE</label>
-                <input type="date" class="cr-input" id="crfAvailableDate">
-              </div>
-              <div class="cr-field">
-                <label>EXPIRES DATE</label>
-                <input type="date" class="cr-input" id="crfExpiresDate">
-              </div>
-            </div>
-
-            <div class="cr-field">
-              <label>NOTES</label>
-              <textarea class="cr-textarea" id="crfNotes" placeholder="Optional notes (claim instructions, eligibility criteria, etc.)"></textarea>
-            </div>
-
-            <div class="cr-field">
-              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-                <input type="checkbox" id="crfIsHot" style="margin:0">
-                <span>🔥 Mark as HOT (high priority)</span>
-              </label>
-            </div>
+            <span class="crx-ach-pct">8 / 10</span>
           </div>
-          <div class="cr-modal-foot">
-            <button class="cr-btn-delete" id="crBtnDelete" style="display:none;">Delete</button>
-            <button class="cr-btn-cancel" id="crBtnCancel">CANCEL</button>
-            <button class="cr-btn-save" id="crBtnSave">SAVE REWARD</button>
+          <div class="crx-ach">
+            <div class="crx-ach-ic cyan">⬡</div>
+            <div class="crx-ach-info">
+              <div class="crx-ach-name">Portfolio Master</div>
+              <div class="crx-ach-desc">Track 25 projects</div>
+              <div class="crx-ach-bar"><div class="fill cyan" style="width:84%"></div></div>
+            </div>
+            <span class="crx-ach-pct">21 / 25</span>
+          </div>
+          <div class="crx-ach">
+            <div class="crx-ach-ic orange">🔥</div>
+            <div class="crx-ach-info">
+              <div class="crx-ach-name">Streak Legend</div>
+              <div class="crx-ach-desc">Maintain 30-day streak</div>
+              <div class="crx-ach-bar"><div class="fill orange" style="width:40%"></div></div>
+            </div>
+            <span class="crx-ach-pct">12 / 30</span>
+          </div>
+          <div class="crx-ach">
+            <div class="crx-ach-ic green">⛓</div>
+            <div class="crx-ach-info">
+              <div class="crx-ach-name">Chain Explorer</div>
+              <div class="crx-ach-desc">Farm on 10 different chains</div>
+              <div class="crx-ach-bar"><div class="fill green" style="width:80%"></div></div>
+            </div>
+            <span class="crx-ach-pct">8 / 10</span>
+          </div>
+          <div class="crx-ach">
+            <div class="crx-ach-ic gold">⚜</div>
+            <div class="crx-ach-info">
+              <div class="crx-ach-name">Elite Farmer</div>
+              <div class="crx-ach-desc">Reach Level 30</div>
+              <div class="crx-ach-bar"><div class="fill gold" style="width:90%"></div></div>
+            </div>
+            <span class="crx-ach-pct">27 / 30</span>
           </div>
         </div>
-      </div>
 
-      <!-- Toast container -->
-      <div class="cr-toast-c" id="crToastC"></div>
+        <!-- NEXT MILESTONE -->
+        <div class="crx-mile">
+          <div class="crx-rsec-title" style="margin-bottom:14px;">NEXT MILESTONE</div>
+          <div class="crx-mile-top">
+            <div class="crx-mile-gem">28</div>
+            <div class="crx-mile-info">
+              <div class="crx-mile-lvl">Level 28</div>
+              <div class="crx-mile-name">Elite Farmer</div>
+            </div>
+          </div>
+          <div class="crx-mile-xp-bar"><div class="fill" style="width:68%"></div></div>
+          <div class="crx-mile-xp">12,540 / 18,500 XP</div>
+          <div class="crx-mile-pct">68% to Level 28</div>
+        </div>
+
+        <!-- NEXT REWARDS -->
+        <div class="crx-rsec" style="position:relative;">
+          <div class="crx-rewards-title">NEXT REWARDS</div>
+          <span class="crx-gift">🎁</span>
+          <div class="crx-perk"><span class="crx-perk-ic green">✦</span>+10% XP Boost</div>
+          <div class="crx-perk"><span class="crx-perk-ic purple">★</span>Early Access to Alpha</div>
+          <div class="crx-perk"><span class="crx-perk-ic cyan">◆</span>Exclusive Role in Discord</div>
+          <div class="crx-perk"><span class="crx-perk-ic gold">⚜</span>Higher Airdrop Multipliers</div>
+
+          <div class="crx-perks-cd">
+            <div class="crx-perks-cd-cell"><div class="crx-perks-cd-num">14</div><div class="crx-perks-cd-u">DAYS</div></div>
+            <div class="crx-perks-cd-cell"><div class="crx-perks-cd-num">16</div><div class="crx-perks-cd-u">HRS</div></div>
+            <div class="crx-perks-cd-cell"><div class="crx-perks-cd-num">32</div><div class="crx-perks-cd-u">MINS</div></div>
+          </div>
+
+          <button class="crx-perks-btn">View Level Rewards →</button>
+        </div>
+
+      </div>
 
     </div>
-    </section>
 
+    </section>
     <!-- END REWARDS TAB CONTENT -->
     <!-- END REWARDS TAB CONTENT -->
 
