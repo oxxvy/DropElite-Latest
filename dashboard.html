@@ -13889,12 +13889,12 @@ select.exp-field-input option { background: #0a0e1a; color: #e8eaf0; }
                 <span class="ov-nba-tag">⚙️ NEXT BEST ACTION</span>
                 <span class="ov-nba-impact" id="ov-nba-impact">High Impact</span>
               </div>
-              <h2 class="ov-nba-title" id="ov-nba-title">Bridge any asset</h2>
-              <p class="ov-nba-desc" id="ov-nba-desc">Bridge any amount between supported chains.</p>
+              <h2 class="ov-nba-title" id="ov-nba-title">Loading your next move…</h2>
+              <p class="ov-nba-desc" id="ov-nba-desc">Scanning today's missions for the highest-impact action.</p>
               <div class="ov-nba-meta">
-                <div class="ov-nba-mi"><span class="ov-nba-ml">Estimated Time</span><span class="ov-nba-mv" id="ov-nba-time">⏱ 5–8 mins</span></div>
-                <div class="ov-nba-mi"><span class="ov-nba-ml">✦ Reward</span><span class="ov-nba-mv gold" id="ov-nba-reward">🪙 350 XP</span></div>
-                <div class="ov-nba-mi"><span class="ov-nba-ml">✦ Difficulty</span><span class="ov-nba-mv" id="ov-nba-diff">🟢 Easy</span></div>
+                <div class="ov-nba-mi"><span class="ov-nba-ml">Estimated Time</span><span class="ov-nba-mv" id="ov-nba-time">⏱ —</span></div>
+                <div class="ov-nba-mi"><span class="ov-nba-ml">✦ Reward</span><span class="ov-nba-mv gold" id="ov-nba-reward">🪙 —</span></div>
+                <div class="ov-nba-mi"><span class="ov-nba-ml">✦ Difficulty</span><span class="ov-nba-mv" id="ov-nba-diff">—</span></div>
               </div>
               <button class="ov-nba-cta" id="ov-nba-cta" onclick="ovDoNBA()">🚀 Do It Now</button>
             </div>
@@ -13979,12 +13979,12 @@ select.exp-field-input option { background: #0a0e1a; color: #e8eaf0; }
             <div class="ov-stat-card">
               <div class="ov-stat-label">TOTAL XP</div>
               <div class="ov-stat-big purple" id="ov-stat-xp">0</div>
-              <div class="ov-stat-delta green" id="ov-stat-xp-delta">↑ 0% this week</div>
+              <div class="ov-stat-delta" id="ov-stat-xp-delta">—</div>
             </div>
             <div class="ov-stat-card">
               <div class="ov-stat-label">TOTAL REWARDS</div>
               <div class="ov-stat-big gold" id="ov-stat-rewards">$0</div>
-              <div class="ov-stat-delta green" id="ov-stat-rewards-delta">↑ 0% this month</div>
+              <div class="ov-stat-delta" id="ov-stat-rewards-delta">—</div>
             </div>
             <div class="ov-stat-card">
               <div class="ov-stat-label">WALLETS HEALTH</div>
@@ -14000,7 +14000,7 @@ select.exp-field-input option { background: #0a0e1a; color: #e8eaf0; }
                 <span class="ov-stat-big" id="ov-stat-missions">0 <small>/ 0</small></span>
                 <span class="ov-missions-icon">⚙️</span>
               </div>
-              <div class="ov-stat-sub" id="ov-missions-status">In Progress</div>
+              <div class="ov-stat-sub" id="ov-missions-status">—</div>
             </div>
           </div>
 
@@ -14011,30 +14011,7 @@ select.exp-field-input option { background: #0a0e1a; color: #e8eaf0; }
               <button class="ov-link-btn" onclick="ovGoToMissions()">View All Moves →</button>
             </div>
             <div class="ov-moves-grid" id="ov-moves-grid">
-              <div class="ov-move-card">
-                <div class="ov-move-num">1</div>
-                <div class="ov-move-icon">🌉</div>
-                <div class="ov-move-name">Bridge any asset</div>
-                <div class="ov-move-desc">Bridge any amount between supported chains.</div>
-                <div class="ov-move-foot"><span class="ov-move-reward">Reward</span><span class="ov-move-xp gold">350 XP</span></div>
-                <button class="ov-move-cta" onclick="ovDoNBA()">Do It Now</button>
-              </div>
-              <div class="ov-move-card">
-                <div class="ov-move-num">2</div>
-                <div class="ov-move-icon">✅</div>
-                <div class="ov-move-name">Complete Daily Check-in</div>
-                <div class="ov-move-desc">Claim your daily rewards</div>
-                <div class="ov-move-foot"><span class="ov-move-reward">Reward</span><span class="ov-move-xp gold">100 XP</span></div>
-                <button class="ov-move-cta">Claim Now</button>
-              </div>
-              <div class="ov-move-card">
-                <div class="ov-move-num">3</div>
-                <div class="ov-move-icon">🔮</div>
-                <div class="ov-move-name">Explore 3 New Protocols</div>
-                <div class="ov-move-desc">Discover and add 3 new protocols to your watchlist.</div>
-                <div class="ov-move-foot"><span class="ov-move-reward">Reward</span><span class="ov-move-xp gold">250 XP</span></div>
-                <button class="ov-move-cta" onclick="ovGoToProjects()">Start Now</button>
-              </div>
+              <div class="ov-no-data">Loading today's moves…</div>
             </div>
           </div>
 
@@ -14051,11 +14028,9 @@ select.exp-field-input option { background: #0a0e1a; color: #e8eaf0; }
 
             <!-- RECENT ACHIEVEMENTS -->
             <div class="ov-card ov-achv-card">
-              <div class="ov-card-head"><span class="ov-card-title purple">RECENT ACHIEVEMENTS</span><button class="ov-link-btn">View All</button></div>
+              <div class="ov-card-head"><span class="ov-card-title purple">RECENT ACHIEVEMENTS</span><button class="ov-link-btn" onclick="ovGoToMissions()">View All</button></div>
               <div class="ov-achv-list" id="ov-achv-list">
-                <div class="ov-achv-item"><div class="ov-achv-icon gold">🏆</div><div class="ov-achv-info"><div class="ov-achv-name">Mission Master</div><div class="ov-achv-sub">Complete 50 Missions</div></div><div class="ov-achv-xp gold">+500 XP</div><div class="ov-achv-time">Just now</div></div>
-                <div class="ov-achv-item"><div class="ov-achv-icon orange">🔥</div><div class="ov-achv-info"><div class="ov-achv-name">Multi-Chain Farmer</div><div class="ov-achv-sub">Interact on 5 Chains</div></div><div class="ov-achv-xp green">+300 XP</div><div class="ov-achv-time">2h ago</div></div>
-                <div class="ov-achv-item"><div class="ov-achv-icon purple">🎯</div><div class="ov-achv-info"><div class="ov-achv-name">Alpha Hunter</div><div class="ov-achv-sub">Track 10 High Conviction Projects</div></div><div class="ov-achv-xp cyan">+400 XP</div><div class="ov-achv-time">5h ago</div></div>
+                <div class="ov-no-data">Loading achievements…</div>
               </div>
             </div>
 
@@ -14089,13 +14064,7 @@ select.exp-field-input option { background: #0a0e1a; color: #e8eaf0; }
           <div class="ov-alpha-bar">
             <div class="ov-alpha-icon">🔥 ALPHA FEED</div>
             <div class="ov-alpha-track" id="ov-alpha-track">
-              <span>New opportunity detected on Linea</span>
-              <span class="ov-alpha-dot">·</span>
-              <span>Galxe campaign with 1,200 USDC reward</span>
-              <span class="ov-alpha-dot">·</span>
-              <span>High whale activity on Base ecosystem</span>
-              <span class="ov-alpha-dot">·</span>
-              <span>EigenLayer TVL increased by 18%</span>
+              <span>Loading alpha signals…</span>
             </div>
             <button class="ov-alpha-cta" onclick="ovGoToIntelHub()">View All Alpha →</button>
           </div>
@@ -14130,9 +14099,9 @@ select.exp-field-input option { background: #0a0e1a; color: #e8eaf0; }
           <!-- TODAY'S TASK -->
           <div class="ov-rsb-card ov-today-task">
             <div class="ov-tt-label gold">Today's Task</div>
-            <div class="ov-tt-row"><span class="ov-tt-icon">🌉</span><span class="ov-tt-name" id="ov-tt-name">Bridge any asset</span></div>
-            <div class="ov-tt-meta"><span>Est. Time: <strong id="ov-tt-time">5–8 mins</strong></span></div>
-            <div class="ov-tt-meta"><span>Reward: <strong class="gold" id="ov-tt-reward">350 XP</strong></span></div>
+            <div class="ov-tt-row"><span class="ov-tt-icon">🎯</span><span class="ov-tt-name" id="ov-tt-name">Loading…</span></div>
+            <div class="ov-tt-meta"><span>Est. Time: <strong id="ov-tt-time">—</strong></span></div>
+            <div class="ov-tt-meta"><span>Reward: <strong class="gold" id="ov-tt-reward">—</strong></span></div>
             <button class="ov-tt-cta" onclick="ovDoNBA()">Do It Now <span>🚀</span></button>
           </div>
 
@@ -14140,9 +14109,7 @@ select.exp-field-input option { background: #0a0e1a; color: #e8eaf0; }
           <div class="ov-rsb-card ov-live-alerts">
             <div class="ov-la-head"><span class="ov-la-title pink">LIVE ALERTS</span><button class="ov-link-btn sm" onclick="ovGoToIntelHub()">View All</button></div>
             <div class="ov-la-list" id="ov-la-list">
-              <div class="ov-la-item"><span class="ov-la-dot red">🔴</span><span class="ov-la-text">High Gas on Ethereum</span><span class="ov-la-time">12m ago</span></div>
-              <div class="ov-la-item"><span class="ov-la-dot green">🟢</span><span class="ov-la-text">New High Conviction</span><span class="ov-la-time">25m ago</span></div>
-              <div class="ov-la-item"><span class="ov-la-dot orange">🔶</span><span class="ov-la-text">Snapshot Alert</span><span class="ov-la-time">1h ago</span></div>
+              <div class="ov-no-data">Loading alerts…</div>
             </div>
           </div>
 
@@ -14153,7 +14120,7 @@ select.exp-field-input option { background: #0a0e1a; color: #e8eaf0; }
               <span class="ov-season-icon">🏆</span>
             </div>
             <div class="ov-season-name" id="ov-season-name">Genesis Season</div>
-            <div class="ov-season-timer" id="ov-season-timer">Ends in 37d 12h 24m</div>
+            <div class="ov-season-timer" id="ov-season-timer">—</div>
             <div class="ov-season-desc">Complete missions to earn exclusive rewards.</div>
             <button class="ov-season-cta" onclick="ovGoToRewards()">View Season →</button>
           </div>
@@ -19025,16 +18992,25 @@ updateClock();
 })();
 
 /* ═══════════════════════════════════════════
-   OVERVIEW TAB v4.0 — LIVE (Supabase)
-   Redesigned layout with NBA hero, stats row,
-   top 3 moves, mission overview, achievements,
-   portfolio health, right sidebar
+   OVERVIEW TAB v4.1 — LIVE (Supabase)
+   Launch polish:
+   · Real API wiring — getProgress / getOverviewStats /
+     getAlerts / getClaimAlerts / getSignals /
+     getActivityFeed / getWalletChainData
+   · Correct mission fields (xp, quest_url, time_minutes, icon)
+   · done-flags from getMissions() (no phantom completions call)
+   · Honest empty states everywhere — zero fake data
+   · Live season countdown · personalized AI Copilot
+   · Parallel loads + 45s reload guard
+   · Listens to dropelite:tabchange (real event name)
 ═══════════════════════════════════════════ */
 (function() {
 
-  var OV_ICONS = ['🔵','🟣','🟢','🟡','🔴','⚡','🌉','🔄','🖼️','📡','📊','🧪','🌊','🎯','💎','🚀'];
+  var OV_ICONS = ['🌉','✅','🔮','💧','📡','⚡','🖼️','🔄','🎯','🧪','🌊','📊','💎','🚀'];
   var ovMissions = [];
-  var ovBusyId = null;
+  var ovStats = null;
+  var ovLastLoad = 0;
+  var OV_RELOAD_MS = 45000;
 
   function ovEl(id) { return document.getElementById(id); }
 
@@ -19050,17 +19026,122 @@ updateClock();
     return '🟢 Easy';
   }
 
-  /* ── Render Mission List (bottom card) ── */
+  function ovTimeAgo(ts) {
+    var diff = Date.now() - new Date(ts).getTime();
+    var mins = Math.floor(diff / 60000);
+    if (mins < 1) return 'now';
+    if (mins < 60) return mins + 'm ago';
+    var hrs = Math.floor(mins / 60);
+    if (hrs < 24) return hrs + 'h ago';
+    return Math.floor(hrs / 24) + 'd ago';
+  }
+
+  function ovFmtMins(mins) {
+    if (!mins || mins <= 0) return '⏱ ~5 mins';
+    if (mins < 60) return '⏱ ~' + mins + ' mins';
+    var h = Math.floor(mins / 60), m = mins % 60;
+    return '⏱ ~' + h + 'h' + (m ? ' ' + m + 'm' : '');
+  }
+
+  function ovMissionIcon(m, i) {
+    return (m && m.icon) ? m.icon : OV_ICONS[i % OV_ICONS.length];
+  }
+
+  function ovClamp(n) { return Math.max(0, Math.min(100, Math.round(n))); }
+
+  /* ── NBA Hero + Today's Task (right sidebar) ── */
+  function ovRenderNBA() {
+    var undone = ovMissions.filter(function(x) { return !x.done; });
+    var m = undone[0];
+    var t = ovEl('ov-nba-title'), d = ovEl('ov-nba-desc'), r = ovEl('ov-nba-reward');
+    var df = ovEl('ov-nba-diff'), tm = ovEl('ov-nba-time'), imp = ovEl('ov-nba-impact');
+    var ttn = ovEl('ov-tt-name'), ttr = ovEl('ov-tt-reward'), ttt = ovEl('ov-tt-time');
+    var why = ovEl('ov-nba-why-text');
+    var cta = ovEl('ov-nba-cta');
+
+    if (m) {
+      if (t) t.textContent = m.title || "Today's mission";
+      if (d) d.textContent = m.description || 'Complete this mission to earn XP and keep your streak alive.';
+      if (r) r.textContent = '🪙 ' + (m.xp || 0) + ' XP';
+      if (df) df.textContent = ovDiffBadge(m.difficulty);
+      if (tm) tm.textContent = ovFmtMins(m.time_minutes);
+      if (imp) imp.textContent = m.boost_active ? '⚡ XP Boost Active' : 'High Impact';
+      if (ttn) ttn.textContent = m.title || '—';
+      if (ttr) ttr.textContent = (m.xp || 0) + ' XP';
+      if (ttt) ttt.textContent = '~' + (m.time_minutes || 5) + ' mins';
+      if (why) why.textContent = m.boost_active
+        ? 'This mission has an active XP boost — extra rewards for a limited time.'
+        : 'Completing this keeps your streak alive and moves you toward the next level.';
+      if (cta) cta.textContent = '🚀 Do It Now';
+    } else if (ovMissions.length) {
+      if (t) t.textContent = 'All missions complete! 🎉';
+      if (d) d.textContent = "You've cleared today's board. Explore new airdrops or check your rewards.";
+      if (r) r.textContent = '🪙 Done for today';
+      if (df) df.textContent = '🟢 Legend';
+      if (tm) tm.textContent = '⏱ —';
+      if (imp) imp.textContent = 'Streak Secured';
+      if (ttn) ttn.textContent = 'All complete ✓';
+      if (ttr) ttr.textContent = 'Done';
+      if (ttt) ttt.textContent = '—';
+      if (why) why.textContent = 'Come back after the daily reset for fresh missions.';
+      if (cta) cta.textContent = '🔭 Explore Airdrops';
+    } else {
+      if (t) t.textContent = 'No missions queued yet';
+      if (d) d.textContent = 'New missions are published daily. Explore active airdrops while you wait.';
+      if (r) r.textContent = '🪙 —';
+      if (df) df.textContent = '—';
+      if (tm) tm.textContent = '⏱ —';
+      if (imp) imp.textContent = 'Standby';
+      if (ttn) ttn.textContent = 'No task yet';
+      if (ttr) ttr.textContent = '—';
+      if (ttt) ttt.textContent = '—';
+      if (why) why.textContent = 'Check the Explorer tab to discover new opportunities.';
+      if (cta) cta.textContent = '🔭 Explore Airdrops';
+    }
+  }
+
+  /* ── Top 3 Moves ── */
+  function ovRenderMoves() {
+    var el = ovEl('ov-moves-grid');
+    if (!el) return;
+    if (!ovMissions.length) {
+      el.innerHTML = '<div class="ov-no-data">No missions published yet — fresh moves drop daily.</div>';
+      return;
+    }
+    var top3 = ovMissions.filter(function(m) { return !m.done; }).slice(0, 3);
+    if (!top3.length) {
+      el.innerHTML = '<div class="ov-no-data">All missions complete! 🎉 Come back after the daily reset.</div>';
+      return;
+    }
+    var html = '';
+    top3.forEach(function(m, i) {
+      var icon = ovMissionIcon(m, i);
+      html += '<div class="ov-move-card">'
+        + '<div class="ov-move-num">' + (i + 1) + '</div>'
+        + '<div class="ov-move-icon">' + icon + '</div>'
+        + '<div class="ov-move-name">' + ovEscape(m.title) + '</div>'
+        + '<div class="ov-move-desc">' + ovEscape(m.description || '') + '</div>'
+        + '<div class="ov-move-foot"><span class="ov-move-reward">Reward</span><span class="ov-move-xp gold">' + (m.xp || 0) + ' XP</span></div>'
+        + '<button class="ov-move-cta" data-ov-move="' + ovEscape(m.id) + '">' + (i === 0 ? 'Do It Now' : 'Start Now') + '</button>'
+        + '</div>';
+    });
+    el.innerHTML = html;
+  }
+
+  /* ── Mission Overview list (bottom card) ── */
   function ovRenderMissionList() {
     var el = ovEl('ov-mission-list');
     if (!el) return;
-    if (!ovMissions.length) { el.innerHTML = '<div class="ov-no-data">No missions today. Check back soon!</div>'; return; }
+    if (!ovMissions.length) {
+      el.innerHTML = '<div class="ov-no-data">No missions today. Check back soon!</div>';
+      return;
+    }
     var html = '';
-    ovMissions.forEach(function(m, i) {
-      var icon = OV_ICONS[i % OV_ICONS.length];
-      var pct = m.done ? 100 : (m.status === 'in_progress' ? 50 : 0);
+    ovMissions.slice(0, 5).forEach(function(m, i) {
+      var icon = ovMissionIcon(m, i);
+      var pct = m.done ? 100 : 0;
       var fillClass = m.done ? 'green' : 'gold';
-      var statusTxt = m.done ? 'Claimed' : (m.status === 'in_progress' ? (m.progress_current || 0) + ' / ' + (m.progress_target || 1) : '0 / ' + (m.progress_target || 1));
+      var statusTxt = m.done ? '✓ Done' : '+' + (m.xp || 0) + ' XP';
       html += '<div class="ov-ml-item">'
         + '<div class="ov-ml-icon">' + icon + '</div>'
         + '<div class="ov-ml-info"><div class="ov-ml-name">' + ovEscape(m.title) + '</div>'
@@ -19072,58 +19153,17 @@ updateClock();
     el.innerHTML = html;
   }
 
-  /* ── Render Top 3 Moves ── */
-  function ovRenderMoves() {
-    var el = ovEl('ov-moves-grid');
-    if (!el || !ovMissions.length) return;
-    var top3 = ovMissions.filter(function(m) { return !m.done; }).slice(0, 3);
-    if (!top3.length) { el.innerHTML = '<div class="ov-no-data">All missions complete! 🎉</div>'; return; }
-    var html = '';
-    top3.forEach(function(m, i) {
-      var icon = OV_ICONS[i % OV_ICONS.length];
-      var xp = m.xp_reward || 100;
-      var ctaLabel = i === 0 ? 'Do It Now' : (i === 1 ? 'Claim Now' : 'Start Now');
-      html += '<div class="ov-move-card">'
-        + '<div class="ov-move-num">' + (i + 1) + '</div>'
-        + '<div class="ov-move-icon">' + icon + '</div>'
-        + '<div class="ov-move-name">' + ovEscape(m.title) + '</div>'
-        + '<div class="ov-move-desc">' + ovEscape(m.description || '') + '</div>'
-        + '<div class="ov-move-foot"><span class="ov-move-reward">Reward</span><span class="ov-move-xp gold">' + xp + ' XP</span></div>'
-        + '<button class="ov-move-cta" data-ov-move="' + m.id + '">' + ctaLabel + '</button>'
-        + '</div>';
-    });
-    el.innerHTML = html;
-  }
+  /* ── Stats Row ── */
+  function ovRenderStats(progress) {
+    var s = ovStats || {};
+    var xp = s.totalXp != null ? s.totalXp : ((progress && progress.total_xp) || 0);
+    var streak = s.currentStreak != null ? s.currentStreak : ((progress && progress.current_streak) || 0);
 
-  /* ── Render NBA Hero from first undone mission ── */
-  function ovRenderNBA() {
-    var m = ovMissions.filter(function(x) { return !x.done; })[0];
-    if (!m) return;
-    var t = ovEl('ov-nba-title'); if (t) t.textContent = m.title || 'Bridge any asset';
-    var d = ovEl('ov-nba-desc'); if (d) d.textContent = m.description || '';
-    var r = ovEl('ov-nba-reward'); if (r) r.textContent = '🪙 ' + (m.xp_reward || 100) + ' XP';
-    var df = ovEl('ov-nba-diff'); if (df) df.textContent = ovDiffBadge(m.difficulty);
-    var tt = ovEl('ov-tt-name'); if (tt) tt.textContent = m.title || 'Bridge any asset';
-    var tr = ovEl('ov-tt-reward'); if (tr) tr.textContent = (m.xp_reward || 100) + ' XP';
-  }
-
-  /* ── Load Stats ── */
-  async function ovLoadStats() {
-    var s = null;
-    try { s = await window.API.getUserProgress(); } catch (e) {}
-    if (!s) s = {};
-    var xp = s.total_xp || 0;
-    var level = s.level || 1;
-    var streak = s.current_streak || 0;
-    var missionsComplete = s.missions_completed || 0;
-    var totalMissions = ovMissions.length || 0;
-
-    // Level + XP
-    var levelXP = level * 1000;
+    // Level derived from XP: 1,000 XP per level
+    var level = Math.floor(xp / 1000) + 1;
     var prevXP = (level - 1) * 1000;
-    var inLevel = xp - prevXP;
-    var needed = levelXP - prevXP;
-    var pct = needed > 0 ? Math.min(100, Math.round((inLevel / needed) * 100)) : 0;
+    var levelXP = level * 1000;
+    var pct = ovClamp(((xp - prevXP) / 1000) * 100);
 
     var elLevel = ovEl('ov-stat-level'); if (elLevel) elLevel.textContent = level;
     var elFill = ovEl('ov-xp-fill'); if (elFill) elFill.style.width = pct + '%';
@@ -19134,135 +19174,262 @@ updateClock();
     var elStreak = ovEl('ov-stat-streak'); if (elStreak) elStreak.textContent = streak;
     ovRenderStreakWeek(streak);
 
-    // Total XP
+    // Total XP + real "today" delta
     var elTXP = ovEl('ov-stat-xp'); if (elTXP) elTXP.textContent = xp.toLocaleString();
+    var elXPD = ovEl('ov-stat-xp-delta');
+    if (elXPD) {
+      var xpToday = s.xpToday || 0;
+      if (xpToday > 0) {
+        elXPD.textContent = '↑ +' + xpToday.toLocaleString() + ' XP today';
+        elXPD.className = 'ov-stat-delta green';
+      } else {
+        elXPD.textContent = 'Complete missions to earn XP';
+        elXPD.className = 'ov-stat-delta';
+        elXPD.style.color = 'var(--ov-text-muted)';
+      }
+    }
 
-    // Total Rewards
-    var elRewards = ovEl('ov-stat-rewards'); if (elRewards) elRewards.textContent = '$' + (s.total_rewards || 0).toLocaleString();
+    // Total Rewards (live unclaimed estimate) + claims closing soon
+    var elRewards = ovEl('ov-stat-rewards');
+    if (elRewards) elRewards.textContent = '$' + (s.estRewardsUsd || 0).toLocaleString();
+    var elRD = ovEl('ov-stat-rewards-delta');
+    if (elRD) {
+      var cs = s.claimingSoon || 0;
+      if (cs > 0) {
+        elRD.textContent = '⏰ ' + cs + ' claim' + (cs > 1 ? 's' : '') + ' closing in 72h';
+        elRD.className = 'ov-stat-delta green';
+      } else {
+        elRD.textContent = 'Est. unclaimed value';
+        elRD.className = 'ov-stat-delta';
+        elRD.style.color = 'var(--ov-text-muted)';
+      }
+    }
 
-    // Wallets Health
-    var health = s.wallet_health || 0;
-    var elHealth = ovEl('ov-stat-health'); if (elHealth) elHealth.textContent = health;
-    var elHL = ovEl('ov-health-label');
-    if (elHL) elHL.textContent = health >= 90 ? 'Excellent' : health >= 70 ? 'Good' : health >= 50 ? 'Fair' : 'Needs Work';
-
-    // Missions count
+    // Missions count — honest states
     var done = ovMissions.filter(function(m) { return m.done; }).length;
-    var elMissions = ovEl('ov-stat-missions'); if (elMissions) elMissions.innerHTML = done + ' <small>/ ' + totalMissions + '</small>';
-    var elMS = ovEl('ov-missions-status'); if (elMS) elMS.textContent = done === totalMissions ? 'All Complete!' : 'In Progress';
-
-    // Portfolio Health gauge
-    ovRenderPortfolioHealth(s);
-
-    // Render missions
-    ovRenderMissionList();
-    ovRenderMoves();
-    ovRenderNBA();
-
-    // Load alerts
-    await ovRenderAlerts();
+    var total = ovMissions.length;
+    var elMissions = ovEl('ov-stat-missions');
+    if (elMissions) elMissions.innerHTML = done + ' <small>/ ' + total + '</small>';
+    var elMS = ovEl('ov-missions-status');
+    if (elMS) elMS.textContent = total === 0 ? 'No missions yet'
+      : (done === total ? 'All Complete! 🎉' : 'In Progress');
   }
 
-  /* ── Streak Week Dots ── */
+  /* ── Streak Week Dots — lit days reflect the actual streak ── */
   function ovRenderStreakWeek(streak) {
     var el = ovEl('ov-streak-week');
     if (!el) return;
-    var today = new Date().getDay(); // 0=Sun
-    var dayMap = [6, 0, 1, 2, 3, 4, 5]; // map JS day to M=0,T=1,...S=6
-    var todayIdx = dayMap[today];
+    var dayMap = [6, 0, 1, 2, 3, 4, 5]; // JS getDay() → M=0 … S=6
+    var todayIdx = dayMap[new Date().getDay()];
+    var lit = Math.min(streak || 0, todayIdx + 1);
     var spans = el.querySelectorAll('span');
     spans.forEach(function(sp, i) {
       sp.className = '';
-      if (i < todayIdx) sp.classList.add('done');
-      else if (i === todayIdx) sp.classList.add(streak > 0 ? 'done' : 'today');
+      if (lit > 0 && i <= todayIdx && i > todayIdx - lit) sp.classList.add('done');
+      else if (i === todayIdx) sp.classList.add('today');
     });
   }
 
-  /* ── Portfolio Health Gauge ── */
-  function ovRenderPortfolioHealth(s) {
-    var score = s.wallet_health || 0;
+  /* ── Portfolio Health — real on-chain scan data, clamped ≥ 0 ── */
+  function ovRenderPortfolioHealth(score, breakdown) {
+    var noData = (score == null);
+    var gaugeScore = noData ? 0 : ovClamp(score);
     var circumference = 2 * Math.PI * 50;
-    var offset = circumference - (score / 100) * circumference;
     var fill = ovEl('ov-ph-fill');
     if (fill) {
       fill.style.strokeDasharray = circumference;
-      fill.style.strokeDashoffset = offset;
+      fill.style.strokeDashoffset = circumference - (gaugeScore / 100) * circumference;
     }
-    var val = ovEl('ov-ph-val'); if (val) val.textContent = score;
+    var val = ovEl('ov-ph-val'); if (val) val.textContent = noData ? '—' : gaugeScore;
     var lbl = ovEl('ov-ph-lbl');
-    if (lbl) lbl.textContent = score >= 90 ? 'Excellent' : score >= 70 ? 'Good' : score >= 50 ? 'Fair' : 'Poor';
+    if (lbl) lbl.textContent = noData ? 'No scan yet'
+      : gaugeScore >= 90 ? 'Excellent' : gaugeScore >= 70 ? 'Good' : gaugeScore >= 50 ? 'Fair' : 'Needs Work';
 
-    // Metrics breakdown (placeholder values)
-    var sec = ovEl('ov-ph-security'); if (sec) sec.textContent = Math.min(100, score + 2) + '/100';
-    var act = ovEl('ov-ph-activity'); if (act) act.textContent = Math.min(100, score - 2) + '/100';
-    var div = ovEl('ov-ph-diversity'); if (div) div.textContent = Math.min(100, score - 3) + '/100';
-    var syb = ovEl('ov-ph-sybil'); if (syb) syb.textContent = Math.min(100, score + 1) + '/100';
-    var con = ovEl('ov-ph-consist'); if (con) con.textContent = Math.min(100, score + 1) + '/100';
+    var ids = { security: 'ov-ph-security', activity: 'ov-ph-activity', diversity: 'ov-ph-diversity', sybil: 'ov-ph-sybil', consist: 'ov-ph-consist' };
+    Object.keys(ids).forEach(function(k) {
+      var e = ovEl(ids[k]);
+      if (e) e.textContent = (noData || !breakdown) ? '—' : ovClamp(breakdown[k]) + '/100';
+    });
+
+    // Wallets Health stat card mirrors the gauge
+    var elHealth = ovEl('ov-stat-health'); if (elHealth) elHealth.textContent = noData ? '—' : gaugeScore;
+    var elHL = ovEl('ov-health-label');
+    if (elHL) elHL.textContent = noData ? 'Run a wallet scan'
+      : gaugeScore >= 90 ? 'Excellent' : gaugeScore >= 70 ? 'Good' : gaugeScore >= 50 ? 'Fair' : 'Needs Work';
+    var elHI = ovEl('ov-health-icon');
+    if (elHI) elHI.textContent = noData ? '🔍' : gaugeScore >= 70 ? '⭐' : gaugeScore >= 50 ? '✨' : '⚠️';
   }
 
-  /* ── Render Live Alerts (right sidebar) ── */
+  async function ovLoadHealth() {
+    var map = {};
+    try { if (window.API && window.API.getWalletChainData) map = await window.API.getWalletChainData() || {}; } catch (e) {}
+    var rows = Object.keys(map).map(function(k) { return map[k]; });
+    if (!rows.length) { ovRenderPortfolioHealth(null, null); return; }
+    function avg(f) { return rows.reduce(function(s, r) { return s + (Number(r[f]) || 0); }, 0) / rows.length; }
+    var riskMap = { low: 92, medium: 60, high: 28 };
+    var sybil = rows.reduce(function(s, r) {
+      var v = riskMap[String(r.activity_risk || '').toLowerCase()];
+      return s + (v == null ? 50 : v);
+    }, 0) / rows.length;
+    var score = Math.round(avg('health_score'));
+    ovRenderPortfolioHealth(score, {
+      security:  score,                       // overall scan score
+      activity:  avg('tx_count') / 5,         // 500 tx ≈ 100
+      diversity: avg('chains_active') * 20,   // 5 chains = 100
+      sybil:     sybil,                       // higher = safer
+      consist:   avg('age_days') / 3.65       // 1 year ≈ 100
+    });
+  }
+
+  /* ── Live Alerts — intel alerts + claim deadlines ── */
   async function ovRenderAlerts() {
     var list = ovEl('ov-la-list');
     if (!list) return;
+    var intel = [], claims = [];
+    try { if (window.API && window.API.getAlerts) intel = await window.API.getAlerts() || []; } catch (e) {}
+    try { if (window.API && window.API.getClaimAlerts) claims = await window.API.getClaimAlerts() || []; } catch (e) {}
+    var items = [];
+    intel.slice(0, 3).forEach(function(a) {
+      var p = String(a.priority || '').toUpperCase();
+      var dot = (p === 'HIGH' || p === 'CRITICAL') ? '🔴' : (p === 'MEDIUM' ? '🔶' : '🟢');
+      items.push({ dot: dot, text: a.name || a.title || 'Alert', time: a.created_at ? ovTimeAgo(a.created_at) : '' });
+    });
+    claims.slice(0, 2).forEach(function(c) {
+      var hrs = Math.max(1, Math.round(c.msLeft / 3600000));
+      var t = hrs < 24 ? 'in ' + hrs + 'h' : 'in ' + Math.round(hrs / 24) + 'd';
+      var v = c.usdValue ? ' · $' + Number(c.usdValue).toLocaleString() : '';
+      items.push({ dot: '💰', text: 'Claim ' + (c.project || 'reward') + v, time: t });
+    });
+    if (!items.length) {
+      list.innerHTML = '<div class="ov-no-data">All quiet — no active alerts.</div>';
+      return;
+    }
+    list.innerHTML = items.slice(0, 4).map(function(it) {
+      return '<div class="ov-la-item">'
+        + '<span class="ov-la-dot">' + it.dot + '</span>'
+        + '<span class="ov-la-text">' + ovEscape(it.text) + '</span>'
+        + '<span class="ov-la-time">' + it.time + '</span>'
+        + '</div>';
+    }).join('');
+  }
+
+  /* ── Alpha Feed Ticker — live intel signals ── */
+  async function ovRenderAlpha() {
+    var track = ovEl('ov-alpha-track');
+    if (!track) return;
+    var sigs = [];
+    try { if (window.API && window.API.getSignals) sigs = await window.API.getSignals(6) || []; } catch (e) {}
+    if (!sigs.length) {
+      track.innerHTML = '<span>Alpha signals from the Intel desk stream here as they go live →</span>';
+      return;
+    }
+    track.innerHTML = sigs.map(function(s) {
+      return '<span>' + ovEscape(s.title || '') + '</span>';
+    }).join('<span class="ov-alpha-dot">·</span>');
+  }
+
+  /* ── Recent Achievements — real activity log ── */
+  async function ovRenderAchievements() {
+    var el = ovEl('ov-achv-list');
+    if (!el) return;
+    var feed = [];
+    try { if (window.API && window.API.getActivityFeed) feed = await window.API.getActivityFeed(5) || []; } catch (e) {}
+    if (!feed.length) {
+      el.innerHTML = '<div class="ov-no-data">Complete your first mission to start filling your trophy shelf 🏆</div>';
+      return;
+    }
+    var iconMap = { mission: ['🏆', 'gold'], streak: ['🔥', 'orange'], wallet: ['👛', 'cyan'], reward: ['💰', 'green'], airdrop: ['🪂', 'purple'] };
+    el.innerHTML = feed.slice(0, 3).map(function(a) {
+      var pair = iconMap[String(a.kind || '').toLowerCase()] || ['⚡', 'purple'];
+      var detail = String(a.detail || '');
+      var xpMatch = detail.match(/\+\s*([\d,]+)\s*XP/i);
+      var sub = detail.replace(/\s*·?\s*\+\s*[\d,]+\s*XP/i, '').trim();
+      var xpHtml = xpMatch ? '<div class="ov-achv-xp gold">+' + xpMatch[1] + ' XP</div>' : '';
+      return '<div class="ov-achv-item">'
+        + '<div class="ov-achv-icon ' + pair[1] + '">' + pair[0] + '</div>'
+        + '<div class="ov-achv-info"><div class="ov-achv-name">' + ovEscape(a.title || '') + '</div>'
+        + '<div class="ov-achv-sub">' + ovEscape(sub) + '</div></div>'
+        + xpHtml
+        + '<div class="ov-achv-time">' + (a.created_at ? ovTimeAgo(a.created_at) : '') + '</div>'
+        + '</div>';
+    }).join('');
+  }
+
+  /* ── AI Copilot — personalized greeting ── */
+  function ovRenderCopilot() {
+    var el = ovEl('ov-copilot-msg');
+    if (!el) return;
+    var name = (ovStats && ovStats.name) ? ovStats.name : 'Elite';
+    var h = new Date().getHours();
+    var greet = h < 12 ? 'GM' : (h < 17 ? 'Good afternoon' : 'Good evening');
+    var undone = ovMissions.filter(function(m) { return !m.done; });
+    var xpLeft = undone.reduce(function(s, m) { return s + (m.xp || 0); }, 0);
+    var line;
+    if (undone.length) {
+      line = undone.length + ' mission' + (undone.length > 1 ? 's' : '') + ' left today — '
+        + xpLeft.toLocaleString() + ' XP up for grabs.';
+    } else if (ovMissions.length) {
+      line = 'All missions cleared. Streak secured — see you at the next reset. 🔥';
+    } else {
+      line = 'No missions live right now. Good moment to scout new airdrops in Explorer.';
+    }
+    el.innerHTML = '<strong>' + greet + ', ' + ovEscape(name) + '! 👋</strong><p>' + line + '</p>';
+  }
+
+  /* ── Farming Season — live ticking countdown (quarter end, UTC) ── */
+  function ovSeasonTick() {
+    var el = ovEl('ov-season-timer');
+    if (!el) return;
+    var now = new Date();
+    var q = Math.floor(now.getUTCMonth() / 3);
+    var end = new Date(Date.UTC(now.getUTCFullYear(), (q + 1) * 3, 1));
+    var diff = Math.max(0, end - now);
+    var d = Math.floor(diff / 86400000);
+    var hN = Math.floor((diff % 86400000) / 3600000);
+    var mN = Math.floor((diff % 3600000) / 60000);
+    el.textContent = 'Ends in ' + d + 'd ' + hN + 'h ' + mN + 'm';
+  }
+  setInterval(ovSeasonTick, 30000);
+  ovSeasonTick();
+
+  /* ── Load Everything (parallel + reload guard) ── */
+  async function ovLoadAll(force) {
+    if (!window.API) return;
+    var now = Date.now();
+    if (!force && (now - ovLastLoad) < OV_RELOAD_MS) return;
+    ovLastLoad = now;
+
+    // Core: missions + hero stats + progress, in parallel
     try {
-      var alerts = [];
-      if (window.API && window.API.getIntelAlerts) {
-        alerts = await window.API.getIntelAlerts();
-      }
-      if (!alerts || !alerts.length) return; // keep default placeholder
-      var html = '';
-      alerts.slice(0, 4).forEach(function(a) {
-        var dot = '🔵';
-        var type = (a.feed_type || a.priority || '').toLowerCase();
-        if (type === 'critical' || type === 'high') dot = '🔴';
-        else if (type === 'warning' || type === 'medium') dot = '🔶';
-        else if (type === 'good' || type === 'low') dot = '🟢';
-        var ago = a.created_at ? ovTimeAgo(a.created_at) : '';
-        html += '<div class="ov-la-item">'
-          + '<span class="ov-la-dot">' + dot + '</span>'
-          + '<span class="ov-la-text">' + ovEscape(a.title || a.headline || '') + '</span>'
-          + '<span class="ov-la-time">' + ago + '</span>'
-          + '</div>';
-      });
-      list.innerHTML = html;
-    } catch (e) { console.error('ovRenderAlerts:', e); }
+      var results = await Promise.all([
+        window.API.getMissions().catch(function() { return []; }),
+        window.API.getOverviewStats ? window.API.getOverviewStats().catch(function() { return null; }) : Promise.resolve(null),
+        window.API.getProgress ? window.API.getProgress().catch(function() { return null; }) : Promise.resolve(null)
+      ]);
+      ovMissions = results[0] || [];
+      ovStats = results[1];
+      var progress = results[2];
+
+      ovRenderStats(progress);
+      ovRenderMissionList();
+      ovRenderMoves();
+      ovRenderNBA();
+      ovRenderCopilot();
+    } catch (e) { console.error('[overview core]', e); }
+
+    // Secondary widgets — independent, fire in parallel
+    ovRenderAlerts();
+    ovRenderAlpha();
+    ovRenderAchievements();
+    ovLoadHealth();
   }
 
-  function ovTimeAgo(ts) {
-    var diff = Date.now() - new Date(ts).getTime();
-    var mins = Math.floor(diff / 60000);
-    if (mins < 1) return 'now';
-    if (mins < 60) return mins + 'm ago';
-    var hrs = Math.floor(mins / 60);
-    if (hrs < 24) return hrs + 'h ago';
-    return Math.floor(hrs / 24) + 'd ago';
-  }
-
-  /* ── Load Missions ── */
-  async function ovLoadMissions() {
-    try {
-      if (!window.API) return;
-      var all = await window.API.getMissions();
-      if (!all) all = [];
-      var completions = [];
-      try { completions = await window.API.getMissionCompletions(); } catch (e) {}
-      var doneIds = {};
-      (completions || []).forEach(function(c) { doneIds[c.mission_id] = true; });
-      ovMissions = all.map(function(m) { m.done = !!doneIds[m.id]; return m; });
-    } catch (e) { console.error('ovLoadMissions:', e); }
-  }
-
-  /* ── Load All ── */
-  async function ovLoadAll() {
-    try { await ovLoadMissions(); } catch (e) { console.error('[ovLoadMissions]', e); }
-    try { await ovLoadStats(); } catch (e) { console.error('[ovLoadStats]', e); }
-  }
-
-  /* ── Actions: Do NBA ── */
+  /* ── Actions: NBA CTA ── */
   window.ovDoNBA = function() {
     var m = ovMissions.filter(function(x) { return !x.done; })[0];
-    if (m && m.action_url) { window.open(m.action_url, '_blank'); }
-    else { ovGoToMissions(); }
+    if (m && m.quest_url) { window.open(m.quest_url, '_blank', 'noopener'); }
+    else if (m) { ovGoToMissions(); }
+    else { document.querySelector('[data-tab-target="explorer"]')?.click(); }
   };
 
   /* ── Navigation helpers ── */
@@ -19285,24 +19452,32 @@ updateClock();
     document.querySelector('[data-tab-target="wallets"]')?.click();
   };
 
-  /* ── Move card click handler ── */
+  /* ── Move card click → open quest link ── */
   document.addEventListener('click', function(e) {
     var btn = e.target.closest('[data-ov-move]');
     if (!btn) return;
-    var id = parseInt(btn.dataset.ovMove, 10);
-    var m = ovMissions.find(function(x) { return x.id === id; });
-    if (m && m.action_url) window.open(m.action_url, '_blank');
+    var id = btn.dataset.ovMove;
+    var m = ovMissions.find(function(x) { return String(x.id) === String(id); });
+    if (m && m.quest_url) window.open(m.quest_url, '_blank', 'noopener');
     else ovGoToMissions();
   });
 
-  /* ── Tab switch listener ── */
+  /* ── Tab switch listeners (real event + legacy fallback) ── */
+  document.addEventListener('dropelite:tabchange', function(e) {
+    if (e.detail && e.detail.tabName === 'overview') ovLoadAll(false);
+  });
   document.addEventListener('tab:changed', function(e) {
-    if (e.detail && e.detail.tabName === 'overview') ovLoadAll();
+    if (e.detail && e.detail.tabName === 'overview') ovLoadAll(false);
+  });
+
+  /* ── Refresh instantly when a mission is completed elsewhere ── */
+  document.addEventListener('dropelite:mission-complete', function() {
+    ovLoadAll(true);
   });
 
   /* ── First load ── */
   document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(ovLoadAll, 650);
+    setTimeout(function() { ovLoadAll(true); }, 400);
   });
 
 })();
@@ -19760,7 +19935,7 @@ updateClock();
       var pCur = m.done ? (m.progress_target || 1) : (m.progress_current || 0);
       var pTgt = m.progress_target || 1;
       var pPct = Math.min(100, Math.round((pCur / pTgt) * 100));
-      var xp = m.xp_reward || 100;
+      var xp = m.xp || 0;
       var isWeekly = m.frequency === 'weekly';
       var cta = m.done ? 'Completed ✓' : (i === 0 ? 'Do It Now' : (i === 1 ? 'Claim Now' : 'Start Now'));
       var ctaCls = m.done ? 'dm-mc-cta done' : 'dm-mc-cta';
@@ -19789,8 +19964,8 @@ updateClock();
     var m = dmMissions.find(function(x) { return x.id === id; });
     if (!m || m.done) return;
 
-    if (m.action_url) {
-      window.open(m.action_url, '_blank');
+    if (m.quest_url) {
+      window.open(m.quest_url, '_blank', 'noopener');
       return;
     }
 
@@ -19803,6 +19978,8 @@ updateClock();
       dmRenderMissions();
       dmUpdateProgress();
       dmShowCelebration(m);
+      // Let other tabs (Overview) know so they refresh their stats
+      document.dispatchEvent(new CustomEvent('dropelite:mission-complete', { detail: { missionId: id } }));
     } catch (e) { console.error('dmDoMission:', e); }
     dmBusy = null;
   };
@@ -19811,7 +19988,7 @@ updateClock();
   function dmShowCelebration(m) {
     var banner = dmEl('dm-complete-banner');
     if (!banner) return;
-    var xp = m.xp_reward || 100;
+    var xp = m.xp || 0;
     var bonus = m.frequency === 'weekly' ? 50 : 0;
     dmEl('dm-cb-xp').textContent = '+' + xp + ' XP';
     dmEl('dm-cb-earned').textContent = '+' + xp + ' XP';
@@ -19837,7 +20014,7 @@ updateClock();
 
     // XP earned today
     var xpToday = 0;
-    dmMissions.forEach(function(m) { if (m.done) xpToday += (m.xp_reward || 100); });
+    dmMissions.forEach(function(m) { if (m.done) xpToday += (m.xp || 0); });
     var psXp = dmEl('dm-ps-xp'); if (psXp) psXp.textContent = xpToday.toLocaleString();
 
     // Daily bonus dots
@@ -19881,7 +20058,7 @@ updateClock();
   /* ── Load Stats ── */
   async function dmLoadStats() {
     var s = {};
-    try { s = await window.API.getUserProgress() || {}; } catch (e) {}
+    try { s = await window.API.getProgress() || {}; } catch (e) {}
     var streak = s.current_streak || 0;
 
     // Streak displays
@@ -19908,11 +20085,8 @@ updateClock();
       if (!window.API) return;
       var all = await window.API.getMissions();
       if (!all) all = [];
-      var completions = [];
-      try { completions = await window.API.getMissionCompletions(); } catch (e) {}
-      var doneIds = {};
-      (completions || []).forEach(function(c) { doneIds[c.mission_id] = true; });
-      dmMissions = all.map(function(m) { m.done = !!doneIds[m.id]; return m; });
+      // getMissions() already returns today's done-flags per mission
+      dmMissions = all;
     } catch (e) { console.error('dmLoadMissions:', e); }
   }
 
