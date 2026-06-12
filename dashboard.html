@@ -751,16 +751,35 @@
 
 /* ─── NBA HERO ─── */
 [data-theme="light"] .overview-view .ov-nba {
-  background: linear-gradient(135deg, rgba(196,138,8,0.05) 0%, rgba(255,255,255,0.80) 40%, rgba(245,248,255,0.90) 100%);
-  border-color: rgba(196,138,8,0.22);
-  box-shadow: 0 4px 30px rgba(10,14,30,0.06), inset 0 0 40px rgba(255,255,255,0.4);
+  background:
+    radial-gradient(ellipse at 85% 15%, rgba(109,79,209,0.05), transparent 50%),
+    linear-gradient(135deg, rgba(196,138,8,0.07) 0%, rgba(255,255,255,0.82) 45%, rgba(245,248,255,0.92) 100%);
+  border-color: rgba(196,138,8,0.26);
+  box-shadow: 0 8px 32px rgba(10,14,30,0.07), inset 0 0 40px rgba(255,255,255,0.4);
 }
+[data-theme="light"] .overview-view .ov-nba::after { opacity: 0.35; }
 [data-theme="light"] .overview-view .ov-nba-tag { color: var(--ov-gold); }
 [data-theme="light"] .overview-view .ov-nba-impact { background: rgba(196,48,90,0.10); color: var(--ov-pink); border-color: rgba(196,48,90,0.22); }
-[data-theme="light"] .overview-view .ov-nba-meta { background: rgba(255,255,255,0.65); border-color: rgba(10,14,30,0.08); }
-[data-theme="light"] .overview-view .ov-nba-why { background: rgba(255,255,255,0.65); border-color: rgba(10,14,30,0.08); }
-[data-theme="light"] .overview-view .ov-nba-cta { background: var(--ov-gold); color: #fff; box-shadow: 0 4px 20px rgba(196,138,8,0.25); }
-[data-theme="light"] .overview-view .ov-nba-cta:hover { box-shadow: 0 6px 28px rgba(196,138,8,0.35); }
+[data-theme="light"] .overview-view .ov-nba-count { background: rgba(196,138,8,0.10); color: var(--ov-gold); border-color: rgba(196,138,8,0.30); }
+[data-theme="light"] .overview-view .ov-nba-chip { background: rgba(255,255,255,0.70); border-color: rgba(10,14,30,0.10); }
+[data-theme="light"] .overview-view .ov-nba-chip.time   { border-color: rgba(0,122,144,0.28); box-shadow: inset 0 0 18px rgba(0,122,144,0.05); }
+[data-theme="light"] .overview-view .ov-nba-chip.reward { border-color: rgba(196,138,8,0.34); box-shadow: inset 0 0 18px rgba(196,138,8,0.07); }
+[data-theme="light"] .overview-view .ov-nba-chip.diff   { border-color: rgba(0,138,74,0.28); box-shadow: inset 0 0 18px rgba(0,138,74,0.05); }
+[data-theme="light"] .overview-view .ov-nba-mv.gold { text-shadow: 0 0 12px rgba(196,138,8,0.22); }
+[data-theme="light"] .overview-view .ov-nba-why { background: rgba(196,138,8,0.05); border-left-color: rgba(196,138,8,0.55); }
+[data-theme="light"] .overview-view .ov-nba-why strong { color: var(--ov-gold); }
+[data-theme="light"] .overview-view .ov-nba-cta {
+  background: linear-gradient(135deg, #c48a08, #a87504); color: #fff;
+  animation-name: ovCtaPulseLight;
+}
+@keyframes ovCtaPulseLight {
+  0%, 100% { box-shadow: 0 4px 18px rgba(196,138,8,0.28); }
+  50%      { box-shadow: 0 4px 30px rgba(196,138,8,0.48); }
+}
+[data-theme="light"] .overview-view .ov-nba-cta:hover { box-shadow: 0 8px 30px rgba(196,138,8,0.45); }
+[data-theme="light"] .overview-view .ov-nba-ghost { border-color: rgba(10,14,30,0.16); color: #3d4a65; }
+[data-theme="light"] .overview-view .ov-nba-ghost:hover { border-color: rgba(196,138,8,0.5); color: var(--ov-gold); }
+[data-theme="light"] .overview-view .ov-nba-art::before { background: radial-gradient(circle, rgba(196,138,8,0.10) 0%, rgba(109,79,209,0.04) 45%, transparent 70%); }
 
 /* Robot SVG in light mode */
 [data-theme="light"] .overview-view .ov-robot-svg { filter: drop-shadow(0 4px 16px rgba(196,138,8,0.12)); }
@@ -2595,48 +2614,113 @@ canvas.mini-chart { width: 100% !important; }
   grid-template-columns: 1fr auto;
   grid-template-rows: auto auto;
   gap: 0 20px;
-  background: linear-gradient(135deg, rgba(245,200,66,0.06) 0%, rgba(20,24,40,0.95) 50%, rgba(10,14,30,0.98) 100%);
-  border: 1px solid rgba(245,200,66,0.18);
-  border-radius: 16px;
+  background:
+    radial-gradient(ellipse at 85% 15%, rgba(167,139,250,0.07), transparent 50%),
+    linear-gradient(135deg, rgba(245,200,66,0.09) 0%, rgba(20,24,40,0.96) 45%, rgba(10,14,30,0.98) 100%);
+  border: 1px solid rgba(245,200,66,0.22);
+  border-radius: 18px;
   padding: 28px 30px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 30px rgba(0,0,0,0.25), 0 0 60px rgba(245,200,66,0.04), inset 0 1px 0 rgba(255,255,255,0.04);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.30), 0 0 80px rgba(245,200,66,0.06), inset 0 1px 0 rgba(255,255,255,0.05);
   backdrop-filter: blur(16px);
 }
 .overview-view .ov-nba::before {
-  content: ''; position: absolute; top: -60%; right: -20%; width: 50%; height: 200%;
-  background: radial-gradient(circle, rgba(245,200,66,0.04) 0%, transparent 70%);
+  content: ''; position: absolute; top: -60%; right: -20%; width: 55%; height: 220%;
+  background: radial-gradient(circle, rgba(245,200,66,0.06) 0%, transparent 70%);
   pointer-events: none;
 }
+.overview-view .ov-nba::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0.8;
+  background:
+    radial-gradient(2px 2px at 72% 22%, rgba(245,200,66,0.8), transparent 60%),
+    radial-gradient(1.6px 1.6px at 86% 64%, rgba(167,139,250,0.65), transparent 60%),
+    radial-gradient(1.6px 1.6px at 64% 82%, rgba(74,240,255,0.5), transparent 60%),
+    radial-gradient(1.4px 1.4px at 91% 34%, rgba(245,200,66,0.5), transparent 60%),
+    radial-gradient(1.4px 1.4px at 56% 12%, rgba(167,139,250,0.45), transparent 60%);
+}
 .overview-view .ov-nba-left { grid-row: 1; grid-column: 1; position: relative; z-index: 1; }
-.overview-view .ov-nba-art { grid-row: 1/3; grid-column: 2; display: flex; align-items: center; justify-content: center; min-width: 200px; padding: 0 10px; }
-.overview-view .ov-nba-why { grid-row: 2; grid-column: 1; margin-top: 10px; padding: 14px 18px; background: rgba(255,255,255,0.03); border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); backdrop-filter: blur(8px); }
-.overview-view .ov-nba-why strong { font-size: 13px; color: var(--ov-text-dim); display: block; margin-bottom: 4px; }
-.overview-view .ov-nba-why p { font-size: 13px; color: var(--ov-text-dim); margin: 0; line-height: 1.4; }
-.overview-view .ov-nba-top { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.overview-view .ov-nba-art {
+  grid-row: 1/3; grid-column: 2; display: flex; align-items: center; justify-content: center;
+  min-width: 200px; padding: 0 10px; position: relative;
+}
+.overview-view .ov-nba-art::before {
+  content: ''; position: absolute; width: 230px; height: 230px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(245,200,66,0.12) 0%, rgba(167,139,250,0.05) 45%, transparent 70%);
+  filter: blur(2px); pointer-events: none;
+}
+.overview-view .ov-nba-art .ov-robot-svg { animation: ovRobotFloat 6s ease-in-out infinite; position: relative; }
+@keyframes ovRobotFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+.overview-view .ov-nba-why {
+  grid-row: 2; grid-column: 1; margin-top: 14px;
+  display: flex; align-items: flex-start; gap: 11px;
+  padding: 11px 16px;
+  background: rgba(245,200,66,0.04);
+  border: none; border-left: 3px solid rgba(245,200,66,0.55);
+  border-radius: 0 10px 10px 0;
+  position: relative; z-index: 1;
+}
+.overview-view .ov-nba-why-ico { font-size: 16px; line-height: 1.3; filter: drop-shadow(0 0 6px rgba(245,200,66,0.5)); }
+.overview-view .ov-nba-why strong { font-size: 12px; color: var(--ov-gold); display: block; margin-bottom: 2px; letter-spacing: 0.4px; }
+.overview-view .ov-nba-why p { font-size: 12.5px; color: var(--ov-text-dim); margin: 0; line-height: 1.45; }
+.overview-view .ov-nba-top { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
 .overview-view .ov-nba-tag {
   font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700;
   color: var(--ov-gold); letter-spacing: 1px;
 }
 .overview-view .ov-nba-impact {
-  font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 6px;
+  font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px;
   background: rgba(255,94,138,0.12); color: var(--ov-pink); border: 1px solid rgba(255,94,138,0.25);
 }
-.overview-view .ov-nba-title { font-family: 'Rajdhani', sans-serif; font-size: 30px; font-weight: 800; color: var(--ov-text); margin: 0 0 6px; line-height: 1.15; }
-.overview-view .ov-nba-desc { font-size: 15px; color: var(--ov-text-dim); margin: 0 0 16px; }
-.overview-view .ov-nba-meta { display: flex; gap: 24px; margin-bottom: 18px; padding: 12px 16px; background: rgba(255,255,255,0.03); border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); backdrop-filter: blur(8px); }
-.overview-view .ov-nba-mi { display: flex; flex-direction: column; gap: 2px; }
-.overview-view .ov-nba-ml { font-size: 11px; color: var(--ov-text-muted); font-weight: 600; }
-.overview-view .ov-nba-mv { font-size: 14px; font-weight: 700; color: var(--ov-text); }
-.overview-view .ov-nba-mv.gold { color: var(--ov-gold); }
-.overview-view .ov-nba-cta {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--ov-gold); color: #0a0e1a; border: none; border-radius: 10px;
-  padding: 12px 32px; font: 700 16px 'Rajdhani', sans-serif; cursor: pointer;
-  transition: all .2s; box-shadow: 0 4px 20px rgba(245,200,66,0.3);
+.overview-view .ov-nba-count {
+  font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px;
+  background: rgba(245,200,66,0.10); color: var(--ov-gold); border: 1px solid rgba(245,200,66,0.30);
 }
-.overview-view .ov-nba-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(245,200,66,0.4); }
+.overview-view .ov-nba-title {
+  font-family: 'Rajdhani', sans-serif; font-size: 31px; font-weight: 800;
+  color: var(--ov-text); margin: 0 0 6px; line-height: 1.12;
+}
+.overview-view .ov-nba-desc { font-size: 14.5px; color: var(--ov-text-dim); margin: 0 0 16px; }
+.overview-view .ov-nba-meta { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+.overview-view .ov-nba-chip {
+  display: flex; flex-direction: column; gap: 3px;
+  padding: 10px 18px; border-radius: 12px;
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  transition: transform .15s, border-color .2s;
+}
+.overview-view .ov-nba-chip:hover { transform: translateY(-1px); }
+.overview-view .ov-nba-chip.time   { border-color: rgba(74,240,255,0.22);  box-shadow: inset 0 0 18px rgba(74,240,255,0.04); }
+.overview-view .ov-nba-chip.reward { border-color: rgba(245,200,66,0.32);  box-shadow: inset 0 0 18px rgba(245,200,66,0.07); }
+.overview-view .ov-nba-chip.diff   { border-color: rgba(34,217,122,0.22);  box-shadow: inset 0 0 18px rgba(34,217,122,0.04); }
+.overview-view .ov-nba-ml { font-size: 10px; color: var(--ov-text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; }
+.overview-view .ov-nba-mv { font-size: 15px; font-weight: 800; color: var(--ov-text); }
+.overview-view .ov-nba-mv.gold { color: var(--ov-gold); text-shadow: 0 0 14px rgba(245,200,66,0.35); }
+.overview-view .ov-nba-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.overview-view .ov-nba-cta {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: linear-gradient(135deg, #f5c842, #e8a818);
+  color: #1a1405; border: none; border-radius: 12px;
+  padding: 14px 36px; font: 800 17px 'Rajdhani', sans-serif; letter-spacing: 0.4px; cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+  animation: ovCtaPulse 2.6s ease-in-out infinite;
+}
+@keyframes ovCtaPulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(245,200,66,0.30); }
+  50%      { box-shadow: 0 4px 34px rgba(245,200,66,0.55); }
+}
+.overview-view .ov-nba-cta:hover { transform: translateY(-2px); animation-play-state: paused; box-shadow: 0 8px 36px rgba(245,200,66,0.55); }
+.overview-view .ov-nba-ghost {
+  background: transparent; border: 1px solid rgba(255,255,255,0.14); color: var(--ov-text-dim);
+  border-radius: 12px; padding: 13px 20px; font: 700 14px 'Rajdhani', sans-serif; cursor: pointer;
+  transition: border-color .2s, color .2s;
+}
+.overview-view .ov-nba-ghost:hover { border-color: rgba(245,200,66,0.5); color: var(--ov-gold); }
+@media (prefers-reduced-motion: reduce) {
+  .overview-view .ov-nba-cta { animation: none; }
+  .overview-view .ov-nba-art .ov-robot-svg { animation: none; }
+}
 
 /* Robot SVG mascot */
 .overview-view .ov-robot-svg { width: 200px; height: 240px; filter: drop-shadow(0 4px 20px rgba(245,200,66,0.15)); }
@@ -2871,11 +2955,15 @@ canvas.mini-chart { width: 100% !important; }
   .overview-view .ov-bottom-row { grid-template-columns: 1fr; }
   .overview-view .ov-rsb { grid-template-columns: 1fr; }
   .overview-view .ov-nba { grid-template-columns: 1fr; padding: 20px; }
-  .overview-view .ov-nba-art { grid-row: auto; grid-column: 1; justify-content: flex-end; height: 140px; }
+  .overview-view .ov-nba-art { grid-row: auto; grid-column: 1; justify-content: center; height: 150px; }
+  .overview-view .ov-nba-art::before { width: 160px; height: 160px; }
   .overview-view .ov-robot-svg { width: 140px; height: 170px; }
   .overview-view .ov-nba-why { grid-column: 1; }
   .overview-view .ov-nba-title { font-size: 24px; }
-  .overview-view .ov-nba-meta { flex-direction: column; gap: 8px; }
+  .overview-view .ov-nba-meta { gap: 8px; }
+  .overview-view .ov-nba-chip { flex: 1 1 calc(33% - 8px); padding: 9px 12px; }
+  .overview-view .ov-nba-actions { flex-direction: column; align-items: stretch; }
+  .overview-view .ov-nba-cta, .overview-view .ov-nba-ghost { justify-content: center; text-align: center; }
   .overview-view .ov-phealth-body { flex-direction: column; }
   .overview-view .ov-alpha-bar { flex-direction: column; align-items: flex-start; gap: 8px; }
 }
@@ -12555,15 +12643,19 @@ canvas.mini-chart { width: 100% !important; }
               <div class="ov-nba-top">
                 <span class="ov-nba-tag">⚙️ NEXT BEST ACTION</span>
                 <span class="ov-nba-impact" id="ov-nba-impact">High Impact</span>
+                <span class="ov-nba-count" id="ov-nba-count" style="display:none;">—</span>
               </div>
               <h2 class="ov-nba-title" id="ov-nba-title">Loading your next move…</h2>
               <p class="ov-nba-desc" id="ov-nba-desc">Scanning today's missions for the highest-impact action.</p>
               <div class="ov-nba-meta">
-                <div class="ov-nba-mi"><span class="ov-nba-ml">Estimated Time</span><span class="ov-nba-mv" id="ov-nba-time">⏱ —</span></div>
-                <div class="ov-nba-mi"><span class="ov-nba-ml">✦ Reward</span><span class="ov-nba-mv gold" id="ov-nba-reward">🪙 —</span></div>
-                <div class="ov-nba-mi"><span class="ov-nba-ml">✦ Difficulty</span><span class="ov-nba-mv" id="ov-nba-diff">—</span></div>
+                <div class="ov-nba-chip time"><span class="ov-nba-ml">Estimated Time</span><span class="ov-nba-mv" id="ov-nba-time">⏱ —</span></div>
+                <div class="ov-nba-chip reward"><span class="ov-nba-ml">Reward</span><span class="ov-nba-mv gold" id="ov-nba-reward">🪙 —</span></div>
+                <div class="ov-nba-chip diff"><span class="ov-nba-ml">Difficulty</span><span class="ov-nba-mv" id="ov-nba-diff">—</span></div>
               </div>
-              <button class="ov-nba-cta" id="ov-nba-cta" onclick="ovDoNBA()">🚀 Do It Now</button>
+              <div class="ov-nba-actions">
+                <button class="ov-nba-cta" id="ov-nba-cta" onclick="ovDoNBA()">🚀 Do It Now</button>
+                <button class="ov-nba-ghost" onclick="ovGoToMissions()">View All Missions →</button>
+              </div>
             </div>
             <div class="ov-nba-art" id="ov-nba-art">
               <svg class="ov-robot-svg" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -12615,8 +12707,11 @@ canvas.mini-chart { width: 100% !important; }
               </svg>
             </div>
             <div class="ov-nba-why">
-              <strong>Why this?</strong>
-              <p id="ov-nba-why-text">Completing this unlocks new missions and boosts your rewards.</p>
+              <span class="ov-nba-why-ico">💡</span>
+              <div>
+                <strong>Why this?</strong>
+                <p id="ov-nba-why-text">Completing this unlocks new missions and boosts your rewards.</p>
+              </div>
             </div>
           </div>
 
@@ -17623,6 +17718,12 @@ updateClock();
     return '⏱ ~' + h + 'h' + (m ? ' ' + m + 'm' : '');
   }
 
+  function ovSentence(s) {
+    if (!s) return '';
+    s = String(s).trim();
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+
   function ovMissionIcon(m, i) {
     return (m && m.icon) ? m.icon : OV_ICONS[i % OV_ICONS.length];
   }
@@ -17638,15 +17739,28 @@ updateClock();
     var ttn = ovEl('ov-tt-name'), ttr = ovEl('ov-tt-reward'), ttt = ovEl('ov-tt-time');
     var why = ovEl('ov-nba-why-text');
     var cta = ovEl('ov-nba-cta');
+    var cnt = ovEl('ov-nba-count');
+    if (cnt) {
+      var doneN = ovMissions.filter(function(x) { return x.done; }).length;
+      if (ovMissions.length && undone.length) {
+        cnt.textContent = 'Mission ' + (doneN + 1) + ' of ' + ovMissions.length + ' today';
+        cnt.style.display = '';
+      } else if (ovMissions.length) {
+        cnt.textContent = 'All ' + ovMissions.length + ' complete ✓';
+        cnt.style.display = '';
+      } else {
+        cnt.style.display = 'none';
+      }
+    }
 
     if (m) {
-      if (t) t.textContent = m.title || "Today's mission";
+      if (t) t.textContent = ovSentence(m.title) || "Today's mission";
       if (d) d.textContent = m.description || 'Complete this mission to earn XP and keep your streak alive.';
       if (r) r.textContent = '🪙 ' + (m.xp || 0) + ' XP';
       if (df) df.textContent = ovDiffBadge(m.difficulty);
       if (tm) tm.textContent = ovFmtMins(m.time_minutes);
       if (imp) imp.textContent = m.boost_active ? '⚡ XP Boost Active' : 'High Impact';
-      if (ttn) ttn.textContent = m.title || '—';
+      if (ttn) ttn.textContent = ovSentence(m.title) || '—';
       if (ttr) ttr.textContent = (m.xp || 0) + ' XP';
       if (ttt) ttt.textContent = '~' + (m.time_minutes || 5) + ' mins';
       if (why) why.textContent = m.boost_active
