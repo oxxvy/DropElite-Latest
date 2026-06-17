@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DropElite — Design Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   DROPELITE DESIGN TOKENS — single source of truth
+═══════════════════════════════════════════════════════════════ */
+:root {
+  /* GOLD — the brand */
+  --gold:        #f5c842;
+  --gold-bright: #ffe066;
+  --gold-dim:    #a8862a;
+  --gold-glow:   rgba(245,200,66,0.18);
+  --gold-glow2:  rgba(245,200,66,0.07);
+  /* BACKGROUNDS */
+  --bg:          #050810;
+  --bg2:         #080d1a;
+  --bg3:         #0c1224;
+  /* SURFACES (cards over background) */
+  --surface:     rgba(255,255,255,0.04);
+  --surface2:    rgba(255,255,255,0.07);
+  /* BORDERS */
+  --border:      rgba(245,200,66,0.15);
+  --border2:     rgba(255,255,255,0.07);
+  /* TEXT */
+  --text:        #e8eaf0;
+  --text-dim:    #7a849a;
+  --text-muted:  #3d4560;
+  /* STATUS */
+  --green:       #00e87a;
+  --green-glow:  rgba(0,232,122,0.15);
+  --red:         #ff4757;
+  --red-glow:    rgba(255,71,87,0.15);
+  --blue:        #4af0ff;
+  --blue-glow:   rgba(74,240,255,0.12);
+  --orange:      #ff8c42;
+  /* RADIUS */
+  --radius:      12px;
+  --radius-lg:   18px;
+}
+
+[data-theme="light"] {
+  --gold:        #c48a08;
+  --gold-bright: #e0a00a;
+  --gold-dim:    #9a6e06;
+  --gold-glow:   rgba(196,138,8,0.22);
+  --gold-glow2:  rgba(196,138,8,0.10);
+  --bg:          #dde2ee;
+  --bg2:         #d0d7e5;
+  --bg3:         #c5cdd8;
+  --surface:     rgba(255,255,255,0.55);
+  --surface2:    rgba(255,255,255,0.70);
+  --border:      rgba(196,138,8,0.30);
+  --border2:     rgba(10,14,30,0.10);
+  --text:        #0a0e1a;
+  --text-dim:    #3d4a65;
+  --text-muted:  #6b7894;
+  --green:       #008a4a;
+  --red:         #c42838;
+  --blue:        #007a90;
+  --orange:      #c06020;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  min-height: 100vh;
+  padding: 60px 40px 100px;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 15% 20%, rgba(245,200,66,0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 85% 80%, rgba(74,240,255,0.03) 0%, transparent 70%);
+}
+
+[data-theme="light"] body {
+  background-image:
+    radial-gradient(ellipse 60% 40% at 15% 20%, rgba(196,138,8,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 85% 80%, rgba(0,122,144,0.04) 0%, transparent 70%);
+}
+
+.container { max-width: 1100px; margin: 0 auto; }
+
+/* ─── HEADER ─── */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border2);
+}
+.page-eyebrow {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.page-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: 1px;
+  line-height: 1.1;
+}
+.page-title span { color: var(--gold); text-shadow: 0 0 20px rgba(245,200,66,0.4); }
+.page-sub {
+  color: var(--text-dim);
+  font-size: 14px;
+  margin-top: 8px;
+}
+.theme-toggle {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  color: var(--text-dim);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  padding: 9px 16px;
+  border-radius: 9px;
+  cursor: pointer;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+.theme-toggle:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ─── TABLE OF CONTENTS ─── */
+.toc {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin: 30px 0 50px;
+}
+.toc a {
+  display: block;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 9px;
+  color: var(--text-dim);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+.toc a:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-glow2); }
+
+/* ─── SECTIONS ─── */
+section { margin-bottom: 70px; scroll-margin-top: 30px; }
+
+.section-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+.section-title::before {
+  content: '';
+  width: 3px; height: 14px;
+  background: var(--gold);
+  border-radius: 2px;
+  box-shadow: 0 0 8px var(--gold);
+}
+.section-heading {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.section-desc {
+  color: var(--text-dim);
+  font-size: 14px;
+  margin-bottom: 28px;
+  max-width: 700px;
+}
+
+/* ─── COLOR GRID ─── */
+.color-group { margin-bottom: 36px; }
+.color-group-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+.swatch {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+.swatch:hover {
+  border-color: rgba(245,200,66,0.22);
+  box-shadow: 0 0 28px rgba(245,200,66,0.06);
+}
+.swatch-color {
+  height: 70px;
+  display: flex;
+  align-items: flex-end;
+  padding: 8px 12px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.7);
+  position: relative;
+}
+.swatch-checker {
+  background-image:
+    linear-gradient(45deg, #1a1a1a 25%, transparent 25%),
+    linear-gradient(-45deg, #1a1a1a 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #1a1a1a 75%),
+    linear-gradient(-45deg, transparent 75%, #1a1a1a 75%);
+  background-size: 12px 12px;
+  background-position: 0 0, 0 6px, 6px -6px, -6px 0;
+  background-color: #2a2a2a;
+}
+.swatch-info { padding: 10px 12px 12px; }
+.swatch-name {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.5px;
+}
+.swatch-var {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+.swatch-use {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+/* ─── TYPOGRAPHY DISPLAY ─── */
+.type-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 30px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border2);
+  align-items: center;
+}
+.type-row:last-child { border-bottom: none; }
+.type-meta {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  line-height: 1.6;
+}
+.type-meta strong { color: var(--gold); display: block; font-size: 11px; margin-bottom: 4px; }
+.type-sample { color: var(--text); }
+
+.font-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  margin-bottom: 18px;
+}
+.font-card-name {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.font-card-family { font-size: 13px; color: var(--text-dim); margin-bottom: 18px; }
+.font-card-role { color: var(--text); font-size: 14px; margin-bottom: 22px; }
+.font-card-role strong { color: var(--gold); }
+
+/* ─── TYPE SCALE TABLE ─── */
+.scale-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.scale-table th {
+  text-align: left;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border2);
+  font-weight: 400;
+}
+.scale-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border2);
+  font-size: 13px;
+  color: var(--text);
+}
+.scale-table tr:last-child td { border-bottom: none; }
+.scale-table .mono { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--text-dim); }
+
+/* ─── SPACING / RADIUS GRID ─── */
+.token-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 14px;
+}
+.token-box {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 9px;
+  padding: 20px;
+  text-align: center;
+}
+.token-demo {
+  background: var(--gold-glow);
+  border: 1px solid var(--gold);
+  height: 60px;
+  margin-bottom: 12px;
+}
+.token-name {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 1.5px;
+}
+.token-val {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+/* ─── COMPONENT PREVIEW ─── */
+.preview {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  margin-bottom: 20px;
+}
+.preview-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.preview-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* — Actual DropElite components reproduced verbatim — */
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 9px 20px;
+  border-radius: 9px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 14px; font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold) 0%, #d4a820 100%);
+  color: #000;
+  box-shadow: 0 0 18px rgba(245,200,66,0.35);
+}
+.btn-gold:hover { box-shadow: 0 0 30px rgba(245,200,66,0.55); transform: translateY(-1px); }
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+}
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-glow2); }
+.btn-ghost {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  color: var(--text-dim);
+  padding: 7px 14px; font-size: 12px;
+}
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+.badge-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.badge-easy   { background: rgba(0,232,122,0.12); border: 1px solid rgba(0,232,122,0.3); color: var(--green); }
+.badge-medium { background: rgba(245,200,66,0.12); border: 1px solid rgba(245,200,66,0.3); color: var(--gold); }
+.badge-hard   { background: rgba(255,71,87,0.12);  border: 1px solid rgba(255,71,87,0.3);  color: var(--red); }
+.badge-verify { background: rgba(74,240,255,0.1);  border: 1px solid rgba(74,240,255,0.25); color: var(--blue); }
+
+.demo-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  backdrop-filter: blur(10px);
+}
+.demo-card-gold {
+  border-color: rgba(245,200,66,0.28);
+  box-shadow: 0 0 30px rgba(245,200,66,0.08), inset 0 0 30px rgba(245,200,66,0.03);
+}
+
+.hero-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.hero-label::after {
+  content: '';
+  flex: 1; height: 1px; max-width: 120px;
+  background: linear-gradient(90deg, var(--gold-dim), transparent);
+}
+.hero-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 26px; font-weight: 900;
+  color: var(--text); line-height: 1.15; margin-bottom: 6px;
+}
+.hero-title span { color: var(--gold); text-shadow: 0 0 20px rgba(245,200,66,0.5); }
+.hero-stat-val {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px; font-weight: 700;
+  color: var(--gold);
+  text-shadow: 0 0 14px rgba(245,200,66,0.4);
+}
+.hero-stat-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.logo-icon {
+  width: 30px; height: 30px;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  box-shadow: 0 0 18px rgba(245,200,66,0.55);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+
+/* ─── DNA / RECIPE ─── */
+.dna {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin-bottom: 40px;
+}
+.dna-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+.dna-num {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.dna-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.dna-text {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  margin-top: 80px;
+  padding-top: 30px;
+  border-top: 1px solid var(--border2);
+  text-align: center;
+  color: var(--text-muted);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 700px) {
+  body { padding: 30px 20px 60px; }
+  .page-title { font-size: 24px; }
+  .type-row { grid-template-columns: 1fr; gap: 10px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="page-header">
+    <div>
+      <div class="page-eyebrow">DROPELITE / DESIGN REFERENCE</div>
+      <h1 class="page-title">The <span>Style Guide</span></h1>
+      <p class="page-sub">Every color, font, and component used in the live codebase — extracted from <code style="font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--gold)">dashboard.html</code>, <code style="font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--gold)">login.html</code>, and <code style="font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--gold)">index.html</code>.</p>
+    </div>
+    <button class="theme-toggle" onclick="document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark')">Toggle theme</button>
+  </header>
+
+  <!-- TOC -->
+  <nav class="toc">
+    <a href="#dna">Design DNA</a>
+    <a href="#colors">Colors</a>
+    <a href="#typography">Typography</a>
+    <a href="#type-scale">Type scale</a>
+    <a href="#radius">Radius</a>
+    <a href="#components">Components</a>
+    <a href="#voice">Voice & rules</a>
+  </nav>
+
+  <!-- DESIGN DNA -->
+  <section id="dna">
+    <div class="section-title">01 / Identity</div>
+    <h2 class="section-heading">The design DNA</h2>
+    <p class="section-desc">DropElite reads as a <strong style="color:var(--gold)">cyberpunk command center</strong> — gold-on-near-black, glowing accents, monospace data displays. It signals "elite operator tool" to crypto airdrop farmers. Everything else descends from this stance.</p>
+    <div class="dna">
+      <div class="dna-card">
+        <div class="dna-num">// 01</div>
+        <div class="dna-title">Gold is the brand</div>
+        <div class="dna-text">A single hero color (#f5c842) carries every important moment: logos, primary CTAs, key numbers, focus rings. Never substitute it for taste.</div>
+      </div>
+      <div class="dna-card">
+        <div class="dna-num">// 02</div>
+        <div class="dna-title">Dark by default</div>
+        <div class="dna-text">Near-black background (#050810) with translucent white surfaces. Light theme exists as a courtesy, not the canonical look.</div>
+      </div>
+      <div class="dna-card">
+        <div class="dna-num">// 03</div>
+        <div class="dna-title">Three fonts, three roles</div>
+        <div class="dna-text">Orbitron for display, Rajdhani for UI text, Share Tech Mono for data and eyebrows. Each has one job — never swap.</div>
+      </div>
+      <div class="dna-card">
+        <div class="dna-num">// 04</div>
+        <div class="dna-title">Glow on what matters</div>
+        <div class="dna-text">Gold elements get a subtle text-shadow / box-shadow glow. Everything else stays quiet. Restraint makes the glow read.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLORS -->
+  <section id="colors">
+    <div class="section-title">02 / Palette</div>
+    <h2 class="section-heading">Colors</h2>
+    <p class="section-desc">Use the CSS variable, not the hex. Variables auto-switch when <code style="font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--gold)">[data-theme="light"]</code> is set on <code style="font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--gold)">&lt;html&gt;</code>. Hex values shown below are the dark-theme defaults.</p>
+
+    <div class="color-group">
+      <div class="color-group-label">Gold — the brand</div>
+      <div class="color-grid">
+        <div class="swatch">
+          <div class="swatch-color" style="background:#f5c842;color:#000">#f5c842</div>
+          <div class="swatch-info">
+            <div class="swatch-name">Gold</div>
+            <div class="swatch-var">--gold</div>
+            <div class="swatch-use">Primary CTAs, logo, focus, brand accent. The hero color.</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#ffe066;color:#000">#ffe066</div>
+          <div class="swatch-info">
+            <div class="swatch-name">Gold Bright</div>
+            <div class="swatch-var">--gold-bright</div>
+            <div class="swatch-use">Hover states, highlights inside gold elements.</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#a8862a">#a8862a</div>
+          <div class="swatch-info">
+            <div class="swatch-name">Gold Dim</div>
+            <div class="swatch-var">--gold-dim</div>
+            <div class="swatch-use">Gradient ends, divider lines fading from gold.</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color swatch-checker" style="background:rgba(245,200,66,0.18)">18% gold</div>
+          <div class="swatch-info">
+            <div class="swatch-name">Gold Glow</div>
+            <div class="swatch-var">--gold-glow</div>
+            <div class="swatch-use">Glow auras, hover backgrounds on gold surfaces.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="color-group">
+      <div class="color-group-label">Backgrounds</div>
+      <div class="color-grid">
+        <div class="swatch">
+          <div class="swatch-color" style="background:#050810">#050810</div>
+          <div class="swatch-info">
+            <div class="swatch-name">Background</div>
+            <div class="swatch-var">--bg</div>
+            <div class="swatch-use">Page background. The deepest layer.</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#080d1a">#080d1a</div>
+          <div class="swatch-info">
+            <div class="swatch-name">Background 2</div>
+            <div class="swatch-var">--bg2</div>
+            <div class="swatch-use">Topbar, modals, slightly raised surfaces.</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#0c1224">#0c1224</div>
+          <div class="swatch-info">
+            <div class="swatch-name">Background 3</div>
+            <div class="swatch-var">--bg3</div>
+            <div class="swatch-use">Highest opaque elevation tier.</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color swatch-checker" style="background:rgba(255,255,255,0.04)">4% white</div>
+          <div class="swatch-info">
+            <div class="swatch-name">Surface</div>
+            <div class="swatch-var">--surface</div>
+            <div class="swatch-use">Default card background (translucent).</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color swatch-checker" style="background:rgba(255,255,255,0.07)">7% white</div>
+          <div class="swatch-info">
+            <div class="swatch-name">Surface 2</div>
+            <div class="swatch-var">--surface2</div>
+            <div class="swatch-use">Hover state on cards, ghost buttons.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="color-group">
+      <div class="color-group-label">Text</div>
+      <div class="color-grid">
+        <div class="swatch">
+          <div class="swatch-color" style="background:#e8eaf0;color:#000">#e8eaf0</div>
+          <div class="swatch-info">
+            <div class="swatch-name">Text</div>
+            <div class="swatch-var">--text</div>
+            <div class="swatch-use">Primary body text, headlines (non-accent).</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#7a849a">#7a849a</div>
+          <div class="swatch-info">
+            <div class="swatch-name">Text Dim</div>
+            <div class="swatch-var">--text-dim</div>
+            <div class="swatch-use">Secondary text, labels, descriptions.</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#3d4560">#3d4560</div>
+          <div class="swatch-info">
+            <div class="swatch-name">Text Muted</div>
+            <div class="swatch-var">--text-muted</div>
+            <div class="swatch-use">Tertiary / placeholder / disabled.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="color-group">
+      <div class="color-group-label">Status — only these four, only for these meanings</div>
+      <div class="color-grid">
+        <div class="swatch">
+          <div class="swatch-color" style="background:#00e87a;color:#000">#00e87a</div>
+          <div class="swatch-info">
+            <div class="swatch-name">Green</div>
+            <div class="swatch-var">--green</div>
+            <div class="swatch-use">Success, profit, easy difficulty, "live" status.</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#ff4757">#ff4757</div>
+          <div class="swatch-info">
+            <div class="swatch-name">Red</div>
+            <div class="swatch-var">--red</div>
+            <div class="swatch-use">Errors, losses, hard difficulty, admin role.</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#4af0ff;color:#000">#4af0ff</div>
+          <div class="swatch-info">
+            <div class="swatch-name">Blue</div>
+            <div class="swatch-var">--blue</div>
+            <div class="swatch-use">Info, verification, links to external sources.</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#ff8c42;color:#000">#ff8c42</div>
+          <div class="swatch-info">
+            <div class="swatch-name">Orange</div>
+            <div class="swatch-var">--orange</div>
+            <div class="swatch-use">Warnings, "medium" priority alerts.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="color-group">
+      <div class="color-group-label">Borders</div>
+      <div class="color-grid">
+        <div class="swatch">
+          <div class="swatch-color swatch-checker" style="background:rgba(245,200,66,0.15)">15% gold</div>
+          <div class="swatch-info">
+            <div class="swatch-name">Border (gold)</div>
+            <div class="swatch-var">--border</div>
+            <div class="swatch-use">Borders on gold-themed elements (topbar, focused inputs).</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color swatch-checker" style="background:rgba(255,255,255,0.07)">7% white</div>
+          <div class="swatch-info">
+            <div class="swatch-name">Border 2 (neutral)</div>
+            <div class="swatch-var">--border2</div>
+            <div class="swatch-use">Default card and divider borders.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TYPOGRAPHY -->
+  <section id="typography">
+    <div class="section-title">03 / Type</div>
+    <h2 class="section-heading">Typography</h2>
+    <p class="section-desc">Three fonts, three jobs. Each has one role — don't blur them. All three load from Google Fonts in one request (the existing link tag in your HTML already does this).</p>
+
+    <div class="font-card" style="font-family:'Orbitron',sans-serif">
+      <div class="font-card-name">Display</div>
+      <div class="font-card-family" style="font-family:'Rajdhani',sans-serif">Orbitron · weights 400 / 600 / 700 / 900</div>
+      <div class="font-card-role" style="font-family:'Rajdhani',sans-serif">Use for: <strong>logo, hero titles, section headings, big numbers, the brand name itself</strong>. Geometric, futuristic, instantly recognisable. Always with letter-spacing.</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:2px;color:var(--text)">DROP<span style="color:var(--gold);text-shadow:0 0 20px rgba(245,200,66,0.5)">ELITE</span></div>
+      <div style="font-size:14px;font-weight:700;letter-spacing:1px;color:var(--text-dim);margin-top:12px;text-transform:uppercase">ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</div>
+    </div>
+
+    <div class="font-card" style="font-family:'Rajdhani',sans-serif">
+      <div class="font-card-name">Body / UI</div>
+      <div class="font-card-family">Rajdhani · weights 400 / 500 / 600 / 700</div>
+      <div class="font-card-role">Use for: <strong>body text, buttons, table content, paragraphs, labels</strong>. Default <code style="font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--gold)">font-family</code> on <code style="font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--gold)">body</code>. Slightly geometric, readable at small sizes.</div>
+      <div style="font-size:22px;color:var(--text);line-height:1.4;margin-bottom:8px">Track real airdrop farming routes. Compare risk and reward. Don't miss the windows that matter.</div>
+      <div style="font-size:14px;color:var(--text-dim)">The quick brown fox jumps over the lazy dog · 0123456789</div>
+    </div>
+
+    <div class="font-card">
+      <div class="font-card-name">Mono / Data</div>
+      <div class="font-card-family" style="font-family:'Rajdhani',sans-serif">Share Tech Mono · weight 400 (single weight)</div>
+      <div class="font-card-role" style="font-family:'Rajdhani',sans-serif">Use for: <strong>eyebrows above headings, code-like labels, numbers, timestamps, wallet addresses, "live data" feel</strong>. Always letter-spaced. Never for body paragraphs.</div>
+      <div style="font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px">// LIVE_DATA · WALLET_07_ACTIVE</div>
+      <div style="font-family:'Share Tech Mono',monospace;font-size:18px;color:var(--text)">0xA1B2...3F4E · $4,287.91 · 14:32:08 UTC</div>
+    </div>
+  </section>
+
+  <!-- TYPE SCALE -->
+  <section id="type-scale">
+    <div class="section-title">04 / Scale</div>
+    <h2 class="section-heading">The type scale in use</h2>
+    <p class="section-desc">These are the actual sizes used across your codebase. Stick to them — every new size you add increases visual chaos.</p>
+    <table class="scale-table">
+      <thead>
+        <tr><th>Role</th><th>Font</th><th>Size · Weight · Spacing</th><th>Sample</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Page hero title</td><td class="mono">Orbitron 900</td><td class="mono">26px · ls 0</td><td style="font-family:'Orbitron',sans-serif;font-size:26px;font-weight:900;color:var(--text)">Welcome <span style="color:var(--gold)">Operator</span></td></tr>
+        <tr><td>Section heading</td><td class="mono">Orbitron 900</td><td class="mono">24px · ls 1px</td><td style="font-family:'Orbitron',sans-serif;font-size:24px;font-weight:900;letter-spacing:1px;color:var(--text)">Daily Missions</td></tr>
+        <tr><td>Hero stat value</td><td class="mono">Orbitron 700</td><td class="mono">20px · gold + glow</td><td style="font-family:'Orbitron',sans-serif;font-size:20px;font-weight:700;color:var(--gold);text-shadow:0 0 14px rgba(245,200,66,0.4)">$4,287</td></tr>
+        <tr><td>Logo</td><td class="mono">Orbitron 900</td><td class="mono">17px · ls 2px</td><td style="font-family:'Orbitron',sans-serif;font-size:17px;font-weight:900;letter-spacing:2px;color:var(--gold)">DROPELITE</td></tr>
+        <tr><td>Body text</td><td class="mono">Rajdhani 400</td><td class="mono">15px · line 1.5</td><td style="font-size:15px;color:var(--text)">Default paragraph text for the dashboard.</td></tr>
+        <tr><td>Button label</td><td class="mono">Rajdhani 700</td><td class="mono">14px · ls 1px · UPPER</td><td style="font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text)">Connect Wallet</td></tr>
+        <tr><td>Section eyebrow</td><td class="mono">Orbitron 700</td><td class="mono">11px · ls 2.5px · UPPER</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--text-dim)">OVERVIEW</td></tr>
+        <tr><td>Mono eyebrow</td><td class="mono">Share Tech Mono</td><td class="mono">11px · ls 3px · gold</td><td style="font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase">// LIVE_DATA</td></tr>
+        <tr><td>Badge / pill</td><td class="mono">Share Tech Mono</td><td class="mono">10px · ls 0.5px · UPPER</td><td><span class="badge-pill badge-medium">MEDIUM</span></td></tr>
+        <tr><td>Caption / micro-label</td><td class="mono">Share Tech Mono</td><td class="mono">10px · ls 1px · UPPER</td><td style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">XP EARNED</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- RADIUS -->
+  <section id="radius">
+    <div class="section-title">05 / Shape</div>
+    <h2 class="section-heading">Border radius</h2>
+    <p class="section-desc">Two canonical radii: <code style="font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--gold)">--radius</code> for small elements, <code style="font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--gold)">--radius-lg</code> for cards. Buttons use 9px (slightly tighter). Pills use 20px or 999px.</p>
+    <div class="token-grid">
+      <div class="token-box">
+        <div class="token-demo" style="border-radius:9px"></div>
+        <div class="token-name">9px</div>
+        <div class="token-val">Buttons</div>
+      </div>
+      <div class="token-box">
+        <div class="token-demo" style="border-radius:12px"></div>
+        <div class="token-name">--radius</div>
+        <div class="token-val">12px · small cards, swatches</div>
+      </div>
+      <div class="token-box">
+        <div class="token-demo" style="border-radius:18px"></div>
+        <div class="token-name">--radius-lg</div>
+        <div class="token-val">18px · main cards</div>
+      </div>
+      <div class="token-box">
+        <div class="token-demo" style="border-radius:20px"></div>
+        <div class="token-name">20px</div>
+        <div class="token-val">Badge pills</div>
+      </div>
+      <div class="token-box">
+        <div class="token-demo" style="border-radius:999px"></div>
+        <div class="token-name">999px</div>
+        <div class="token-val">Fully round (chips)</div>
+      </div>
+      <div class="token-box">
+        <div class="token-demo" style="border-radius:50%"></div>
+        <div class="token-name">50%</div>
+        <div class="token-val">Avatars, status dots</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPONENTS -->
+  <section id="components">
+    <div class="section-title">06 / Components</div>
+    <h2 class="section-heading">Live components</h2>
+    <p class="section-desc">Pulled straight from <code style="font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--gold)">dashboard.html</code>. Hover them — they behave like the real thing.</p>
+
+    <div class="preview">
+      <div class="preview-label">Buttons · .btn .btn-gold / .btn-outline / .btn-ghost</div>
+      <div class="preview-row">
+        <button class="btn btn-gold">Connect Wallet</button>
+        <button class="btn btn-outline">Cancel</button>
+        <button class="btn btn-ghost">Skip for now</button>
+      </div>
+    </div>
+
+    <div class="preview">
+      <div class="preview-label">Status badges · .badge-pill .badge-{easy/medium/hard/verify}</div>
+      <div class="preview-row">
+        <span class="badge-pill badge-easy">EASY</span>
+        <span class="badge-pill badge-medium">MEDIUM</span>
+        <span class="badge-pill badge-hard">HARD</span>
+        <span class="badge-pill badge-verify">VERIFY</span>
+      </div>
+    </div>
+
+    <div class="preview">
+      <div class="preview-label">Logo mark</div>
+      <div class="preview-row">
+        <span class="logo-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="#000"><path d="M12 2L4 7v10l8 5 8-5V7l-8-5z"/></svg></span>
+        <span style="font-family:'Orbitron',sans-serif;font-size:17px;font-weight:900;letter-spacing:2px;color:var(--gold);text-shadow:0 0 18px rgba(245,200,66,0.5)">DROPELITE</span>
+      </div>
+    </div>
+
+    <div class="preview">
+      <div class="preview-label">Section title · .section-title</div>
+      <div class="section-title" style="margin-bottom:0">PROJECT INTELLIGENCE</div>
+    </div>
+
+    <div class="preview">
+      <div class="preview-label">Hero block</div>
+      <div class="hero-label">SYSTEM ONLINE</div>
+      <div class="hero-title">Welcome back, <span>Operator</span></div>
+      <p style="color:var(--text-dim);font-size:15px;margin:6px 0 20px">3 missions ready · 2 windows closing in &lt; 24h</p>
+      <div style="display:flex;gap:30px">
+        <div><div class="hero-stat-val">$4,287</div><div class="hero-stat-label">Total Earned</div></div>
+        <div><div class="hero-stat-val">14</div><div class="hero-stat-label">Active Routes</div></div>
+        <div><div class="hero-stat-val">87%</div><div class="hero-stat-label">Success Rate</div></div>
+      </div>
+    </div>
+
+    <div class="preview">
+      <div class="preview-label">Cards · .card / .card-gold-border</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="demo-card">
+          <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">DEFAULT CARD</div>
+          <div style="font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px">Standard card</div>
+          <div style="color:var(--text-dim);font-size:13px">Neutral border. Hover for subtle gold accent.</div>
+        </div>
+        <div class="demo-card demo-card-gold">
+          <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">FEATURED</div>
+          <div style="font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px">Gold-border card</div>
+          <div style="color:var(--text-dim);font-size:13px">Reserved for the one thing on the screen that matters most.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOICE / RULES -->
+  <section id="voice">
+    <div class="section-title">07 / Rules</div>
+    <h2 class="section-heading">Five rules to keep it tight</h2>
+    <div class="dna">
+      <div class="dna-card">
+        <div class="dna-num">// 01</div>
+        <div class="dna-title">One gold, one place</div>
+        <div class="dna-text">If everything is gold, nothing is. Use it on the primary CTA, the key stat, the logo — then stop.</div>
+      </div>
+      <div class="dna-card">
+        <div class="dna-num">// 02</div>
+        <div class="dna-title">Mono = data, never prose</div>
+        <div class="dna-text">Share Tech Mono is for numbers, codes, timestamps, eyebrows. Never use it for paragraphs — it kills readability.</div>
+      </div>
+      <div class="dna-card">
+        <div class="dna-num">// 03</div>
+        <div class="dna-title">Uppercase + letter-spacing</div>
+        <div class="dna-text">Eyebrows and labels always uppercase with ~2-3px letter-spacing. Body text never uppercase.</div>
+      </div>
+      <div class="dna-card">
+        <div class="dna-num">// 04</div>
+        <div class="dna-title">Glow only on gold</div>
+        <div class="dna-text">Box-shadow / text-shadow glows are reserved for gold elements. Don't glow status colors or text — they'll look radioactive.</div>
+      </div>
+      <div class="dna-card">
+        <div class="dna-num">// 05</div>
+        <div class="dna-title">Use variables, not hex</div>
+        <div class="dna-text">Always <code style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--gold)">var(--gold)</code>, never <code style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--gold)">#f5c842</code>. Light theme depends on it.</div>
+      </div>
+      <div class="dna-card">
+        <div class="dna-num">// 06</div>
+        <div class="dna-title">Two radii max in one view</div>
+        <div class="dna-text">Don't mix 9px, 12px, 18px, and 20px in one section. Pick a primary card radius and let buttons + pills be the variants.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    DROPELITE / DESIGN REFERENCE · GENERATED FROM SOURCE
+  </footer>
+
+</div>
+</body>
+</html>
