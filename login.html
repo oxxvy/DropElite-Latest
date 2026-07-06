@@ -123,14 +123,55 @@ input::placeholder { color:var(--text-muted); }
 .live-dot { width:6px; height:6px; border-radius:50%; background:var(--green);
   box-shadow:0 0 8px var(--green); animation:pulse 2s infinite; }
 
+/* ═══ LIVE CLAIMS FEED (brand panel) ═══ */
+.brand-mid { display:flex; align-items:center; justify-content:space-between; gap:56px; width:100%; }
+.au-feed { display:flex; flex-direction:column; gap:16px; width:250px; flex-shrink:0; margin-right:8px; }
+.feed-card { padding:15px 16px; border:1px solid var(--border2); border-radius:14px;
+  background:rgba(8,13,26,0.72); backdrop-filter:blur(10px); box-shadow:0 14px 36px rgba(0,0,0,0.45);
+  animation:floatA 7s ease-in-out infinite; }
+[data-theme="light"] .feed-card { background:rgba(255,255,255,0.72); box-shadow:0 14px 36px rgba(10,14,30,0.12); }
+.feed-head { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+.feed-head .label { font-family:'Share Tech Mono',monospace; font-size:9.5px; letter-spacing:2px; color:var(--text-dim); }
+.feed-list { display:flex; flex-direction:column; gap:10px; }
+.feed-row { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.feed-op { display:flex; flex-direction:column; min-width:0; }
+.feed-op .op { font-size:13px; font-weight:600; color:var(--text-soft);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.feed-op .t { font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:1px; color:var(--text-muted); }
+.feed-amt { font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--green); white-space:nowrap; }
+.feed-pill { display:flex; align-items:center; gap:12px; padding:13px 16px; border:1px solid var(--border);
+  border-radius:14px; background:var(--gold-glow); box-shadow:0 0 22px rgba(245,200,66,0.10);
+  animation:floatB 8.5s ease-in-out infinite; }
+.feed-pill .ico { width:32px; height:32px; flex-shrink:0; border-radius:9px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-dim));
+  display:flex; align-items:center; justify-content:center; font-size:15px; color:#000; }
+.feed-pill .amt { font-family:'Orbitron',sans-serif; font-size:15px; font-weight:800; color:var(--gold); }
+.feed-pill .cap { font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:1.5px; color:var(--text-dim); }
+@keyframes floatA { 0%,100%{transform:translateY(0) rotate(-1.2deg)} 50%{transform:translateY(-9px) rotate(-1.2deg)} }
+@keyframes floatB { 0%,100%{transform:translateY(0) rotate(1.4deg)} 50%{transform:translateY(-7px) rotate(1.4deg)} }
+@media (max-width:1180px){ .au-feed { display:none !important; } .brand-mid { display:block; } }
+
 /* ═══ RIGHT · AUTH CARD ═══ */
 .auth-col {
   position:relative; z-index:1; display:flex; align-items:center; justify-content:center;
-  padding:40px 48px; border-left:1px solid var(--border2);
+  padding:40px 48px; border-left:1px solid var(--border2); overflow:hidden;
   background:rgba(8,13,26,0.6); backdrop-filter:blur(14px);
 }
 [data-theme="light"] .auth-col { background:rgba(255,255,255,0.55); }
-.auth-card { width:100%; max-width:400px; }
+.auth-card { width:100%; max-width:400px; position:relative; z-index:1; }
+
+/* panel ambient behind the auth card */
+.panel-ambient { position:absolute; inset:0; pointer-events:none; z-index:0; }
+.panel-ambient .honeycomb {
+  position:absolute; inset:0; background-size:56px 97px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='97' viewBox='0 0 56 97'%3E%3Cg fill='none' stroke='%23f5c842' stroke-opacity='0.14'%3E%3Cpath d='M28 8L52 22v28L28 64 4 50V22z'/%3E%3Cpath d='M28 56.5L52 70.5v28L28 112.5 4 98.5v-28z'/%3E%3Cpath d='M0 32.25L24 46.25v28L0 88.25M56 32.25L32 46.25v28l24 14'/%3E%3C/g%3E%3C/svg%3E");
+  -webkit-mask-image:radial-gradient(ellipse 90% 70% at 60% 15%,#000 0%,transparent 75%);
+  mask-image:radial-gradient(ellipse 90% 70% at 60% 15%,#000 0%,transparent 75%);
+}
+.panel-ambient .aura-gold { position:absolute; top:-140px; right:-120px; width:420px; height:420px;
+  border-radius:50%; filter:blur(70px); background:radial-gradient(circle,rgba(245,200,66,0.09),transparent 70%); }
+.panel-ambient .aura-cyan { position:absolute; bottom:-160px; left:-100px; width:380px; height:380px;
+  border-radius:50%; filter:blur(70px); background:radial-gradient(circle,rgba(74,240,255,0.05),transparent 70%); }
 
 .mode-switch { display:grid; grid-template-columns:1fr 1fr; gap:4px; padding:4px;
   border:1px solid var(--border2); border-radius:12px; background:var(--surface); margin-bottom:28px; }
@@ -249,6 +290,7 @@ input::placeholder { color:var(--text-muted); }
       <span class="brand-wordmark">DROPELITE</span>
     </div>
 
+    <div class="brand-mid">
     <div class="brand-copy">
       <div class="brand-eyebrow">// Mission control for airdrop farming</div>
       <h1 class="brand-headline">Farm smarter.<br>Claim <span>everything</span>.</h1>
@@ -260,6 +302,22 @@ input::placeholder { color:var(--text-muted); }
       </div>
     </div>
 
+    <aside class="au-feed" aria-hidden="true">
+      <div class="feed-card">
+        <div class="feed-head"><span class="live-dot"></span><span class="label">LIVE CLAIMS</span></div>
+        <div class="feed-list">
+          <div class="feed-row"><div class="feed-op"><span class="op">operator_19</span><span class="t">2M AGO</span></div><span class="feed-amt">+1,240 $ZK</span></div>
+          <div class="feed-row"><div class="feed-op"><span class="op">nova_farms</span><span class="t">6M AGO</span></div><span class="feed-amt">+380 $STRK</span></div>
+          <div class="feed-row"><div class="feed-op"><span class="op">0xkestrel</span><span class="t">11M AGO</span></div><span class="feed-amt">+2,050 $TIA</span></div>
+        </div>
+      </div>
+      <div class="feed-pill">
+        <span class="ico">◈</span>
+        <div><div class="amt">$12,480</div><div class="cap">CLAIMED TODAY</div></div>
+      </div>
+    </aside>
+    </div><!-- /brand-mid -->
+
     <div class="brand-stats">
       <span class="live"><span class="live-dot"></span>12,400 OPERATORS ONLINE</span>
       <span>·</span>
@@ -269,6 +327,11 @@ input::placeholder { color:var(--text-muted); }
 
   <!-- ═══ RIGHT · AUTH CARD ═══ -->
   <div class="auth-col">
+    <div class="panel-ambient" aria-hidden="true">
+      <div class="honeycomb"></div>
+      <div class="aura-gold"></div>
+      <div class="aura-cyan"></div>
+    </div>
     <div class="auth-card">
 
       <div class="mode-switch">
