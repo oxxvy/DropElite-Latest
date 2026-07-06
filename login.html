@@ -149,6 +149,32 @@ input::placeholder { color:var(--text-muted); }
 .feed-pill .cap { font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:1.5px; color:var(--text-dim); }
 @keyframes floatA { 0%,100%{transform:translateY(0) rotate(-1.2deg)} 50%{transform:translateY(-9px) rotate(-1.2deg)} }
 @keyframes floatB { 0%,100%{transform:translateY(0) rotate(1.4deg)} 50%{transform:translateY(-7px) rotate(1.4deg)} }
+@keyframes floatC { 0%,100%{transform:translateY(0) rotate(0.8deg)} 50%{transform:translateY(-8px) rotate(0.8deg)} }
+
+/* season leaderboard card */
+.feed-card.is-lead { animation:floatC 9s ease-in-out infinite; }
+.feed-head .diamond { color:var(--gold); font-size:11px; }
+.feed-list.lead { gap:9px; }
+.lead-row { display:flex; align-items:center; gap:10px; }
+.lead-rank { width:20px; height:20px; flex-shrink:0; border-radius:6px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Share Tech Mono',monospace; font-size:10px;
+  background:var(--surface2); border:1px solid var(--border2); color:var(--text-dim); }
+.lead-rank.gold { background:linear-gradient(135deg,var(--gold),var(--gold-dim)); border:none; color:#000; }
+.lead-op { flex:1; font-size:13px; font-weight:600; color:var(--text-soft);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.lead-xp { font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--gold); }
+
+/* next reward window countdown */
+.feed-window { padding:14px 16px; border:1px solid rgba(74,240,255,0.22); border-radius:14px;
+  background:rgba(74,240,255,0.04); animation:floatA 10s ease-in-out infinite; }
+.feed-window .wlabel { font-family:'Share Tech Mono',monospace; font-size:9.5px; letter-spacing:2px;
+  color:var(--text-dim); margin-bottom:8px; }
+.feed-window .wrow { display:flex; align-items:baseline; gap:8px; }
+.feed-window .cd { font-family:'Share Tech Mono',monospace; font-size:20px; color:var(--blue);
+  text-shadow:0 0 14px rgba(74,240,255,0.35); }
+.feed-window .wtoken { font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:1px; color:var(--text-muted); }
+
 @media (max-width:1180px){ .au-feed { display:none !important; } .brand-mid { display:block; } }
 
 /* ═══ RIGHT · AUTH CARD ═══ */
@@ -303,6 +329,14 @@ input::placeholder { color:var(--text-muted); }
     </div>
 
     <aside class="au-feed" aria-hidden="true">
+      <div class="feed-card is-lead">
+        <div class="feed-head"><span class="diamond">◆</span><span class="label">SEASON LEADERBOARD</span></div>
+        <div class="feed-list lead">
+          <div class="lead-row"><span class="lead-rank gold">1</span><span class="lead-op">yield_reaper</span><span class="lead-xp">48.2K XP</span></div>
+          <div class="lead-row"><span class="lead-rank">2</span><span class="lead-op">mx_orbital</span><span class="lead-xp">44.9K XP</span></div>
+          <div class="lead-row"><span class="lead-rank">3</span><span class="lead-op">dropzone_ivy</span><span class="lead-xp">41.3K XP</span></div>
+        </div>
+      </div>
       <div class="feed-card">
         <div class="feed-head"><span class="live-dot"></span><span class="label">LIVE CLAIMS</span></div>
         <div class="feed-list">
@@ -314,6 +348,10 @@ input::placeholder { color:var(--text-muted); }
       <div class="feed-pill">
         <span class="ico">◈</span>
         <div><div class="amt">$12,480</div><div class="cap">CLAIMED TODAY</div></div>
+      </div>
+      <div class="feed-window">
+        <div class="wlabel">NEXT REWARD WINDOW</div>
+        <div class="wrow"><span class="cd" id="rewardCountdown">02:14:36</span><span class="wtoken">$LINEA DROP</span></div>
       </div>
     </aside>
     </div><!-- /brand-mid -->
@@ -555,6 +593,19 @@ el('authForm').addEventListener('submit', async function(e){
     location.href = (res.user.role === 'admin') ? 'admin.html' : 'dashboard.html';
   }, 400);
 });
+
+/* ═══ NEXT REWARD WINDOW COUNTDOWN (decorative, ticks down) ═══ */
+(function(){
+  var cd = el('rewardCountdown');
+  if (!cd) return;
+  var secs = 2*3600 + 14*60 + 36;
+  var pad = function(n){ return String(n).padStart(2,'0'); };
+  function render(){
+    cd.textContent = pad(Math.floor(secs/3600)) + ':' + pad(Math.floor((secs%3600)/60)) + ':' + pad(secs%60);
+  }
+  render();
+  setInterval(function(){ if (secs > 0) secs--; render(); }, 1000);
+})();
 
 /* ═══ AUTO-REDIRECT IF ALREADY LOGGED IN ═══ */
 (async function(){
