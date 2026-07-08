@@ -280,16 +280,20 @@ input::placeholder { color:var(--text-muted); }
 .switch-prompt .switch-link { color:var(--gold); font-weight:700; cursor:pointer; }
 
 /* ═══ RESPONSIVE ═══ */
-@media (max-width:980px) {
-  .shell { grid-template-columns:1fr; }
-  .brand-panel { padding:64px 32px 28px; gap:26px; min-height:auto; }
+/* ── tablet / phone: stack, auth card on top ── */
+@media (max-width:900px) {
+  .shell { display:flex; flex-direction:column; }
+  .auth-col { order:-1; border-left:none; border-bottom:1px solid var(--border2);
+    padding:28px 20px; background:transparent; backdrop-filter:none; }
+  .brand-panel { padding:36px 24px 32px; gap:28px; min-height:auto; }
   .brand-headline { font-size:30px; }
   .brand-lede { font-size:15px; }
-  .auth-col { border-left:none; border-top:1px solid var(--border2); padding:32px 24px 48px;
-    background:transparent; backdrop-filter:none; }
+  .au-field input { font-size:16px; }        /* prevents iOS auto-zoom on focus */
+  .btn, .mode-tab { min-height:44px; }        /* comfortable tap targets */
+  .brand-stats { flex-wrap:wrap; row-gap:8px; }
 }
 @media (max-width:560px) {
-  .brand-panel { padding:60px 22px 20px; }
+  .brand-panel { padding:32px 20px 28px; }
   .brand-headline { font-size:26px; }
   .brand-stats { font-size:10px; gap:12px; }
   .social-row { grid-template-columns:1fr; }
